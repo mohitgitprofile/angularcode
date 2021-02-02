@@ -1,0 +1,182 @@
+<div class="wrapper">
+        <app-sidebar></app-sidebar>
+        <main class="middle-content">
+            <!-- Page Title Start -->
+            <div class="page_title_block">
+                <h1 class="page_title">Edit Community</h1>
+            </div>
+            <!-- Page Title End -->
+            <div class="content-section">
+                <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                    <div class="main-block-innner mb40 mt40">
+                        <form [formGroup]="addSubadminForm" #f="ngForm" style="padding: 10px;">
+                            <div class="add-store-block input-style">
+                                <div class="user-profile">
+                                    <!-- <div class="image-box">
+                                    <img [src]="imageUrl || 'assets/img/profile-img.jpg'" id="sub-admin-image" alt="">
+                                    <label class="upload-label">
+                                        <input type="file" name="image" accept="image/jpg,image/jpeg,image/png" id="image" (change)="ValidateFileUpload($event)"
+                                            maxlength="56">
+                                        <em class="fas fa-pencil-alt" style="color: #26abe6!important;font-size: 12px"></em>
+                                    </label>
+                                </div> -->
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Name of community:</label>
+                                    <div class="col-md-7">
+                                        <input type="text" (keypress)="service.preventSpace($event)" formControlName="name"
+                                            maxlength="20" placeholder="Name" class="form-control">
+                                        <div class="text-danger"
+                                            *ngIf="addSubadminForm.get('name').hasError('required') && (addSubadminForm.get('name').dirty || addSubadminForm.get('name').touched)">
+                                            *Please enter name.
+                                        </div>
+                                        <!-- <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('pattern') && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        *Name accept only alphabets.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('minlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        *Minimum length must be 2.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('maxlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        *Maximum length should not more than 20.
+                                    </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Link:</label>
+                                    <div class="col-md-7">
+                                        <input type="text" (keypress)="service.preventSpace($event)"
+                                            placeholder="www.abc.com" maxlength="15" formControlName="link"
+                                            class="form-control">
+                                        <div class="text-danger"
+                                            *ngIf="addSubadminForm.get('balance').hasError('required') && (addSubadminForm.get('balance').dirty || addSubadminForm.get('balance').touched)">
+                                            *Please enter link.
+                                        </div>
+                                        <!-- <div class="text-danger" *ngIf="addSubadminForm.get('balance').hasError('pattern') && (addSubadminForm.get('balance').dirty || f.submitted)">
+                                            *Balance accept only digits.
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Type:</label>
+                                <!-- <div class="col-md-7" > -->
+                                <div class="col-md-3" style="display: flex">
+                                    <input type="radio" value="OPEN" formControlName="typee" name="type" (click)="typeVerify('OPEN')" class="form-control"
+                                        style="margin: 6px">
+                                    <label>Open</label>
+                                    
+                                </div>
+                                <div class="col-md-4" style="display: flex">
+                                    <input type="radio" value="CLOSE" formControlName="typee" name="type" (click)="typeVerify('CLOSE')" class="form-control"
+                                    style="margin: 6px">
+                                    <label >Close</label>
+                                   
+                                </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Category:</label>
+                                    <div class="col-md-7">
+                                        <select formControlName="category" style="width: 100%">
+                                            <option style="        width: 273px;" value="">Select</option>
+                                                <option  *ngFor = "let data of dataloop" [value]="data?._id">{{data?.categoryName}}</option>
+                                                <!-- <option *ngFor="let test of testModel" [value]="test.id">{{test.description}}</option> -->
+                                                <!-- <option value="{{data?._id}}">{{data?.categoryName}}</option>
+                                                <option value="{{data?._id}}">{{data?.categoryName}}</option>
+                                                <option value="{{data?._id}}">{{data?.categoryName}}</option>
+                                                <option value="{{data?._id}}">{{data?.categoryName}}</option> -->
+                                                <!-- <option value="saab">Saab</option>
+                                                <option value="mercedes">Mercedes</option>
+                                                <option value="audi">Audi</option> -->
+                                              </select>
+                                        <!-- <input type="text" (keypress)="service.preventSpace($event)" placeholder="Category"
+                                            maxlength="15" formControlName="pincode" class="form-control"> -->
+                                        <!-- <div class="text-danger"
+                                            *ngIf="addSubadminForm.get('pincode').hasError('required') && (addSubadminForm.get('pincode').dirty || addSubadminForm.get('pincode').touched)">
+                                            *Please enter category.
+                                        </div> -->
+                                        <!-- <div class="text-danger" *ngIf="addSubadminForm.get('pincode').hasError('pattern')">
+                                        *Pincode accept only digits.
+                                    </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Community description:</label>
+                                    <div class="col-md-7">
+                                        <textarea type="text" formControlName="description" cols="1" rows="7" minLength="10"
+                                            (keypress)="service.preventSpace($event)" maxLength="100" style="min-width:100%"
+                                            class="form-control"></textarea>
+                                        <!-- <input type="text" (keypress)="service.preventSpace($event)"
+                                            placeholder="Description" formControlName="description"
+                                            class="form-control"> -->
+                                        <div class="text-danger"
+                                            *ngIf="addSubadminForm.get('description').hasError('required') && (addSubadminForm.get('description').dirty || addSubadminForm.get('description').touched)">
+                                            *Please enter description.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Logo page:</label>
+                                    <div class="col-md-7">
+                                        <div class="image-box">
+                                            <img [src]="imageUrl || 'assets/img/profile-img.jpg'" id="sub-admin-image" style="width: 100%"
+                                                alt="">
+                                            <label class="upload-label">
+                                                <input type="file" style="opacity: 0" name="image" accept="image/jpg,image/jpeg,image/png"
+                                                    id="image" (change)="ValidateFileUpload($event)" maxlength="56">
+                                                <em class="fas fa-pencil-alt"
+                                                    style="    color: #26abe6!important;
+                                                    font-size: 18px;
+                                                    position: absolute;
+                                                    top: 63%;
+                                                    left: 89%;
+                                                    background-color: black;"></em>
+                                            </label>
+                                        </div>
+                                        <!-- <input type="text" (keypress)="service.preventSpace($event)" class="form-control"> -->
+                                        <!-- <div class="text-danger" *ngIf="addSubadminForm.get('kyc').hasError('required') && (addSubadminForm.get('kyc').dirty || addSubadminForm.get('kyc').touched)">
+                                        *Please enter kyc.
+                                    </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Cover page:</label>
+                                    <div class="col-md-7">
+                                        <div class="image-box" style="    width: 100%;">
+                                            <img style="    width: 100%;" [src]="imageUrll || 'assets/img/profile-img.jpg'" id="sub-admin-image"
+                                                alt="">
+                                            <label class="upload-label">
+                                                <input type="file" style="opacity: 0" name="image" accept="image/jpg,image/jpeg,image/png"
+                                                    id="image" (change)="ValidateFileUploadd($event)" maxlength="56">
+                                                <em class="fas fa-pencil-alt"
+                                                    style="    color: #26abe6!important;
+                                                    font-size: 18px;
+                                                    position: absolute;
+                                                    top: 63%;
+                                                    left: 89%;
+                                                    background-color: black;"></em>
+                                            </label>
+                                        </div>
+                                        
+                                        <!-- <input type="text" (keypress)="service.preventSpace($event)" class="form-control"> -->
+                                        <!-- <div class="text-danger" *ngIf="addSubadminForm.get('description').hasError('required') && (addSubadminForm.get('kyc').dirty || addSubadminForm.get('kyc').touched)">
+                                        *Please enter kyc.
+                                    </div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="text-center mt40">
+                                        <a (click)="updateSubadmin()"
+                                            class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Add</a>
+                                        <a [routerLink]="['/community']"
+                                            class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Cancel</a>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Table Responsive End -->
+            <app-footer></app-footer>
+        </main>
+    </div>

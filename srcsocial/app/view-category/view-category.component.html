@@ -1,0 +1,54 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title">View Category Management</h1>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+            <div class="main-block-innner mb40 mt40">
+                <!-- <form [formGroup]="addAgentForm" #f="ngForm" style="padding: 10px;"> -->
+                    <div class="add-store-block input-style">
+                        <div class="user-profile">
+                            <div class="image-box">
+                                
+                                <img [src]="viewdata.image || 'assets/img/testimonial-img1.jpg'" alt="">
+                            </div>
+                        </div>
+                        <!-- <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">User Name :</label>
+                            <ul class="col-md-7">
+                                 <h5 style="color: black">{{viewData?.reportedBy}}</h5>
+                            </ul>
+                        </div> -->
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-6"> Name:</label>
+                            <ul class="col-md-6 text-center" style="    word-wrap: break-word;
+                            ">
+                                <h5 style="color: black">{{viewdata?.categoryName}}</h5>
+                            </ul>
+                        </div>
+
+
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-6">Added On:</label>
+                            <ul class="col-md-6 text-center">
+                                <h5 style="color: black">{{viewdata?.addedOn | date}}</h5>
+                            </ul>
+                        </div>
+                       <div class="form-group">
+                            <div class="text-center mt40" style="justify-content: space-between">
+                                <a  class="btn btn-large  max-WT-200 font-100 btn-green mb-5" [routerLink]="['/category-management']">Back</a>
+                                <!-- <a [routerLink]="['/view-category']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Save</a> -->
+                            </div>
+
+                        </div>
+                    </div>
+                <!-- </form> -->
+            </div>
+        </div></div>
+        <app-footer></app-footer>
+    </main>
+</div>

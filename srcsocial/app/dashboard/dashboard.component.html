@@ -1,0 +1,65 @@
+<div class="wrapper">
+        <app-sidebar></app-sidebar>
+        <main class="middle-content">
+            <div class="page_title_block">
+                <h1 class="page_title">Dashboard</h1>
+            </div>
+            <div class="content-section dashboard-block">
+                <ul class="dash_list d-flex w-100 flex-wrap text-center">
+                    <li [routerLink]="['/user-management']" style="cursor:pointer">
+                        <div class="dash_icon">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                        </div>
+                        <h2>Users</h2>
+                        <h4>{{userList}}</h4>
+                    </li>
+                    <li [routerLink]="['/contentpost']"  style="cursor:pointer">
+                        <div class="dash_icon">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <h2>Content</h2>
+                        <h4>{{communityList}}</h4>
+                    </li>
+                    <li [routerLink]="['/reward-management']" style="cursor:pointer">
+                        <div class="dash_icon">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <h2>Reward</h2>
+                        <h4>{{eventList}}</h4>
+                    </li>
+                </ul>
+                <ul class="dash_list d-flex w-100 flex-wrap text-center">
+                    <li [routerLink]="['/category-management']" style="cursor:pointer">
+                        <div class="dash_icon">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                        </div>
+                        <h2>Categories</h2>
+                        <h4>{{categoryList}}</h4>
+                    </li>
+                    <li [routerLink]="['/static-content-management']" style="cursor:pointer">
+                        <div class="dash_icon">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <h2>Static</h2>
+                        <h4>3</h4>
+                        <!-- <i class="fa fa-inr" style="font-size:36px"></i> -->
+                        <!-- <h4 style='font-size:27px;'>&#8377; {{transactionList}}</h4> -->
+                        <!-- <h4 style='font-size:27px;'>&#8377; 890000</h4> -->
+                    </li>
+                    <li [routerLink]="['/report-management']" style="cursor:pointer">
+                        <div class="dash_icon">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <h2>Reports</h2>
+                        <h4>{{reportLists}}</h4>
+                    </li>
+                </ul>
+                <!-- <div class="graphBlock">
+                        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                        <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+                </div> -->
+            </div>
+            <app-footer></app-footer>
+        </main>
+    </div>
+    

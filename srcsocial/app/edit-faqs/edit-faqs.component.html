@@ -1,0 +1,39 @@
+<div class="wrapper">
+     <app-sidebar></app-sidebar>
+     <main class="middle-content">
+         <div class="page_title_block">
+             <h1 class="page_title">Static Content Management >FAQ >Edit</h1>
+            
+         </div>
+         <form [formGroup]="faqForm">
+       <div class="form-group" style="width:90; margin:0 10%">
+            <div class="row">
+                    <div class="col-md-2">
+                              <label for="" >Question:</label>
+                    </div>
+                 <div class="col-md-10">
+               <input type="text" class="form-control" formControlName="questions" >
+          </div>
+            </div>
+       </div><br>
+       <div class="form-group" style="width:80; margin:0 10%">
+               <div class="row">
+                    <div class="col-md-2">
+                              <label for="" >Answer:</label>
+                    </div>
+                    <div class="col-md-10">
+               <textarea  class="form-control" cols="100" rows="18" formControlName="answers"></textarea>
+             </div>
+               </div>
+          </div>
+          <div class="form-group">
+                    <div class="text-center mt40" style="justify-content: space-between; margin-left: 15%;">
+                        <a (click)="addAgent()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5" [routerLink]="['/faqs']">Back</a>
+                        <a  class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2" (click)="updateFaq()">Update</a>
+                    </div>
+    
+                </div>
+               </form>
+     </main>
+     </div>
+         

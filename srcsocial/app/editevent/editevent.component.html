@@ -1,0 +1,124 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title">Edit Event</h1>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+            <div class="main-block-innner mb40 mt40">
+                <form [formGroup]="editSubadminForm" #f="ngForm">
+                    <div class="add-store-block input-style">
+                        <!-- <div class="user-profile">
+                            <div class="image-box">
+                                <img [src]="imageUrl" id="sub-admin-image" alt="">
+                                <label class="upload-label">
+                                <input type="file" accept="image/jpg,image/png,image/jpg" name="image" id="image" (change)="ValidateFileUpload($event)">
+                                <em class="fas fa-pencil-alt" style="color: #26abe6!important;font-size: 12px"></em>
+                            </label>
+                            </div>
+                        </div> -->
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">Name :</label>
+                            <!-- <div class="col-md-7">
+                                <input type="text" formControlName="name" class="form-control">
+                                <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('required') && (editSubadminForm.get('name').dirty || f.submitted)">
+                                    Please enter name.
+                                </div>
+                                <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('pattern') && (editSubadminForm.get('name').dirty || f.submitted)">
+                                    Name accepts only alphabets.
+                                </div>
+                                <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('minlength') && !(editSubadminForm.get('name').hasError('pattern')) && (editSubadminForm.get('name').dirty || f.submitted)">
+                                    Minimum length must be 2.
+                                </div>
+                                <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('maxlength') && !(editSubadminForm.get('name').hasError('pattern')) && (editSubadminForm.get('name').dirty || f.submitted)">
+                                    Maximum length should not more than 255.
+                                </div>
+                            </div> -->
+                            <div class="col-md-7">
+                                    <input type="text" (keypress)="service.preventSpace($event)" maxlength="32" placeholder="Name" formControlName="name" class="form-control">
+                                    <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('required') && (editSubadminForm.get('name').dirty || f.submitted)">
+                                      Please enter name.
+                                    </div>
+                                    <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('pattern') && (editSubadminForm.get('name').dirty || f.submitted)">
+                                      Name accepts only alphabets.
+                                    </div>
+                                    <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('minlength') && !(editSubadminForm.get('name').hasError('pattern')) && (editSubadminForm.get('name').dirty || f.submitted)">
+                                      Name must be at least 2 characters long.
+                                    </div>
+                                    <div class="text-danger" *ngIf="editSubadminForm.get('name').hasError('maxlength') && !(editSubadminForm.get('name').hasError('pattern')) && (editSubadminForm.get('name').dirty || f.submitted)">
+                                      Name maximum 30 characters allowed.
+                                    </div>
+                                  </div>
+                          </div>
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">Category :</label>
+                            <div class="col-md-7">
+                                    <!-- <input type="text" formControlName="category" (keypress)="service.preventSpace($event)" class="form-control" maxlength="32" placeholder="Category"> -->
+                                    <select formControlName="category" style="width: 100%">
+                                            <option style="        width: 273px;" value="">Select</option>
+                                                <option  *ngFor = "let data of dataloop" [value]="data?._id">{{data?.categoryName}}</option>
+
+                                              </select>
+                                          
+                                  </div>
+                        </div>
+
+                        <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Event Type :</label>
+                                <div class="col-md-7">
+                             
+                                    <input type="text" formControlName="eventType" maxlength="18" class="form-control" (keypress)="service.preventSpace($event)" placeholder="Private/Public" />
+                                    <div class="text-danger" *ngIf="editSubadminForm.get('eventType').hasError('required') && editSubadminForm.get('eventType').dirty">
+                                        Please enter event type.
+                                    </div>
+                                    <!-- <div class="text-danger" *ngIf="(editSubadminForm.get('eventType').hasError('pattern') || isValidNumbers === false) && editSubadminForm.get('number').dirty">
+                                      Please enter valid mobile number(mobile number must have country code).
+                                  </div> -->
+                                </div>     
+                              </div>
+                              <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Date of Event :</label>
+                                <div class="col-md-7">
+                             
+                                    <input type="date" formControlName="dateofEvent" [min]="this.todayee" (keypress)="service.toCheckSpaceChar($event)" class="form-control" (keyup)="toCheckSpaceChars()"/>
+                                    <!-- <div class="text-danger" *ngIf="editSubadminForm.get('number').hasError('required') && editSubadminForm.get('number').dirty">
+                                        Please enter date.
+                                    </div>
+                                    <div class="text-danger" *ngIf="(editSubadminForm.get('number').hasError('pattern') || isValidNumbers === false) && editSubadminForm.get('number').dirty">
+                                      Please enter valid mobile number(mobile number must have country code).
+                                  </div> -->
+                                </div>     
+                              </div>
+                        <!-- <div class="row">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-7">
+                                <div class="text-danger" *ngIf="editSubadminForm.get('countryCode').hasError('required') && f.submitted">
+                                    Please select country code.
+                                </div>
+                                <div class="text-danger" *ngIf="editSubadminForm.get('number').hasError('required') && (editSubadminForm.get('number').dirty || f.submitted)">
+                                    Please enter mobile number.
+                                </div>
+                                <div class="text-danger" *ngIf="editSubadminForm.get('number').hasError('pattern') && (editSubadminForm.get('number').dirty || f.submitted)">
+                                    Please enter valid mobile number.
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="form-group">
+                            <div class="text-center mt40">
+                                <a (click)="updateSubadmin()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Save</a>
+                                <a [routerLink]="['/event-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Cancel</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <!-- Table Responsive End -->
+        <app-footer></app-footer>
+    </main>
+</div>

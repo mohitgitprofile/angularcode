@@ -1,0 +1,179 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">View Event</h1>
+            <div class="d-flex align-items-center">
+                <!-- <p>User Management > <a> View User</a> </p> -->
+            </div>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                            <!-- <div class="tab-pane1">
+                            <div class="sec_head_new sec_head_new_after1">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6 col-xl-4">
+                                        <div class="d-flex align-items-center">
+                                            <button type="submit" *ngIf="permission.includes('changeUser')"
+                                                [routerLink]="['/edit-user/' + copyUserList?.Username]"
+                                                class="btn  btn-theme">Edit</button>
+                                            <button type="submit"
+                                                *ngIf="!copyUserList?.Enabled && permission.includes('changeUserStatus')"
+                                                (click)="unBlock()" class="btn  btn-success new_btn ml-2"
+                                                style="min-width: 100px;max-height: 36!important;">Un Block</button>
+                                            <button type="submit"
+                                                *ngIf="copyUserList?.Enabled && permission.includes('changeUserStatus')"
+                                                (click)="block()" class="btn  btn-danger new_btn ml-2"
+                                                style="min-width: 100px;max-height: 36!important;">Block</button>
+                                            <button type="submit" *ngIf="permission.includes('deleteUser')"
+                                                (click)="openDeleteModal()" class="btn  btn-theme ml-2">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" order-view main-block-innner mb40 mt40">
+                                    <div class="add-store-block input-style">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-md-12" style="text-align: center">
+                                                <img (click)="windoww()" [src]="kycImage || 'assets/img/defaultprofile.jpeg'"
+                                                    alt='' style="height: 100px;
+                        width: 100px;
+                        border-radius: 50%;">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6"> Name:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label>{{copyUserList?.eventName}}</label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group row ">
+                                            <label class="col-md-5">Email :</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?.firstName }}</a></label>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Category:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a
+                                                        >{{ copyUserList?.categoryId.categoryName }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Event Type:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?.eventType }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Date of Event:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?.dateOfEvent | date }}</a></label>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="text-center mt40">
+                                            <a [routerLink]="['/event-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </main>
+</div>
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="delete">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Delete</h5>
+                </div>
+                <div>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to delete this user?</p>
+                                <div>
+                                    <button type="submit" (click)="delete()" class="btn btn-info ml-2">Delete</button>
+                                    <button type="button" class="btn btn-danger ml-2"
+                                        data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Deactivate</h5>
+                </div>
+                <div>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to block this user?</p>
+                                <div>
+                                    <button type="submit" (click)="blockYes()" class="btn btn-success ml-2">Yes</button>
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- unblock_modal Start -->
+<div class="modal fade global-modal reset-modal" id="unblock">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Activate</h5>
+                </div>
+                <div>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to unblock this user?</p>
+                                <div>
+                                    <button type="submit" (click)="unblockYes()"
+                                        class="btn btn-success ml-2">Yes</button>
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

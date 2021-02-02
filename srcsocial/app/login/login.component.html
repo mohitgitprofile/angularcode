@@ -1,0 +1,146 @@
+<div class="login-wrapper">
+    <div class="container-common">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center minheight70vh">
+                    <form class="login_box_outer w-100" [formGroup]="loginForm">
+                        <div class="login-box max-WT-520">
+                            <div class="login-right-block">
+                                <div class="login-heading">
+                                    <h4>LOGIN</h4>
+                                </div>
+                                <div class="login-box-body">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="email" (keypress)="service.preventSpace($event)" class="form-control" maxlength="50"
+                                            placeholder="abc@gmail.com" />
+                                        <div class="text-danger" *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty  || loginForm.get('email').touched)"
+                                            style="color: red;text-align: start">
+                                            <span *ngIf="loginForm.get('email').hasError('required')">*Email address is
+                                                required.</span>
+                                            <span *ngIf="loginForm.get('email').hasError('pattern')">*Please enter
+                                                valid email.</span>
+
+                                        </div>
+                                        <!-- <input type="text" formControlName="number" (keypress)="service.toCheckSpaceChar($event)" maxlength="20" id="loginPhoneNumber" class="form-control" (keyup)="toCheckSpaceChars()" placeholder="Enter Mobile Number" /> -->
+                                        <!-- <div class="text-danger" *ngIf="(loginForm.get('number').hasError('required') && loginForm.get('number').dirty);else check">
+                                            Please enter mobile number.
+                                        </div>
+                                        <ng-template #check>
+                                            <div class="text-danger" *ngIf="(loginForm.get('number').hasError('pattern') || isValidNumbers === false) && loginForm.get('number').dirty">
+                                                Please enter valid mobile number.
+                                            </div>
+                                        </ng-template>
+                                        <div class="text-danger" *ngIf="loginForm.get('number').hasError('maxlength') && !(loginForm.get('number').hasError('pattern')) && loginForm.get('number').dirty">
+                                            Maximum length should not more than 18.
+                                        </div> -->
+                                    </div>
+                                    <div class="form-group eyeicon">
+                                        <input type="password" (keypress)="service.preventSpace($event)" maxlength="18"
+                                            formControlName="password" class="form-control "
+                                            placeholder="Enter Password" />
+                                            <div class="text-danger" *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty  || loginForm.get('password').touched)"
+                                            style="color: red;text-align: start">
+                                            <span *ngIf="loginForm.get('password').hasError('required')">*Password is
+                                                required.</span>
+                                            <span *ngIf="loginForm.get('password').hasError('pattern')">*Password must
+                                                be between 8 to 16 characters and contain at least one special character
+                                                and one digit.</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="form-group eyeicon">
+                                        <input type="{{type}}" (keypress)="service.preventSpace($event)" maxlength="18" formControlName="confirmpassword" class="form-control " placeholder="Enter Confirm Password" />
+                                        <i *ngIf="type == 'confirmpassword'" (click)="showPassword()" aria-hidden="true"></i>
+                                        <i *ngIf="type == 'text'" (click)="showPassword()" aria-hidden="true"></i>
+
+                                        <div class="text-danger" *ngIf="loginForm.get('confirmpassword').hasError('required') && loginForm.get('confirmpassword').dirty">
+                                            Please enter confirm password.
+                                        </div>
+                                        <div class="text-danger" *ngIf="loginForm.get('confirmpassword').hasError('minlength') && !(loginForm.get('confirmpassword').hasError('pattern')) && loginForm.get('confirmpassword').dirty">
+                                            Minimum length must be 8.
+                                        </div>
+                                        <div class="text-danger" *ngIf="loginForm.get('confirmpassword').hasError('maxlength') && !(loginForm.get('confirmpassword').hasError('pattern')) && loginForm.get('confirmpassword').dirty">
+                                            Maximum length should not more than 16.
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group row">
+                                        <div class="col-lg-6">
+                                            <div style="margin-right: 44%;">
+                                                <a class="forgot-links" style="cursor: pointer; color: #23b9f4;" (click)="terms()">Terms & </a>
+                                                <a class="forgot-links" style="cursor: pointer; color: #23b9f4;" (click)="privacy()">Privacy</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="forgot-links">
+                                                <a [routerLink]="['/forgot-password']">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt40">
+                                    <button (click)="login()" [disabled]="loginForm.invalid"
+                                        class="btn btn-login btn-large  width100 font-100">LOGIN</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Please Enter OTP</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="loginPhNumberVerificationForm">
+                <div class="modal-body" style="display: flex;
+                justify-content: center;
+                white-space: nowrap;">
+                    <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="service.config"></ng-otp-input>
+                    <!-- <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Verification Code:</label>
+                        <input type="text" class="form-control" formControlName="verificationCode" id="recipient-name">
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="verifEmail()">Verify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Security Question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="loginPhNumberVerificationForm2">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Please answer this security question?</label>
+                        <input type="text" class="form-control" formControlName="verificationCode2" id="recipient-name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="verifyotp()">Verify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- (click)="verifyotp()" -->

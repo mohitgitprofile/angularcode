@@ -1,0 +1,109 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">My Profile</h1>
+        </div>
+        <div class="content-section">
+            <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                <div class="main-block-innner  mb40">
+                    <div class="admin-profile">
+                            <h4 class="mb20">Admin Profile</h4>
+                            <i class="fas fa-edit right-icon" (click)=editprofile(getUserData?._id)></i>
+                    </div>
+                    
+
+                    <div class="add-store-block input-style" >
+
+                        
+                        <!-- <img style="height:15px;width: 15px;float: right;" src="assets/img/edit.png" (click)=editprofile() alt="icon"> -->
+                        <div class="form-group row align-items-baseline">
+                            <div class="col-md-12" style="text-align: center">
+                                <img src="{{getUserData?.profilePic }}" alt='' style="height: 100px;
+              width: 100px;
+              border-radius: 50%; border: 1px solid black!important;">
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5 textalignright ">Full Name :</label>
+                            <div class="col-md-7 textaligncenter">
+                                <div class="form-group">
+                                    <label style="padding: 0px 5px!important;">{{(getUserData?.name ) || '--'}}</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5 textalignright">Email :</label>
+                            <div class="col-md-7 textaligncenter">
+                                <div class="form-group ">
+                                    <label style="white-space: nowrap;">{{getUserData?.email || '--'}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5 textalignright">Mobile :</label>
+                            <div class="col-md-7 textaligncenter">
+                                <label>{{getUserData?.mobileNumber  || '--'}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Password Reset -->
+
+                <form [formGroup]="changeForm" autocomplete="off">
+                    <div class="main-block-innner mb40 ">
+                        <h4 class="mb20">Change Password</h4>
+                        <div class="add-store-block input-style">
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-4">Old Password :</label>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control password" placeholder="Old Password" formControlName="password" maxlength="16">
+                                    <div class="error" *ngIf="password.invalid && (password.dirty || password.touched)">
+                                        <div *ngIf="password.errors.required" class='danger' style="color: red" padding>
+                                            Please enter password.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-4">New Password :</label>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control password" placeholder="New Password" formControlName="newPassword" maxlength="16">
+                                    <div class="error" *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)">
+                                        <div *ngIf="newPassword.errors.required" class='danger' style="color: rgb(241, 201, 201)" padding>
+                                            Please enter password.
+                                        </div>
+                                        <div *ngIf="newPassword.errors.pattern" class='danger' style="color: red" padding>
+                                            Password minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.
+                                        </div>
+                                        <div *ngIf="newPassword.errors?.mismatch">New password cannot be same as old password</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-4">Confirm Password :</label>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control password" placeholder="Confirm Password" formControlName="confirmPassword" maxlength="16">
+                                    <div class="error" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                                        <div *ngIf="confirmPassword.errors.required" class='danger' padding>
+                                            Enter Confirm password
+                                        </div>
+                                        <div *ngIf="confirmPassword.errors?.mismatch">Confirm password should be same as password</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt40">
+                        <a [routerLink]="['/dashboard']" class="btn btn-large  max-WT-150 font-100 btn-green" style="    margin-left: 10px;">Cancel</a> &nbsp;
+
+                        <a class="btn btn-large  max-WT-150 font-100 btn-green" (click)="changePass()">Submit</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </main>
+</div>

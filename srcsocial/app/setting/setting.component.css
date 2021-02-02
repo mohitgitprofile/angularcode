@@ -1,0 +1,5 @@
+table#patientPdf {
+    width: 100%;
+    max-width: 60%;
+    margin: 0 auto;
+}

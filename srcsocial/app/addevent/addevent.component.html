@@ -1,0 +1,95 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        
+        <div class="page_title_block">
+            <h1 class="page_title">Add Event</h1>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+            <div class="main-block-innner mb40 mt40">
+                <form [formGroup]="addSubadminForm" #f="ngForm" style="padding: 10px;">
+                    <div class="add-store-block input-style">
+                      <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">Name:</label>
+                            <div class="col-md-7">
+                                <input type="text" (keypress)="service.preventSpace($event)" formControlName="name" maxlength="60" placeholder="Name" class="form-control">
+                                <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('required') && (addSubadminForm.get('name').dirty || addSubadminForm.get('name').touched)">
+                                    *Please enter name.
+                                </div>
+                                <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('pattern') && (addSubadminForm.get('name').dirty || f.submitted)">
+                                    *Name accept only alphabets.
+                                </div>
+                                <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('minlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                    *Minimum length must be 2.
+                                </div>
+                                <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('maxlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                    *Maximum length should not more than 20.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">Category:</label>
+                            <div class="col-md-7" style="widows: 100%">
+                                    <select formControlName="category" style="width: 100%">
+                                        <option style="    display: flex;
+                                        width: 100%;" value="">Select</option>
+                                            <option  *ngFor = "let data of dataloop" [value]="data?._id">{{data?.categoryName}}</option>
+                                            <!-- <option *ngFor="let test of testModel" [value]="test.id">{{test.description}}</option> -->
+                                            <!-- <option value="{{data?._id}}">{{data?.categoryName}}</option>
+                                            <option value="{{data?._id}}">{{data?.categoryName}}</option>
+                                            <option value="{{data?._id}}">{{data?.categoryName}}</option>
+                                            <option value="{{data?._id}}">{{data?.categoryName}}</option> -->
+                                            <!-- <option value="saab">Saab</option>
+                                            <option value="mercedes">Mercedes</option>
+                                            <option value="audi">Audi</option> -->
+                                          </select>
+                                <!-- <input type="text" (keypress)="service.preventSpace($event)" placeholder="Category" maxlength="15" formControlName="category" class="form-control">
+                                <div class="text-danger" *ngIf="addSubadminForm.get('category').hasError('required') && (addSubadminForm.get('category').dirty || addSubadminForm.get('category').touched)">
+                                    *Please enter category.
+                                </div> -->
+                                <!-- <div class="text-danger" *ngIf="addSubadminForm.get('category').hasError('pattern')">
+                                    *State only accept characters.
+                                </div> -->
+                               </div>
+                        </div>
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">Event type:</label>
+                            <div class="col-md-7">
+                                <input type="text" (keypress)="service.preventSpace($event)" placeholder="Private/Public" maxlength="60" formControlName="event" class="form-control">
+                                <div class="text-danger" *ngIf="addSubadminForm.get('event').hasError('required') && (addSubadminForm.get('event').dirty || addSubadminForm.get('event').touched)">
+                                    *Please enter event type(Private/Public).
+                                </div>
+                                <!-- <div class="text-danger" *ngIf="addSubadminForm.get('event').hasError('pattern')">
+                                    *Pincode accept only digits.
+                                </div> -->
+                                </div>
+                        </div>
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">Date of event:</label>
+                            <div class="col-md-7">
+                                <input type="date" (keypress)="service.preventSpace($event)" [min]="this.todaye" placeholder="Bate of event" maxlength="15" formControlName="doe" class="form-control">
+                                <div class="text-danger" *ngIf="addSubadminForm.get('doe').hasError('required') && (addSubadminForm.get('doe').dirty || addSubadminForm.get('doe').touched)">
+                                    *Please enter date.
+                                </div>
+                               </div>
+                        </div>
+                       <div class="form-group">
+                            <div class="text-center mt40">
+                                <button [disabled]="addSubadminForm.invalid" (click)="addEvent()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Add</button>
+                                <a [routerLink]="['/event-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Cancel</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div></div>
+        <!-- Table Responsive End -->
+        <app-footer></app-footer>
+    </main>
+</div>
+
+

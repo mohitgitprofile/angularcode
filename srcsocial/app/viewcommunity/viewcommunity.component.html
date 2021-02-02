@@ -1,0 +1,191 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">View Community Management</h1>
+            <div class="d-flex align-items-center">
+                <!-- <p>User Management > <a> View User</a> </p> -->
+            </div>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                            <div class="tab-pane1">
+                        <!-- <div class="tab-pane1"
+                            *ngIf="permission.includes('changeUser') || permission.includes('changeUserStatus') || permission.includes('deleteUser')"> -->
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" order-view main-block-innner mb40 mt40">
+                                    <div class="add-store-block input-style">
+                                      
+                                        <div class="form-group row ">
+                                            <label class="col-md-6"> Name of community:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label>{{copyUserList?.communityName}}</label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group row ">
+                                            <label class="col-md-5">Email :</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?.firstName }}</a></label>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Link:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a
+                                                        >{{ copyUserList?.link }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Type:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?.communityType }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Category:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?.categoryId }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Community description:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?.communityDescription }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Logo page:</label>
+                                            <div class="col-md-6 text-center">
+                                                    <img [src]="kycImage || 'assets/img/defaultprofile.jpeg'"
+                                                    alt='' style="    height: 100%;
+                                                    width: 100%;">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Cover page:</label>
+                                            <div class="col-md-6 text-center">
+                                                    <img [src]="kycImagee || 'assets/img/defaultprofile.jpeg'"
+                                                    alt='' style="    height: 100%;
+                                                    width: 100%;">
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group row ">
+                                            <label class="col-md-5">Roles:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a >{{ copyUserList?. }}</a></label>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="form-group row ">
+                                            <label class="col-md-5">Status :</label>
+                                            <div class="col-md-6 text-center">
+                                                <label *ngIf="copyUserList?.Enabled"><a ><em class="far fa-check-circle" style="color: green;"></em></a></label>
+                                                <label *ngIf=!copyUserList?.Enabled><a ><em class="far fa-times-circle"
+                              style="color:red"></em></a></label>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="form-group">
+                                        <div (click)="gotonext()" class="text-center mt40">
+                                            <!-- <a 
+                                                class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a> -->
+                                                <a [routerLink]="['/community-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </main>
+</div>
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="delete">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Delete</h5>
+                </div>
+                <div>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to delete this user?</p>
+                                <div>
+                                    <button type="submit" (click)="delete()" class="btn btn-info ml-2">Delete</button>
+                                    <button type="button" class="btn btn-danger ml-2"
+                                        data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Deactivate</h5>
+                </div>
+                <div>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to block this user?</p>
+                                <div>
+                                    <button type="submit" (click)="blockYes()" class="btn btn-success ml-2">Yes</button>
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- unblock_modal Start -->
+<div class="modal fade global-modal reset-modal" id="unblock">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Activate</h5>
+                </div>
+                <div>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to unblock this user?</p>
+                                <div>
+                                    <button type="submit" (click)="unblockYes()"
+                                        class="btn btn-success ml-2">Yes</button>
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

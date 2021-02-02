@@ -1,0 +1,281 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title"> Subadmin Management>Add New</h1>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+            <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                <div class="main-block-innner mb40 mt40">
+                    <form [formGroup]="addSubadminForm" #f="ngForm" style="padding: 10px;">
+                        <div class="add-store-block input-style">
+                            <div class="user-profile">
+                                <div class="image-box">
+                                    <img [src]="imageUrl" id="sub-admin-image" alt="">
+                                    <label class="upload-label" style="cursor: pointer;">
+                                        <input type="file" name="image" id="image"
+                                            (keypress)="service.preventSpace($event)" maxlength="32"
+                                            (change)="ValidateFileUpload($event)" style="cursor: pointer;">
+                                        <em class="fas fa-pencil-alt"
+                                            style="color: #26abe6!important;font-size: 12px;cursor: pointer;"
+                                            aria-hidden="false"></em>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Name :</label>
+                                <div class="col-md-7">
+                                    <input type="text" formControlName="name" maxlength="28" placeholder="Name"
+                                        class="form-control" value="T001">
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('name').hasError('required')|| f.submitted) && (addSubadminForm.get('name').dirty || addSubadminForm.get('name').touched)">
+                                        Please enter name.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addSubadminForm.get('name').hasError('pattern') && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        Name accepts only alphabets.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addSubadminForm.get('name').hasError('minlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        Minimum length must be 2.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addSubadminForm.get('name').hasError('maxlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        Maximum length should not more than 30.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                            <label class="col-md-5">Email :</label>
+                            <div class="col-md-7 ">
+                                <input type="text" formControlName="email" placeholder="Email" (keypress)="service.preventSpace($event)" maxlength="32" class="form-control" value="Abc">
+                                <div class="text-danger" *ngIf="(addSubadminForm.get('email').hasError('required')|| f.submitted) && (addSubadminForm.get('email').dirty || addSubadminForm.get('email').touched)">
+                                        Please enter email.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('email').hasError('pattern') && (addSubadminForm.get('email').dirty || f.submitted)">
+                                        Email must be a valid email address.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('email').hasError('maxlength') && !(addSubadminForm.get('email').hasError('pattern')) && (addSubadminForm.get('email').dirty || f.submitted)">
+                                        Maximum length should not more than 30.
+                                    </div>
+                            </div>
+                        </div>
+                            <!-- <div class="form-group row align-items-baseline" style="max-height: 38px!important;">
+                            <label class="col-md-5" for="mobile_number">Phone Number :</label>
+                            <div class="col-md-7 form-group inputGroupContainer">
+                                <div (click)="toCheckSpaceChars()" style="width: 100%;
+      max-width: 307px;" class="form-group ">
+
+                                    <input type="text" class="form-control" placeholder="" maxlength="18" id="phoneNumber1" formControlName="number" (keyup)="toCheckSpaceChars()" (keypress)="service.toCheckSpaceChar($event)">
+                                    <div *ngIf="addSubadminForm.get('number').errors && addSubadminForm.get('number').touched || addSubadminForm.get('number').dirty">
+                                        <div *ngIf="addSubadminForm.get('number').hasError('required'); else elseBlock" style="color: red">*Phone number is required.</div>
+                                        <ng-template #elseBlock>
+                                            <div *ngIf="isValidNumbers == false" style="color: red">*Please enter valid number.
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div> -->
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Mobile Number :</label>
+                                <div class="col-md-7">
+
+                                    <input type="text" formControlName="number" maxlength="20"
+                                        (keypress)="service.toCheckSpaceChar($event)" id="loginPhoneNumber"
+                                        class="form-control" (keyup)="toCheckSpaceChars()"
+                                        placeholder="Mobile Number" />
+                                    <div class="text-danger"
+                                        *ngIf="addSubadminForm.get('number').hasError('required') && (addSubadminForm.get('number').dirty || addSubadminForm.get('number').touched)">
+                                        Please enter mobile number.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('number').hasError('pattern') || isValidNumbers === false) && addSubadminForm.get('number').dirty">
+                                        Please enter valid mobile number.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addSubadminForm.get('number').hasError('maxlength') && !(addSubadminForm.get('number').hasError('pattern')) && addSubadminForm.get('number').dirty ">
+                                        Maximum length should not more than 18.
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        
+
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Password:</label>
+                                <div class="col-md-7">
+                                    <input type="password" (keypress)="service.preventSpace($event)"
+                                        placeholder="password" maxlength="18" formControlName="password"
+                                        class="form-control">
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('password').hasError('required') ) && (addSubadminForm.get('password').dirty || addSubadminForm.get('password').touched || f.submitted)">
+                                        Please enter password.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('password').hasError('pattern') ) && (addSubadminForm.get('password').dirty  || f.submitted)">
+                                        Invalid password(password must have at least one uppercase, lowercase, numbers
+                                        and special characters).
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('password').hasError('minlength') ) && !(addSubadminForm.get('password').hasError('pattern')) && (addSubadminForm.get('password').dirty || f.submitted)">
+                                        Minimum length must be 8.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('password').hasError('maxlength')) && !(addSubadminForm.get('password').hasError('pattern')) && (addSubadminForm.get('password').dirty || f.submitted)">
+                                        Maximum length should not more than 16.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Confirm Password :</label>
+                                <div class="col-md-7">
+                                    <input type="password" (keypress)="service.preventSpace($event)"
+                                        placeholder="Confirm password" maxlength="16" formControlName="confirmPassword"
+                                        class="form-control">
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('confirmPassword').hasError('required') || f.submitted) && (addSubadminForm.get('confirmPassword').dirty || addSubadminForm.get('confirmPassword').touched )">
+                                        Please enter comfirm password.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.value.confirmPassword !== addSubadminForm.value.password) && (addSubadminForm.get('confirmPassword').dirty || f.submitted)">
+                                        Comfirm password must be same as password.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label>Permissions :</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="dashboard"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Dashboard
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="subadmin"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Subadmin Management
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="user"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                User Management
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="event"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Event Management
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="report"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Report Management
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="community"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Community Management
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="form-group row" >
+                                        <div class="col-md-6">
+                                            <input type="checkbox"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Money Management
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="checkbox"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                History Management
+                                            </span>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="category"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Category Management
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="transaction"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Transaction Management
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <input type="checkbox"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Agent Transaction Management
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="checkbox"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                KYC Management
+                                            </span>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <input type="checkbox" formControlName="static"
+                                                (change)="checkboxPermission($event)"/>
+                                            <span class="col-md-6">
+                                                Static Content Management
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="text-center mt40">
+                                    <a (click)="addSubadmin()"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5" >Save</a>
+                                    <a [routerLink]="['/sub-admin']"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+        <app-footer></app-footer>
+    </main>
+</div>

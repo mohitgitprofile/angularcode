@@ -1,0 +1,60 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title">View Transaction</h1>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+            <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                <div class="main-block-innner mb40 mt40">
+
+                    <div class="form-group row align-items-baseline">
+                        <label class="col-md-5">User Name :</label>
+                        <ul class="col-md-7">
+                            <h5 style="color: black">{{viewTransactionList?.userName}}</h5>
+
+
+                        </ul>
+                    </div>
+
+                    <div class="form-group row align-items-baseline">
+                        <label class="col-md-5">Transaction id :</label>
+                        <ul class="col-md-7">
+                            <h5 style="color: black">{{viewTransactionList?._id}}</h5>
+                        </ul>
+                    </div>
+                    <div class="form-group row align-items-baseline">
+                        <label class="col-md-5">Transaction date :</label>
+                        <ul class="col-md-7">
+                            <h5 style="color: black">{{viewTransactionList?.createdAt | date}}</h5>
+                        </ul>
+                    </div>
+                    <div class="form-group row align-items-baseline">
+                        <label class="col-md-5">Amount :</label>
+                        <ul class="col-md-7">
+                            <h5 style="color: black">{{viewTransactionList?.amount}}</h5>
+                        </ul>
+                    </div>
+                    <div class="form-group row align-items-baseline">
+                        <label class="col-md-5">Payment method :</label>
+                        <ul class="col-md-7">
+                            <h5 style="color: black">{{viewTransactionList?.paymentMethod}}</h5>
+                        </ul>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="text-center mt40" style="justify-content: space-between">
+                            <a (click)="addAgent()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5"
+                                [routerLink]="['/transaction-management']">Back</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </main>
+</div>

@@ -1,0 +1,143 @@
+<div class="wrapper">
+     <app-sidebar></app-sidebar>
+     <main class="middle-content">
+         <!-- Page Title Start -->
+         <div class="page_title_block">
+             <h1 class="page_title">Add Category</h1>
+         </div>
+         <!-- Page Title End -->
+         <div class="content-section">
+         <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+             <div class="main-block-innner mb40 mt40">
+                 <form [formGroup]="addAgentForm" #f="ngForm" style="padding: 10px;">
+                     <div class="add-store-block input-style">
+                         <div class="user-profile">
+                             <div class="image-box">
+                                 <img [src]="imageUrl || 'assets/img/testimonial-img1.jpg'" alt="">
+                                 <label class="upload-label">
+                                     <input type="file" name="image" id="image" (change)="ValidateFileUpload($event)"
+                                         maxlength="56">
+                                     <em class="fas fa-pencil-alt" style="color: #26abe6!important;font-size: 12px"></em>
+                                 </label>
+                             </div>
+                         </div>
+                         <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">Name of  Category :</label>
+                             <div class="col-md-7">
+                                 <input type="text" maxlength="30" formControlName="name" class="form-control" placeholder="Name">
+                                 <div class="text-danger" *ngIf="addAgentForm.get('name').hasError('required') && (addAgentForm.get('name').dirty || f.submitted)">
+                                     Please enter name.
+                                 </div>
+                                 <div class="text-danger" *ngIf="addAgentForm.get('name').hasError('pattern') && (addAgentForm.get('name').dirty || f.submitted)">
+                                     Name accepts only alphabets.
+                                 </div>
+                                 <div class="text-danger" *ngIf="addAgentForm.get('name').hasError('minlength') && !(addAgentForm.get('name').hasError('pattern')) && (addAgentForm.get('name').dirty || f.submitted)">
+                                     Minimum length must be 2.
+                                 </div>
+                                 <div class="text-danger" *ngIf="addAgentForm.get('name').hasError('maxlength') && !(addAgentForm.get('name').hasError('pattern')) && (addAgentForm.get('name').dirty || f.submitted)">
+                                     Maximum length should not more than 56.
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">Added On :</label>
+                             <div class="col-md-7">
+ 
+                                 <input type="date" formControlName="date" [min]="this.todaye"
+                                     (keypress)="service.toCheckSpaceChar($event)"
+                                     class="form-control" (keyup)="toCheckSpaceChars()"
+                                     placeholder="Mobile Number" />
+                                 <!-- <div class="text-danger"
+                                     *ngIf="addAgentForm.get('number').hasError('required') && (addAgentForm.get('number').dirty || addAgentForm.get('number').touched)">
+                                     Please enter mobile number.
+                                 </div>
+                                 <div class="text-danger"
+                                     *ngIf="(addAgentForm.get('number').hasError('pattern') || isValidNumbers === false) && addAgentForm.get('number').dirty">
+                                     Please enter valid mobile number.
+                                 </div>
+                                 <div class="text-danger"
+                                     *ngIf="addAgentForm.get('number').hasError('maxlength') && !(addAgentForm.get('number').hasError('pattern')) && addAgentForm.get('number').dirty ">
+                                     Maximum length should not more than 18.
+                                 </div> -->
+                             </div>
+                         </div>
+                         <!-- <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">City :</label>
+                             <div class="col-md-7">
+                                 <input type="text" formControlName="city" class="form-control" placeholder="City">
+                                 <div class="text-danger" *ngIf="addAgentForm.get('city').hasError('required') && (addAgentForm.get('city').dirty || f.submitted)">
+                                     Please enter city.
+                                 </div>
+                                 </div>
+                         </div>
+                         <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">State :</label>
+                             <div class="col-md-7">
+                                 <input type="text" formControlName="state" class="form-control" placeholder="State">
+                                 <div class="text-danger" *ngIf="addAgentForm.get('state').hasError('required') && (addAgentForm.get('state').dirty || f.submitted)">
+                                     Please enter state.
+                                 </div>
+                                </div>
+                         </div>
+                         <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">KYC :</label>
+                             <div class="col-md-7">
+                                 <input type="text" formControlName="kyc" class="form-control" placeholder="KYC">
+                                 <div class="text-danger" *ngIf="addAgentForm.get('kyc').hasError('required') && (addAgentForm.get('kyc').dirty || f.submitted)">
+                                     Please enter kyc.
+                                 </div>
+                            </div>
+                         </div>
+                         <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">Agent ID :</label>
+                             <div class="col-md-7">
+                                 <input type="text" formControlName="agentId" class="form-control" placeholder="Agent ID">
+                                 <div class="text-danger" *ngIf="addAgentForm.get('agentId').hasError('required') && (addAgentForm.get('agentId').dirty || f.submitted)">
+                                     Please enter agentID.
+                                 </div>
+                            </div>
+                         </div> -->
+                         <!-- <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">Password:</label>
+                             <div class="col-md-7">
+                                 <input type="password" formControlName="password" class="form-control" value="Xyz" maxlength="56">
+                                 <div class="text-danger" *ngIf="addAgentForm.get('password').hasError('required') && (addAgentForm.get('password').dirty || f.submitted)">
+                                     Please enter password.
+                                 </div>
+                                 <div class="text-danger" *ngIf="addAgentForm.get('password').hasError('pattern') && (addAgentForm.get('password').dirty || f.submitted)">
+                                     Invalid password(password must have at least one uppercase, lowercase, numbers and special characters).
+                                 </div>
+                                 <div class="text-danger" *ngIf="addAgentForm.get('password').hasError('minlength') && !(addAgentForm.get('password').hasError('pattern')) && (addAgentForm.get('password').dirty || f.submitted)">
+                                     Minimum length must be 8.
+                                 </div>
+                                 <div class="text-danger" *ngIf="addAgentForm.get('password').hasError('maxlength') && !(addAgentForm.get('password').hasError('pattern')) && (addAgentForm.get('password').dirty || f.submitted)">
+                                     Maximum length should not more than 56.
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="form-group row align-items-baseline">
+                             <label class="col-md-5">Confirm Password :</label>
+                             <div class="col-md-7">
+                                 <input type="password" formControlName="confirmPassword" class="form-control" maxlength="56">
+                                 <div class="text-danger" *ngIf="addAgentForm.get('confirmPassword').hasError('required') && (addAgentForm.get('confirmPassword').dirty || f.submitted)">
+                                     Please enter comfirm password.
+                                 </div>
+                                 <div class="text-danger" *ngIf="(addAgentForm.value.confirmPassword !== addAgentForm.value.password) && (addAgentForm.get('confirmPassword').dirty || f.submitted)">
+                                     Comfirm password must be same as password.
+                                 </div>
+                             </div>
+                         </div> -->
+                        <div class="form-group">
+                             <div class="text-center mt40" style="justify-content: space-between">
+                                 <button [routerLink]="['/category-management']"  class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Back</button>
+                                 <button [routerLink]="['/view-category']" [disabled]="addAgentForm.invalid" (click)="addCategory()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Save</button>
+                             </div>
+ 
+                         </div>
+                     </div>
+                 </form>
+             </div>
+         </div></div>
+         <app-footer></app-footer>
+     </main>
+ </div>

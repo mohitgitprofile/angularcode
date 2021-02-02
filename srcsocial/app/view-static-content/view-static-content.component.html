@@ -1,0 +1,93 @@
+<!-- <div class="wrapper">
+  <app-sidebar></app-sidebar>
+  <main class="middle-content" style="height: 848!important;">
+   
+    <div class="page_title_block">
+      <h1 class="page_title">View Static Content Management</h1>
+    </div>
+  
+    <div class="order-view mt30 max-WT-700 mrgn-0-auto" >
+      <div class="main-block-innner mb40 mt40" >
+        <form>
+          <div class="add-store-block input-style">
+            <div class="form-group row align-items-baseline">
+              <label class="col-md-3">Title :</label>
+              <label class="col-md-9">{{paramData?.type}}</label>
+            </div>
+            <div class="form-group row align-items-baseline mt-2">
+              <label class="col-md-12">Description :</label>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label [innerHTML]='data?.body.length ? data?.body[0].content : ""'style="width:550px;word-break: break-all!important; overflow: hidden!important;
+                text-overflow: ellipsis;
+               "></label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="text-center mt40">
+                <a [routerLink]="['/static-content-management']" 
+                  class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+  </main>
+  <app-footer></app-footer>
+</div> -->
+<div class="wrapper">
+  <app-sidebar></app-sidebar>
+  <main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+      <h5 class="page_title">View Static Content Management > {{paramData}} > View</h5>
+    </div>
+    <!-- Page Title End -->
+    <div class="content-section">
+      <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+        <div class="main-block-innner mb40 mt40">
+          <form>
+            <div class="add-store-block input-style">
+              <div class="form-group row align-items-baseline">
+                <div class="row" style="    width: 100%;">
+                  <label class="col-md-3">Title:</label>
+                  <h5 class="col-md-9" style="color: black">{{data?.title}}</h5>
+                </div>
+              </div>
+              <div class="form-group row align-items-baseline ">
+                <div class="row">
+                  <label class="col-md-3">Description :</label>
+
+
+                  <div class="col-md-9">
+                    <h5 style="color: black">{{data?.description}}</h5>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                            <div class="text-center mt40">
+                                <a [routerLink]="['/static-content-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Cancel</a>
+                                <a (click)="editParamdata(data)" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Edit</a>
+                            </div> 
+                        </div> -->
+
+              <div class="form-group">
+                <div class="text-center mt40" style="justify-content: space-between">
+                  <a [routerLink]="['/static-content-management']"
+                    class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Cancel</a>&nbsp;
+                  <a (click)="editParamdata(data)" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Edit</a>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Table Responsive End -->
+    <app-footer></app-footer>
+  </main>
+</div>

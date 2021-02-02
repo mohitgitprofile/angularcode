@@ -1,0 +1,99 @@
+<div class="wrapper">
+        <app-sidebar></app-sidebar>
+        <main class="middle-content">
+            <!-- Page Title Start -->
+            <div class="page_title_block">
+                <h1 class="page_title">Add User</h1>
+            </div>
+            <!-- Page Title End -->
+            <div class="content-section">
+            <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                <div class="main-block-innner mb40 mt40">
+                    <form [formGroup]="addSubadminForm" #f="ngForm" style="padding: 10px;">
+                        <div class="add-store-block input-style">
+                            <div class="user-profile">
+                                <div class="image-box">
+                                    <img [src]="imageUrl || 'assets/img/profile-img.jpg'" id="sub-admin-image" alt="">
+                                    <label class="upload-label">
+                                        <input type="file" formControlName="image" name="image" accept="image/jpg,image/jpeg,image/png" id="image" (change)="ValidateFileUpload($event)"
+                                            maxlength="56">
+                                        <em class="fas fa-pencil-alt" style="color: #26abe6!important;font-size: 12px"></em>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Name:</label>
+                                <div class="col-md-7">
+                                    <input type="text" (keypress)="service.preventSpace($event)" formControlName="name" maxlength="20" placeholder="Name" class="form-control">
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('required') && (addSubadminForm.get('name').dirty || addSubadminForm.get('name').touched)">
+                                        *Please enter name.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('pattern') && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        *Name accept only alphabets.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('minlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        *Minimum length must be 2.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('name').hasError('maxlength') && !(addSubadminForm.get('name').hasError('pattern')) && (addSubadminForm.get('name').dirty || f.submitted)">
+                                        *Maximum length should not more than 20.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Mobile Number:</label>
+                                <div class="col-md-7">
+    
+                                    <input type="text" formControlName="number" maxlength="15"
+                                        (keypress)="service.preventSpace($event)" id="loginPhoneNumber"
+                                        class="form-control" 
+                                        placeholder="Mobile Number" />
+                                    <div class="text-danger"
+                                        *ngIf="addSubadminForm.get('number').hasError('required') && (addSubadminForm.get('number').dirty || addSubadminForm.get('number').touched)">
+                                        *Please enter mobile number.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="(addSubadminForm.get('number').hasError('pattern') || isValidNumbers === false) && addSubadminForm.get('number').dirty">
+                                        *Please enter valid mobile number.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addSubadminForm.get('number').hasError('maxlength') && !(addSubadminForm.get('number').hasError('pattern')) && addSubadminForm.get('number').dirty ">
+                                        *Maximum length should not more than 18.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Email Id:</label>
+                                <div class="col-md-7">
+                                    <input type="text" (keypress)="service.preventSpace($event)" placeholder="Email" maxlength="70" formControlName="email" class="form-control">
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('email').hasError('required') && (addSubadminForm.get('email').dirty || addSubadminForm.get('email').touched)">
+                                        *Please enter you email.
+                                    </div>
+                                    <div class="text-danger" *ngIf="addSubadminForm.get('email').hasError('pattern')">
+                                        *Please enter valid email.
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">DOB:</label>
+                                <div class="col-md-7">
+                                    <input type="date" (keypress)="service.preventSpace($event)" [max]="this.todaye" placeholder="Bate of birth" formControlName="dob" class="form-control">
+                                    <!-- <div class="text-danger" *ngIf="addSubadminForm.get('dob').hasError('required') && (addSubadminForm.get('dob').dirty || addSubadminForm.get('dob').touched)">
+                                        *Please enter dob.
+                                    </div> -->
+                                   </div>
+                            </div>
+                           <div class="form-group">
+                                <div class="text-center mt40">
+                                    <button (click)="addUser()" [disabled]="addSubadminForm.invalid" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Add</button>
+                                    <a [routerLink]="['/user-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Cancel</a>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div></div>
+            <!-- Table Responsive End -->
+            <app-footer></app-footer>
+        </main>
+    </div>

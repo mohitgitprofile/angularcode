@@ -1,0 +1,52 @@
+/* button.btn.btn-theme{
+     margin-right: 5px!important;
+  }
+  
+  td.text-center {
+     white-space: nowrap;
+  }
+  td {
+     white-space: nowrap;
+     width: 100%;
+     overflow: hidden;
+     text-overflow: ellipsis;
+  } */
+  /* 
+  input[type="date"].form-control.datepicker::-webkit-calendar-picker-indicator {
+     display: none;
+   } */
+  /* 
+   .center {
+     text-align: center;
+     } */
+  /* 
+  input[type=date]::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+     display: none;
+  } */
+  
+  
+  /* 
+  input[type=date]::-webkit-calendar-picker-indicator {
+     -webkit-appearance: none;
+     display: none;
+  } */
+  /* tr:first-child
+  {
+      max-width: 20px!important;
+  }
+  
+  button.addsubadmin {
+     color: white;
+     margin-bottom: 11px;
+     background-color: #3dabe6;
+     float: right;
+  } */
+
+  .btn-xl {
+   padding: 10px 20px;
+   font-size: 15px;
+   border-radius: 4px;
+   background-color: #2a86d1;
+   color: white;
+}

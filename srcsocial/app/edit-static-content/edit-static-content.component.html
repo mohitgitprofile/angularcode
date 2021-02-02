@@ -1,0 +1,53 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title">Static Content Management> {{title}}>Edit</h1>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+            <div class="main-block-innner mb40 mt40">
+                <form [formGroup]="editstaticContentForm" #f="ngForm">
+                    <div class="add-store-block input-style">
+                        <div class="form-group row align-items-baseline">
+                            <label class="col-md-12">Title :</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" formControlName="title" class="form-control" >
+                                <div class="text-danger" *ngIf="editstaticContentForm.get('title').hasError('required') && (editstaticContentForm.get('title').dirty || f.submitted)">
+                                    Please enter title.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-baseline mt-2">
+                            <label class="col-md-12">Description :</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- <input type="text" formControlName="description" class="form-control"> -->
+                                <!-- <ck-editor formControlName="description"></ck-editor> -->
+                                <textarea class="form-control" cols="100" rows="18" formControlName="description"></textarea>
+                                <div class="text-danger" *ngIf="editstaticContentForm.get('description').hasError('required') && (editstaticContentForm.get('description').dirty || f.submitted)">
+                                    Please enter description.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="justify-content: space-between">
+                            <div class="text-center mt40">
+                                    <a [routerLink]="['/static-content-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Cancel</a>&nbsp;
+                                <a (click)="updateStatic()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Update</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        <!-- Table Responsive End -->
+        <app-footer></app-footer>
+    </main>
+</div>

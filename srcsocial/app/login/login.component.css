@@ -1,0 +1,13 @@
+.eyeicon i {
+    position: absolute;
+    top: 17px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.eyeicon {
+    position: relative;
+}
+.modal-content {
+    margin-top: 57%;
+}

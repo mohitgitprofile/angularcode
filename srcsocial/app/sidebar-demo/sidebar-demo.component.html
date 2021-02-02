@@ -1,0 +1,264 @@
+<header class="header">
+        <nav class="navbar clearfix">
+          <div class="logo-box"  [routerLink]="['/dashboard']">
+            <a class="navbar-brand logo" >
+              <img src="assets/img/stage1logo.png" alt="logo"  class="lg-logo">
+            </a>
+          </div>
+          <div class="d-flex align-items-center justify-content-between header-padding">
+            <div class="header-right-part">
+              <button class="btn btn-toggle" type="button" style="color:#000">
+                <em class="fas fa-bars"></em>
+              </button>
+              <button class="btn btn-outline-secondary btn-mobsearch" type="button"><em class="fas fa-search"></em></button>
+            </div>
+          </div>
+        </nav>
+      </header>
+      
+      <aside class="sidebar">
+        <div class="sidebar-scroller">
+          <div id="accordion" class="sidebar-menu">
+            <div class="menu-box" [ngClass]="currentUrl === '/dashboard' ? 'active' : ''">
+              <div class="card-header clearfix" id="headingOne">
+                <a class="side_menu" [routerLink]="['/dashboard']">
+                  <span class="side_menu_icon"><img src="assets/img/dashboard-icon.png" alt="icon"></span><span
+                    class="side_page_name head_color" >Dashboard</span>
+                </a>
+              </div>
+            </div>
+      
+        <!-- menu-box SubAdmin-Management Start -->
+       
+            <div class="menu-box toggle-menu" [ngClass]="((currentUrl === '/add-subadmin') || (currentUrl === '/subadmin-management') ) ? 'active' : ''">
+              <div class="card-header clearfix" id="headingOne"data-target="#collapseOne" data-toggle="collapse"aria-expanded="false"
+              aria-controls="collapseTwo" >
+                <a class="side_menu"  >
+                  <span class="side_menu_icon"><img src="assets/img/user-manage.png" alt="icon"></span><span
+                    class="side_page_name head_color" >Sub Admin Management</span>
+                </a>
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                  aria-controls="collapseTwo">
+                </button>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <ul class="inner-submenu head_color">
+                    <li [routerLink]="['/subadmin-management']" data-toggle="collapse"aria-expanded="false" data-target="#collapseOne"  aria-controls="collapseTwo">
+                      <a>
+                       
+                        Sub Admin List
+                      </a>
+                      </li>
+                    <li *ngIf="permission.includes('addSubadmin')" [routerLink]="['/add-subadmin']" data-toggle="collapse"aria-expanded="false" data-target="#collapseOne"  aria-controls="collapseTwo">
+                      <a>
+                        <!-- <em class="fas fa-chevron-right"></em> -->
+                        Create new user
+                      </a>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+      
+            <!-- <div class="menu-box toggle-menu" [ngClass]="((currentUrl === '/subadmin-management') || (currentUrl === '/add-subadmin')) ? 'active' : ''">
+              <div class="card-header clearfix" id="headingOne"data-target="#collapseOne" data-toggle="collapse"aria-expanded="false"
+              aria-controls="collapseTwo" >
+                <a class="side_menu"  >
+                  <span class="side_menu_icon"><img src="assets/img/user-manage.png" alt="icon"></span><span
+                    class="side_page_name" style="color:#FFFFFF!important">Sub Admin Management</span>
+                </a>
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                  aria-controls="collapseTwo">
+                </button>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <ul class="inner-submenu">
+                    <li [routerLink]="['/subadmin-management']"  data-toggle="collapse"aria-expanded="false" data-target="#collapseOne"  aria-controls="collapseTwo">
+                      <a>
+                     
+                        Sub Admin List
+                      </a>
+                      </li>
+                    <li *ngIf="permission.includes('addSubadmin')" [routerLink]="['/add-subadmin']" data-toggle="collapse"aria-expanded="false" data-target="#collapseOne"  aria-controls="collapseTwo">
+                      <a>
+                    
+                        Create new user
+                      </a>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </div> -->
+            <!-- menu-box SubAdmin-Management End -->
+      
+            <!-- menu-box userManagement Start -->
+            <div class="menu-box toggle-menu" [ngClass]="((currentUrl === '/user-management') || (currentUrl === '/add-user')) ? 'active' : ''">
+              <div class="card-header clearfix" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <a class="side_menu">
+                  <span class="side_menu_icon"><img src="assets/img/avatar.png" alt="icon"></span><span
+                    class="side_page_name head_color">User Management</span></a>
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                  aria-expanded="false" aria-controls="collapseThree">
+                </button>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                  <ul class="inner-submenu head_color">
+                      <li class="active" [routerLink]="['/user-management']" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <a>
+                          <!-- <em class="fas fa-chevron-right"></em> -->
+                            User List</a>
+                          </li>
+                    <li *ngIf="permission.includes('addUser')" class="active" [routerLink]="['/add-user']" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <a >
+                      <!-- <em class="fas fa-chevron-right"></em> -->
+                      Add New User
+                    </a>
+                    </li>
+                   
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!----------------------------------------------------------- menu-box userManagement End ------------------------------------------->
+      
+           <!------------------------------------------------------------ menu-box Devices start ----------------------------------------------------------->
+            <div class="menu-box toggle-menu" [ngClass]="((currentUrl === ('/edit-light')) || (currentUrl === ('/add-light')) || (currentUrl === ('/gateway'))|| (currentUrl === '/add-gateway') || (currentUrl === '/edit-gateway') || (currentUrl === '/light-management')) ? 'active' : ''">
+              <div class="card-header clearfix" id="headingFour" data-toggle="collapse" data-target="#devices" aria-expanded="false" aria-controls="devices">
+                <a class="side_menu">
+                  <span class="side_menu_icon">
+                    <img src="assets/img/setting-icon.png" alt="icon">
+                    <!-- <i class="fa fa-lightbulb-o" aria-hidden="true"></i> -->
+                  </span><span class="side_page_name head_color">Devices</span>
+                </a>
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#devices" aria-expanded="false"
+                  aria-controls="devices">
+                </button>
+              </div>
+              <div id="devices" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                  <ul class="inner-submenu head_color">
+                    <li [routerLink]="['/gateway']" data-toggle="collapse" data-target="#devices" aria-expanded="false" aria-controls="devices"><a>
+                      <!-- <em class="fas fa-chevron-right"></em> -->
+                      Gateway</a>
+                    </li>
+                    <li [routerLink]="['/light-management']" data-toggle="collapse" data-target="#devices" aria-expanded="false" aria-controls="devices">
+                      <a>
+                        <!-- <em class="fas fa-chevron-right"></em> -->
+                        Lights</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!------------------------------------------------------------ menu-box Devices End -------------------------------------------------------------->
+      
+            <!------------------------------------------------------------ menu-box Area Start -------------------------------------------------------------->
+            <div class="menu-box toggle-menu" [ngClass]="((currentUrl === '/zone-management') || (currentUrl === '/room-management') || (currentUrl === '/add-zone') || (currentUrl === '/edit-zone') || (currentUrl === '/add-room') || (currentUrl === '/edit-room')) ? 'active' : ''">
+                <div class="card-header clearfix" id="headingFour" data-toggle="collapse" data-target="#area" aria-expanded="false" aria-controls="area">
+                  <a class="side_menu">
+                    <span class="side_menu_icon">
+                      <img src="assets/img/setting-icon.png" alt="icon">
+                    </span><span class="side_page_name head_color">Area</span>
+                  </a>
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#area" aria-expanded="false" aria-controls="area">
+                  </button>
+                </div>
+                <div id="area" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                  <div class="card-body">
+                    <ul class="inner-submenu head_color">
+                        <li [routerLink]="['/room-management']" data-toggle="collapse" data-target="#area" aria-expanded="false" aria-controls="area"><a>
+                            Room</a></li>
+                      <li [routerLink]="['/zone-management']" data-toggle="collapse" data-target="#area" aria-expanded="false" aria-controls="area"><a>
+                        Zone</a>
+                      </li>
+                    
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!------------------------------------------------------------ menu-box Area End -------------------------------------------------------------->
+      
+      
+      
+              <!------------------------------------------------------------ menu-box Setting Start -------------------------------------------------------------->
+            <div class="menu-box toggle-menu" [ngClass]="((currentUrl === '/setting') || (currentUrl === '/view-adminprofile') || (currentUrl === '/add-role')) ? 'active' : ''">
+              <div class="card-header clearfix" id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <a class="side_menu">
+                  <span class="side_menu_icon"><img src="assets/img/setting-icon.png" alt="icon"></span><span
+                    class="side_page_name head_color">Settings</span>
+                </a>
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                </button>
+              </div>
+              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                  <ul class="inner-submenu head_color">
+                      <li [routerLink]="['/view-adminprofile']" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"><a>
+                          My Profile</a></li>
+                    <li [routerLink]="['/setting']" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"><a>
+                      <!-- <em class="fas fa-chevron-right"></em> -->
+                      Manage Permission</a></li>
+                   
+                    <!-- <li [routerLink]="['/view-adminprofile']" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"><a>
+                      Change Password</a></li> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!------------------------------------------------------------ menu-box Setting End -------------------------------------------------------------->
+           
+            <!------------------------------------------------------------ menu-box Static Content Management Start -------------------------------------------------------------->
+            <div class="menu-box" [ngClass]="((currentUrl === '/static-content-management') || (currentUrl === '/edit-static-content') || (currentUrl === '/view-static-content')) ? 'active' : ''">
+              <div class="card-header clearfix" id="headingOne">
+                <a class="side_menu" [routerLink]="['/static-content-management']">
+                  <span class="side_menu_icon"><img src="assets/img/dashboard-icon.png" alt="icon"></span><span
+                    class="side_page_name head_color">Static Content Management</span>
+                </a>
+              </div>
+            </div>
+             <!------------------------------------------------------------ menu-box Static Content Management End -------------------------------------------------------------->
+      
+      
+            <div class="menu-box">
+              <div class="card-header clearfix" id="headingOne">
+                <a class="side_menu" href="#signout_modal" data-toggle="modal" data-target="#signout_modal">
+                  <span class="side_menu_icon"><img src="assets/img/logout-icon.png" alt="Icon"></span><span
+                    class="side_page_name head_color">Logout</span>
+                </a>
+              </div>
+            </div>
+            <!-- menu-box End -->
+      
+          </div>
+          <!--Accordion End -->
+        </div>
+      </aside>
+      
+      
+      <!-- signout_modal Start -->
+      <div class="modal fade global-modal reset-modal" id="signout_modal">
+        <div class="modal-dialog max-WT-500">
+          <div class="modal-content">
+            <div>
+              <!-- Modal body -->
+              <div class="modal-body  text-center">
+                <div class="row align-items-center modal_flax_height">
+                  <div class="col">
+                    <div class="box-title mb40 d-inline-block">
+                      <i class="fas fa-power-off off-icon"></i>
+                      <p class="mt40">Are you sure you want to logout?</p>
+                    </div>
+                    <div class="text-center">
+                      <a (click)="logout()" class="btn btn-blue btn-noYes ml-2">YES</a>
+                      <button type="button" class="btn btn-red btn-noYes ml-2" data-dismiss="modal">CANCEL</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      

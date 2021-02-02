@@ -1,0 +1,40 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">Static Content Management</h1>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="patientPdf">
+                                <thead>
+                                    <tr class="no_wrap_th text-center">
+                                        <th class="Sorting-img">S.No.</th>
+                                        <th class="Sorting-img" style="width:200px!important">Title </th>
+                                        <th class="Sorting-img" style="width:200px!important">Content </th>
+                                        <th class="action_td_btn3 Sorting-img" style="width:200px!important">Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of StaticContentList;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data?.title}}</td>
+                                        <td>{{data?.description}}</td>
+                                        <td class="text-center">
+                                            <button [routerLink]="['/view-static-content/' + data.title, data._id]" class="btn btn-info ml-2"><em class="fa fa-eye" style="color:white"></em></button>
+                                            <button (click)="gotoEditstatic(data)"  class="btn btn-info ml-2"><em class="far fa-edit" style="color:white"></em></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </main>
+</div>

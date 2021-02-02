@@ -1,0 +1,211 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">view sub-admin management</h1>
+            <div class="d-flex align-items-center">
+                <!-- <p>User Management > <a> View User</a> </p> -->
+            </div>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                            <!-- <div class="tab-pane1"
+                                *ngIf="permission.includes('changeUser') || permission.includes('changeUserStatus') || permission.includes('deleteUser')"> -->
+                            <div class="sec_head_new sec_head_new_after1">
+                                <!-- <div class="row justify-content-between">
+                                    <div class="col-md-6 col-xl-4">
+                                        <div class="d-flex align-items-center">
+                                            <button type="submit" *ngIf="permission.includes('changeUser')"
+                                                [routerLink]="['/edit-user/' + userData?.Username]"
+                                                class="btn  btn-theme">Edit</button>
+                                            <button type="submit"
+                                                *ngIf="!userData?.Enabled && permission.includes('changeUserStatus')"
+                                                (click)="unBlock()" class="btn  btn-success new_btn ml-2"
+                                                style="min-width: 100px;max-height: 36!important;">Un Block</button>
+                                            <button type="submit"
+                                                *ngIf="userData?.Enabled && permission.includes('changeUserStatus')"
+                                                (click)="block()" class="btn  btn-danger new_btn ml-2"
+                                                style="min-width: 100px;max-height: 36!important;">Block</button>
+                                            <button type="submit" *ngIf="permission.includes('deleteUser')"
+                                                (click)="openDeleteModal()" class="btn  btn-theme ml-2">Delete</button>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" order-view main-block-innner mb40 mt40">
+                                    <div class="add-store-block input-style">
+                                        <div class="form-group row align-items-baseline">
+                                            <div class="col-md-12" style="text-align: center">
+                                                <img [src]="kycImage || 'assets/img/user_icon_004.jpg'" style="height: 100px; width: 100px; border-radius: 50%;">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6"> Name:</label>
+                                            <div class="col-md-6 text-center">
+                                                <!-- <label>Mohit</label> -->
+                                                <label>{{userData?.name}}</label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group row ">
+                                                <label class="col-md-5">Email :</label>
+                                                <div class="col-md-6 text-center">
+                                                    <label><a >{{ userData?.firstName }}</a></label>
+                                                </div>
+                                            </div> -->
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Phone Number:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a>{{ userData?.mobileNumber }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Email:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ userData?.email }}</a></label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group row ">
+                                            <label class="col-md-6">DOB:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a>{{ userData?.createdAt | date }}</a></label>
+                                            </div>
+                                        </div> -->
+
+
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <label>Permissions :</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="userData?.permission?.dashboard == true ">
+                                                        <input type="checkbox"
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Dashboard
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="userData?.permission?.subAdminManagement == true ">
+                                                        <input type="checkbox" 
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Subadmin Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="userData?.permission?.userManagement == true ">
+                                                        <input type="checkbox" 
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            User Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6"  *ngIf="userData?.permission?.eventManagement == true ">
+                                                        <input type="checkbox"
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Event Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" >
+                                                    <div class="col-md-6" *ngIf="userData?.permission?.reportManagement == true ">
+                                                        <input type="checkbox" 
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Report Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="userData?.permission?.communityManagement == true ">
+                                                        <input type="checkbox" 
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Community Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="form-group row" >
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox"
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Money Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox"
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            History Management
+                                                        </span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="userData?.permission?.categoryManagement == true ">
+                                                        <input type="checkbox" 
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Category Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6"  *ngIf="userData?.permission?.transactionManagement == true ">
+                                                        <input type="checkbox"
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Transaction Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox"
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Agent Transaction Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox"
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            KYC Management
+                                                        </span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="userData?.permission?.staticContentManagement == true ">
+                                                        <input type="checkbox" 
+                                                            checked/>
+                                                        <span class="col-md-6">
+                                                            Static Content Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="text-center mt40">
+                                            <a [routerLink]="['/sub-admin']"
+                                                class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </main>
+</div>
