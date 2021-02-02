@@ -1,0 +1,141 @@
+
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">Transaction Management</h1>
+      
+    </div>
+    <!-- Page Title End -->
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="custom_tabs common-tabs">
+                
+                <!-- </div> -->
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="btc">
+                        <div class="tab-pane1">
+                            <div class="row trassction-mainbox">
+                                <!-- <div class="row"> -->
+                                    <div class="col-md-3 col-lg-2">
+                                            <div class="head_flt_select">
+                                                    <div class="head_flt_select input-label input-label1">
+                                                        <span class="d-flex align-items-center">Coin</span>
+                                                        <select class="form-control" [(ngModel)]="allcoin"  (change)="coinfunction($event.target.value)" >
+                                                             <option value="">Select Coin</option>
+                                                            <option *ngFor="let index of coinListArr" value="{{index.coinShortName}}">{{index.coinShortName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2">
+                                            <div class="head_flt_select">
+                                                    <div class="head_flt_select input-label input-label1">
+                                                        <span class="d-flex align-items-center">Type</span>
+                                                        <select class="form-control" [(ngModel)]="type" (change)="onChange($event.target.value)">
+                                                              <option value="">All</option>
+                                                            <option value="WITHDRAW" >Withdrawal</option>
+                                                            <option  value="DEPOSIT">Deposit</option>
+                                                            <option  value="HOT_TO_COLD_TRANSFER">Hot To Cold</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 date-padding" >
+                                            <div class="head_flt_select">
+                                                    <div class="head_flt_select input-label input-label1">
+                                                        <span class="d-flex align-items-center">From Date</span>
+                                                        <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}" name="formdate" [(ngModel)]="calender.formdate" (change)="formdate()"   class="form-control datepicker" placeholder="Search by date">
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 date-padding">
+                                            <div class="head_flt_select">
+                                                    <div class="head_flt_select input-label input-label1">
+                                                        <span class="d-flex align-items-center">To Date</span>
+                                                        <input type="date" name="todate"    min="{{fromDate | date:'yyyy-MM-dd'}}" (change)="todate()"    [disabled]="!calender.formdate"  [(ngModel)]="calender.todate"  class="form-control datepicker" placeholder="Search by date">
+                                                    </div>
+                                                </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-4">
+                                            <div class="tras-threebtn">
+                                                    <div class="comman-btn">
+                                                            <button type="submit" class="btn  btn-theme" (click)="search()" >Search</button>
+                                                        </div>
+                                                        <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme" (click)="reset()" >Reset</button>
+                                                          </div>
+                                                          <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme" (click)="exportAsXLSX()" >Export</button>
+                                                          </div>
+                                            </div>
+                                    </div>
+                              
+                              
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="no_wrap_th">
+                                            <th>S.No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Coin</th>
+                                            <th> Type</th>
+                                            <th>Created Date</th>
+                                            <th>Transaction ID</th>
+                                            <th>Transaction #</th>
+                                            <th>Amount</th>
+                                            <th> View </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let transactionitem of walletArry | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total}; let i = index" [attr.data-index]="i">
+                                          <td *ngIf="p == 0">{{i + 1}}</td>
+                                         
+                                          <td *ngIf="p>0">{{10 * (p - 1) + i+1}}</td>
+                                          <td>{{transactionitem.userName || "no records"}}</td>
+                                          <td>{{transactionitem.userEmail || "no records"}}</td>
+                                            <td>{{transactionitem.coinType || "no records"}}</td>
+                                            <td>{{transactionitem.txnType  || "no records" }}</td>
+                                            <td>{{transactionitem.txnTime | date:'short'}}</td>
+                                           
+                                            <td>{{transactionitem.txnId  || "no records" }}</td>
+                                            <td>{{transactionitem.txnHash  || "no records" }}</td>
+                                            <td>{{transactionitem.amount  || "no records" }}</td>
+                                            <td class="action_td_btn3">
+                                                <a ><i (click)="viewwalletmangment(transactionitem.txnId)" class="fa fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="walletArry?.length==0">
+                                              <td colspan="10" vertical-align="middle">
+                                                <div class="no-record">
+                                                  <div class="no-recordin">
+                                                    <H5 style="margin-left: 44%;">No record found</H5>
+                                                  </div>
+                                                </div>
+                                              </td>
+                                            </tr>
+  
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="custom-pagination mt20 text-center">
+                            
+                              <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+             
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+    </div>
+  </main>
+  <!-- Middle Content End -->
+  <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright © 2020 <strong class="theme-text-color">CryptoBiz Exchange</strong> All Rights Reserved.</p>
+        </div>
+    </footer>
+    <!-- Footer Finish -->

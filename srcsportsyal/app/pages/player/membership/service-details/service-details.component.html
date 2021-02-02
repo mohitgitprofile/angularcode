@@ -1,0 +1,437 @@
+<app-header></app-header>
+<div class="topBanner height300">
+    <div class="container">
+    </div>
+</div>
+<main class="main-container pt0 mt-min60">
+    <div class="custom-container">
+        <div class="fixtures-section w-100 center-box">
+            <!-- Global Box Start -->
+            <div class="global-box grey-box">
+                <app-memb-header></app-memb-header>
+                <div class="fixture-inner">
+                    <div class="fixture-btn-row">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn_row mb20">
+                                    <button type="btn" [ngClass]="{'active': typeOfMedia == 'Services'}" (click)="Services()" class="btn">Service Detail</button>
+                                    <button type="btn" [ngClass]="{'active': typeOfMedia == 'Leadership'}" (click)="Leadership()" class="btn">Leaderboard</button>
+                                    <button type="btn" [ngClass]="{'active': typeOfMedia == 'Evaluation'}" (click)="Evaluation()" class="btn">Evaluation</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="white-box-pannel mt20" *ngIf="typeOfMedia == 'Services'">
+                        <div class="row justify-content-center">
+                            <div class="col-md-3 col-sm-4">
+                                <div class="member-img-box">
+                                    <img [src]="serviceDetails?.membershipId?.imageURL">
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-sm-8">
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Service Name</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.serviceName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Organiser Name</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.organizerName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Duration</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.duration}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Venue</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.venueName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Start and End Date</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.startDate | date}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Start and End Time</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.startDuration}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Service Type</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.serviceType}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Description</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetails?.description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-man-leader" *ngIf="typeOfMedia == 'Leadership'">
+                        <div class="content-box-filter">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-9">
+                                    <form class="filter-form ">
+                                        <div class="filter-box d-inline-block  " style=" width: 161px;">
+                                            <label class="control-label">Date</label>
+                                            <my-date-picker name="mydate" placeholder="Select Date" [options]="myDatePickerOptions" [(ngModel)]="date" (dateChanged)="onDateSelect($event)" required></my-date-picker>
+                                        </div>
+                                        <!-- <button type="submit" class="btn btn-navy-blue max-WT-100">Apply</button> -->
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="table-block table-blockleader">
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Point</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="currentList?.length == 0">
+                                            <td colspan="2">No data found.</td>
+                                        </tr>
+                                        <tr *ngFor="let leader of currentList">
+                                            <td>{{leader?.playerId?.firstName}} {{leader?.playerId?.lastName}}</td>
+                                            <td>{{leader?.leaderBoard[currentYear][currentMonth]}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TRIAL -->
+                    <div class="white-box-pannel mt20" *ngIf="typeOfMedia == 'Evaluation'">
+                        <div class="content-box-filter">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-9">
+                                    <form class="filter-form">
+                                        <div class="filter-box d-inline-block" style=" width: 161px;">
+                                            <label class="control-label">Date</label>
+                                            <my-date-picker name="mydate" placeholder="Select Date" [options]="myDatePickerOptions" [(ngModel)]="date" (dateChanged)="onDateSelect($event)" required></my-date-picker>
+                                        </div>
+                                        <!-- <button type="submit" class="btn btn-navy-blue max-WT-100">Apply</button> -->
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="evaluation-block">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="evaluation-box">
+                                        <span *ngIf="evaluationList?.length == 0">{{evaluationList?.length}}
+                                                                        <p>No data found.</p>
+                                                                    </span>
+
+                                        <h3>Technical Evaluation</h3>
+                                        <div class="inner-evaluation-data">
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Bad Skill</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[0]?.bad}}%</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Pass Control</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[1]?.pass}}%</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Shooting</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[2]?.shooting}}%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="evaluation-box">
+                                        <h3>Physical Evaluation</h3>
+                                        <div class="inner-evaluation-data">
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Strenght</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[3]?.strenght}}%</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Speed</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[4]?.speed}}%</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Flexibility</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[5]?.flexibility}}%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="evaluation-box">
+                                        <h3>Tactical Evaluation</h3>
+                                        <div class="inner-evaluation-data">
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Decision Making</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[6]?.decision}}%</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Offensive Tactics</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[7]?.offensive}}%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3">
+                                    <div class="evaluation-box">
+                                        <h3>Psycological Evaluation</h3>
+                                        <div class="inner-evaluation-data">
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Concentration</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[8]?.concentration}}%</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Competitiveness</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[9]?.competitivenedd}}%</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <p>Self Confidence</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p>{{evaluationListCopy[10]?.selfConfidence}}%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="evaluation-box-bottom">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="evl-bottom-inner">
+                                        <label>Average Percentage</label>
+                                        <span>{{evaluationListCopy[11]?.avg}}%</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3  col-md-6">
+                                    <div class="evl-bottom-inner">
+                                        <!-- <label>Points</label>
+                                                            <span>50%</span> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TRIAL -->
+                    <!-- <div class="white-box-pannel mt20" *ngIf="typeOfMedia == 'Evaluation'">
+                        <div class="content-box-filter">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-9">
+                                    <form class="filter-form">
+                                        <div class="filter-box d-inline-block" style=" width: 161px;">
+                                            <label class="control-label">Date</label>
+                                            <my-date-picker name="mydate" placeholder="Select Date" [options]="myDatePickerOptions" [(ngModel)]="date" (dateChanged)="onDateSelect($event)" required></my-date-picker>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="evaluation-block">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+
+                                    <h3> Evaluation</h3>
+                                    <span *ngIf="evaluationList?.length == 0">{{evaluationList?.length}}
+                                        <p>No data found.</p>
+                                    </span>
+                                    <div class="inner-evaluation-data" *ngIf='evaluationList?.length'>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Bad : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[0]?.bad}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Pass : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[1]?.pass}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Shooting : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[2]?.shooting}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Strength : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[3]?.strenght}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Speed : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[4]?.speed}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Flexibility : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[5]?.flexibility}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Decision : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[6]?.decision}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Offensive : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[7]?.offensive}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Concentration : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[8]?.concentration}}%</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Competitiveness : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[9]?.competitivenedd}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <p> Self Confidence : </p>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p>{{evaluationListCopy[10]?.selfConfidence}}%</p>
+                                            </div>
+                                        </div>
+                                        <div class="evaluation-box-bottom">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-6">
+                                                    <div class="evl-bottom-inner">
+                                                        <label>Average Percentage</label>
+                                                        <span>{{evaluationListCopy[11]?.avg}}%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div> -->
+
+                </div>
+            </div>
+            <!-- Global Box End -->
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<app-footer></app-footer>

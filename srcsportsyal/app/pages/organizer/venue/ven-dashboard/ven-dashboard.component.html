@@ -1,0 +1,415 @@
+<!--  Header  Start -->
+<app-header></app-header>
+<!--  Header  End -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Dashborad</h2>
+            <div class="content-box-filter">
+                <form class="filter-form fullwidth">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row justify-content-center" *ngIf="venueList.length">
+                                <div class="col-md-4">
+                                    <div class="filter-box ">
+                                        <select class="form-control select-style1" (change)="onVenueSelect()" [ngModelOptions]="{standalone: true}" [(ngModel)]="venueId">
+                                            <option *ngFor="let i of venueList" value="{{i._id}}">{{i?.venueName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="!venueList.length">
+                        <div class="booking-inner-block top-block">
+                            <h2>Add Venue to see Dashborad data</h2>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="pannel-block">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5" >
+                        <div class="booking-block" >
+                            <div class="booking-inner-block top-block" *ngIf="venueList.length">
+                                <h2>{{bookingToday.count}} Booking Today</h2>
+                            </div>
+                        </div>
+                        <div class="booking-inner-block content-bottom-booking">
+                            <h3> Upcoming Bookings</h3>
+                            <div class="booking-content-block" *ngIf="!upcomingBooking || upcomingBooking.length == 0">
+                                <td colspan="9" class="text-center">No data found.</td>
+                            </div>
+                            <div class="booking-content-block" *ngIf="upcomingBooking.length">
+                                <div class="detail-row" *ngFor="let booking of upcomingBooking">
+                                    <label [routerLink]="['/organizer/venueBooking']">{{booking.playerId.firstName}}</label>
+                                    <span>{{booking.bookingDate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-5">
+                        <div class="booking-block">
+                            <div class="booking-inner-block top-block"  *ngIf="venueList.length">
+                                <h2>{{bookingNextWeek.count}} booking this week</h2>
+                            </div>
+                        </div>
+                        <div class="booking-inner-block content-bottom-booking">
+                            <h3>Latest bookings</h3>
+                            <div class="booking-content-block" *ngIf="!latestBooking || latestBooking.length == 0">
+                                <td colspan="9" class="text-center">No data found.</td>
+                            </div>
+                            <div class="booking-content-block" *ngIf="latestBooking.length">
+                                <div class="detail-row" *ngFor="let booking of latestBooking">
+                                    <!-- <label *ngIf="booking == null">No latest booking</label> -->
+                                    <label  [routerLink]="['/organizer/venueBooking']" *ngIf="booking != null">{{booking.playerId.firstName}}</label>
+                                    <span *ngIf="booking != null">{{booking.bookingDate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- main End -->
+<!-- Footer Start  -->
+<app-footer></app-footer>
+<!-- Footer End  -->
+<!-- Modal Start -->
+<div class="modal fade" id="preview_booking_info" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="booking-proceed-form">
+                <div class="modal-header d-block bdr-none pb0 clearfix">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body tab_pad_L60 tab_pad_R60">
+                    <!-- <h5 class="modal-head mt0 mb20 text-center navy-blue font_uni_sans" id="exampleModalLabel">Booking Form</h5> -->
+                    <div class="modal_booking_table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>21/03/2018</td>
+                                        <td>6:00 PM</td>
+                                        <td>8:00 PM</td>
+                                        <td>8:00 PM</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Outside 7 - Aside</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3">Total</td>
+                                        <td>$300</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="center-box booking-field hide-tag mb30">
+                        <div class="row mb15">
+                            <label class="control-label col-md-3">Name</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="row mb15">
+                            <label class="control-label col-md-3">Email ID</label>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="row mb15">
+                            <label class="control-label col-md-3">Phone No.</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="row mb15">
+                            <label class="control-label col-md-3">Payment Method</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix calendar-action">
+                        <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left">Back to calender</button>
+                        <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right proceed-btn">Proceed</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- preview_booking_info End -->
+<div class="modal fade" id="booking_calander" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog max-WT-900" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block bdr-none pb0 clearfix">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <h5 class="modal-head mt0 mb5" id="exampleModalLabel">Booking</h5>
+                <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <div class="filter-box d-inline-block">
+                    <label class="control-label">Space</label>
+                    <select class="form-control select-style1 d-inline-block">
+                        <option>Areobics</option>
+                    </select>
+                </div>
+                <!-- global-datepicker Start -->
+                <div class="global-datepicker-block mt25">
+                    <div id="demoPicker2" class="global-datepicker"></div>
+                    <div class="clearfix calendar-action">
+                        <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left">Legend</button>
+                        <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right" data-toggle="modal" data-target="#book_slot">Book (0 Slots)</button>
+                    </div>
+                </div>
+                <!-- global-datepicker End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- booking_calander End -->
+<div class="modal fade" id="booking_legend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog max-WT-900" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block bdr-none pb0 clearfix">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <h5 class="modal-head mt0 mb5" id="exampleModalLabel">Booking</h5>
+                <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                <div class="filter-box d-inline-block">
+                    <label class="control-label">Space</label>
+                    <select class="form-control select-style1 d-inline-block">
+                        <option>Areobics</option>
+                    </select>
+                </div>
+                <!-- global-datepicker Start -->
+                <div class="global-datepicker-block mt25">
+                    <div id="demoPicker" class="global-datepicker"></div>
+                    <ul class="color-instruction hide-tag">
+                        <li>Available
+                            <span class="color-code f-right"></span>
+                        </li>
+                        <li>
+                            <span class="color-code f-left green-bg"></span>Today</li>
+                        <li>Fully Booked
+                            <span class="color-code f-right red-bg"></span>
+                        </li>
+                        <li>
+                            <span class="color-code f-left yellow-bg "></span>Partly Booked</li>
+                        <li>Day Off
+                            <span class="color-code f-right magenta-bg"></span>
+                        </li>
+                        <li>
+                            <span class="color-code f-left gray-bg"></span>Past</li>
+                    </ul>
+                    <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <div class="clearfix calendar-action">
+                        <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left openlegend">Legend</button>
+                        <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right" data-toggle="modal" data-target="#book_slot">Book (0 Slots)</button>
+                    </div>
+                </div>
+                <!-- global-datepicker End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- booking_calander End -->
+<!-- Modal Start -->
+<div class="modal fade" id="book_slot" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form class="book-slot-form">
+                <div class="modal-header d-block bdr-none pb0 clearfix">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="head_lagend mb25">Select number of courts</p>
+                    <div class="radio_btn radio-inline ">
+                        <div class="custom-radio-btn">
+                            <input name="exchange" id="check11" checked="" type="radio" />
+                            <label for="check11">1</label>
+                        </div>
+                        <div class="custom-radio-btn">
+                            <input name="exchange" id="check12" type="radio" />
+                            <label for="check12">2</label>
+                        </div>
+                        <div class="custom-radio-btn">
+                            <input name="exchange" id="check13" checked="" type="radio" />
+                            <label for="check13">3</label>
+                        </div>
+                        <div class="custom-radio-btn">
+                            <input name="exchange" id="check14" type="radio" />
+                            <label for="check14">4</label>
+                        </div>
+                        <div class="custom-radio-btn">
+                            <input name="exchange" id="check15" type="radio" />
+                            <label for="check15">5</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-block text-center bdr-none">
+                    <button type="submit" class="mb25 btn btn-navy-blue max-WT-170">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- book_slot End -->
+
+<!-- create-club -->
+<div class="modal fade common-modal" id="create_club" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">CREATE Sponser</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img src="assets/images/profile-img.png" alt="Profile img">
+                                    <span class="camera fa fa-pencil-alt">
+                                        <input type="file">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Phone</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control round-input" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Headquaters</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150">Cancel</button>
+                                    <button type="button" data-toggle="modal" data-target="#edit_club" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right">Create</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--  Modal End edit-club-->
+<!-- create-club -->
+<div class="modal fade common-modal" id="edit_club" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT Sponser</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img src="assets/images/profile-img.png" alt="Profile img">
+                                    <span class="camera fa fa-pencil-alt">
+                                        <input type="file">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Barcelon" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Phone</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="9999999999" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control round-input" placeholder="club@gmail.com" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Headquaters</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Dube" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150">Cancel</button>
+                                    <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right">Create</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--  Modal End edit-club-->

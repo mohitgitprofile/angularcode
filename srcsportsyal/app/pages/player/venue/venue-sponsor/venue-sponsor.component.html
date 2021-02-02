@@ -1,0 +1,80 @@
+<div class="wrapper">
+  <app-header></app-header>
+  <div class="topBanner">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="topBanner-content d-flex align-items-center w-100">
+            <div class="w-100">
+              <h1>COMPREHENSIVE MANAGEMENT OF
+                <br> ANY SPORTS venue</h1>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- main Start -->
+  <main class="main-container pt0">
+    <div class="venue-booking-container">
+      <!-- content-box -->
+      <div class="content-box bg-gray mt-60">
+          <app-venue-player-header></app-venue-player-header>
+          <!-- content-box-filter End -->
+          <div class="table-block mt30">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Sponsor Name</th>
+                    <th>Link</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="sponsorList.total == 0">
+                    <td colspan="6">No data found.</td>
+                  </tr>
+                  <tr *ngFor="let sponsor of sponsorList.docs | paginate: { itemsPerPage: sponsorList.limit, currentPage: sponsorList.page,  totalItems: sponsorList.total }">
+                    <td style="cursor: pointer;" (click)="venueDetailFun(venue)">
+                      <div class="text-left d-flex align-items-center">
+                        <span class="image-box image-box_1" *ngIf="sponsor.image">
+                          <img *ngIf="!sponsor.image" src="assets/images/follow-img.png">
+                          <img *ngIf="sponsor.image" src="{{sponsor.image}}">
+                        </span>
+                        <div>{{sponsor.sponsorName}}</div>
+                      </div>
+                    </td>
+                    <td style="cursor: pointer;">
+                      <a href="" target="_blank">{{sponsor.link}}</a>
+                    </td>
+                    <td style="cursor: pointer;">{{sponsor.description}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="clearfix pagination-entity">
+              <div class="pagination-block mt10 text-right" *ngIf="sponsorList.total > sponsorList.limit">
+                <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+              </div>
+              <div class="entity-text" *ngIf="sponsorList.docs.length">
+                <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+                  < sponsorList.total) ? (page.limit * page.currPage) : sponsorList.total || 0}} of {{sponsorList.total}} entries </span>
+                    <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                      <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                    </select>
+                    <span>entries</span>
+              </div>
+            </div>
+          </div>
+          <!-- Row End -->
+        </div>
+        <!-- content-box End-->
+      </div>
+  </main>
+  <!-- main End -->
+  <app-footer></app-footer>
+  </div>
+  <!-- Wrapper End -->

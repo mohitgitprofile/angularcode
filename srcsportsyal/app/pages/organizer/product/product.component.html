@@ -1,0 +1,334 @@
+<!--  Header Start    -->
+<app-header></app-header>
+<!--  Header End    -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Product</h2>
+            <div class="content-box-filter">
+                <form class="filter-form fullwidth">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="filter-box mt10">
+                                <select class="form-control select-style1" (change)="onChangeProduct()" [(ngModel)]="filterProdType" name="filterProdType">
+                               <option value="">Select Product</option>
+                               <option *ngFor="let item of productTypeArr" [value]="item?.productType">{{item?.productType}}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="button-box text-right mobTL mt10">
+                                <button class="btn btn btn-dark-blue-s max-WT-180 mb10" type="button" (click)="configureModal()">Configure Product Type</button>
+                                <button class="btn btn btn-dark-blue-s max-WT-120 mb10" type="button" (click)="sellHistory(1)">Product History</button>
+                                <button class="btn btn btn-dark-blue-s max-WT-120 mb10" type="button" (click)="addProductModal()">Add Product</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content-box-filter mt20 pt30">
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let item of productList.docs | paginate : { itemsPerPage: productList.limit, currentPage: productList.page, totalItems: productList.total } ">
+                        <div class="product-box">
+                            <div class="pro-top-part clearfix">
+                                <p class="head-sm pull-left"> {{item?.productType?.productType}}</p>
+                                <p class="head-sm pull-right"> <a href="javascript:;" (click)="prodDetailModal(item._id)">View</a></p>
+                            </div>
+                            <div class="product-box-img text-center">
+                                <img class="logo_img" src="{{ item?.productImage?.url || 'assets/images/dummy.png' }}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%" *ngIf="!productList.docs.length">
+                        <h3 class="text-center">No product found.</h3>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6"> -->
+                <div class="pagination-block mt10 text-right" *ngIf="productList.total > productList.limit">
+                    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- main End -->
+<!--   Footer Start  -->
+<app-footer></app-footer>
+<!--   Footer End  -->
+<!--  Start Add product Modal -->
+<div class="modal fade common-modal" style="z-index: 1111;" id="org_add_product" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-900" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="productForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Product</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="profile-img" id="profile_img">
+                                    <img src="{{ addProductImg || 'assets/images/user-img.png' }}" alt="Profile img">
+                                    <span class="camera fa fa-pencil-alt"><input type="file" (change)="onFileSelect($event)" accept="image/*" #addProdFile ></span>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <!-- When Both Competition And Mebership User -->
+                                <div class="form-group clearfix row" *ngIf="bothCM">
+                                    <label class="col-md-3 label-blue">Role</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" (change)="onSelectRole($event)">
+                                  <option value="">Select Role</option>
+                                  <option value="competition">Competition</option>
+                                  <option value="membership">Membership</option>
+                                </select>
+                                    </div>
+                                </div>
+                                <!-- When Both Competition And Mebership User -->
+                                <!-- Competition User -->
+                                <div class="form-group clearfix row" *ngIf="showComp == 1">
+                                    <label class="col-md-3 label-blue">Competition</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [formControl]="form.competition">
+                                    <option value="">Select Competition</option>
+                                    <option *ngFor="let item of list.orgList" [value]="item?._id">{{item?.competitionName}}</option>
+                                  </select>
+                                        <div class="errorMsg" *ngIf="form.competition.dirty && form.competition.invalid">
+                                            <span *ngIf="form.competition.hasError('required')">*Please select competition.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Competition User -->
+                                <!-- Membership User -->
+                                <div class="form-group clearfix row" *ngIf="showComp == 2">
+                                    <label class="col-md-3 label-blue">Membership</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [formControl]="form.competition">
+                                    <option value="">Select Membership</option>
+                                    <option *ngFor="let item of list.membList" [value]="item?._id">{{item?.membershipName}}</option>
+                                  </select>
+                                        <!-- <div class="errorMsg" *ngIf="form.competition.dirty && form.competition.invalid">
+                                    <span *ngIf="form.competition.hasError('required')">*Please select competition.</span>
+                                  </div> -->
+                                    </div>
+                                </div>
+                                <!-- Membership User -->
+
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Product Type</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [formControl]="form.productType" (change)="onSelectProdType(form.productType.value)">
+                                  <option value="">Select Product Type</option>
+                                  <option *ngFor="let item of productTypeArr" [value]="item?._id">{{item?.productType}}</option>
+                               </select>
+                                        <div class="errorMsg" *ngIf="form.productType.dirty && form.productType.invalid">
+                                            <span *ngIf="form.productType.hasError('required')">*Please select product type.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Description</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control common-textarea" placeholder="Description" [formControl]="form.description" maxlength="1000"></textarea>
+                                        <div class="errorMsg" *ngIf="form.description.dirty && form.description.invalid">
+                                            <span *ngIf="form.description.hasError('required')">*Please enter description.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Start Size (Tshirt)  -->
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue"> </label>
+                                    <div class="col-md-9">
+                                        <div class="row" formArrayName="size" *ngFor="let control of productForm.get('size').controls;let i = index;">
+                                            <div class="col-md-2" *ngIf="control.controls['size']">
+                                                <div class="custom-checkbox clearfix">
+                                                    <input type="checkbox" [id]="i" [formControl]="control.controls['checked']" (change)="onCheck(i, control.controls['checked'].value)">
+                                                    <label for="{{i}}">{{control.controls['size'].value}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="pro-des">
+                                                    <label>Quantity</label>
+                                                    <input type="text" class="form-control" [formControl]="control.controls['quantity']" maxlength="10">
+                                                    <div class="errorMsg" *ngIf="control.controls['quantity'].dirty  && control.controls['quantity'].invalid">
+                                                        <span *ngIf="control.controls['quantity'].hasError('required')">*Please enter quantity.</span>
+                                                        <span *ngIf="control.controls['quantity'].hasError('pattern')">*Please enter valid quantity.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="pro-des">
+                                                    <label>Price</label>
+                                                    <input type="text" class="form-control" [formControl]="control.controls['price']" maxlength="10">
+                                                    <div class="errorMsg" *ngIf="control.controls['price'].dirty  && control.controls['price'].invalid">
+                                                        <span *ngIf="control.controls['price'].hasError('required')">*Please enter price.</span>
+                                                        <span *ngIf="control.controls['price'].hasError('pattern')">*Please enter valid price.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  End Size (Tshirt) -->
+                                <div class="clearfix calendar-action mt30 text-right">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " type="button" (click)="onAddProduct()" [disabled]="productForm.invalid || !addProductImg" *ngIf="isAdd">Submit</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " type="button" (click)="onUpdateProduct()" [disabled]="productForm.invalid || !addProductImg" *ngIf="!isAdd">Update</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--  End Add product Modal -->
+
+<!-- Start Configure product Modal -->
+<div class="modal fade common-modal" id="config_pro" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="configureForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Configure Product Type</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="form-group clearfix row">
+                            <label class="col-md-3 label-blue">Product Type</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder="Product type" [formControl]="confForm.productType" maxlength="50">
+                                <div class="errorMsg" *ngIf="confForm.productType.dirty && confForm.productType.invalid">
+                                    <span *ngIf="confForm.productType.hasError('required')">*Please enter product type.</span>
+                                    <span *ngIf="confForm.productType.hasError('pattern')">*Please enter valid product type.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix row">
+                            <label class="col-md-3 label-blue">Replicate To</label>
+                            <div class="col-md-9">
+                                <select class="form-control select-style1 round-input" [formControl]="confForm.replicateTo">
+                            <option value="">Select Product Type</option>
+                            <option *ngFor="let item of list.replArr" [value]="item.value">{{item?.name}}</option>
+                          </select>
+                                <div class="errorMsg" *ngIf="confForm.replicateTo.dirty && confForm.replicateTo.invalid">
+                                    <span *ngIf="confForm.replicateTo.hasError('required')">*Please select replicate to product type.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix calendar-action mt30 text-center">
+                            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " type="button" (click)="onConfigureProduct()" [disabled]="configureForm.invalid">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--   End Configure Product Modal  -->
+
+<!--  manage product detail modal -->
+<div class="modal fade common-modal" id="addpro_detail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-900" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Manage Product</h5>
+                    <button type="button" class="close close-icon" data-dismiss="modal">&times;</button>
+                    <div class="modal-content-body modalform-body text-left">
+
+                        <h5 class="head-sub">{{prodDetail?.productType?.productType}} </h5>
+                        <div class="product-image mb20">
+                            <img src="{{ prodDetail?.productImage?.url || 'assets/images/dummy.png'}}" alt="Logo" />
+                        </div>
+                        <p class="head-sm"> {{prodDetail?.description}}
+                        </p>
+                        <div class="form-group max-WT-500 clearfix row text-center">
+                            <!-- <label class="col-md-2 label-blue" *ngIf="prodDetail?.productType"> Size</label> -->
+                            <!-- <label class="col-md-2 label-blue" *ngIf="!item.size"> Quantity</label> -->
+                            <div class="col-md-10">
+                                <div class="row" *ngFor="let item of prodDetail?.price_size_qunatity">
+                                    <div class="col-4" *ngIf="item.size">
+                                        <div class="size-box">
+                                            <label for="check2">{{item?.size}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-label">
+                                            <label>{{item?.quantity}}</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-label">
+                                            <label>${{item?.price}}</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix calendar-action mt30 text-right">
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " type="button" (click)="editProductModal(prodDetail)">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--  Modal End manage product detail -->
+<!-- Sell History Modal Start Here -->
+<div class="modal fade common-modal" id="sell" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-900" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Product Sell History</h5>
+                    <button type="button" class="close close-icon" data-dismiss="modal">&times;</button>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr class="table-head-bg">
+                                        <th>Sr.No.</th>
+                                        <th>Transaction Id</th>
+                                        <th>Date</th>
+                                        <th>Player Name</th>
+                                        <th>Product</th>
+                                        <th>Amount</th>
+                                        <th>Payment Method</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of sellList | paginate: { itemsPerPage:pageLimit , currentPage:filter.currPage , totalItems:pageTotal } ; let i = index">
+                                        <td *ngIf="filter.currPage == 1">{{i + 1}}</td>
+                                        <td *ngIf="filter.currPage > 1">{{i + 1 +(pageLimit * (filter.currPage-1))}}</td>
+                                        <td>{{item?.paymentDetails[0]?.response.transactionId}}</td>
+                                        <td>{{item?.createdAt}}</td>
+                                        <td>{{item?.playerId?.firstName}}</td>
+                                        <td>{{item?.productId?.productType?.productType}}</td>
+                                        <td>{{currency}}{{item?.productType.price}}</td>
+                                        <td>{{item?.paymentMethod}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <h3 *ngIf="(sellList == '')">No Data Found</h3>
+                            <pagination-controls style="text-align: center" *ngIf="pageLimit<pageTotal" (pageChange)="sellHistory($event)"></pagination-controls>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

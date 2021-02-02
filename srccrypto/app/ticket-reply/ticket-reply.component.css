@@ -1,0 +1,78 @@
+
+
+.custm-inpt input[type=text]{
+    min-height: 46px;
+    width: 100%!important;
+    font-size: 14px;
+    min-width: 299px;
+}
+
+.custm-inpt{
+    display: flex;
+}
+.form-group.custm-inpt{
+    position: relative;
+}
+
+button.btn-sendnd{
+    color: #fff;
+    background: #10b416;
+    font-weight: 600;
+    height: 45px;
+    /* margin-top: 8px; */
+}
+/* .form-group.custm-inpt input.absolutemange {
+    position: absolute;
+    top: 20px;
+    right: 67px;
+    max-width: 40px;
+    opacity: 0;
+}
+
+.atch {
+    width: 20px;
+    height: 20px;
+    margin-left: -20px;
+    margin-top: 20px;
+} */
+
+/* chat */
+/* .statusTradeInputChat {
+    border-radius: 10px;
+    margin: 25px 0;
+    color: #54566b;
+    position: relative;
+}
+.chatInput {
+    opacity: 0.9;
+    padding-right: 40px;
+}
+.chat-attachment-img-box {
+    top: 25%;
+    right: 65px;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    opacity: 0.9;
+}
+.chat-attachment-img-box img {
+    width: 100%;
+    height: 100%;
+}
+
+.statusTradeUploadChat {
+    position: absolute;
+    width: 25px;
+    opacity: 0;
+}
+
+.chat-container {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.img_def {
+    max-width: 150px;
+    min-width: 150px;
+    max-height: 150px
+} */

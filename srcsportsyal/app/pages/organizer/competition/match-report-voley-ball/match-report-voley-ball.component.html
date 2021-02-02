@@ -1,0 +1,394 @@
+<div id="Starts" class=" tab-pane active show" *ngIf="!observation">
+    <div class="row">
+       <div class="col-lg-12">
+          <div class="scoreboard-table-block1">
+             <div class="scoreboard-table-inner">
+                <div class="status-content-block">
+                  <div>
+                    <div>
+                        <div class="status-inner status-inner-edit">
+
+                          <div class="view-row">
+                              <label>Competition</label>
+                              <span>{{gameData?.competitionData?.competitionName}}</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Division</label>
+                              <span>{{gameData?.competitionData?.division}}</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Period</label>
+                              <span>{{gameData?.competitionData?.period}}</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Date</label>
+                              <span>12/12/2017</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Time</label>
+                              <span>23:00:01</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Venue</label>
+                              <span> {{gameData?.competitionData?.venue}} </span>
+                          </div>
+                          <div class="view-row">
+                              <label>Referee</label>
+                              <span>Sushant</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                 <div class="table-scrool-box">
+                 <div class="table-block mt30">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center">
+                           <thead>
+                             <tr class="table-head-bg">
+                               <th>Team Name</th>
+                               <th colspan="2">Set 1 Score</th>
+                               <th colspan="2">Set 2 Score</th>
+                               <th colspan="2">Set 3 Score</th>
+                               <th colspan="2">Set 4 Score</th>
+                               <th colspan="2">Set 5 Score</th>
+                               <th>Final Score</th>
+                               <th>MVP</th>
+                             </tr>
+                           </thead>
+                           <tbody>
+                             <tr>
+                               <th></th>
+                               <th>Set 1 Score</th>
+                               <th>Time Outs</th>
+                               <th>Set 2 Score</th>
+                               <th>Time Outs</th>
+                               <th>Set 3 Score</th>
+                               <th>Time Outs</th>
+                               <th>Set 4 Score</th>
+                               <th>Time Outs</th>
+                               <th>Set 5 Score</th>
+                               <th>Time Outs</th>
+                               <th></th>
+                               <th></th>
+                             </tr>
+                             <tr>
+                               <th>{{ voleyBallGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th> 
+                               <td colspan="2" *ngFor= "let data of teamOneScore">
+                                 <span class="span" >{{ data.score }}</span> 
+                                 <span >{{ data.timeOut }}</span>
+                               </td>
+                               <td> {{ finalScoreOne }} </td>
+                               <td *ngIf="!mvpOfTeamOne">Select Player From Team {{this.voleyBallGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName}}</td>
+                               <td *ngIf="mvpOfTeamOne">{{mvpOfTeamOne}}</td>
+                             </tr>
+                             <tr>
+                               <th>{{ voleyBallGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                               <td colspan="2" *ngFor = " let data of teamTwoScore" >
+                                 <span class="span">{{data.score}}</span>
+                                 <span> {{data.timeOut}} </span>
+                               </td>
+                               <td>{{ finalScoreTwo }}</td>
+                               <td *ngIf="!mvpOfTeamTwo">Select Player From Team {{this.voleyBallGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</td>
+                               <td *ngIf="mvpOfTeamTwo">{{mvpOfTeamTwo}}</td>
+                             </tr>
+                           </tbody>
+                         </table>
+                         <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#score" data-backdrop="static" data-keyboard="false" style="width:147px">Edit Score</button>
+                    </div>
+                 </div>
+                 <div class="tableentry">
+                   <div class="row">
+                   <div class="col-md-6">
+                     <div class="table-block mt10">
+                       <div class="table-responsive">
+                        <table class="table table-bordered text-center">
+                           <thead>
+                             <tr class="table-head-bg">
+                               <th colspan="4" class="text-align-left">{{ voleyBallGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th>
+
+                             </tr>
+                           </thead>
+                           <tbody>
+                             <tr class="strong-color">
+                               <th>Player No</th>
+                               <th>Player First Name</th>
+                               <th>Player Last Name</th>
+                               <th>Points</th>
+                             </tr>
+                             <tr *ngFor=" let data of voleyBallGameDetailsData?.result?.teamOne">
+                               <td>{{ data.playerNumber }}</td>
+                               <td>{{ data.userDetails[0].firstName }}</td>
+                               <td>{{ data.userDetails[0].lastName }}</td>
+                               <td>{{ data.points }}</td>
+                             </tr>
+                           </tbody>
+                         </table>
+                     </div>
+                   </div>
+                   </div>
+                   <div class="col-md-6">
+                     <div class="table-block mt10">
+                       <div class="table-responsive">
+                        <table class="table table-bordered text-center">
+                           <thead>
+                             <tr class="table-head-bg">
+                               <th colspan="4"  class="text-align-left">{{ voleyBallGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                             </tr>
+                           </thead>
+                           <tbody>
+                             <tr class="strong-color">
+                               <th>Player No</th>
+                               <th>Player First Name</th>
+                               <th>Player Last Name</th>
+                               <th>Points</th>
+                             </tr>
+                             <tr *ngFor=" let data of voleyBallGameDetailsData?.result?.teamTwo">
+                               <td>{{ data.playerNumber }}</td>
+                               <td>{{ data.userDetails[0].firstName }}</td>
+                               <td>{{ data.userDetails[0].lastName }}</td>
+                               <td>{{ data.points }}</td>
+                             </tr>
+                           </tbody>
+                         </table>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                   <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#editScorePlayerWiseTeamOne" data-backdrop="static" style="float: left" data-keyboard="false">Edit Player's Score</button>
+                 </div>
+                 <div class="col-md-6">
+                   <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#editScorePlayerWiseTeamTwo" data-backdrop="static" data-keyboard="false">Edit Player's Score</button>
+                 </div> 
+               </div>
+             </div>
+           </div>
+             <div class=" text-right mt20">
+               <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#socialSharing" data-backdrop="static" data-keyboard="false" style="width:147px">Publish Match</button>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+ </div>
+
+
+ <!-- Observation -->
+<div id="Information" *ngIf="observation">
+  <div class="tab-inner-text-block">
+    <div class="col-md-12 col-lg-12 marginzero">
+      <textarea class="form-control common-textarea" [(ngModel)]="observationMessage"></textarea>
+      <div class=" text-right mt10">
+        <button class="btn btn btn-dark-blue-s" (click)="updateObservation()">Update Observation</button>
+        <button class="btn btn btn-dark-blue-s" [disabled]="messageFromObservation" (click)="addObservation()">Add Observation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Edit score Modal Team Wise -->
+ <div class="modal fade common-modal" id="score" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+       <div class="modal-content">
+          <form class="modal-add-card-form" >
+                <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+                <div class="modal-content-body modalform-body text-left">
+                   <div class="row">
+
+                      <div class="">
+                        <div class="table-scrool-box" >
+                            <div class="table-block mt30">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center" style="overflow-x: scroll">
+                                      <thead>
+                                        <tr class="table-head-bg">
+                                          <th>Player Name</th>
+                                          <th colspan="2">Set 1 Score</th>
+                                          <th colspan="2">Set 2 Score</th>
+                                          <th colspan="2">Set 3 Score</th>
+                                          <th colspan="2">Set 4 Score</th>
+                                          <th colspan="2">Set 5 Score</th>
+                                          <th>Final Score</th>
+                                          <th>MVP</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th></th>
+                                          <th>Set 1 Score</th>
+                                          <th>Time Outs</th>
+                                          <th>Set 2 Score</th>
+                                          <th>Time Outs</th>
+                                          <th>Set 3 Score</th>
+                                          <th>Time Outs</th>
+                                          <th>Set 4 Score</th>
+                                          <th>Time Outs</th>
+                                          <th>Set 5 Score</th>
+                                          <th>Time Outs</th>
+                                          <th></th>
+                                          <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ voleyBallGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th> 
+                                            <td colspan="2" *ngFor= "let data of teamOneScore; let i = index; trackBy:trackByIndex ">
+                                              <span  class="spanLeft">
+                                                <input type="text" class="inputScore" [(ngModel)]="data.score" name="scoreOne{{i}}" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                              </span> 
+                                              <span class="spanRight">
+                                                <input type="text" class="inputScore" [(ngModel)]="data.timeOut" name="timrOutOne{{i}}" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                              </span>
+                                            </td>
+                                            <td>
+                                              <input type="text" class="inputScore" [(ngModel)]="finalScoreOne" name="finalScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly> 
+                                            </td>
+                                            <td>
+                                              <select name="mvpOfTeamOne" [(ngModel)]="mvpOfTeamOne" class="select">
+                                                <option [ngValue]="undefined" disabled>select Value</option>
+                                                <option *ngFor="let data of voleyBallGameDetailsData?.result?.teamOne">{{data.userDetails[0].firstName}}{{data.userDetails[0].lastName}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                              <th>{{ voleyBallGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                                              <td colspan="2" *ngFor = " let data of teamTwoScore; let index = index; trackBy : trackByIndex" >
+                                                <span class="spanLeft">
+                                                  <input  type="text" class="inputScore" [(ngModel)]="data.score" name="scoreTwo{{i}}"  inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                                </span>
+                                                <span class="spanRight"> 
+                                                  <input type="text" class="inputScore" [(ngModel)]="data.timeOut" name="timeOutTwo{{i}}" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                                </span>
+                                              </td>
+                                              <td>
+                                                <input type="text" class="inputScore" [(ngModel)]="finalScoreTwo" name="finalScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                              </td>
+                                              <td>
+                                                <select name="mvpOfTeamTwo" [(ngModel)]="mvpOfTeamTwo" class="select">
+                                                  <option [ngValue]="undefined" disabled>Select Value</option>
+                                                  <option *ngFor="let data of voleyBallGameDetailsData?.result?.teamTwo">{{data.userDetails[0].firstName}}{{data.userDetails[0].lastName}} </option>
+                                                </select>
+                                              </td>
+                                            </tr>
+                                      </tbody>
+                                    </table>
+                                </div>
+                              </div>
+                            </div> 
+                            <div class="clearfix calendar-action mt30 text-center">
+                              <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" style="margin-right: 28%;" (click)="updatedScore()">Update</button>
+                              <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                            </div>              
+                      </div>
+                   </div>
+                  </div>
+          </form>
+       </div>
+    </div>
+ </div>
+  
+
+ <!-- Edit Score Player Wise of Team One Modale -->
+ <div class="modal fade common-modal" id="editScorePlayerWiseTeamOne" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+       <div class="modal-content">
+          <form class="modal-add-card-form" >
+                <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+                <div class="modal-content-body modalform-body text-left">
+                   <div class="row">
+
+                      <div class="">
+                              <div class="table-block mt10">
+                                <div class="table-responsive">
+                                 <table class="table table-bordered text-center">
+                                    <thead>
+                                      <tr class="table-head-bg">
+                                        <th colspan="4" class="text-align-left">{{ voleyBallGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr class="strong-color">
+                                        <th>Player No</th>
+                                        <th>Player First Name</th>
+                                        <th>Player Last Name</th>
+                                        <th>Points</th>
+                                      </tr>
+                                      <tr *ngFor=" let data of voleyBallGameDetailsData?.result?.teamOne">
+                                        <td>
+                                          <input type="text" [(ngModel)]="data.playerNumber" name="playerNumberOne" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                        </td>
+                                        <td>{{ data.userDetails[0].firstName }}</td>
+                                        <td>
+                                          {{ data.userDetails[0].lastName }}</td>
+                                        <td>
+                                          <input type="text" [(ngModel)]="data.points" name="scoreOne" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                            </div>
+
+                        <div class="clearfix calendar-action mt30 text-center">
+                          <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" style="margin-right: 28%;" (click)="updatedScoreDataPlayerWise('teamOne')">Update</button>
+                          <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                        </div>              
+                      </div>
+                   </div>
+                </div>
+          </form>
+       </div>
+    </div>
+ </div>
+
+
+<!-- Edit Score Player Wise of Team Two Modale -->
+ <div class="modal fade common-modal" id="editScorePlayerWiseTeamTwo" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+       <div class="modal-content">
+          <form class="modal-add-card-form" >
+                <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+                <div class="modal-content-body modalform-body text-left">
+                   <div class="row">
+
+                      <div class="">
+                          <div class="table-block mt10">
+                              <div class="table-responsive">
+                               <table class="table table-bordered text-center">
+                                  <thead>
+                                    <tr class="table-head-bg">
+                                      <th colspan="4"  class="text-align-left">{{ voleyBallGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr class="strong-color">
+                                      <th>Player No</th>
+                                      <th>Player First Name</th>
+                                      <th>Player Last Name</th>
+                                      <th>Points</th>
+                                    </tr>
+                                    <tr *ngFor=" let data of voleyBallGameDetailsData?.result?.teamTwo">
+                                      <td>
+                                        <input type="text" [(ngModel)]="data.playerNumber" name="playerNumberTwo" inputmode="numeric" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                                      </td>
+                                      <td>{{ data.userDetails[0].firstName }}</td>
+                                      <td>{{ data.userDetails[0].lastName }}</td>
+                                      <td>
+                                        <input type="text" [(ngModel)]="data.points" name="scoreTwo" inputmode="numeric" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        <div class="clearfix calendar-action mt30 text-center">
+                          <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" style="margin-right: 28%;" (click)="updatedScoreDataPlayerWise('teamTwo')">Update</button>
+                          <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                        </div>              
+                      </div>
+                   </div>
+                </div>
+          </form>
+       </div>
+    </div>
+ </div>

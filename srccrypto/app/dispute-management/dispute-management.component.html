@@ -1,0 +1,162 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">DISPUTE RESOLUTION</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        <div class="sec_head_new">
+                            <div class="row">
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Dispute Status</span>
+                                            <select class="form-control" [(ngModel)]="tradeStatus">
+                                                <option value="" placeholder="Select">Select</option>
+                                                <option value="Raised">Raised</option>
+                                                <option value="WIP">WIP</option>
+                                                <option value="Pending_for_Release">Pending For Release</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Country</span>
+                                            <select class="form-control" [(ngModel)]="country">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let item of countryList" [value]="item?.country">
+                                                    {{item?.country}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Payment Method</span>
+                                            <select class="form-control" [(ngModel)]="paymentType">
+                                                <option value="">Select</option>
+                                                <option value="NationalBankTransfer">National Bank Transfer</option>
+                                                <option value="IMPS">IMPS</option>
+                                                <option value="paypal">PAYPAL</option>
+                                                 <option value="paytm">PAYTM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Start Date</span>
+                                            <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}" name="fromdate"
+                                                [(ngModel)]="calender.fromdate" (change)="fromdate()"
+                                                class="form-control datepicker" placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">End Date</span>
+                                            <input type="date" name="todate" min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                (change)="todate()" [disabled]="!calender.fromdate"
+                                                [(ngModel)]="calender.todate" class="form-control datepicker"
+                                                placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-2 user-pl">
+                                    <div class="user-frmbtn" style="display: flex;">
+                                        <button type="submit" (click)="search()"
+                                            class="btn  btn-theme mr-2">Search</button>
+                                        <button type="submit" (click)="reset()" class="btn  btn-theme">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- next row -->
+
+                            <!-- <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Trade Type</span>
+                                            <select class="form-control" [(ngModel)]="type">
+                                                <option value="">Select</option>
+                                                <option value="SELL">Sell</option>
+                                                <option value="BUY">Buy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            <div class="col-md-10 ">
+                                <div class="text-left" style="float: right;  ">
+                                    <button type="submit" class="btn btn-theme" (click)="exportAsXLXS()" style="  margin-top: -50%;
+                                    margin-left: 55%;">Export As
+                                        Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="transaction"><h3>Trade List</h3></div> -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered" aria-describedby="trade table">
+                            <thead>
+                                <tr class="no_wrap_th">
+                                    <th id="">Trade ID</th>
+                                    <th id="">Dispute ID</th>
+                                    <th id="">Trade Date</th>
+                                    <th id="">Dispute Date</th>
+                                    <th id="">Dispute Status</th>
+                                    <th id="">Trade Status</th>
+                                    <th id="">Fiat</th>
+                                    <th id="">Payment Method</th>
+                                    <!-- <th id="">Staff Incharge</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr
+                                        *ngFor="let data of tradeList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: tradeListlength}; let i=index; "> -->
+                                <tr
+                                    *ngFor="let data of disputeList | paginate:{itemsPerPage: itemsPerPage, currentPage: currentPage,totalItems: totalItems}; let i=index; ">
+                                    <td (click)="navigate(data.tradeId)"><u
+                                            class="trade-table-data">{{data?.tradingId || 'N/A'}}</u></td>
+                                    <td>{{data?.disputeId || 'N/A'}}</td>
+                                    <td>{{(data?.creationTime | date) || 'N/A'}}</td>
+                                    <td>{{(data?.disputeDate | date) || 'N/A'}}</td>
+                                    <td>{{data?.disputeStatus || 'N/A'}}</td>
+                                    <td>{{data?.tradeStatus || 'N/A'}}</td>
+                                    <td>{{data?.tradeAmount}} {{data?.fiatCoin}}</td>
+                                    <td>{{data?.paymentType || 'N/A'}}</td>
+                                </tr>
+                                <tr *ngIf="disputeList?.length==0">
+                                    <td colspan="11" vertical-align="middle">
+                                        <div class="no-record">
+                                            <div class="no-recordin">
+                                                <H5>No record found</H5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="custom-pagination mt20 text-center" style="float: right;"
+                            *ngIf="tradeListlength > 5 ">
+                            <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
+                        </div> -->
+                    <div class="custom-pagination mt20 text-center" style="float: right;" *ngIf="totalItems > 5 ">
+                        <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    
+</main>

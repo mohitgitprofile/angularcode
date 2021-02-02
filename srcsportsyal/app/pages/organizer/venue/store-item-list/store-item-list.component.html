@@ -1,0 +1,197 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <h2 class="content-box-head">Item</h2>
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-right">
+              <button class="btn btn btn-dark-blue-s" type="button" (click)="addStoreItemModal()">Add Item</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!itemList.docs.length">
+                <td colspan="5" class="text-center">No data found.</td>
+              </tr>
+              <tr *ngFor="let item of itemList.docs  | paginate: { itemsPerPage: itemList.limit, currentPage: itemList.page,  totalItems: itemList.total } ">
+
+                <td>{{item?.itemName}}</td>
+                <td>{{item?.quantity}}</td>
+                <td class="action-td">
+                  <a class="btn btn-info" (click)="editStoreItemModal(item._id)" data-toggle="modal">
+                    <i class="far fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger" (click)="deleteStoreItemModal(item._id)" data-toggle="modal">
+                    <i class="far fa-trash-alt"></i>
+                  </a>
+                  <!-- <a class="btn btn-info" [routerLink]="['/organizer/StoreItemItemList', item._id]">
+                      <i class="fas fa-eye"></i>
+                    </a> -->
+                </td>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block mt10 text-right" *ngIf="itemList.total > itemList.limit">
+            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="itemList.docs.length">
+            <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+              < itemList.total) ? (page.limit * page.currPage) : itemList.total || 0}} of {{itemList.total}} entries</span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                  <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+
+
+<!-- add-StoreItem -->
+<div class="modal fade common-modal" id="add_storeItem" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="addStoreItemForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Item</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Item Name</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control round-input" [formControl]="gStoreItemForm.StoreItemName" placeholder="Enter Item Name" />
+                    <div class="errorMsg" *ngIf="gStoreItemForm.StoreItemName.dirty && gStoreItemForm.StoreItemName.invalid">
+                      <span *ngIf="gStoreItemForm.StoreItemName.hasError('required')">*Please enter item name.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Quantity</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" [formControl]="gStoreItemForm.quantity" placeholder="Enter quantity" />
+                    <div class="errorMsg" *ngIf="gStoreItemForm.quantity.dirty && gStoreItemForm.quantity.invalid">
+                      <span *ngIf="gStoreItemForm.quantity.hasError('required')">*Please enter quantity.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="addStoreItemForm.invalid" (click)="addStoreItem()">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End add-StoreItem-->
+
+<!-- Edit-StoreItem Modal-->
+<div class="modal fade common-modal" id="edit_StoreItem" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="editStoreItemForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Edit Item</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Item Name</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control round-input" [formControl]="eStoreItemForm.StoreItemName" placeholder="Enter Item Name" />
+                    <div class="errorMsg" *ngIf="eStoreItemForm.StoreItemName.dirty && eStoreItemForm.StoreItemName.invalid">
+                      <span *ngIf="eStoreItemForm.StoreItemName.hasError('required')">*Please enter item name.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Quantity</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" [formControl]="eStoreItemForm.quantity" placeholder="Enter quantity" />
+                    <div class="errorMsg" *ngIf="eStoreItemForm.quantity.dirty && eStoreItemForm.quantity.invalid">
+                      <span *ngIf="gStoreItemForm.quantity.hasError('required')">*Please enter quantity.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="editStoreItemForm.invalid" (click)="updateStoreItemModal()">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End Edit-StoreItem-->
+
+
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="deleteItem-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">Are you sure you want to delete this item?</p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="onDeleteStoreItem()">YES</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- delete-modal-end -->

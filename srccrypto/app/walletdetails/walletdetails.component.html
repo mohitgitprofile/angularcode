@@ -1,0 +1,66 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title">Wallet Details of : "{{userDetail}}" </h1>
+    </div> <!-- Page Title End -->
+    <div class="content-section">
+        <div class="outer-box">
+            <!-- Gloabl Table Box Start -->
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+
+                        <!-- Start export Button  -->
+                        <div class="user-main-head">
+                            <div class="user-lst">
+                                <div class="two-btnline">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Export button  -->
+
+                        <!-- table content -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="myCanvas" >
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th>Coin Name</th>
+                                        <th>Inorder Balance</th>
+                                        <th>Available Balance</th>
+                                        <th>Total Balance</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                    <tr *ngFor="let user of walletDetail">
+                                        
+                                        <td>{{user?.coinName}}</td>
+                                        <td>{{user?.inOrderBalance}}</td>
+                                        <td>{{user?.availableBalance}}</td>                                  
+                                        <td>{{user?.totalBalance}}</td>
+                                    </tr>
+                                    <tr *ngIf="walletDetail.length==0">
+                                        <td colspan="100" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin text-center"> <span>No record found</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Table Responsive End -->
+</main>
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Copyright © 2020 <strong class="theme-text-color">CryptoBiz Exchange</strong> All Rights Reserved.</p>
+    </div>
+</footer>

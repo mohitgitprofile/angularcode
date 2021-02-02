@@ -1,0 +1,58 @@
+<app-header></app-header>
+<div class="topBanner">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="topBanner-content d-flex align-items-center w-100">
+                    <div class="w-100">
+                        <h1>COMPREHENSIVE MANAGEMENT OF<br> ANY SPORTS COMPETITION</h1>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container">
+    <div class="container">
+        <div class="max-WT-800 center-box">
+            <div class="global-box mb50">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="player-img"><img [src]="ImageBase64" alt="Player Image" /></div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="player-info">
+                            <h2 class="player-name">{{profileData.firstName+" "+profileData.lastName}}</h2>
+                            <p class="player-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took.</p>
+                            <ul class="player-links-list">
+                                <li><a class="underline-none" [routerLink]="['/player/profile']">Show Profile</a></li>
+                                <li><a class="underline-none" [routerLink]="['/player/notification']">Notification</a></li>
+                            </ul>
+                            <h3 class="thin_head">My Competitions</h3>
+                            <ul class="player-social-info">
+                                <li>
+                                    <a class="underline-none" [routerLink]="['/player/following','APPROVED']"><img src="assets/images/user-icon.png" alt="User Icon" />Following<span>({{profileData.following}})</span></a>
+                                </li>
+                                <li>
+                                    <a class="underline-none" [routerLink]="['/player/following','PENDING']"><img src="assets/images/user-icon2.png" alt="User Icon" />Pending Request<span>({{profileData.pending}})</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Global Box End -->
+            <div class="global-box pt30 pb30">
+                <a class="link_tab" [routerLink]="['/player/searchCompetition']">Search Competition <i class="fas fa-chevron-right"></i></a>
+                <a class="link_tab" >Search Venue <i class="fas fa-chevron-right"></i></a>
+                <a class="link_tab" >Search Membership <i class="fas fa-chevron-right"></i></a>
+            </div>
+            <!-- Global Box End -->
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

@@ -1,0 +1,128 @@
+<app-header></app-header>
+<div class="topBanner height300">
+  <div class="container">
+
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <div class="heading-search-block mb30">
+        <div class="row">
+          <div class="col-md-3">
+            <h3 class="content-box-head">Competitions</h3>
+          </div>
+          <div class="col-md-9">
+            <div class="search-block-main">
+              <div class="search_block">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2"
+                    [(ngModel)]="bodyData.filterFields.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                  <div class="input-group-append">
+                    <button class="btn btn_search" type="button" (click)="onSearch(2)"><i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-box-filter">
+        <div class="row">
+          <div class="col-md-12 col-lg-12">
+            <form class="filter-form">
+              <div class="filter-box d-inline-block">
+                <label class="control-label">Competition Status</label>
+                <select [(ngModel)]="filterCompStatus" [ngModelOptions]="{standalone: true}" class="form-control select-style1 d-inline-block ">
+                  <option value="">Select status</option>
+                  <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                </select>
+              </div>
+              <div class="filter-box d-inline-block">
+                <label class="control-label">Select Tournament</label>
+                <ng-multiselect-dropdown [data]="sportsList" [(ngModel)]="filtersport" [settings]="dropdownSettings" name="sports" class="d-inline-block multi_select">
+                </ng-multiselect-dropdown>
+              </div>
+              <div class="filter-box d-inline-block">
+                <label class="control-label">Following Status</label>
+                <select [(ngModel)]="filterfollowStatus" [ngModelOptions]="{standalone: true}" class="form-control select-style1 d-inline-block">
+                  <option value="">Select status</option>
+                  <option value="APPROVED">Approved</option>
+                  <option value="PENDING">Pending</option>
+                  <option value="NOT FOLLOWED">Not Followed</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-navy-blue max-WT-100" (click)="applyFilter()">Apply</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="table-block mt30">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Divisions</th>
+                <th>Period</th>
+                <th>Status</th>
+                <th>Location</th>
+                <th>Request</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="list.competitionList.total == 0">
+                <td colspan="6">No data found.</td>
+              </tr>
+              <tr [ngClass]="{'pointer': competition.playerFollow == 'APPROVED', 'default':competition.playerFollow == 'NOT FOLLOWED', 'default':competition.playerFollow == 'PENDING'}"
+                *ngFor="let competition of list.competitionList.docs | paginate: { itemsPerPage: list.competitionList.limit, currentPage: list.competitionList.page,  totalItems: list.competitionList.total }">
+                <td (click)="competitionDetail(competition)">
+                  <div class="text-left d-flex align-items-center">
+                  <span class="image-box image-box_1">
+                    <img *ngIf="!competition.imageURL" src="../../../../../assets/images/follow-img.png">
+                    <img *ngIf='competition.imageURL' src="{{competition.imageURL}}">
+                  </span>
+                  <div>{{competition.competitionName}}</div>
+                </div>
+                </td>
+                <td (click)="competitionDetail(competition)">{{competition.division}}</td>
+                <td (click)="competitionDetail(competition)">{{competition.period}}</td>
+                <td (click)="competitionDetail(competition)" *ngIf="competition.status == 'settingUp'">Setting up</td>
+                <td (click)="competitionDetail(competition)" *ngIf="competition.status == 'published'">Published</td>
+                <td (click)="competitionDetail(competition)" *ngIf="competition.status == 'inProgress'">In Progress</td>
+                <td (click)="competitionDetail(competition)" *ngIf="competition.status == 'completed'">Completed</td>
+                <td (click)="competitionDetail(competition)" *ngIf="competition.status == 'cancelled'">Cancelled</td>
+                <td (click)="competitionDetail(competition)">{{competition.venue}}</td>
+                <td class="tbl_btn">
+                  <button type="button" class="btn btn-follow" *ngIf="competition.playerFollow == 'NOT FOLLOWED'" (click)="follow(competition)">follow</button>
+                  <button type="button" class="btn btn-unfollow" *ngIf="competition.playerFollow == 'APPROVED'" (click)="unfollow(competition)">Unfollow</button>
+                  <button type="button" class="btn btn-unfollow" *ngIf="competition.playerFollow == 'PENDING'" (click)="unfollow(competition)">Cancel
+                    Request
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block text-right" *ngIf="list.competitionList.total > list.competitionList.limit">
+            <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="list.competitionList.total!=0">
+            <span>Showing {{list.competitionList?.limit * (list.competitionList?.page - 1) + 1}} to {{((list.competitionList?.limit
+              * list.competitionList?.page) < list.competitionList?.total) ? (list.competitionList?.limit * list.competitionList?.page)
+                : list.competitionList?.total || 0}} entries</span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="limitChange" (change)="changeLimit()">
+                  <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

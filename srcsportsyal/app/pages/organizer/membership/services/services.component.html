@@ -1,0 +1,540 @@
+<!--  Header Start -->
+<app-header></app-header>
+<!-- Header  End    -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <div class="custom-breadcrumb custom-breadcrumb1 mt0 clearfix">
+                <div class="fleft">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item active" [routerLink]="['/organizer/service']"> Service</a>
+                        <a class="breadcrumb-item" [routerLink]="['/organizer/professional']">Professional</a>
+                        <a class="breadcrumb-item" [routerLink]="['/organizer/booking']"> Booking </a>
+                        <!-- <a class="breadcrumb-item"        [routerLink]="['/organizer/option']"> Option </a> -->
+                    </nav>
+                </div>
+
+            </div>
+            <h2 class="content-box-head">Filter BY</h2>
+            <div class="content-box-filter">
+                <form class="filter-form fullwidth" [formGroup]='serviceListForm'>
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <div class="filter-box">
+                                <label class="control-label">Status</label>
+                                <select class="form-control select-style1" formControlName="status">
+                                    <option value="">All</option>
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="unconfirmed">Unconfirmed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="filter-box">
+                                <label class="control-label">Membership Name</label>
+                                <select class="form-control select-style1" formControlName="membershipname" (change)="getMembershipId($event)">
+                                    <option value="">All</option>
+                                    <option *ngFor="let i of memberlist" value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="filter-box">
+                                <label class="control-label">Professional Name</label>
+                                <select class="form-control select-style1" formControlName="professionalname">
+                                    <option value="">All</option>
+                                    <option *ngFor="let i of professionallist" value="{{i?.item_id}}">{{i?.item_text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="button-box ">
+                                <button class="btn btn btn-dark-blue-s" type="button" (click)="serviceList(serviceListForm.value,filter.currPage,1)">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form class="filter-form fullwidth" [formGroup]='searchListForm'>
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="search" placeholder="Search Here.."
+                                            aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button" [disabled]="!searchListForm.valid"
+                                                (click)="serviceList(searchListForm.value,filter.currPage,2)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="button-box text-right">
+                                <button class="btn btn btn-dark-blue-s" type="button" data-toggle="modal" data-target="#addService">Add
+                                    Service</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th>Service Name</th>
+                                <th>Duration</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of servicelist | paginate: { itemsPerPage:pageLimit , currentPage:filter.currPage , totalItems:pageTotal } ; let i = index">
+                                <td [routerLink]="['/organizer/servicedetail',item._id]">{{item.serviceName}}</td>
+                                <td [routerLink]="['/organizer/servicedetail',item._id]">{{item.duration}} Minutes</td>
+                                <td [routerLink]="['/organizer/servicedetail',item._id]">{{ currency + ' '
+                                    +item.amount}}</td>
+                                <td class="action-td">
+                                    <button class="btn btn-info" data-toggle="modal" (click)="getServiceDetail(item._id)">Edit</button>
+                                    <button class="btn btn-success" *ngIf="item.published == false" (click)="publishFun(item._id)">Publish</button>
+                                    <button class="btn btn-danger" *ngIf="item.published == true" (click)="unpublishFun(item._id)">Unpublish</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3 *ngIf="(servicelist == '')">No Data Found</h3>
+                    <pagination-controls style="text-align: center" *ngIf="(pageLimit<pageTotal)&&(formtype == 1)"
+                        (pageChange)="serviceList(serviceListForm.value,$event,1)"></pagination-controls>
+                    <pagination-controls style="text-align: center" *ngIf="(pageLimit<pageTotal)&&(formtype == 2)"
+                        (pageChange)="serviceList(searchListForm.value,$event,2)"></pagination-controls>
+                </div>
+                <!-- <div class="clearfix pagination-entity">
+                 <div class="pagination-block text-right">
+                  <ul class="pagination">
+                   <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-caret-left"></i> Prev</a></li>
+                   <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                   <li class="page-item"><a class="page-link" href="#">2</a></li>
+                   <li class="page-item"><a class="page-link" href="#">3</a></li>
+                   <li class="page-item"><a class="page-link" href="#">4</a></li>
+                   <li class="page-item"><a class="page-link" href="#">5</a></li>
+                   <li class="page-item"><a class="page-link" href="#">6</a></li>
+                   <li class="page-item"><a class="page-link" href="#">Next <i class="fas fa-caret-right"></i></a></li>
+                   </ul>
+                 </div>
+                 <div class="entity-text">
+                    <span>showing 1 to 6 entries</span>
+                    <select class="form-control select-style1 mw50">
+                       <option>4</option>
+                       <option>4</option>
+                       <option>4</option>
+                    </select>
+                     <span>entries</span>
+                 </div>
+               
+               </div> -->
+            </div>
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- main End -->
+<!-- Footer Start -->
+<app-footer></app-footer>
+<!-- Footer End -->
+<!-- Add Service Start Here -->
+<div class="modal fade common-modal" id="addService" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]='addserviceForm'>
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add New Service</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Service Type</label>
+                                    <div class="col-md-9">
+                                        <input type="radio" name="servicetype" formControlName="servicetype" (change)="disappear()"
+                                            value="free" />Free
+                                        <input type="radio" name="servicetype" formControlName="servicetype" (change)="appear()"
+                                            value="paid" />Paid
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('servicetype').hasError('required') &&  addserviceForm.get('servicetype').dirty"
+                                    style="color:red" padding>*Service Type field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Membership List</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="membershipname"
+                                            (change)="getMembershipId($event)">
+                                            <option value="">SELECT MEMBERSHIP</option>
+                                            <option *ngFor="let i of memberlist" value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('membershipname').hasError('required') &&  addserviceForm.get('membershipname').dirty"
+                                    style="color:red" padding>*MemberShip Name field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Service Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter the Service Name" formControlName="servicename" />
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('servicename').hasError('required') &&  addserviceForm.get('servicename').dirty"
+                                    style="color:red" padding>*Servicename field can not be empty</p>
+                                <p *ngIf="addserviceForm.get('servicename').hasError('pattern') &&  addserviceForm.get('servicename').dirty"
+                                    style="color:red" padding>*Invalid Service Name</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Professional</label>
+                                    <div class="col-md-9">
+                                        <!-- <select class="form-control select-style1 round-input" formControlName="professional" multiple="multiple" >
+                                 <option (mousedown)="onMouseDown($event,i?.professionalId)" (mousemove)="$event.preventDefault()"   *ngFor="let i of professionallist"  value="{{i?.professionalName}}">{{i?.professionalName}}</option>
+                              </select> -->
+                                        <ng-multiselect-dropdown [placeholder]="'Select Professionals'" [data]="professionallist"
+                                            formControlName="professional" [settings]="dropdownSettings" name="profession">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('professional').hasError('required') &&  addserviceForm.get('professional').dirty"
+                                    style="color:red" padding>*Professional field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Venue</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="venue"
+                                            (change)="getVenueId($event)">
+                                            <option value="">Select Venue</option>
+                                            <option *ngFor="let i of venuelist" value="{{i?.venue}}">{{i?.venue}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('venue').hasError('required') &&  addserviceForm.get('venue').dirty"
+                                    style="color:red" padding>*Venue field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Start Date</label>
+                                    <div class="col-md-9">
+                                        <my-date-picker name="startdate" formControlName="startdate" [options]="myDatePickerOptions"
+                                            (dateChanged)="onChange($event)" placeholder="start Date"></my-date-picker>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('startdate').hasError('required') &&  addserviceForm.get('startdate').dirty"
+                                    style="color:red" padding>*Startdate field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">End Date</label>
+                                    <div class="col-md-9">
+                                        <my-date-picker name="enddate" [disabled]='beDisable' formControlName="enddate"
+                                            [options]="toDate" placeholder="End Date"></my-date-picker>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('enddate').hasError('required') &&  addserviceForm.get('enddate').dirty"
+                                    style="color:red" padding>*Enddate field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Service Duration</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="duration"
+                                            (change)="onchange($event)">
+                                            <option value="30">30 minutes</option>
+                                            <option value="60">60 minutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('duration').hasError('required') &&  addserviceForm.get('duration').dirty"
+                                    style="color:red" padding>*Duration field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Start Time</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="starttime"
+                                            (change)="ontime($event)">
+                                            <option *ngFor="let i of timeslot" value="{{i?.time}}">{{i?.time}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('starttime').hasError('required') &&  addserviceForm.get('starttime').dirty"
+                                    style="color:red" padding>*Starttime field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">End Time</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="endtime">
+                                            <option *ngFor="let i of endtime" value="{{i?.time}}">{{i?.time}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('endtime').hasError('required') &&  addserviceForm.get('endtime').dirty"
+                                    style="color:red" padding>*endtime field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">No of player per slot</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="perslot" formControlName="perslot" placeholder="Enter the Number of Slot" class="form-control" />
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('perslot').hasError('required') &&  addserviceForm.get('perslot').dirty"
+                                    style="color:red" padding>*perslot field can not be empty</p>
+                                <p *ngIf="addserviceForm.get('perslot').hasError('pattern') &&  addserviceForm.get('perslot').dirty"
+                                    style="color:red" padding>*Invalid Number of player per slot</p>
+                                <div class="form-group clearfix row" *ngIf="amount == true">
+                                    <label class="col-md-3 label-blue">Amount Per Slot</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="perslot" formControlName="amount" placeholder="Enter the amount" class="form-control" />
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('amount').hasError('pattern') &&  addserviceForm.get('amount').dirty"
+                                    style="color:red" padding>*amount field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">WeekOff</label>
+                                    <div class="col-md-9">
+                                        <!-- <select class="form-control select-style1 round-input" formControlName="weekoff" multiple="multiple" >
+                            <option (mousedown)="onweekend($event)" (mousemove)="$event.preventDefault()"   *ngFor="let i of weekOff"  value="{{i?.itemName}}">{{i?.itemName}}</option>
+                          </select>                     -->
+                                        <ng-multiselect-dropdown [placeholder]="'Select week off'" [data]="weekOff"
+                                            formControlName="weekoff" [settings]="dropdownSettings" name="week">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('weekoff').hasError('required') &&  addserviceForm.get('weekoff').dirty"
+                                    style="color:red" padding>*weekoff field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="status">
+                                            <option value="">Select Status</option>
+                                            <option value="confirmed">Confirmed</option>
+                                            <option value="unconfirmed">Unconfirmed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('status').hasError('required') &&  addserviceForm.get('status').dirty"
+                                    style="color:red" padding>*status field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Description</label>
+                                    <div class="col-md-9">
+                                        <textarea formControlName="description" placeholder="Provide the service description" style="height:118px; width: 343px;"></textarea>
+                                    </div>
+                                </div>
+                                <p *ngIf="addserviceForm.get('description').hasError('required') &&  addserviceForm.get('description').dirty"
+                                    style="color:red" padding>*description field can not be empty</p>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"
+                                        [disabled]="!addserviceForm.valid" (click)="addserviceFunc(addserviceForm.value)">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Service Modal Ends here [disabled]="!addserviceForm.valid"-->
+<!-- Edit Service Start Here -->
+<div class="modal fade common-modal" id="editService" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]='editserviceForm'>
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Edit Service</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Service Type</label>
+                                    <div class="col-md-9">
+                                        <input type="radio" name="servicetype" formControlName="servicetype" value="free"
+                                            [(ngModel)]="serviceDetail.serviceType" disabled />Free
+                                        <input type="radio" name="servicetype" formControlName="servicetype" value="paid"
+                                            [(ngModel)]="serviceDetail.serviceType" disabled />Paid
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('servicetype').hasError('required') &&  editserviceForm.get('servicetype').dirty"
+                                    style="color:red" padding>*servicetype field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Membership List</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [(ngModel)]="serviceDetail.membershipName"
+                                            formControlName="membershipname" (change)="getMembershipId($event)">
+                                            <option *ngFor="let i of memberlist" value="{{i?.membershipName}}" disabled>{{i?.membershipName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('membershipname').hasError('required') &&  editserviceForm.get('membershipname').dirty"
+                                    style="color:red" padding>*membershipname field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Service Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" formControlName="servicename"
+                                            [(ngModel)]="serviceDetail.serviceName" />
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('servicename').hasError('required') &&  editserviceForm.get('servicename').dirty"
+                                    style="color:red" padding>*servicename field can not be empty</p>
+                                <p *ngIf="editserviceForm.get('servicename').hasError('pattern') &&  editserviceForm.get('servicename').dirty"
+                                    style="color:red" padding>*servicename field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Professional</label>
+                                    <div class="col-md-9">
+                                        <!-- <select class="form-control select-style1 round-input" [(ngModel)]="serviceDetail.professionals"  formControlName="professional" multiple="multiple" >
+                                 <option (mousedown)="onMouseDown($event,i?.professionalId)" (mousemove)="$event.preventDefault()"   *ngFor="let i of professionallist"  value="{{i?.professionalName}}">{{i?.professionalName}}</option>
+                              </select> -->
+                                        <ng-multiselect-dropdown [placeholder]="'Select Professionals'" [data]="professionallist"
+                                            formControlName="professional" [(ngModel)]="serviceDetail.professionals"
+                                            [settings]="dropdownSettings" name="profession">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('professional').hasError('required') &&  editserviceForm.get('professional').dirty"
+                                    style="color:red" padding>*professional field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Venue</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [(ngModel)]="serviceDetail.venueName"
+                                            formControlName="venue" (change)="getVenueId($event)">
+                                            <option *ngFor="let i of venuelist" value="{{i?.venue}}">{{i?.venue}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('venue').hasError('required') &&  editserviceForm.get('venue').dirty"
+                                    style="color:red" padding>*venue field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Start Date</label>
+                                    <div class="col-md-9">
+                                        <my-date-picker name="startdate" formControlName="startdate" [(ngModel)]="serviceDetail.startDate"
+                                            [options]="myDatePickerOptions" (dateChanged)="onChange($event)"
+                                            placeholder="start Date" [disabled]='beDisable'></my-date-picker>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('startdate').hasError('required') &&  editserviceForm.get('startdate').dirty"
+                                    style="color:red" padding>*startdate field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">End Date</label>
+                                    <div class="col-md-9">
+                                        <my-date-picker name="enddate" [disabled]='beDisable' [(ngModel)]="serviceDetail.endDate"
+                                            formControlName="enddate" [options]="toDate" placeholder="End Date"></my-date-picker>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('enddate').hasError('required') &&  editserviceForm.get('enddate').dirty"
+                                    style="color:red" padding>*enddate field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Service Duration</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [(ngModel)]="serviceDetail.duration"
+                                            formControlName="duration" (change)="onchange($event)" disabled>
+                                            <option value="30">30 minutes</option>
+                                            <option value="60">60 minutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('duration').hasError('required') &&  editserviceForm.get('duration').dirty"
+                                    style="color:red" padding>*duration field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Start Time</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [(ngModel)]="serviceDetail.startDuration"
+                                            formControlName="starttime" (change)="ontime($event)" disabled>
+                                            <option *ngFor="let i of timeslot" value="{{i?.time}}">{{i?.time}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('starttime').hasError('required') &&  editserviceForm.get('starttime').dirty"
+                                    style="color:red" padding>*starttime field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">End Time</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="endtime"
+                                            [(ngModel)]="serviceDetail.endDuration" disabled>
+                                            <option *ngFor="let i of endtime" value="{{i?.time}}">{{i?.time}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('endtime').hasError('required') &&  editserviceForm.get('endtime').dirty"
+                                    style="color:red" padding>*endtime field can not be empty</p>
+
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">No of player per slot</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="perslot" class="form-control" formControlName="perslot"
+                                            [(ngModel)]="serviceDetail.noOfPlayersPerSlot" readonly />
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('perslot').hasError('required') &&  editserviceForm.get('perslot').dirty"
+                                    style="color:red" padding>*perslot field can not be empty</p>
+                                <p *ngIf="editserviceForm.get('perslot').hasError('pattern') &&  editserviceForm.get('perslot').dirty"
+                                    style="color:red" padding>*perslot field can not be empty</p>
+
+                                <div class="form-group clearfix row" *ngIf="serviceDetail.serviceType == 'paid'">
+                                    <label class="col-md-3 label-blue">Amount Per Slot</label>
+                                    <div class="col-md-9">
+                                        <input type="text" name="perslot" class="form-control" formControlName="amount"
+                                            [(ngModel)]="serviceDetail.amount" />
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('amount').hasError('required') &&  editserviceForm.get('amount').dirty"
+                                    style="color:red" padding>*amount field can not be empty</p>
+                                <p *ngIf="editserviceForm.get('amount').hasError('pattern') &&  editserviceForm.get('amount').dirty"
+                                    style="color:red" padding>*amount field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">WeekOff</label>
+                                    <div class="col-md-9" aria-disabled="true">
+                                        <!-- <select class="form-control select-style1 round-input" formControlName="weekoff" multiple="multiple" [(ngModel)]="serviceDetail.offDays" [disabled]="beDisable">
+                            <option (mousedown)="onweekend($event)" (mousemove)="$event.preventDefault()"   *ngFor="let i of weekOff"  value="{{i?.itemName}}">{{i?.itemName}}</option>
+                           
+                          </select>                     -->
+                                        <ng-multiselect-dropdown [placeholder]="'Select week off'" [data]="weekOff"
+                                            formControlName="weekoff" [(ngModel)]="serviceDetail.offDays" [settings]="dropdownSettings"
+                                            name="week">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('weekoff').hasError('required') &&  editserviceForm.get('weekoff').dirty"
+                                    style="color:red" padding>*weekoff field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="status"
+                                            [(ngModel)]="serviceDetail.showStatus">
+                                            <option value="confirmed">Confirmed</option>
+                                            <option value="unconfirmed">Unconfirmed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('status').hasError('required') &&  editserviceForm.get('status').dirty"
+                                    style="color:red" padding>*status field can not be empty</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Description</label>
+                                    <div class="col-md-9">
+                                        <textarea formControlName="description" [(ngModel)]="serviceDetail.description"
+                                            style="height:118px; width: 343px;"></textarea>
+                                    </div>
+                                </div>
+                                <p *ngIf="editserviceForm.get('description').hasError('required') &&  editserviceForm.get('description').dirty"
+                                    style="color:red" padding>*description field can not be empty</p>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"
+                                        (click)="editserviceFunc(editserviceForm.value)">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Service Modal Ends here -->

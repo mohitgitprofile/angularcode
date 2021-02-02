@@ -1,0 +1,74 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="content-box bg-gray">
+      <app-venue-configure-header></app-venue-configure-header>
+      <div class="tab-block mt10">
+        <ul class="nav nav-pills">
+          <li class="nav-item ">
+            <a class="nav-link active" data-toggle="tab" href="#home" (click)="changeTabFunc('email')">Email</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1" (click)="changeTabFunc('sms')">Sms</a>
+          </li>
+        </ul>
+        <div class="tab-scroll-block">
+          <div class="tab-content mt20 sms-tab">
+            <div class="tab-pane active" id="home">
+              <div class="form-block">
+                <h3 class="tab-inner-heading">Client - amendment email notification</h3>
+                <form autocomplete="off" novalidate [formGroup]="addNotificationForm">
+                  <div class="form-group clearfix row">
+                    <label class="col-md-5 col-lg-3 label-blue">Subject</label>
+                    <div class="col-md-7 col-lg-8">
+                      <input type="text" class="form-control round-input" [formControl]="gNotificationF.subject" placeholder="Please enter Subject">
+                      <div class="errorMsg" *ngIf="gNotificationF.subject.dirty && gNotificationF.subject.invalid">
+                        <span *ngIf="gNotificationF.subject.hasError('required')">*Please enter Subject.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-5 col-lg-3 label-blue">Email Content</label>
+                    <div class="col-md-7 col-lg-8">
+                      <textarea class="form-control common-textarea" placeholder="Please enter email content"  [formControl]="gNotificationF.body"></textarea>
+                      <div class="errorMsg" *ngIf="gNotificationF.body.dirty && gNotificationF.body.invalid">
+                        <span *ngIf="gNotificationF.body.hasError('required')">*Please enter email content.</span>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="button-box">
+                <button class="btn btn btn-dark-blue-s max-WT-100" type="button" [disabled]="!addNotificationForm.valid" (click)="saveFunc('email')">Save</button>
+              </div>
+            </div>
+            <div class="tab-pane" id="menu1">
+              <div class="form-block">
+                <h3 class="tab-inner-heading">Client - amendment SMS notification</h3>
+                <form>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-5 col-lg-3 label-blue">SMS Content</label>
+                    <div class="col-md-7 col-lg-8">
+                      <textarea class="form-control common-textarea" placeholder="Please sms content" [(ngModel)]="smsBody"  [ngModelOptions]="{standalone: true}" ></textarea>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="button-box">
+                <button class="btn btn btn-dark-blue-s max-WT-100" type="button" [disabled]="!smsBody" (click)="saveFunc('sms')">Save</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>
+

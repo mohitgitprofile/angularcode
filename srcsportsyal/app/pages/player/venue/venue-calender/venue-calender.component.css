@@ -1,0 +1,6 @@
+.dijitCalendarContainer {
+    /* (must be higher than popup z-index) */
+    z-index: 10010 !important;
+    background-color: #eff0f2;
+    display: block !important;
+  }

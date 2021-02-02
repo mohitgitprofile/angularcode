@@ -1,0 +1,59 @@
+
+      <!--   Header  Start   -->
+      <app-header></app-header>
+      <!--   Header  End   -->
+      <div class="topBanner">
+         <div class="container">
+         </div>
+      </div>
+      <!-- main Start -->
+      <main class="main-container pt0 mt-min60">
+         <div class="container">
+            <div class="content-box bg-gray">
+               <div class="content-box-filter">
+                  <div class="user-message-block max-WT-800 mrgn-0-auto">
+                     <h5 class="head-sub text-center" *ngIf="MessagesList.docs.length">Message</h5>
+                     <p *ngIf="!MessagesList.docs.length" class="text-center">No Message Found.</p>
+                     <ul class="user-msg-list" *ngFor="let item of MessagesList?.docs | paginate: { itemsPerPage: MessagesList?.limit, currentPage: MessagesList?.page,  totalItems: MessagesList?.total } " >
+                      <li [routerLink]="['/organizer/compMessagesdetail', item?.playerId?._id]">
+                        <div class="message-img-block">
+                            <div class="message-img">
+                              <span>{{item?.playerId?.firstName.charAt(0)}}{{item?.playerId?.lastName.charAt(0)}}</span>
+                            </div>
+                        </div>
+                         <div class="message-part">
+                           <h5 class="head-sub mb5">{{item?.playerId?.firstName}} {{item?.playerId?.lastName}}</h5>
+                           <p> {{item?.message[item?.message.length - 1].message}} </p>
+                        </div>
+                      </li>    
+                     </ul>
+                  </div>
+                    	<div class="shoing_entries">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="show_ent" *ngIf="MessagesList.docs.length">
+									FOLLOW US Showing {{filter?.currPage}} to {{(MessagesList?.limit)<(MessagesList?.total)?(MessagesList?.limit):(MessagesList?.total)}} of {{MessagesList?.total}} entries 
+										<select class="form-control select-style1 d-inline" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+											<option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+										</select>
+									entries
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="pagination-block mt10 text-right" *ngIf="MessagesList?.total > MessagesList?.limit">
+
+                    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+								</div>
+							</div>
+						</div>
+                    </div>
+               </div>
+
+            </div>
+            <!-- Max With Box End -->
+         </div>
+      </main>
+      <!-- main End -->
+      <!--  Footer Start  -->
+      <app-footer></app-footer>
+      <!--  Footer End  -->

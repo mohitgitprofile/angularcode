@@ -1,0 +1,1577 @@
+<app-header></app-header>
+
+<div class="topBanner">
+  <div class="container"></div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <app-comp-configure-header></app-comp-configure-header>
+      <div class="text-right mb10">
+        <!-- <button class="btn btn btn-dark-blue-s " type="button">Import from CSV</button> -->
+        <!-- <button class="btn btn btn-dark-blue-s" (click)="exportCSV()" type="button">Export to CSV</button> -->
+        <!-- <button class="btn btn btn-dark-blue-s " type="button">Print</button> -->
+        <button
+          class="btn btn btn-dark-blue-s "
+          (click)="addGroupModal()"
+          type="button"
+        >
+          Add Group
+        </button>
+
+        <button
+          class="btn btn btn-dark-blue-s max-WT-100"
+          type="button"
+          data-toggle="modal"
+          data-target="#create-cup"
+          data-backdrop="static"
+          (click)="addCupModal()"
+        >
+          Cup
+        </button>
+      </div>
+      <div class="content-box-filter">
+        <div class="custom-breadcrumb mt0 custom-breadcrumb1">
+          <nav class="breadcrumb">
+            <a
+              class="breadcrumb-item"
+              [ngClass]="activeTabId == group?._id ? 'active' : ''"
+              *ngFor="let group of groupList"
+              (click)="manageActiveTab(group,'group')"
+              style="cursor:pointer"
+            >
+              {{ group?.groupName }}
+            </a>
+            <a
+              class="breadcrumb-item"
+              *ngFor="let cup of cupList"
+              [ngClass]="activeTabId == cup?._id ? 'active' : ''"
+              (click)="manageActiveTab(cup,'cup')"
+              style="cursor:pointer"
+              >{{ cup?.cupName }}</a
+            >
+          </nav>
+        </div>
+        <div class="custom-breadcrumb mt0 custom-breadcrumb1" *ngIf="grouporcup == 'group'">
+          <nav class="breadcrumb">
+            <a class="breadcrumb-item" [ngClass]="groupStandingOrFixture == 'groupStanding' ? 'active' : ''" (click)="standingClick()" style="cursor:pointer">Standing</a>
+            <a class="breadcrumb-item" [ngClass]="groupStandingOrFixture == 'groupFixture' ? 'active' : ''" (click)="fixtureClick()" style="cursor:pointer">Fixtures</a>
+          </nav>
+        </div>
+        <form class="filter-form fullwidth" *ngIf="grouporcup == 'group' && groupStandingOrFixture == 'groupFixture'">
+          <div class="row">
+            <div class="col-md-12">
+              <li class="dropdown">
+
+                <button class="dropdown-toggle btn btn btn-dark-blue-s pull-right" style="min-width: 120px;" data-toggle="dropdown" >
+                  <span class="caret">
+                    Create Calendar
+                  </span>
+                </button>
+                <button class="btn btn btn-dark-blue-s pull-right mr-2" (click)="exportCSV()" type="button">Export to CSV</button>
+                <button class="btn btn btn-dark-blue-s pull-right mr-2" (click)="downloadPdf()" type="button">PDF</button>
+                <ul class="dropdown-menu" style="color: #fff;background-color: rgb(37, 115, 127);cursor: pointer">
+                  <li style="text-align:center" data-toggle="modal" data-target="#manuel-calender" data-backdrop="static" (click)="CalenderFormReset()"><a >Manual Calendar</a></li>
+                  <li class="border-top" style="text-align:center" data-toggle="modal" data-target="#automatic-calender" data-backdrop="static" (click)="CalenderFormReset()"><a >Automatic Calendar</a></li>
+                </ul>
+              </li>
+            </div>
+          </div>
+        </form>
+        <form class="filter-form fullwidth" *ngIf="grouporcup == 'group' && groupStandingOrFixture == 'groupStanding'">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <form>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search Here.."
+                        aria-label="Recipient's username"
+                        aria-describedby="basic-addon2"
+                        [(ngModel)]="searchKey"
+                        name="searchKey"
+                        (keyup)="searchKeyUP()"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn_search"
+                          (click)="groupTeamListApi()"
+                          type="button"
+                        >
+                          Search
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 fullwidth d-flex align-items-center">
+                <button
+                  class="btn btn btn-dark-blue-s"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#delete-group"
+                  data-backdrop="static"
+                >
+                  Delete Group
+                </button>
+                <button
+                  class="btn btn mL5 mr5 btn-dark-blue-s"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#add-group-team"
+                  data-backdrop="static"
+                  (click)="addTeam()"
+                >
+                  Add Team To Group
+                </button>
+            </div>
+          </div>
+        </form>
+        <!-- && cupTeamList.length -->
+        <form class="filter-form fullwidth" *ngIf="grouporcup == 'cup'">
+          <div class="row">
+            <div class="col-md-12" style="text-align: right;">
+                <button style="min-width: 119px;"
+                  class="btn btn btn-dark-blue-s"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#delete-cup"
+                  data-backdrop="static"
+                >
+                  Delete Cup
+                </button>
+                <!-- <button
+                  class="btn btn mL5 mr5 btn-dark-blue-s"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#add-cup-team"
+                  data-backdrop="static"
+                  (click)="addTeam()"
+                >
+                  Add Team To Cup
+                </button> -->
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="table-block mt10 white-bg" *ngIf="grouporcup == 'group' && groupStandingOrFixture == 'groupStanding'" >
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Name</th>
+                <th>Played Match</th>
+                <th>Won</th>
+                <th>Loss</th>
+                <th>Point</th>
+                <th>For</th>
+                <th>Against</th>
+                <th>Diffrence</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let data of (groupTeamList
+                    | paginate
+                      : {
+                          id: 'groupteam',
+                          itemsPerPage: paginationOfTeamList?.limit,
+                          currentPage: paginationOfTeamList?.currentPage,
+                          totalItems: paginationOfTeamList?.total
+                        })
+                "
+              >
+                <td>{{data?.teamName}}</td>
+                <td>{{data?.count || 0}}</td>
+                <td>{{data?.win || 0}}</td>
+                <td>{{data?.loss || 0}}</td>
+                <td>{{data?.totalPoint || 0}}</td>
+                <td>{{data?.for || 0}}</td>
+                <td>{{data?.against || 0}}</td>
+                <td>{{data?.diffrence || 0}}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="deleteGroupTeamModal(data)">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="!groupTeamList.length">
+                <td colspan="9">No Record Found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block text-right" *ngIf="groupTeamList.length">
+            <pagination-controls
+              (pageChange)="groupTeamPage($event)"
+              id="groupteam"
+            ></pagination-controls>
+          </div>
+          <form>
+            <div class="entity-text" *ngIf="groupTeamList.length">
+              <span>showing{{paginationOfTeamList.limit * (paginationOfTeamList.currentPage - 1) + 1 || 0}} to {{((paginationOfTeamList.limit * paginationOfTeamList.currentPage) < paginationOfTeamList.total) ? (paginationOfTeamList.limit * paginationOfTeamList.currentPage) : paginationOfTeamList.total || 0}} of {{paginationOfTeamList.total}}  entries</span>
+
+              <select
+                class="form-control select-style1 mw50"
+                [(ngModel)]="limit"
+                name="limit"
+                (change)="groupTeamPageLimit()"
+              >
+                <option value="2">2</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+
+              <span>entries</span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-block mt10 white-bg" *ngIf="grouporcup == 'group' && groupStandingOrFixture == 'groupFixture'" >
+        <div class="row" *ngIf="roundWiseData.length">
+          <div class="col-md-12 mt-3">
+            <button class="btn btn-danger pull-right ml-2 mr-2" data-toggle="modal" data-target="#delete-round"
+            data-backdrop="static">
+              <i class="fa fa-trash"></i> Delete Round
+            </button>
+            <select class="form-control select-style1 mw50 pull-right" style="max-width: 222px;" (change)="getRoundsId($event)">
+              <option *ngFor="let item of roundWiseData" [value]="item?._id">Round{{item?.roundName}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3"  *ngIf="roundWiseData.length">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-bordered large-table text-center">
+                <thead>
+                  <tr class="table-head-bg">
+                    <th>Team 1</th>
+                    <th>Team 2</th>
+                    <th>Result</th>
+                    <th>Place</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of particularRoundGame | paginate
+                  : {
+                      id: 'particularRoundGame',
+                      itemsPerPage: particularRoundGamelimit,
+                      currentPage: particularRoundGameTotalCurrentPage,
+                      totalItems: particularRoundGameTotal
+                    };let i=index">
+                    <td>{{data?.teamName1 || '--'}}</td>
+                    <td>{{data?.teamName2 || '--'}}</td>
+                    <td>{{data?.result1}} - {{data?.result2}}</td>
+                    <td>{{data?.place || '--'}}</td>
+                    <td>{{data?.matchTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td>
+                      <button class="btn btn-info" data-toggle="modal" data-target="#edit-game"
+                      data-backdrop="static" (click)="editGame(data)">
+                          <i class="far fa-edit"></i>
+                      </button>
+                      <button class="btn btn-danger" data-toggle="modal" data-target="#delete-game"
+                      data-backdrop="static" (click)="deleteGameModal(data)">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!particularRoundGame.length">
+                    <td colspan="9">No Record Found</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+          <div class="clearfix pagination-entity">
+            <div class="pagination-block text-right" *ngIf="groupTeamList.length">
+              <pagination-controls
+                (pageChange)="particularRoundGamePage($event)"
+                id="particularRoundGame"
+              ></pagination-controls>
+            </div>
+            <form>
+              <div class="entity-text" *ngIf="groupTeamList.length">
+                <span>showing{{particularRoundGamelimit * (particularRoundGameTotalCurrentPage - 1) + 1 || 0}} to {{((particularRoundGamelimit * particularRoundGameTotalCurrentPage) < particularRoundGameTotal) ? (particularRoundGamelimit * particularRoundGameTotalCurrentPage) : particularRoundGameTotal || 0}} of {{particularRoundGameTotal}}  entries</span>
+
+                <select
+                  class="form-control select-style1 mw50"
+                  [(ngModel)]="particularRoundGamelimit"
+                  name="particularRoundGamelimit"
+                >
+                  <option value="2">2</option>
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+
+                <span>entries</span>
+              </div>
+            </form>
+          </div>
+        </div>
+       <div style="box-shadow: 0 4px 20px #929191;margin-top: 20px;display: flex;overflow: scroll;" *ngIf="grouporcup == 'cup'">
+        <!-- && cupTeamList.length -->
+          <div class="horizontalClass0" *ngFor="let data of cupTeamData;let i = index">
+            <div [ngClass]="i==0? 'marginLeft30':'marginLeft60'" style="margin-top: 30px;">
+              <label *ngIf="data.length == 64">64th round</label>
+              <label *ngIf="data.length == 32">32th round</label>
+              <label *ngIf="data.length == 16">16th round</label>
+              <label *ngIf="data.length == 8">8th round</label>
+              <label *ngIf="data.length == 4">Quarter Final</label>
+              <label *ngIf="data.length == 2">Semi Final</label>
+              <label *ngIf="data.length == 1">Final</label>
+              <div  *ngIf="(data[0]?.startDate && data[0]?.startDate != '1970-01-01T05:30:00.000Z') || (data[0]?.endDate && data[0]?.endDate != '1970-01-01T05:30:00.000Z')">
+                  (<span *ngIf="data[0]?.startDate && data[0]?.startDate != '1970-01-01T05:30:00.000Z'">{{data[0]?.startDate | date:'dd/MM/yyyy'}}</span>
+                  <span *ngIf="data[0]?.endDate && data[0]?.endDate != '1970-01-01T05:30:00.000Z'"> <span *ngIf="data[0]?.startDate && data[0]?.startDate != '1970-01-01T05:30:00.000Z'">-</span> {{data[0]?.endDate | date:'dd/MM/yyyy'}}</span> )
+              </div>
+              <div>
+                <button class="btn btn-info" (click)="roundConfigure(data,i)"><i class="fa fa-cog fa-fw"></i>The best of {{data[0]?.games.length}}</button>
+              </div>
+            </div>
+            <div class="verticalClass00" *ngFor="let item of data;let j= index" [ngClass]="i==0? 'marginLeft30':'marginLeft60'" style="display: flex">
+              <div class="borderClass" [ngClass]="i== 0 ? 'marginTop43' : (i==1 ? ((j==0) ? 'marginTop147' : 'marginTop243') : (i==2 ? (j==0 ? 'marginTop346' : 'marginTop642') : (i==3 ? (j==0? 'marginTop737' : 'marginTop1445') : (i==4 ? (j==0 ? 'marginTop1514': 'marginTop3047') : (i==5 ? (j==0 ? 'marginTop3336' : 'marginTop6150') : 'marginTop6200')))))">
+                <div [ngClass]="cupTeamData[i+1] ? (j % 2 == 0 ? 'evenClass' + i : 'oddClass' + i) : (i>0 ? 'backlineclass' : '')">
+                    <div [ngClass]="cupTeamData[i+1] ? j % 2 == 0 ? 'verticalevenClass' + i : 'verticaloddClass' + i : ''">
+                <label class="classh">
+                  <i class="fa fa-plus left marginTop ml-1" style="cursor: pointer" (click)="addTeamToCupRound(item, 'team1')"></i>
+                  <span class="marginTop" *ngIf="item?.games[0]?.teamName1 == ''">Add Team</span>
+                  <span class="marginTop" *ngIf="item?.games[0]?.teamName1 != ''" [title]="item?.games[0]?.teamName1">{{sliceFunction(item?.games[0]?.teamName1)}}</span>
+                  <i class="fa fa-plus right marginTop mr-1" style="cursor: pointer" (click)="getGameData(plus)" *ngFor="let plus of item?.games"></i>
+                  <i class="far fa-edit right marginTop mr-1" style="cursor: pointer" (click)="addTeamToCupRound(item, 'team1')"></i>
+                </label>
+                <label class="classh">
+                  <i class="fa fa-plus left marginTop ml-1" style="cursor: pointer" (click)="addTeamToCupRound(item, 'team2')"></i>
+                  <span class="marginTop" *ngIf="item?.games[0]?.teamName2 == ''">Add Team</span>
+                  <span class="marginTop" *ngIf="item?.games[0]?.teamName2 != ''" [title]="item?.games[0]?.teamName2">{{sliceFunction(item?.games[0]?.teamName2)}}</span>
+                  <i class="fa fa-plus right marginTop mr-1" style="cursor: pointer" (click)="getGameData(plus)" *ngFor="let plus of item?.games"></i>
+                  <i class="far fa-edit right marginTop mr-1" style="cursor: pointer" (click)="addTeamToCupRound(item, 'team2')"></i>
+                </label>
+                <label class="classh">date</label>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="box-shadow: 0 4px 20px #929191;margin-top: 20px;display: flex;overflow: scroll;" *ngIf="grouporcup == 'cup' && thirdAndForthPlace.length">
+          <!-- && cupTeamList.length -->
+          <div class="horizontalClass0" style="margin-left: 32px;">
+            <div style="margin-top: 24px;">
+              <label>Third and fourth place</label>
+              <div *ngIf="(thirdAndForthPlace[0]?.startDate && thirdAndForthPlace[0]?.startDate != '1970-01-01T05:30:00.000Z') || (thirdAndForthPlace[0]?.endDate && thirdAndForthPlace[0]?.endDate != '1970-01-01T05:30:00.000Z')">
+                  (<span *ngIf="thirdAndForthPlace[0]?.startDate && thirdAndForthPlace[0]?.startDate != '1970-01-01T05:30:00.000Z'">{{thirdAndForthPlace[0]?.startDate | date:'dd/MM/yyyy'}}</span>
+                  <span *ngIf="thirdAndForthPlace[0]?.endDate && thirdAndForthPlace[0]?.endDate != '1970-01-01T05:30:00.000Z'">
+                    <span *ngIf="thirdAndForthPlace[0]?.startDate && thirdAndForthPlace[0]?.startDate != '1970-01-01T05:30:00.000Z'">-</span>
+                    {{thirdAndForthPlace[0]?.endDate | date:'dd/MM/yyyy'}}
+                  </span> )
+              </div>
+              <div style="margin-top: 11px;">
+                <button class="btn btn-info" (click)="roundConfigure(thirdAndForthPlace,12)">The best of {{thirdAndForthPlace[0]?.games.length}}</button>
+              </div>
+            </div>
+            <div class="verticalClass00" style="margin-top: 30px;margin-bottom: 23px;">
+              <div class="borderClass" >
+                <label class="classh">
+                  <i class="fa fa-plus left marginTop" style="cursor: pointer" (click)="addTeamToCupRound(thirdAndForthPlace[0], 'team1')"></i>
+                  <span *ngIf="thirdAndForthPlace[0]?.games[0]?.teamName1 == ''" class="marginTop">Add Team</span>
+                  <span class="marginTop" *ngIf="thirdAndForthPlace[0]?.games[0]?.teamName1 != ''" [title]="item?.games[0]?.teamName1">{{sliceFunction(item?.games[0]?.teamName1)}}</span>
+                  <i class="fa fa-plus right marginTop ml-1" (click)="getGameData(plus)" *ngFor="let plus of thirdAndForthPlace[0]?.games" style="cursor: pointer"></i>
+                  <i class="far fa-edit right marginTop" (click)="addTeamToCupRound(thirdAndForthPlace[0], 'team1')"  style="cursor: pointer"></i>
+                </label>
+                <label class="classh">
+                  <i class="fa fa-plus left marginTop" style="cursor: pointer" (click)="addTeamToCupRound(thirdAndForthPlace[0], 'team2')"></i>
+                  <span class="marginTop" *ngIf="thirdAndForthPlace[0]?.games[0]?.teamName2 == ''">Add Team</span>
+                  <span class="marginTop" *ngIf="thirdAndForthPlace[0]?.games[0]?.teamName2 != ''" [title]="item?.games[0]?.teamName2">{{sliceFunction(item?.games[0]?.teamName2)}}</span>
+                  <i class="fa fa-plus right marginTop ml-1" (click)="getGameData(plus)" *ngFor="let plus of thirdAndForthPlace[0]?.games" style="cursor: pointer"></i>
+                  <i class="far fa-edit right marginTop" (click)="addTeamToCupRound(thirdAndForthPlace[0], 'team2')" style="cursor: pointer"></i>
+                </label>
+                <label class="classh">date</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main end -->
+<!--- Footer Start -->
+<app-footer></app-footer>
+<!--- Footer End -->
+
+<!-- add-group -->
+<div
+  class="modal fade common-modal"
+  id="add-group"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="tiebreakerForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">
+            New Group
+          </h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Name</label>
+                  <div class="col-md-9">
+                    <input
+                      class="form-control round-input"
+                      formControlName="name"
+                      maxlength="256"
+                    />
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        tiebreakerForm.get('name').hasError('required') &&
+                        (tiebreakerForm.get('name').touched ||
+                          tiebreakerForm.get('name').dirty)
+                      "
+                    >
+                      *Please enter name.
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        tiebreakerForm.get('name').hasError('minlength') &&
+                        (tiebreakerForm.get('name').touched ||
+                          tiebreakerForm.get('name').dirty)
+                      "
+                    >
+                      *Minimum length must be 2.
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        tiebreakerForm.get('name').hasError('pattern') &&
+                        !tiebreakerForm.get('name').hasError('minlength') &&
+                        (tiebreakerForm.get('name').touched ||
+                          tiebreakerForm.get('name').dirty)
+                      "
+                    >
+                      *Invalid group name.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Tiebreakers</label>
+                  <div class="col-md-9">
+                    <select
+                      class="form-control select-style1 round-input"
+                      formControlName="tiebreaker"
+                    >
+                      <option value="" style="display:none"
+                        >-- Select Tiebreakers --</option
+                      >
+                      <option
+                        *ngFor="let data of tiebreakersList"
+                        [ngValue]="data"
+                        >{{ data?.standingName }}</option
+                      >
+                    </select>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        tiebreakerForm.get('tiebreaker').hasError('required') &&
+                        (tiebreakerForm.get('tiebreaker').touched ||
+                          tiebreakerForm.get('tiebreaker').dirty)
+                      "
+                    >
+                      *Tiebreaker is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-right">
+                  <button
+                    type="button"
+                    class="mb25 btn btn-gray max-WT-150"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="mb25 btn btn-navy-blue max-WT-150 mL5 "
+                    (click)="addGroup()"
+                    [disabled]="tiebreakerForm.invalid"
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end(add-group)-->
+
+<!-- start add cup -->
+
+<div
+  class="modal fade common-modal"
+  id="create-cup"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="createCupForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">
+            Create cup
+          </h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Name</label>
+                  <div class="col-md-9">
+                    <input
+                      class="form-control round-input"
+                      formControlName="cupName"
+                      maxlength="256"
+                    />
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        createCupForm.get('cupName').hasError('required') &&
+                        (createCupForm.get('cupName').touched ||
+                          createCupForm.get('cupName').dirty)
+                      "
+                    >
+                      *Please enter name.
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        createCupForm.get('cupName').hasError('minlength') &&
+                        (createCupForm.get('cupName').touched ||
+                          createCupForm.get('cupName').dirty)
+                      "
+                    >
+                      *Minimum length must be 2.
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        createCupForm.get('cupName').hasError('pattern') &&
+                        !createCupForm.get('cupName').hasError('minlength') &&
+                        (createCupForm.get('cupName').touched ||
+                          createCupForm.get('cupName').dirty)
+                      "
+                    >
+                      *Invalid cup name.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">No. of Team</label>
+                  <div class="col-md-9">
+                    <select
+                      class="form-control select-style1 round-input"
+                      formControlName="noOfTeam"
+                    >
+                    <!-- (change)="noOfTeamFunc()" -->
+                      <option value="" style="display:none"
+                        >-- Select No. of Team --</option
+                      >
+                      <option *ngFor="let x of noOfTeam" [ngValue]="x">{{
+                        x
+                      }}</option>
+                    </select>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        createCupForm.get('noOfTeam').hasError('required') &&
+                        (createCupForm.get('noOfTeam').touched ||
+                          createCupForm.get('noOfTeam').dirty)
+                      "
+                    >
+                      *Please select number of team.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">The Best</label>
+                  <div class="col-md-9">
+                    <select
+                      class="form-control select-style1 round-input"
+                      formControlName="theBest"
+                    >
+                      <option value="" style="display:none"
+                        >-- Select Best of --</option
+                      >
+                      <option *ngFor="let y of bestArr" [ngValue]="y">{{
+                        y
+                      }}</option>
+                      <!-- <option>Select Best of</option> -->
+                    </select>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        createCupForm.get('theBest').hasError('required') &&
+                        (createCupForm.get('theBest').touched ||
+                          createCupForm.get('theBest').dirty)
+                      "
+                    >
+                      *Please select best.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <div class="col-md-3">
+                  </div>
+                  <div class="col-md-9">
+                    <input type="checkbox" formControlName="TandFvalue" id="T&F">
+                    <label for="T&F">Third & fourth place</label>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-right">
+                  <button
+                    type="button"
+                    class="mb25 btn btn-gray max-WT-150"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="mb25 btn btn-navy-blue max-WT-150 mL5 "
+                    [disabled]="createCupForm.invalid"
+                    (click)="createCup()"
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- end add cup -->
+
+<!-- delete group modal start -->
+
+<div class="modal fade global-modal reset-modal" id="delete-group">
+  <div class="modal-dialog max-WT-350">
+    <form class="change_password">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+          <h5 class="modal-title d-inline-block">Delete Group</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mt-0">
+          <div
+            class="text-center  d-flex align-items-center justify-content-center"
+          >
+            <div class="w-100">
+              <p>Are you sure you want to delete this group?</p>
+              <div>
+                <button
+                  type="submit"
+                  class="btn mr-2 btn-info"
+                  (click)="deleteGroup()"
+                >
+                  Delete
+                </button>
+                <button
+                  type="submit"
+                  class="btn mr-2 btn-info"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- delete group modal end -->
+
+<!-- delete cup modal start -->
+
+<div class="modal fade global-modal reset-modal" id="delete-cup">
+  <div class="modal-dialog max-WT-350">
+    <form class="change_password">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+          <h5 class="modal-title d-inline-block">Delete cup</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mt-0">
+          <div
+            class="text-center  d-flex align-items-center justify-content-center"
+          >
+            <div class="w-100">
+              <p>Are you sure you want to delete this cup?</p>
+              <div>
+                <button
+                  type="submit"
+                  class="btn mr-2 btn-info"
+                  (click)="deletecup()"
+                >
+                  Delete
+                </button>
+                <button
+                  type="submit"
+                  class="btn mr-2 btn-info"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- delete cup modal end -->
+
+<!-- add team in group modal start -->
+
+<div
+  class="modal fade common-modal"
+  id="add-group-team"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">
+            Add Team To Group
+          </h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Selete Team</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [(ngModel)]='teamToAddInGroup' name="teamToAddInGroup" required>
+                      <option value="" style="display:none" selected>-- Select Team --</option>
+                      <option *ngFor="let team of teamListToAddTeam" [ngValue]="team">{{team?.teamName}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-right">
+                  <button
+                    type="button"
+                    class="mb25 btn btn-gray max-WT-150"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="mb25 btn btn-navy-blue max-WT-150 mL5 "
+                    (click)="addTeamToGroup()"
+                    [disabled]="teamToAddInGroup == ''"
+                    [ngStyle]="{'cursor':teamToAddInGroup == '' ? 'no-drop' : '' }"
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- add team in group modal end -->
+
+<!-- add team in cup modal start -->
+
+<div
+  class="modal fade common-modal"
+  id="add-cup-team"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">
+            Add Team To Cup
+          </h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Selete Team</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [(ngModel)]='teamToAddInCup' name="teamToAddInCup" required>
+                      <option value="" style="display:none" selected>-- Select Team --</option>
+                      <option *ngFor="let team of teamListToAddTeam" [ngValue]="team">{{team?.teamName}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-right">
+                  <button
+                    type="button"
+                    class="mb25 btn btn-gray max-WT-150"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    class="mb25 btn btn-navy-blue max-WT-150 mL5 "
+                    (click)="addTeamToCup()"
+                    [disabled]="teamToAddInCup == ''"
+                    [ngStyle]="{'cursor':teamToAddInCup == '' ? 'no-drop' : '' }"
+                  >
+                    Add Team
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- add team in cup modal end -->
+
+<!-- delete group team modal -->
+<div class="modal fade global-modal reset-modal" id="delete-group-team">
+    <div class="modal-dialog max-WT-350">
+      <form class="change_password">
+        <div class="modal-content">
+          <div class="modal-header d-block text-center">
+            <h5 class="modal-title d-inline-block">Delete Group Team</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body mt-0">
+            <div
+              class="text-center  d-flex align-items-center justify-content-center"
+            >
+              <div class="w-100">
+                <p>Are you sure you want to delete this team?</p>
+                <div>
+                  <button
+                    type="submit"
+                    class="btn mr-2 btn-info"
+                    (click)="deleteGroupTeam()"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn mr-2 btn-info"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- manual calender modal start -->
+
+  <div class="modal fade common-modal" id="manuel-calender" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog max-WT-800" role="document">
+         <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="manualCalForm">
+               <div class="modal-body text-center">
+                   <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Manual Calender</h5>
+                  <div class="modal-content-body modalform-body text-left">
+                   <div class="row">
+
+                     <div class="col-md-12">
+                       <div class="form-group clearfix row">
+                          <label class="col-md-4 label-blue">Number of Rounds</label>
+                          <div class="col-md-8">
+                           <input type="text" class="form-control round-input" formControlName="noOfRounds" placeholder="Number of Rounds">
+                           <div class="text-danger" *ngIf="manualCalForm.get('noOfRounds').hasError('required') && (manualCalForm.get('noOfRounds').dirty || manualCalForm.get('noOfRounds').touched)">
+                            *Please enter number of rounds.
+                           </div>
+                           <div class="text-danger" *ngIf="manualCalForm.get('noOfRounds').hasError('pattern') && (manualCalForm.get('noOfRounds').dirty || manualCalForm.get('noOfRounds').touched)">
+                              *Number of rounds accepts only numbers.
+                             </div>
+                          </div>
+                        </div>
+                        <div class="form-group clearfix row">
+                          <label class="col-md-4 label-blue">Number of Games Per Round</label>
+                          <div class="col-md-8">
+                           <input type="text" class="form-control round-input" formControlName="noOfGamesPerRound" placeholder="Number of Games Per Round">
+                           <div class="text-danger" *ngIf="manualCalForm.get('noOfGamesPerRound').hasError('required') && (manualCalForm.get('noOfGamesPerRound').dirty || manualCalForm.get('noOfGamesPerRound').touched)">
+                              *Please enter number of games per rounds.
+                             </div>
+                             <div class="text-danger" *ngIf="manualCalForm.get('noOfGamesPerRound').hasError('pattern') && (manualCalForm.get('noOfGamesPerRound').dirty || manualCalForm.get('noOfGamesPerRound').touched)">
+                                *Number of games per rounds accepts only numbers.
+                               </div>
+                          </div>
+                        </div>
+                       <div class="clearfix calendar-action mt30 text-right">
+                         <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                         <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5 " [disabled]="manualCalForm.invalid" (click)="manualCalAccept()">Accepted</button>
+                       </div>
+                      </div>
+                   </div>
+
+                 </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+
+  <!-- manual calender modal end -->
+
+  <!-- automatic calender modal start -->
+
+  <div class="modal fade common-modal" id="automatic-calender" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog max-WT-800" role="document">
+         <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="autometicCalForm" [autocomplete]="off">
+               <div class="modal-body text-center">
+                   <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Automatic Calneder</h5>
+                  <div class="modal-content-body modalform-body text-left">
+                   <div class="row">
+                     <div class="col-md-12">
+                       <div class="form-group clearfix row">
+                          <label class="col-md-4 label-blue">Each Team Play Against The Rest</label>
+                          <div class="col-md-8">
+                           <select class="form-control select-style1 round-input" formControlName="againstTeams">
+                             <option value='' selected style="display: none">-- Select No. of Match --</option>
+                               <option value="1">Once</option>
+                                <option value="2">Twice</option>
+                                <option value="3">3 Times</option>
+                                <option value="4">4 Times</option>
+                                <option value="5">5 Times</option>
+                                <option value="6">6 Times</option>
+                                <option value="7">7 Times</option>
+                           </select>
+                           <div class="text-danger" *ngIf="autometicCalForm.get('againstTeams').hasError('required') && (autometicCalForm.get('againstTeams').dirty || autometicCalForm.get('againstTeams').touched)">
+                            *Please select no. of match play against the rest
+                           </div>
+                          </div>
+                        </div>
+                        <div class="form-group clearfix row">
+                          <label class="col-md-4 label-blue">No. of match played by the same team each round</label>
+                          <div class="col-md-8">
+                           <select class="form-control select-style1 round-input" formControlName="sameTeamMatches">
+                              <option value='' selected style="display: none">-- No. of matches played by same team -- </option>
+                             <option value='1'>1 match (most common)</option>
+                             <option value="2">2 matches</option>
+                             <option value="3">3 matches</option>
+                             <option value="4">4 matches</option>
+                             <option value="5">5 matches</option>
+                             <option value="6">6 matches</option>
+                             <option value="7">7 matches</option>
+                             <option value="8">8 matches</option>
+                             <option value="9">9 matches</option>
+                           </select>
+                           <div class="text-danger" *ngIf="autometicCalForm.get('sameTeamMatches').hasError('required') && (autometicCalForm.get('sameTeamMatches').dirty || autometicCalForm.get('sameTeamMatches').touched)">
+                              *Please select no. of match played by same team.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group clearfix row">
+                          <label class="col-md-4 label-blue">Start Date (Round 1)</label>
+                          <div class="col-md-8">
+                              <input
+                              class="form-control datepicker"
+                              style="float:none"
+                              placeholder="Select start date"
+                              formControlName = "round1StartDate"
+                              ngx-mydatepicker
+                              name="startDateRound1"
+                              [options]="startDateOptions"
+                              #startDateOptions="ngx-mydatepicker"
+                              (click)="startDateOptions.toggleCalendar()"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group clearfix row">
+                          <label class="col-md-4 label-blue">End Date (Round 1)</label>
+                          <div class="col-md-8">
+                           <input
+                              class="form-control datepicker"
+                              style="float:none"
+                              placeholder="Select end date"
+                              formControlName = "round2StartDate"
+                              ngx-mydatepicker
+                              name="startDateRound2"
+                              [options]="endDateOptions"
+                              #endDateOptions="ngx-mydatepicker"
+                              (click)="endDateOptions.toggleCalendar()"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group clearfix row">
+                          <label class="col-md-4 label-blue">Match Duration</label>
+                          <div class="col-md-4">
+                            <input type="text" formControlName = "eachRoundTime" class="form-control round-input" placeholder="match duration">
+                            <div class="text-danger" *ngIf="autometicCalForm.get('eachRoundTime').hasError('required') && (autometicCalForm.get('eachRoundTime').dirty || autometicCalForm.get('eachRoundTime').touched)">
+                              *Time to complete each round is required.
+                            </div>
+                            <div class="text-danger" *ngIf="autometicCalForm.get('eachRoundTime').hasError('pattern') && (autometicCalForm.get('eachRoundTime').dirty || autometicCalForm.get('eachRoundTime').touched)">
+                                *Accepts only numbers.
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                           <select class="form-control select-style1 round-input" formControlName="selectPeriod">
+                             <option value="" selected style="display:none">-- Select Period --</option>
+                             <option value="days">Days</option>
+                              <option value="hours">Hours</option>
+                              <option value="minutes">Minutes</option>
+                           </select>
+                           <div class="text-danger" *ngIf="autometicCalForm.get('selectPeriod').hasError('required') && (autometicCalForm.get('selectPeriod').dirty || autometicCalForm.get('selectPeriod').touched)">
+                              *Period is required.
+                            </div>
+                          </div>
+                        </div>
+                       <div class="clearfix calendar-action mt30 text-right">
+                         <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                         <button type="submit" (click)="autometicCalNext()" class="mb25 btn btn-navy-blue max-WT-150 mL5 " [disabled]="autometicCalForm.invalid">Next</button>
+                       </div>
+                      </div>
+                   </div>
+                 </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+
+  <!-- automatic calender modal end -->
+
+
+<!-- autometic calender step 2 -->
+<div id="myModal" class="modal fade Automatic-Calender" style="overflow: scroll;" id="autometicCalenderStep2" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header automatic">
+        <h4 class="modal-title">Automatic calendar</h4>
+        <button type="button" class="times" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="Automatic-Calender-body clearfix">
+         <div class="Automatic-Calender-left-part">
+            <div class="order-top">
+               <h3>Order of the terms</h3>
+               <p><span>Drag and drop</span> the teams to change the order.</p>
+               <span>Change the order of the teams to edit matches in the rounds.</span>
+            </div>
+            <div class="order-text">
+               <span>ORDER</span>
+            </div>
+            <div class="Drag-Drop-Order clearfix">
+              <div >
+                <div class="order-no">
+                    <ul *ngFor="let data of groupAllTeamList;let i=index">
+                      <li><span class="squared-tag squared-tag-{{i+1}}">{{i+1}}</span></li>
+                    </ul>
+                </div>
+                <div class="team-order-drag">
+                    <ul dnd-sortable-container [sortableData]="groupAllTeamList">
+                        <li (onDropSuccess)="dragAndDrop($event)" class="list-group-item" dnd-sortable [sortableIndex]="i" *ngFor="let data of groupAllTeamList;let i=index">
+                          <span class="pull-right drag-icon fa fa-fw fa-sort"></span>
+                          <img src="https://static.leverade.com/defaults/equipo.30x30.png">
+                          {{data?.teamName}}
+                        </li>
+                    </ul>
+                </div>
+               </div>
+            </div>
+         </div>
+         <div class="Automatic-Calender-right-part">
+            <div class="create-calender">
+               <span>Calender {{selectedGroupDetail?.groupName}}</span>
+               <button class="btn btn-create-calender" (click)="automaticCalenderApi()"><i class="fa fa-plus mr-2"></i>Create calender</button>
+            </div>
+            <div class="team-round-cont">
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <i class="fa fa-eye pull-left half-padd-right padd-bottom"></i>
+                        This is a <strong>Preview</strong>. You must click <strong>"Create calendar"</strong> to create it
+                     </div>
+                  </div>
+                  <div class="col-sm-6" *ngFor="let data of finalAutometicCalenderData;let i=index">
+                     <div class="box-info shady paddingless">
+                        <div class="h4">
+                           <strong class="half-padd-all inline-block">
+                              Round {{i+1}}
+                           </strong>
+                           <div class="flex quarter-padd">
+                              <label class="quarter-marg full-width" title="" data-original-title="Start date">
+                                 <input class="form-control input-sm" type="text" value="{{data[data.length-1]?.startDate | date:'dd/MM/yyyy hh:mm:ss a'}}"
+                                 ngx-mydatepicker name="setStartDate{{i+1}}" [options]="setDateOptions" #setDateOptions="ngx-mydatepicker"
+                                 (click)="setDateOptions.toggleCalendar()" (dateChanged)="changeStartDate($event,i)">
+                              </label>
+                              <label class="quarter-marg full-width" title="" data-original-title="End date">
+                                 <input class="form-control input-sm" type="text" value="{{data[data.length-1]?.endDate | date:'dd/MM/yyyy hh:mm:ss a'}}"
+                                 ngx-mydatepicker name="setEndDate{{i+1}}" [options]="setEndDateOptions" #setEndDateOptions="ngx-mydatepicker"
+                                 (click)="setEndDateOptions.toggleCalendar()" (dateChanged)="changeendDate($event,i)">
+                              </label>
+                           </div>
+                        </div>
+                        <table class="table marginless table-condensed table-hover round">
+                           <tbody>
+                              <tr *ngFor="let item of data;let j=index">
+                                <td class="text-left" *ngIf="j < data.length-1 && item?.team1?.teamName != ''">
+                                  <span class="squared-tag squared-tag-{{item?.team1?.number}}">{{item?.team1?.number}}</span>
+                                </td>
+                                <td class="text-left" *ngIf="j < data.length-1 && item?.team1?.teamName == ''">
+                                  <span class=""></span>
+                                </td>
+                                <td *ngIf="j < data.length-1 && item?.team1?.teamName != ''" class="text-left round-max" title="" data-original-title="team 7">
+                                  <img class="img-circle" src="https://static.leverade.com/defaults/equipo.30x30.png">
+                                   {{item?.team1?.teamName}}
+                                </td>
+                                <td *ngIf="j < data.length-1 && item?.team1?.teamName == ''" class="text-left round-max" title="" data-original-title="team 7">
+                                </td>
+                                <td *ngIf="j < data.length-1" class="text-center">—</td>
+                                <td  *ngIf="j < data.length-1 && item?.team2?.teamName != ''"class="text-right round-max" title="" data-original-title="team 1">
+                                  {{item?.team2?.teamName}}
+                                  <img class="img-circle" src="https://static.leverade.com/defaults/equipo.30x30.png">
+                                </td>
+                                <td *ngIf="j < data.length-1 && item?.team2?.teamName != ''" class="text-right">
+                                  <span class="squared-tag squared-tag-{{item?.team2?.number}}">{{item?.team2?.number}}</span>
+                                </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- delete round modal -->
+
+<div class="modal fade global-modal reset-modal" id="delete-round">
+    <div class="modal-dialog max-WT-350">
+      <form class="change_password">
+        <div class="modal-content">
+          <div class="modal-header d-block text-center">
+            <h5 class="modal-title d-inline-block">Delete Round</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body mt-0">
+            <div
+              class="text-center  d-flex align-items-center justify-content-center"
+            >
+              <div class="w-100">
+                <p>Are you sure you want to delete this Round?</p>
+                <div>
+                  <button
+                    type="submit"
+                    class="btn mr-2 btn-info"
+                    (click)="deleteRound()"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn mr-2 btn-info"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-- delete game modal -->
+
+<div class="modal fade global-modal reset-modal" id="delete-game">
+    <div class="modal-dialog max-WT-350">
+      <form class="change_password">
+        <div class="modal-content">
+          <div class="modal-header d-block text-center">
+            <h5 class="modal-title d-inline-block">Delete Game</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body mt-0">
+            <div
+              class="text-center  d-flex align-items-center justify-content-center"
+            >
+              <div class="w-100">
+                <p>Are you sure you want to delete this Game?</p>
+                <div>
+                  <button
+                    type="submit"
+                    class="btn mr-2 btn-info"
+                    (click)="deleteGameApi()"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn mr-2 btn-info"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- edit game modal -->
+
+  <div class="modal fade global-modal reset-modal" id="edit-game">
+      <div class="modal-dialog max-WT-900">
+        <form class="change_password" [formGroup] = "editGameForm">
+          <div class="modal-content">
+            <div class="modal-header d-block text-center">
+              <h5 class="modal-title d-inline-block" style="color: #343434;">Edit Information</h5>
+              <button type="button" style="border:none" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mt-0">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <span style="font-size: 20px;font-weight: 600;color: black">
+                    Date Of Match
+                  </span>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-4 col-sm-4">
+                  <span style="color: #000;">Date</span>
+                  <input formControlName="date" class="form-control datepicker" style="float:none;" placeholder="Select date"
+                  ngx-mydatepicker name="startDateRound1" [options]="startDateOptions"
+                  #startDateRound1="ngx-mydatepicker" (click)="startDateRound1.toggleCalendar()"
+                  />
+                </div>
+                <div class="col-md-8 col-sm-8">
+                  <span style="color: #000;">Place</span>
+                  <input formControlName="place" class="form-control" placeholder="- Without place -">
+                </div>
+              </div>
+              <hr style="border-top: dotted 1px;">
+              <div class="row mt-3">
+                <div class="col-md-12 col-sm-12">
+                  <span style="font-size: 20px;font-weight: 600;color: black">
+                    Match results
+                  </span>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-4 col-sm-4">
+                  <span style="color: #000;">Team 1</span>
+                  <select class="form-control select-style1 round-input" formControlName="team1" name="teamToAddInGroup" >
+                    <option value="" style="display:none" selected>-- Select Team --</option>
+                    <option *ngFor="let team of groupTeamList" [ngValue]="team?.teamName">{{team?.teamName}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                  <span style="color: #000;">Result 1</span>
+                  <input formControlName="result1" type="text" class="form-control">
+                </div>
+                <div class="col-md-2 col-sm-2">
+                  <span style="color: #000;">Result 2</span>
+                  <input formControlName="result2" type="text" class="form-control">
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <span style="color: #000;">Team 2</span>
+                  <select class="form-control select-style1 round-input" formControlName="team2" name="teamToAddInGroup" >
+                    <option value="" style="display:none" selected>-- Select Team --</option>
+                    <option *ngFor="let team of groupTeamList" [ngValue]="team?.teamName">{{team?.teamName}}</option>
+                  </select>
+                </div>
+              </div>
+              <hr style="border-top: dotted 1px;">
+              <hr>
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <button class="btn pull-right" [disabled]="editGameForm.invalid" (click)="editGameInfo()" style="color: #fff;background-color: #506aa6;border-color: #2f3e61;">
+                    <i class="far fa-save mr-2"></i>Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+<div class="modal fade global-modal reset-modal" id="pdfDownloadModal">
+  <div class="modal-dialog max-WT-900">
+    <div class="modal-content">
+      <div class="modal-header d-block text-center">
+        <h5 class="modal-title d-inline-block" style="color: #343434;">Download Pdf</h5>
+        <button type="button" style="border:none" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mt-0">
+        <div class="row">
+          <div class="col-md-12">
+            <span class="pull-right" (click)="downloadPDF('pdfId')" style="cursor:pointer"><i class="fa fa-print mr-2" aria-hidden="true"></i>Print</span>
+          </div>
+        </div>
+        <div id="pdfId">
+          <div class="row">
+            <div class="col-md-2">
+              <img src="{{profileData?.image}}" *ngIf="profileData?.image" style="border-radius: 50%;height: 115px;">
+              <img src="assets/images/background1.jpg" *ngIf="!profileData?.image" style="border-radius: 50%;height: 115px;">
+            </div>
+            <div class="col-md-10">
+              <div class="row" style="margin-top: 12px;">
+                <div class="col-md-12">
+                    <span style="font-size: 30px;">YalaSports</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                    <span style="font-size: 20px;">DIP Ramadan Championship-Soccer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12" style="text-align: center;">
+              <span style="font-size: 25px;">{{selectedGroupDetail?.groupName}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="text-align: center;">
+              <span style="font-size: 23px;">Calendar — Round {{currentRoundData[0]?.roundName}}</span>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table table-bordered large-table text-center" style="min-width:100%">
+                  <thead>
+                    <tr class="table-head-bg">
+                      <th>Team 1</th>
+                      <th>Team 2</th>
+                      <th>Result</th>
+                      <th>Place</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let data of particularRoundGame">
+                        <td>{{data?.teamName1 || '--'}}</td>
+                        <td>{{data?.teamName2 || '--'}}</td>
+                        <td>{{data?.result1}} - {{data?.result2}}</td>
+                        <td>{{data?.place || '--'}}</td>
+                        <td>{{data?.matchTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- the best of modal -->
+
+<div class="modal fade global-modal reset-modal" id="configureRound">
+  <div class="modal-dialog max-WT-320">
+    <form class="change_password" [formGroup]="configureRoundModalForm">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+          <h5 class="modal-title d-inline-block" style="color: #343434;">Configure Round</h5>
+          <button type="button" style="border:none" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mt-0">
+          <div class="row">
+            <div class="col-md-12">
+              <label>Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input type="text" formControlName="name" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+                <label>The Best of</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+                <select class="form-control" formControlName="bestOf">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <label>Start Date</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input formControlName="startDate" class="form-control datepicker" style="float:none;" placeholder="Select date"
+                  ngx-mydatepicker name="startDateConfigRound1" [options]="startDateConfigOptions"
+                  #startDateConfigRound1="ngx-mydatepicker" (click)="startDateConfigRound1.toggleCalendar()"
+                  />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <label>End Date</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input formControlName="endDate" class="form-control datepicker" style="float:none;" placeholder="Select date"
+                  ngx-mydatepicker name="endDateConfigRound1" [options]="endDateConfigOptions"
+                  #endDateConfigRound1="ngx-mydatepicker" (click)="endDateConfigRound1.toggleCalendar()"
+                  />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12" style="text-align: right">
+              <button class="btn btn-info" (click)="accept()">Accept</button>
+              <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade global-modal reset-modal" id="configureRound">
+  <div class="modal-dialog max-WT-320">
+    <form class="change_password">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+          <h5 class="modal-title d-inline-block" style="color: #343434;">Configure Round</h5>
+          <button type="button" style="border:none" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mt-0">
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

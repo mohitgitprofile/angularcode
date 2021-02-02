@@ -1,0 +1,81 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title">Profit & Loss Management</h1>
+    </div> <!-- Page Title End -->
+    <div class="content-section">
+        <div class="outer-box">
+            <!-- Gloabl Table Box Start -->
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+
+                        <!-- Start export Button  -->
+                        <div class="user-main-head">
+                            <div class="user-lst">
+                                <div class="two-btnline">
+                                    <div class="text-left">
+                                        <button type="submit" class="btn  btn-theme cus-mr" (click)="exportCSV()">Export As CSV</button>
+                                    </div>
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label">
+                                            <button type="submit" class="btn  btn-theme" (click)="card1()">Export As PDF</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end Export button  -->
+
+                        <!-- table content -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="myCanvas" >
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th>S.No.</th>
+                                        <th>Coin</th>
+                                        <th>Taker Fee</th>
+                                        <th>Maker Fee</th>
+                                        <th>Withdrawal Fee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr *ngFor="let data of userList; let i = index"> -->
+                                    <tr *ngFor="let data of profLossData; let i = index">
+                                        <td *ngIf="p == 1">{{i + 1}}</td>
+                                        <td *ngIf="p > 1">{{i + 1 + 10 * (p-1)}}</td>
+                                        <td *ngIf="data.coinName != 'ECH'">{{data.coinName || '--'}}</td>
+                                        <td *ngIf="data.coinName == 'ECH'">ETC</td>
+                                        <td>{{data.takerFee || '--'}}</td>
+                                        <td>{{data.makerFee || '--'}}</td>
+                                        <td>{{data.totalWithDrawFee || '--'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Total</td>
+                                        <td>{{gTotalTakerFees}}</td>
+                                        <td>{{gTotalMakerFees}}</td>
+                                        <td>{{gTotalWithDrawFees}}</td>
+                                    </tr> <!-- <tr *ngIf="userList.length==0"> -->
+                                    <tr *ngIf="profLossData.length==0">
+                                        <td colspan="100" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin text-center"> <span>No record found</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Table Responsive End -->
+</main>
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Copyright © 2020 <strong class="theme-text-color">CryptoBiz Exchange</strong> All Rights Reserved.</p>
+    </div>
+</footer>

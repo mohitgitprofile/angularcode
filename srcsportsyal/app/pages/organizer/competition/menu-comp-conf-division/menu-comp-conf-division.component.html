@@ -1,0 +1,211 @@
+      <!--   Header  Start -->
+      <app-header></app-header>
+      <!--   Header End -->
+      <div class="topBanner">
+         <div class="container">
+         </div>
+      </div>
+      <!-- main Start -->
+      <main class="main-container pt0 mt-min60">
+         <div class="container">
+            <div class="content-box bg-gray">
+              <!-- Subheader of Menu Competition Configuration Header  -->
+              <app-menu-comp-conf-header></app-menu-comp-conf-header>
+              <!-- End Subheader of Menu Competition Configuration Header  -->
+               <div class="content-box-filter">
+                  <form class="filter-form fullwidth">
+                    <div class="row align-items-center">
+                       <div class="col-md-8">
+                          <div class="search-block-main fiter-full-search">
+                            <div class="search_block">
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)" >
+                                  <div class="input-group-append">
+                                    <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                       <div class="col-md-4 text-right">
+                            <button class="btn btn btn-dark-blue-s" type="button" (click)="addDivisionModal()">Add Division</button>
+                       </div>
+                    </div>
+                  </form>
+                     
+               </div>
+              <div class="table-block mt10 white-bg">
+                  <div class="table-responsive">
+                     <table class="table table-bordered large-table text-center">
+                        <thead>
+                           <tr class="table-head-bg">
+                              <th>Name</th>
+                              <th>Sports</th>
+                              <th>Gender</th>
+                              <th>Age</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngIf="!divisionData.docs.length">
+                              <td colspan="5" class="text-center">No data found.</td>
+                           </tr>
+                            <tr *ngFor="let item of divisionData.docs | paginate: { itemsPerPage: divisionData.limit, currentPage: divisionData.page,  totalItems: divisionData.total } ">
+                              <td>{{item?.divisionName}}</td>
+                              <td>{{item?.sports}}</td>
+                              <td>{{item?.gender | letterCase}}</td>
+                              <td>{{item?.minAge}}-{{item?.maxAge}}</td>
+                              <td class="action-td">
+                              <!--   <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book">Edit</button>
+                                 <a href="#membership_service_booking" data-toggle="modal" data-target="#membership_service_booking" class="btn btn-book red">Delete</a> -->
+                                <button class="btn btn-info" (click)="editDivisionModal(item._id)"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-danger"  type="button" (click)="deleteDivisionModal(item._id)" ><i class="far fa-trash-alt"></i></button>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="clearfix pagination-entity">
+                    <div class="pagination-block mt10 text-right" *ngIf="divisionData.total > divisionData.limit">
+                      <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                    </div>
+                    <div class="entity-text" *ngIf="divisionData.docs.length">
+                       <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage) < divisionData.total) ? (page.limit * page.currPage) : divisionData.total || 0}} of {{divisionData.total}} entries</span>
+                       <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                        <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                     </select>
+                        <span>entries</span>
+                    </div>
+                  
+                  </div>
+               </div>
+            </div>
+            <!-- Max With Box End -->
+         </div>
+      </main>
+      <!-- main End -->
+      <!--- Footer Start -->
+      <app-footer></app-footer>
+      <!--- Footer End -->
+	  
+	  
+
+
+             <!-- add-venue -->
+      <div class="modal fade common-modal" id="orgMenuCompAddDivision" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" [formGroup]="addDivisionForm">
+                  <div class="modal-body text-center">
+                      <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" *ngIf="updateData.isAddDivision">Add Division</h5>
+                      <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" *ngIf="!updateData.isAddDivision">Edit Division</h5>
+                     <div class="modal-content-body modalform-body text-left">
+                      <div class="row">
+
+                        <div class="col-md-12">
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Name</label>
+                             <div class="col-md-9">
+                              <input type="text" class="form-control round-input" placeholder="Division name" [formControl]="gDivisionF.divisionName" maxlength="50"/>
+                              <div class="errorMsg" *ngIf="gDivisionF.divisionName.dirty && gDivisionF.divisionName.invalid">
+                                <span *ngIf="gDivisionF.divisionName.hasError('required')">*Please enter division name.</span>
+                              </div>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Sports</label>
+                             <div class="col-md-9">
+                              <select class="form-control select-style1 round-input" [formControl]="gDivisionF.sports">
+                                <option value="">Select Sports</option>
+                                <option *ngFor="let sport of list.sportsListArr" [value]="sport.sportName">{{sport?.sportName}}</option>
+                              </select>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                            <label class="col-md-3 label-blue">Gender</label>
+                            <div class="col-md-9">
+                             <select class="form-control select-style1 round-input" [formControl]="gDivisionF.gender">
+                               <option value="">Select Gender</option>
+                               <!-- <option *ngFor="let gender of list.genderListArr" [value]="gender.value">{{gender?.name}}</option>
+                               -->
+                               <option value="male">Male</option>
+                               <option value="female">Female</option>
+                               <option value="co-ed">Co-ed</option>
+                             </select>
+                            </div>
+                          </div>
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Age</label>
+                             <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control round-input" placeholder="Minimum age" maxlength="3" [formControl]="gDivisionF.minAge" onlyNumber/>
+                                        <div class="errorMsg" *ngIf="gDivisionF.minAge.dirty && gDivisionF.minAge.invalid">
+                                         <span *ngIf="gDivisionF.minAge.hasError('required')">*Please enter minimum age.</span>
+                                       </div>
+                                     </div>
+                                    <div class="col-sm-6">
+                                     <input type="text" class="form-control round-input" placeholder="Maximum age" [formControl]="gDivisionF.maxAge" maxlength="3" onlyNumber/>
+                                     <!-- <div class="errorMsg" *ngIf="addDivisionForm.dirty && addDivisionForm.invalid">
+                                       <span *ngIf="gDivisionF.maxAge.hasError('required')">*Please enter maximum age.</span>
+                                     </div> -->
+                                     <div class="errorMsg" *ngIf="gDivisionF.minAge.value && gDivisionF.maxAge.value">
+                                       <span *ngIf="getNumber(gDivisionF.minAge.value) > getNumber(gDivisionF.maxAge.value)">*Maximum age should be greater than minimum age.</span>
+                                     </div>
+                                     <!-- {{gDivisionF.minAge.value}} -->
+                                    </div>
+                                </div>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Date</label>
+                             <div class="col-md-9">
+                             <input style="float:none" class="form-control round-input datepicker"  placeholder="dd-mm-yyyy" [formControl]="gDivisionF.date" ngx-mydatepicker name="date" [options]="myOptions" #divisionDate="ngx-mydatepicker" (click)="divisionDate.toggleCalendar()"/>
+                             </div>
+                           </div>
+                          <div class="clearfix calendar-action mt30 text-left">
+                            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" (click)="onAddDivision(1)" [disabled]="(getNumber(gDivisionF.minAge.value) > getNumber(gDivisionF.maxAge.value)) || addDivisionForm.invalid" *ngIf="updateData.isAddDivision">Add</button>
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" (click)="onAddDivision(2)" [disabled]="(getNumber(gDivisionF.minAge.value) > getNumber(gDivisionF.maxAge.value)) || addDivisionForm.invalid" *ngIf="!updateData.isAddDivision">Update</button>
+                          </div>
+                         </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!--  Modal End add-venue--> 
+
+      
+
+
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="orgMenuCompDeleteDivision" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-500" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" >
+                  <div class="modal-body text-center">
+                     <div class="modal-content-body modalform-body text-left">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p class="text-center modal-text-s">Are you sure you want to  delete this division?</p>
+                          <div class="clearfix calendar-action mt30 text-left">
+                            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" (click)="onDeleteDivision()" >YES</button>
+                          </div>
+                         </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+
+<!-- delete-modal-end -->
+	  
+    

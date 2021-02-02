@@ -1,0 +1,190 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">ADVERTISEMENTS</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        <div class="sec_head_new">
+                            <div class="row">
+                                <!-- <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center"> </span>
+                                            <input type="text" placeholder="Search by Email" class="form-control"
+                                            [(ngModel)]="searchByEmail" style="height: 38px;">
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select" style="margin-top: 20px;">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center"> </span>
+                                            <input type="text" placeholder="Search by User Id" class="form-control"
+                                                [(ngModel)]="userId2" style="height: 38px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Country</span>
+                                            <select class="form-control" [(ngModel)]="country">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let item of countryList" [value]="item?.country">
+                                                    {{item?.country}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select" style="margin-top: 20px;">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center"> </span>
+                                            <input type="text" placeholder="Search by User Name" class="form-control"
+                                                [(ngModel)]="userName" style="height: 38px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Start Date</span>
+                                            <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}" name="fromdate"
+                                                [(ngModel)]="calender.fromdate" (change)="fromdate()"
+                                                class="form-control datepicker" placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">End Date</span>
+                                            <input type="date" name="todate" min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                (change)="todate()" [disabled]="!calender.fromdate"
+                                                [(ngModel)]="calender.todate" class="form-control datepicker"
+                                                placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 user-pl">
+                                    <div class="user-frmbtn" style="display: flex;">
+                                        <button type="submit" (click)="search()"
+                                            class="btn  btn-theme mr-2">Search</button>
+                                        <button type="submit" (click)="reset()" class="btn  btn-theme">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- next row -->
+                            <div class="row mt-3">
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Status</span>
+                                            <select class="form-control" [(ngModel)]="orderStatus">
+                                                <option value="" placeholder="Select">Select</option>
+                                                <option value="ENABLE">Enable</option>
+                                                <option value="DISABLE">Disable</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Country</span>
+                                            <select class="form-control" [(ngModel)]="country">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let item of countryList" [value]="item?.country">
+                                                    {{item?.country}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Payment Method</span>
+                                            <select class="form-control" [(ngModel)]="paymentType">
+                                                <option value="">Select</option>
+                                                <option value="NationalBankTransfer">National Bank Transfer</option>
+                                                <option value="IMPS">IMPS</option>
+                                                <option value="paypal">PAYPAL</option>
+                                                <option value="paytm">PAYTM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Type</span>
+                                            <select class="form-control" [(ngModel)]="orderType">
+                                                <option value="">Select</option>
+                                                <option value="SELL">Sell</option>
+                                                <option value="BUY">Buy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- <div class="transaction"><h3>Trade List</h3></div> -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="trade table">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th id="">Ad. ID</th>
+                                        <th id="">Username</th>
+                                        <th id="">Created Date</th>
+                                        <th id="">Status</th>
+                                        <th id="">Type</th>
+                                        <th id="">Payment Method</th>
+                                        <th id="">Location</th>
+                                        <th id="">Price Equation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr
+                                        *ngFor="let data of tradeList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: tradeListlength}; let i=index; "> -->
+                                    <tr
+                                        *ngFor="let data of advertisementData | paginate:{itemsPerPage: itemsPerPage, currentPage: currentPage,totalItems: totalItems}; let i=index; ">
+                                        <td>{{data?.peerToPeerExchangeId}}</td>
+                                        <td (click)="navigate(data.peerToPeerExchangeId)"><u
+                                                class="trade-table-data">{{data?.userName}}</u></td>
+                                        <td>{{data?.creationTime | date}}</td>
+                                        <td>{{data?.orderStatus}}</td>
+                                        <td>{{data?.orderType}}</td>
+                                        <td>{{data?.paymentType}}</td>
+                                        <td>{{data?.country}}</td>
+                                        <td>{{data?.price}}</td>
+                                    </tr>
+                                    <tr *ngIf="advertisementData?.length==0">
+                                        <td colspan="11" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5>No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="custom-pagination mt20 text-center" style="float: right;" *ngIf="totalItems > 5 ">
+                            <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>

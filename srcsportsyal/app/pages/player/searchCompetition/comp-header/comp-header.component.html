@@ -1,0 +1,141 @@
+<div class="logo_block">
+    <img *ngIf="!competitionDetail.imageURL" src="assets/images/follow-img.png">
+    <img *ngIf="competitionDetail.imageURL" src="{{competitionDetail.imageURL}}">
+</div>
+<!-- <div class="following_btn text-right"><button type="button" class="btn btn-blue" (click)="unfollowModal()"><i class="far fa-star"></i> Following</button></div> -->
+<div class="following_btn text-right"><button type="button" class="btn btn-blue" (click)="unfollowModal()"><img src="assets/images/colored-star-icon.png" style="width: 17px;float: left; margin-top: 2px;">Following</button></div>
+<div class="heading-block text-center">
+    <h2 class="heading_a">{{competitionDetail.competitionName}}</h2>
+    <p class="txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took.</p>
+</div>
+<div class="fixture-inner">
+    <div class="custom-breadcrumb">
+        <nav class="breadcrumb">
+            <span class="breadcrumb-item active">{{competitionDetail.competitionName}}</span>
+            <a [ngClass]="{'headerActive': pageName == 'summary'}" class="breadcrumb-item" [routerLink]="['/player/summary', competitionId, organizerId]"> Summary</a>
+            <!-- <a [ngClass]="{'headerActive': pageName == 'standingAndFixture'}" class="breadcrumb-item" [routerLink]="['/player/standingAndFixture', competitionId, organizerId]">Standings and Fixtures</a> -->
+            <a [ngClass]="{'headerActive': pageName == 'media'}" class="breadcrumb-item" [routerLink]="['/player/media', competitionId, organizerId, 1]"> Media</a>
+            <a [ngClass]="{'headerActive': pageName == 'playerCompFinancial'}" class="breadcrumb-item" [routerLink]="['/player/playerCompFinancial', competitionId, organizerId]"> Financial</a>
+            <a [ngClass]="{'headerActive': pageName == 'product'}" class="breadcrumb-item" [routerLink]="['/player/product', competitionId, organizerId, 1]"> Product </a>
+            <a [ngClass]="{'headerActive': pageName == 'registration'}" class="breadcrumb-item" [routerLink]="['/player/registration', competitionId, organizerId]"> Registration </a>
+             <a [ngClass]="{'active': pageName == 'playerSponsor'}" class="breadcrumb-item" [routerLink]="['/player/playerSponsor', competitionId,organizerId]"> Sponsor </a>
+        </nav>
+        <div class="" style="float: right;">
+            <div class="contact-organise">
+                <span>Contact Organizer  </span><button type="button" class="btn btn-blue" (click)="messageModal()">Send Message</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- detele modal -->
+<div class="modal fade common-modal" id="unfollow_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-500" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" action="profile-with-card.html">
+                <div class="modal-body text-center">
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="text-center modal-text-s">Are you sure you want to unfollow this competition?</p>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="unfollow()">YES</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- detele modal end -->
+
+<!-- Message modal -->
+<div class="modal fade common-modal" id="send_message" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-650" role="document">
+        <div class="modal-content">
+            <!-- <button type="button" class="modal_head" style="max-width:4%;float: left;"  (click)="closeModal()">
+                <span class="close_popup_btn"><img src="assets/images/blue-close.svg" alt="Cancel"></span>
+              </button> -->
+            <div class="modal-header d-block border-0 pb0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-add-card-form" action="profile-with-card.html">
+                <div class="modal-body text-center">
+                    <div class="modal-content-body modalform-body text-left pt0">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="content-box-filter">
+                                    <div class="user-message-block clearfix max-WT-800 mrgn-0-auto">
+                                        <h5 class="head-sub text-center" (click)="closeModal()">{{competitionDetail?.competitionName}}</h5>
+                                        <div class="chat-cover">
+                                            <div class="chat-block clearfix mb10" *ngFor="let chat of chatList">
+                                                <ul class="user-msg-list noborder" *ngIf="userDetails?._id != chat?.senderId?._id">
+                                                    <li>
+                                                        <div class="message-img-block" *ngIf="!chat?.senderId?.image">
+                                                            <div class="message-img">
+                                                                <!-- <span>{{competitionDetail.imageURL}}</span> -->
+                                                                <img src="{{competitionDetail.imageURL || 'assets/images/user-img.png'}}" alt="Logo" />
+                                                                <!-- <img src="assets/images/dummy-user-img.png" alt="Logo"/> -->
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="message-img-block" *ngIf="chat.senderId.image">
+                                                            <div class="message-img">
+                                                                <img src="{{chat?.senderId?.image}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="message-part">
+
+                                                            <p> {{chat.message}} </p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <ul class="user-msg-list noborder right-side-user" *ngIf="userDetails?._id == chat?.senderId?._id">
+                                                    <li>
+                                                        <div class="message-part">
+
+                                                            <p> {{chat.message}} </p>
+                                                        </div>
+                                                        <div class="message-img-block">
+                                                            <div class="message-img">
+                                                                <!-- <span>{{profileData?.image}}{{profileData?.lastName[0]}}</span> -->
+                                                                <img src="{{profileData?.image || 'assets/images/user-img.png'}}" alt="Logo" />
+                                                                <!-- <img *ngIf="profileData?.image" [src]="profileData?.image" alt="Logo" /> -->
+                                                            </div>
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="chat-input-send">
+                                            <div class="row">
+                                                <div class="col-md-9  form-group">
+                                                    <input type="text" class="form-control" [(ngModel)]="msg">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="text-right">
+                                                        <button class="btn btn btn-dark-blue-s max-WT-120" [disabled]="!msg" (click)="sendMessage()">Send</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Message modal end -->

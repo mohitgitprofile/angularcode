@@ -1,0 +1,221 @@
+<app-header>
+</app-header>
+<div class="topBanner height300 logintopbanner">
+</div>
+<!-- main Start -->
+<main class="main-container">
+    <div class="container">
+        <div class="content-box max-WT-767 mrgn-0-auto p0">
+            <div class="form-head-block">
+                <h2 class="log-head text-center">Signup {{currRole.charAt(0).toUpperCase() + currRole.substr(1).toLowerCase()}}</h2>
+            </div>
+            <div class="form-box p30">
+                <form [formGroup]="signupForm" autocomplete="off">
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">First Name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="First name" maxlength="50" [formControl]="formC.firstName">
+                                <div class="errorMsg" *ngIf="formC.firstName.dirty && formC.firstName.invalid">
+                                    <span *ngIf="formC.firstName.hasError('required')">*Please enter first name.</span>
+                                    <span *ngIf="formC.firstName.hasError('minlength')">*First name must be between 2 to 50 characters.</span>
+                                    <span *ngIf="formC.firstName.hasError('pattern') && !formC.firstName.hasError('minlength')">*Please enter valid first name.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">LastName</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Last name" maxlength="50" [formControl]="formC.lastName">
+                                <div class="errorMsg" *ngIf="formC.lastName.dirty && formC.lastName.invalid">
+                                    <span *ngIf="formC.lastName.hasError('required')">*Please enter last name.</span>
+                                    <span *ngIf="formC.lastName.hasError('minlength')">*Last name must be between 2 to 50 characters.</span>
+                                    <span *ngIf="formC.lastName.hasError('pattern') &&!formC.lastName.hasError('minlength')">*Please enter valid last name.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Email</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Email" maxlength="64" [formControl]="formC.email">
+                                <div class="errorMsg" *ngIf="formC.email.dirty && formC.email.invalid">
+                                    <span *ngIf="formC.email.hasError('required')">*Please enter a email address.</span>
+                                    <span *ngIf="formC.email.hasError('pattern')">*Please enter a valid email address.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Mobile Number</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-5 pR0">
+                                        <select class="form-control select-arrow" [formControl]="formC.mobCode">
+                                <option value="">Select Country Code</option>
+                                <option value="" *ngFor="let country of countryList" value="{{country.callingCode}}">{{country.callingCode}} {{country.countryName}}</option>
+                              </select>
+                                    </div>
+                                    <div class="col-7">
+                                        <input type="text" class="form-control" placeholder="Mobile number" [formControl]="formC.mobile" maxlength="16">
+                                        <div class="errorMsg" *ngIf="formC.mobile.dirty && formC.mobile.invalid">
+                                            <span *ngIf="formC.mobile.hasError('required')">*Please enter mobile number.</span>
+                                            <span *ngIf="formC.mobile.hasError('pattern')">*Please enter valid mobile number.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Date of Birth</label>
+                            <div class="col-md-8">
+                                <input style="float:none" class="form-control datepicker" placeholder="yyyy-mm-dd" [formControl]="formC.dob" ngx-mydatepicker name="date" [options]="myOptions" #dp="ngx-mydatepicker" (click)="dp.toggleCalendar()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Gender</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-5 pR0">
+                                        <select class="form-control select-arrow" [formControl]="formC.gender">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                              </select>
+                                        <div class="errorMsg" *ngIf="formC.gender.dirty && formC.gender.invalid">
+                                            <span *ngIf="formC.gender.hasError('required')">*Please select gender.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <select class="form-control select-arrow" [formControl]="formC.country">
+                                <option value="">Select Nationality</option>
+                                <option *ngFor="let country of countryList" value="{{country.countryName}}">{{country.countryName}}</option>
+                              </select>
+                                        <div class="errorMsg" *ngIf="formC.country.dirty && formC.country.invalid">
+                                            <span *ngIf="formC.country.hasError('required')">*Please select country.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" placeholder="Password" [formControl]="formC.password" maxlength="16">
+                                <div class="errorMsg" *ngIf="formC.password.dirty && formC.password.invalid">
+                                    <span *ngIf="formC.password.hasError('required')">*Please enter password.</span>
+                                    <span *ngIf="formC.password.hasError('minlength')">*Password must be between 8 to 16 characters.</span>
+                                    <span *ngIf="formC.password.hasError('pattern') && !formC.password.hasError('minlength')">*Please enter valid password.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Confirm Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" placeholder="Confirm password" [formControl]="formC.cnfPassword" maxlength="16">
+                                <div class="errorMsg" *ngIf="formC.password.value && formC.cnfPassword.value">
+                                    <span *ngIf="formC.password.value != formC.cnfPassword.value">*Password and confirm password must be same.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="currRole == 'organization' ">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Select Organizer Type</label>
+                            <div class="col-md-8">
+                                <select class="form-control select-arrow" [formControl]="formC.orgType">
+                                <option value="">Select Organizer</option>
+                                <option value="COMPETITION">Competition</option>
+                                <option value="MEMBERSHIP">Membership</option>
+                                <option value="VENUE">Venue</option>
+                          </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="currRole == 'organization'|| currRole == 'venue'">
+                        <div class="row">
+                            <label class="control-label col-md-3 text-right">Select Subscription</label>
+                            <div class="col-md-8">
+                                <select class="form-control select-arrow" [formControl]="formC.subscription">
+                                <option value="">Select Subscription</option>
+                                <option value="oneEvent">One Event</option>
+                                <option value="yearly">Yearly</option>
+                                <option value="monthly">Monthly</option>
+                          </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label nolabel col-md-3">&nbsp;</label>
+                            <div class="col-md-8">
+                                <div class="custom-checkbox clearfix">
+                                    <input type="checkbox" id="check2" [formControl]="formC.tandc">
+                                    <label for="check2">I accept the <a class="terms" [routerLink]="['/landing/terms']" target="_blank" >terms and conditions</a></label>
+                                </div>
+                                <div class="custom-checkbox clearfix">
+                                    <input type="checkbox" id="check3" [formControl]="formC.news">
+                                    <label for="check3">I want to receive newsletter</label>
+                                    <!-- <label>{{signupForm.value | json}}</label> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 nolabel">&nbsp;</label>
+                            <div class="custom-checkbox col-md-8 clearfix">
+                                <button type="button" class="btn btn-navy-blue btn-block font_uni_sans" [disabled]="signupForm.invalid || (!formC.tandc.value) || (formC.password.value != formC.cnfPassword.value)" (click)="signup()">SIGN UP</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        <!-- Max With Box End -->
+
+    </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+
+<!-- Modal Start -->
+<div class="modal fade common-modal" id="signupOtp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" autocomplete="off">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans">OTP VERIFICATION</h5>
+                    <div class="modal-content-body">
+                        <p class="head_lagend mb20  text-center para">Please enter your OTP</p>
+                        <div class="max-WT-400 center-box">
+                            <div class="form-group clearfix">
+                                <input type="text" class="form-control" placeholder="Enter your otp" maxlength="6" [(ngModel)]="userData.otp" name="otp" />
+                                <a class="forgot-pass pull-right" href="javascript:;" (click)="resendOtp()">Resend OTP</a>
+                            </div>
+                        </div>
+                        <div class="clearfix calendar-action text-center pL15 pR15 mt30">
+                            <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5" (click)="otpVerify()" [disabled]="!userData.otp">Proceed</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--  Modal End-->

@@ -1,0 +1,282 @@
+<app-header></app-header>
+<div class="topBanner height400" style="background-image:url(assets/images/scoreboard-banner.png);">
+  <div class="container">
+    <div class="scoreboard-banner-content">
+      <div class="scoreboard-bannertop clearfix">
+        <div class="text-right mb30">
+          <!-- <button class="btn btn-banner" [routerLink]="['/organizer/standing/' + paramData?.compId]">
+            BACK
+          </button> -->
+          <button class="btn btn-banner" (click)="onBack()">
+            BACK
+          </button>
+          <button class="btn btn-banner" (click)="observationRouting()">Observation</button>
+        </div>
+      </div>
+      <div class="scoreboard-banner-inner">
+        <h3>{{compititionData?.sports}} {{compititionData?.sportType}}</h3>
+        <p class="points-text">POINTS</p>
+        <div class="basket-hound-box">
+          <div class="inline-block">
+            <div class="img-box">
+              <img src="assets/images/cup-image.png" alt="cup" />
+            </div>
+            <p *ngIf="compititionData?.sports == 'Basketball'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <p *ngIf="compititionData?.sports == 'Badminton'"> {{ gameData?.gameData?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <p *ngIf="compititionData?.sports == 'Generic' && compititionData?.sportType == !'team'"> {{ gameData?.gameData?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <p *ngIf="compititionData?.sports == 'Volleyball'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <p *ngIf="compititionData?.sports == 'Table Tennis'"> {{ gameData?.gameData?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <p *ngIf="compititionData?.sports == 'Cricket'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <p *ngIf="compititionData?.sports == 'Soccer'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <p *ngIf="compititionData?.sports == 'Generic' && compititionData?.sportType == 'team'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <!-- <p *ngIf="compititionData?.sports == 'Swimming'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p> -->
+
+          </div>
+          <div class="inline-block middle">
+            <div></div>
+            <span>22</span>
+            <span>33</span>
+          </div>
+          <div class="inline-block">
+            <div class="img-box">
+              <img src="assets/images/cup-image.png" alt="cup" />
+            </div>
+            <p *ngIf="compititionData?.sports == 'Basketball'">{{gameData?.gameData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</p>
+            <p *ngIf="compititionData?.sports == 'Badminton'">{{gameData?.gameData?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</p>
+            <p *ngIf="compititionData?.sports == 'Generic' && compititionData?.sportType == !'team'">{{gameData?.gameData?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</p>
+            <p *ngIf="compititionData?.sports == 'Volleyball'">{{gameData?.gameData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</p>
+            <p *ngIf="compititionData?.sports == 'Table Tennis'">{{gameData?.gameData?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</p>
+            <p *ngIf="compititionData?.sports == 'Cricket'">{{gameData?.gameData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</p>
+            <p *ngIf="compititionData?.sports == 'Soccer'">{{gameData?.gameData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</p>
+            <p *ngIf="compititionData?.sports == 'Generic' && compititionData?.sportType == 'team'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p>
+            <!-- <p *ngIf="compititionData?.sports == 'Swimming'"> {{ gameData?.gameData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }} </p> -->
+
+          </div>
+        </div>
+        <div class="button-box text-center">
+          <button type="submit" class="btn btn-dark-blue-s max-WT-100 white-bor" data-toggle="modal" data-target="#edit-game">
+            EDIT
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="main-container pt0 mt-min20">
+  <div class="content-container">
+    <div class="content-box bg-gray nopadding">
+      <div class="tab-block tab-scoreboard">
+        <div class="tab-scoreboard-list">
+          <ul class="nav nav-pills justify-content-md-center" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active show" data-toggle="pill" (click)="statsRouting()" style="cursor: pointer">
+                Starts
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " data-toggle="pill" (click)="observationRouting()" style="cursor: pointer" >
+                Observation 
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- <router-outlet></router-outlet> -->
+        <app-match-report-cricket  [gameData]="gameData" (MessageEvent) = "receiveURL($event)"  *ngIf="compititionData?.sports == 'Cricket' && runSelector"></app-match-report-cricket>
+        <app-match-report-basket-ball  [gameData]="gameData" (MessageEvent) = "receiveURL($event)" *ngIf="compititionData?.sports == 'Basketball' && runSelector"></app-match-report-basket-ball>
+        <app-match-report-badminton [gameData]="gameData" (MessageEvent)="receiveURL($event)" *ngIf="compititionData?.sports == 'Badminton' && runSelector"></app-match-report-badminton>
+        <app-match-report-soccer [gameData]="gameData" (MessageEvent) = "receiveURL($event)" *ngIf="compititionData?.sports == 'Soccer' && runSelector"></app-match-report-soccer>
+        <app-match-report-swimming [gameData]="gameData" (MessageEvent) = "receiveURL($event)"  *ngIf="compititionData?.sports == 'Swimming' && runSelector"></app-match-report-swimming>
+        <app-match-report-table-tennis  [gameData]="gameData" (MessageEvent) = "receiveURL($event)" *ngIf="compititionData?.sports == 'Table Tennis' && runSelector"></app-match-report-table-tennis>    
+        <app-match-report-voley-ball [gameData]="gameData" (MessageEvent)="receiveURL($event)" *ngIf="compititionData?.sports == 'Volleyball' && runSelector"></app-match-report-voley-ball>
+        <app-match-report-generic  [gameData]="gameData" (MessageEvent) = "receiveURL($event)" *ngIf="compititionData?.sports == 'Generic' && compititionData?.sportType == !'team' && runSelector"></app-match-report-generic>
+        <app-match-report-generic-team [gameData]="gameData" (MessageEvent)="receiveURL($event)" *ngIf="compititionData?.sports == 'Generic' && compititionData?.sportType == 'team' && runSelector"></app-match-report-generic-team>
+        <app-match-report-observation [gameData]="gameData" *ngIf="compititionData?.sports == 'Observation' && runSelector"></app-match-report-observation>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- //Tabletennis -->
+<app-footer></app-footer>
+
+<!-- Edit Modal -->
+<div class="modal fade common-modal" id="edit" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+       <div class="modal-content">
+          <form class="modal-add-card-form" action="profile-with-card.html">
+             <div class="modal-body text-center">
+                <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT SCORE</h5>
+                <div class="modal-content-body modalform-body text-left">
+                   <div class="row">
+
+                      <div class="col-md-8 m-center">
+                         <div class="form-group clearfix row">
+                            <label class="col-md-3 label-blue">Date</label>
+                            <div class="col-md-9">
+                               <input type="date" class="form-control round-input"/>
+                            </div>
+                         </div>
+                         <div class="form-group clearfix row">
+                            <label class="col-md-3 label-blue">Time</label>
+                            <div class="col-md-9">
+                               <input type="time" class="form-control round-input"/>
+                            </div>
+                         </div>
+                         <div class="form-group clearfix row">
+                            <label class="col-md-3 label-blue">Venue</label>
+                            <div class="col-md-9">
+                               <input type="Venue" class="form-control round-input"/>
+                            </div>
+                         </div>
+                          <div class="form-group clearfix row align-item-center">
+                            <label class="col-md-3 label-blue">Home</label>
+                            <div class="col-md-3">
+                               <input type="" name="" class="form-control round-input" placeholder="Loose">
+                            </div>
+
+
+                            <label class="col-md-3 label-blue">Away</label>
+                            <div class="col-md-3">
+                             <input type="" name="" class="form-control round-input" placeholder="Won">
+                            </div>
+                         </div>
+                         <div class="form-group clearfix row">
+                            <label class="col-md-3 label-blue">Score</label>
+                            <div class="col-md-4">
+                               <input type="Venue" class="form-control round-input"/>
+                            </div>
+                            <div class="col-md-4">
+                               <input type="Venue" class="form-control round-input"/>
+                            </div>
+                         </div>
+                         <div class="clearfix calendar-action mt30 text-center">
+                            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal">Save</button>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>
+
+
+
+
+
+
+
+
+
+
+ <div class="modal fade global-modal reset-modal" id="edit-game">
+    <div class="modal-dialog max-WT-900">
+      <form class="change_password" [formGroup] = "editGameForm">
+        <div class="modal-content">
+          <div class="modal-header d-block text-center">
+            <h5 class="modal-title d-inline-block" style="color: #343434;">Edit Information</h5>
+            <button type="button" style="border:none" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body mt-0">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <span style="font-size: 20px;font-weight: 600;color: black">
+                  Date Of Match
+                </span>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-4 col-sm-4">
+                <span style="color: #000;">Date</span>
+                <input class="form-control datepicker" style="float:none;" placeholder="Select date"
+                ngx-mydatepicker name="startDateRound1" [options]="startDateOptions" formControlName="date"
+                #startDateRound1="ngx-mydatepicker" (click)="startDateRound1.toggleCalendar()"
+                />
+              </div>
+              <div class="col-md-8 col-sm-8">
+                <span style="color: #000;">Place</span>
+                <input  class="form-control" placeholder="- Without place -" formControlName="place">
+              </div>
+            </div>
+            <hr style="border-top: dotted 1px;">
+            <div class="row mt-3">
+              <div class="col-md-12 col-sm-12">
+                <span style="font-size: 20px;font-weight: 600;color: black">
+                  Match results
+                </span>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-4 col-sm-4">
+                <span style="color: #000;">Team 1</span>
+                <select class="form-control select-style1 round-input" name="teamToAddInGroup" formControlName="team1">
+                  <option value="" style="display:none" selected>-- Select Team --</option>
+                  <option>team</option>
+                  <!-- {{team?.teamName}} -->
+                  <!-- *ngFor="let team of groupTeamList" [ngValue]="team?.teamName" -->
+                </select>
+              </div>
+              <div class="col-md-2 col-sm-2">
+                <span style="color: #000;">Result 1</span>
+                <input type="text" class="form-control" formControlName="result1">
+              </div>
+              <div class="col-md-2 col-sm-2">
+                <span style="color: #000;">Result 2</span>
+                <input type="text" class="form-control" formControlName="result2">
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <span style="color: #000;">Team 2</span>
+                <select class="form-control select-style1 round-input" name="teamToAddInGroup" formControlName="team2">
+                  <option value="" style="display:none" selected>-- Select Team --</option>
+                  <option></option>
+                  <!-- {{team?.teamName}} -->
+                  <!-- *ngFor="let team of groupTeamList" [ngValue]="team?.teamName" -->
+                </select>
+              </div>
+            </div>
+            <hr style="border-top: dotted 1px;">
+            <hr>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <button class="btn pull-right" [disabled]="editGameForm.invalid" (click)="editGameInfo()" style="color: #fff;background-color: #506aa6;border-color: #2f3e61;">
+                  <i class="far fa-save mr-2"></i>Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <!-- SocialSharing Modal -->
+<div class="modal fade common-modal" id="socialSharing" tabindex="-1" role="dialog"  aria-hidden="true"  >
+  <div class="modal-dialog max-WT-800" role="document">
+     <div class="modal-content">
+           <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">Share With</h5>
+             <div class="modal-content-body modalform-body text-left">
+              <div class="row">                     
+                 <div class="col">
+                    <button ceiboShare class="facebook" [facebook]="{u:childURL}">Facebook</button>
+                 </div>
+                 <div class="col">
+                    <button ceiboShare  class="google" [googlePlus]="{url:childURL}">Google Plus</button>
+                 </div>
+                <div class="col">
+                 <button ceiboShare class="twitter" [twitter]="{url:childURL}">Twitter</button>
+                </div>
+             </div> 
+        </div>
+        <div class="clearfix calendar-action mt30 text-center">
+           <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+        </div>
+     </div>
+  </div>
+</div>

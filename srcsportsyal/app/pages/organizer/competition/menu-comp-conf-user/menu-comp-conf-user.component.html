@@ -1,0 +1,250 @@
+ <!--   Header  Start -->
+ <app-header></app-header>
+ <!--   Header End -->
+ <div class="topBanner">
+    <div class="container">
+    </div>
+ </div>
+ <!-- main Start -->
+ <main class="main-container pt0 mt-min60">
+  <div class="container">
+     <div class="content-box bg-gray">
+        <div class="content-box-filter">
+           <form class="filter-form fullwidth">
+             <div class="row align-items-center">
+                <div class="col-md-4">
+                  <div class="filter-box">
+                    <label class="control-label">User Type</label>
+                     <select class="form-control select-style1" (change)="userType($event)">
+                        <option value=''>Select Status</option>
+                        <option value='ADMINSTRATOR'>Administrator</option>
+                        <option value='COORDINATOR'>Coordinator</option>
+                     </select>
+                   </div>
+                </div>
+              <!-- <div class="col-md-4">
+                   <div class="button-box ">
+                      <button class="btn btn btn-dark-blue-s" type="button" (click)="getUserList('',searchUser)">Apply</button>
+                   </div> 
+                </div>  -->
+                <div class="col-md-4">
+                   <div class="button-box text-right">
+                      <button class="btn btn btn-dark-blue-s" type="button" data-toggle="modal" data-target="#createSubUser">Create User</button>
+                   </div>
+                </div>   
+                
+             </div>
+             <div class="row">
+                <div class="col-md-8">
+                   <div class="search-block-main fiter-full-search">
+                     <div class="search_block">
+                         <div class="input-group">
+                           <input type="text" class="form-control" placeholder="Search Here.." [(ngModel)]="searchUser" [ngModelOptions]="{standalone: true}" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                           <div class="input-group-append">
+                             <button class="btn btn_search" type="button" (click)="getUserList(roleType,searchUser)">Search</button>
+                           </div>
+                         </div>
+                     </div>
+                 </div>
+                </div>
+             </div>
+           </form>
+              
+        </div>
+       <div class="table-block mt10 white-bg">
+           <div class="table-responsive">
+              <table class="table table-bordered large-table text-center">
+                 <thead>
+                    <tr class="table-head-bg">
+                       <th>FirstName</th>
+                       <th>LastName</th>
+                       <th>Email</th>
+                       <th>Role</th>
+                       <th>Action</th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                    <tr *ngIf="employeeList == ''"><td colspan="11" class="text-center">No Data Found.</td> </tr>
+                    <tr *ngFor="let emp of employeeList">
+                       <td>{{emp.firstName}}</td>
+                       <td>{{emp.lastName}}</td>
+                       <td>{{emp.email}}</td>
+                       <td>{{emp.employeeRole}}</td>
+                       <td class="action-td" style="min-width:350px">
+                         <!-- <a class="#"><img src="assets/images/activate.png" (click)="roleMatrix(emp.employeerId)"></a> -->
+                         <!-- <a class="btn btn-info" (click)="edit(emp.employeerId)"><i class="far fa-edit"></i></a> -->
+                         <button class="btn btn-danger" (click)="deleteModal(emp._id)"><i class="far fa-trash-alt"></i></button>
+                       </td>
+                    </tr>
+                    <!-- <tr>
+                       <td>Peter</td>
+                       <td>peter@mobiloitte</td>
+                       <td>Adminsration</td>
+                       <td class="action-td" style="min-width:350px">
+                         <a class="#"><img src="assets/images/deactivate.png"></a>
+                         <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                         <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>Peter</td>
+                       <td>peter@mobiloitte</td>
+                       <td>Adminsration</td>
+                       <td class="action-td" style="min-width:350px">
+                         <a class="#"><img src="assets/images/activate.png"></a>
+                         <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                          <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>Peter</td>
+                       <td>peter@mobiloitte</td>
+                       <td>Adminsration</td>
+                       <td class="action-td" style="min-width:350px">
+                         <a class="#"><img src="assets/images/deactivate.png"></a>
+                         <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                          <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td>Peter</td>
+                       <td>peter@mobiloitte</td>
+                       <td>Adminsration</td>
+                       <td class="action-td" style="min-width:350px">
+                         <a class="#"><img src="assets/images/deactivate.png"></a>
+                         <a class="btn btn-info"><i class="far fa-edit"></i></a>
+                          <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                       </td>
+                    </tr> -->
+                 </tbody>
+              </table>
+           </div>
+           <div class="clearfix pagination-entity">
+             <div class="pagination-block text-right">
+              <!-- <ul class="pagination">
+               <li class="page-item disabled"><a class="page-link" ><i class="fas fa-caret-left"></i> Prev</a></li>
+               <li class="page-item active"><a class="page-link" >1</a></li>
+               <li class="page-item"><a class="page-link" >2</a></li>
+               <li class="page-item"><a class="page-link" >3</a></li>
+               <li class="page-item"><a class="page-link" >4</a></li>
+               <li class="page-item"><a class="page-link" >5</a></li>
+               <li class="page-item"><a class="page-link" >6</a></li>
+               <li class="page-item"><a class="page-link" >Next <i class="fas fa-caret-right"></i></a></li>
+               </ul> -->
+             </div>
+             <!-- <div class="entity-text">
+                <span>showing 1 to 6 entries</span>
+                <select class="form-control select-style1 mw50">
+                   <option>4</option>
+                   <option>4</option>
+                   <option>4</option>
+                </select>
+                 <span>entries</span>
+             </div>
+            -->
+           </div>
+        </div>
+     </div>
+     <!-- Max With Box End -->
+  </div>
+</main>
+ <!-- main End -->
+ <!--- Footer Start -->
+ <app-footer></app-footer>
+ <!--- Footer End -->
+ <!-- Create Sub-User Modal Start Here -->
+ <div class="modal fade common-modal" id="createSubUser" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-800" role="document">
+      <div class="modal-content">
+          <form class="modal-add-card-form" [formGroup]="createUserForm">
+              <div class="modal-body text-center">
+                  <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Create Subuser
+                  </h5>
+                  <div class="modal-content-body modalform-body text-left">
+                      <div class="row">                          
+                          <div class="col-md-8">
+                              <div class="form-group clearfix row">
+                                  <label class="col-md-4 label-blue">First Name</label>
+                                  <div class="col-md-8">
+                                      <input type="text" class="form-control round-input" formControlName="firstName"
+                                           placeholder="Enter first name"
+                                          maxlength="50" />
+                                      <p *ngIf="createUserForm.get('firstName').hasError('required') &&  createUserForm.get('firstName').dirty"
+                                          style="color:red" padding>*FirstName field can not be empty</p>
+                                      <p *ngIf="createUserForm.get('firstName').hasError('pattern') &&  createUserForm.get('firstName').dirty"
+                                          style="color:red" padding>*Invalid FirstName</p>
+                                  </div>
+                              </div>
+                              <div class="form-group clearfix row">
+                                  <label class="col-md-4 label-blue">Last Name</label>
+                                  <div class="col-md-8">
+                                      <input type="text" class="form-control round-input" formControlName="lastName"
+                                          placeholder="Enter Last Name"
+                                          maxlength="100" />
+                                      <p *ngIf="createUserForm.get('lastName').hasError('required') &&  createUserForm.get('lastName').dirty"
+                                          style="color:red" padding>*LastName field can not be empty</p>
+                                          <p *ngIf="createUserForm.get('lastName').hasError('pattern') &&  createUserForm.get('lastName').dirty"
+                                          style="color:red" padding>*Invalid LastName</p>
+                                  </div>
+                              </div>
+                              <div class="form-group clearfix row">
+                                  <label class="col-md-4 label-blue">Role</label>
+                                  <div class="col-md-8">
+                                      <select class="form-control select-style1 round-input" formControlName="role">
+                                          <option value=''>Select Status</option>
+                                          <option value='ADMINSTRATOR'>Administrator</option>
+                                          <option value='COORDINATOR'>Coordinator</option>
+                                      </select>
+                                      <p *ngIf="createUserForm.get('role').hasError('required') &&  createUserForm.get('role').dirty"
+                                          style="color:red" padding>*Role field can not be empty</p>
+                                  </div>
+                              </div>
+                              <div class="form-group clearfix row">
+                                  <label class="col-md-4 label-blue">Email</label>
+                                  <div class="col-md-8">
+                                      <input type="text" class="form-control round-input" formControlName="email"
+                                          placeholder="Enter Email Id"/>
+                                      <!-- <p *ngIf="createUserForm.get('email').hasError('required') &&  createUserForm.get('email').dirty"
+                                          style="color:red" padding>*Email field can not be empty</p> -->
+                                      <p *ngIf="createUserForm.get('email').hasError('pattern') &&  createUserForm.get('email').dirty"
+                                          style="color:red" padding>*Invalid Email</p>
+                                  </div>
+                              </div>
+                              <div class="clearfix calendar-action mt30 text-left">
+                                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="!createUserForm.valid" (click)="addSubUserFunctionality(createUserForm.value)">Add</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- Create Sub-User Modal Ends Here -->
+<!-- Delete Sub-User Modal  Start Here-->
+<div class="modal fade common-modal" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog max-WT-600" role="document">
+          <div class="modal-content">
+              <form class="modal-add-card-form">
+                  <div class="modal-body text-center">
+                      <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Delete User</h5>
+                      <div class="modal-content-body modalform-body text-left">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <label class="deleteModal">Are you sure want to delete this user ?</label>
+                                  <div class="clearfix calendar-action mt30 text-left">
+                                      <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button"
+                                          (click)="delete()">Yes</button>
+                                      <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+<!-- Delete Sub-User Modal Ends Here -->

@@ -1,0 +1,147 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="venue-booking-view-section w-100 center-box">
+      <!-- Global Box Start -->
+      <div class="global-box grey-box">
+        <div class="booking-carousel">
+          <div id="demo" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class=""></li>
+              <li data-target="#demo" data-slide-to="1" class=""></li>
+              <li data-target="#demo" data-slide-to="2" class="active"></li>
+              <li data-target="#demo" data-slide-to="3" class=""></li>
+            </ul>
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+              <div class="carousel-item">
+                <img src="assets/images/stadium.png" alt="stadium">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/images/stadium.png" alt="stadium">
+              </div>
+              <div class="carousel-item active">
+                <img src="assets/images/stadium.png" alt="stadium">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/images/stadium.png" alt="stadium">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="custom-breadcrumb mt10 custom-breadcrumb1">
+          <nav class="breadcrumb">
+            <a class="breadcrumb-item" [routerLink]="['/player/venueDetail',venId]"> View </a>
+            <!-- <a class="breadcrumb-item" href="#"> Sponsers </a> -->
+            <a class="breadcrumb-item" [routerLink]="['/player/media', venId,userDetail._id, 3]">Media</a>
+            <a class="breadcrumb-item active" [routerLink]="['/player/playerVenueSponsor',venId]">Sponsor</a>
+          </nav>
+        </div>
+        <div class="table-block mt30">
+          <div class="table-responsive">
+              <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th>Sponsor Name</th>
+                          <th>Sponsor Link</th>
+                          <th>Position</th>
+                          <th>Organizer Id</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <!-- <th class="W-150">Action</th> -->
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngIf="sponsorList.length == 0">
+                          <td colspan="8">No data found.</td>
+                      </tr>
+                      <tr class="pointer" *ngFor='let sponsor of sponsorList| paginate : { itemsPerPage: paginationData.limit, currentPage: paginationData.page, totalItems: paginationData.total }'>
+                          <td>{{sponsor?.sponsorName}}</td>
+                          <td>{{sponsor?.link}}</td>
+                          <td>{{sponsor?.position}}</td>
+                          <td>{{sponsor?.userId}}</td>
+                          <td>{{sponsor?.createdAt | date : 'dd/MMM/yyyy'}}</td>
+                          <td>{{sponsor?.status}}</td>
+                          <!-- <td><ul><li *ngFor='let prof of sponsor["professionals"]'>{{prof?.professionalName}}</li></ul></td>
+                          <td>
+                              <button *ngIf='sponsor?.bookingStatus == "True"' (click)='book(sponsor, 1)' class="btn btn-book" >Booking Detail</button>
+                              <a  (click)='book(sponsor, 2)' class="btn btn-book">Book</a>
+                          </td> -->
+                      </tr>
+                        <!-- <tr>
+              <td>Face Therapist</td>
+              <td>$50.00</td>
+              <td>30 Minutes</td>
+              <td>22/03/2018</td>
+              <td>3:00 PM</td>
+              <td>Service</td>
+              <td>
+                 <a href="javascript:;" class="btn btn-book">Book</a>
+              </td>
+            </tr>    
+           <tr>
+              <td>Face Therapist</td>
+              <td>$50.00</td>
+              <td>30 Minutes</td>
+              <td>22/03/2018</td>
+              <td>3:00 PM</td>
+              <td>Service</td>
+              <td>
+                 <a href="javascript:;" class="btn btn-book">Book</a>
+              </td>
+            </tr> 
+            <tr>
+              <td>Face Therapist</td>
+              <td>$50.00</td>
+              <td>30 Minutes</td>
+              <td>22/03/2018</td>
+              <td>3:00 PM</td>
+              <td>Service</td>
+              <td>
+                 <a href="javascript:;" class="btn btn-book">Book</a>
+              </td>
+            </tr>  
+            <tr>
+              <td>Face Therapist</td>
+              <td>$50.00</td>
+              <td>30 Minutes</td>
+              <td>22/03/2018</td>
+              <td>3:00 PM</td>
+              <td>Service</td>
+              <td>
+                 <a href="javascript:;" class="btn btn-book">Book</a>
+              </td>
+            </tr> 
+            <tr>
+              <td>Face Therapist</td>
+              <td>$50.00</td>
+              <td>30 Minutes</td>
+              <td>22/03/2018</td>
+              <td>3:00 PM</td>
+              <td>Service</td>
+              <td>
+                 <a href="javascript:;" class="btn btn-book">Book</a>
+              </td>
+            </tr>  -->
+                  </tbody>
+              </table>
+          </div>
+          <div class="pagination-block mt10 text-right" *ngIf="paginationData.total > paginationData.limit">
+              <pagination-controls (pageChange)="getSponsorList($event)"></pagination-controls>
+          </div>
+      </div>
+      </div>
+      <!-- Global Box End -->
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

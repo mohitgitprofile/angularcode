@@ -1,0 +1,400 @@
+<app-header></app-header>
+<div class="topBanner height300">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="topBanner-content d-flex align-items-center w-100">
+                    <div class="w-100">
+                        <h1>COMPREHENSIVE MANAGEMENT OF<br> ANY SPORTS COMPETITION</h1>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="w-100 center-box">
+            <div class="global-box">
+                <div class="heading-search-block mb20">
+                    <h3 class="page-headng mb5">Notification</h3>
+                    <h5 class="page-sub-heading">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took.
+                    </h5>
+                </div>
+                <div class="notification-inner-block">
+                    <div class="grey-bg-pannel mb10">
+                        <ul>
+                            <li class="notif-top-heading clearfix">
+                                <div class="fleft">
+                                    <h3 class="notif-main-heading">Competitions</h3>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block">
+                                        <h3 class="notif-main-heading">Email</h3>
+                                    </div>
+                                    <div class="noti-inline-block">
+                                        <h3 class="notif-main-heading">Mobile</h3>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Registrations</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.registrationEmail" (change)="notify('registration','email',modalData.competitionNotify.registrationEmail)" >
+                                        <span class="slider" ></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.registrationMobile"  (change)="notify('registration','mobile',modalData.competitionNotify.registrationMobile)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">My Team</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.myTeamEmail"  (change)="notify('myTeam','email',modalData.competitionNotify.myTeamEmail)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.myTeamMobile"  (change)="notify('myTeam','mobile',modalData.competitionNotify.myTeamMobile)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Result & Standing</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.resultEmail"  (change)="notify('result','email',modalData.competitionNotify.resultEmail)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.resultMobile"  (change)="notify('result','mobile',modalData.competitionNotify.resultMobile)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Media</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.mediaEmail"  (change)="notify('media','email',modalData.competitionNotify.mediaEmail)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.mediaMobile"  (change)="notify('media','mobile',modalData.competitionNotify.mediaMobile)"  >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Message</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.messageEmail"  (change)="notify('message','email',modalData.competitionNotify.messageEmail)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.competitionNotify.messageMobile"  (change)="notify('message','mobile',modalData.competitionNotify.messageMobile)" >
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="grey-bg-pannel mb10">
+                        <ul>
+                            <li class="notif-top-heading clearfix">
+                                <div class="fleft">
+                                    <h3 class="notif-main-heading">Membership</h3>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block">
+                                        <h3 class="notif-main-heading">Email</h3>
+                                    </div>
+                                    <div class="noti-inline-block">
+                                        <h3 class="notif-main-heading">Mobile</h3>
+                                    </div>
+
+                                </div>
+                            </li>
+
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Evaluation</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                          <input type="checkbox" [(ngModel)]="modalData.membershipNotify.evaluationEmail"  (change)="membershipNotify('evaluationEmail','email',modalData.membershipNotify.evaluationEmail)">
+                                          <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.evaluationMobile"  (change)="membershipNotify('evaluationMobile','mobile',modalData.membershipNotify.evaluationMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Leaderboard</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.leaderboardEmail"  (change)="membershipNotify('leaderboardEmail','email',modalData.membershipNotify.leaderboardEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.leaderboardMobile"  (change)="membershipNotify('leaderboardMobile','mobile',modalData.membershipNotify.leaderboardMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Certificate</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.certificateEmail"  (change)="membershipNotify('certificateEmail','email',modalData.membershipNotify.certificateEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.certificateMobile"  (change)="membershipNotify('certificateMobile','mobile',modalData.membershipNotify.certificateMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Service</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.serviceEmail"  (change)="membershipNotify('serviceEmail','email',modalData.membershipNotify.serviceEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.serviceMobile"  (change)="membershipNotify('serviceMobile','mobile',modalData.membershipNotify.serviceMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Media</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.mediaEmail"  (change)="membershipNotify('media','email',modalData.membershipNotify.mediaEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.mediaMobile"  (change)="membershipNotify('media','mobile',modalData.membershipNotify.mediaMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Message</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.messageEmail"  (change)="membershipNotify('message','email',modalData.membershipNotify.messageEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.membershipNotify.messageMobile"  (change)="membershipNotify('message','mobile',modalData.membershipNotify.messageMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="grey-bg-pannel mb10">
+                        <ul>
+                            <li class="notif-top-heading clearfix">
+                                <div class="fleft">
+                                    <h3 class="notif-main-heading">Venue</h3>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block">
+                                        <h3 class="notif-main-heading">Email</h3>
+                                    </div>
+                                    <div class="noti-inline-block">
+                                        <h3 class="notif-main-heading">Mobile</h3>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Venue Add</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.venueEmail"  (change)="venueNotify('venueEmail','email',modalData.venueNotify.venueEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.venueMobile"  (change)="venueNotify('venueMobile','mobile',modalData.venueNotify.venueMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Booking Confirmation</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.bookingConfirmationEmail"  (change)="venueNotify('bookingConfirmation','email',modalData.venueNotify.bookingConfirmationEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.bookingConfirmationMobile"  (change)="venueNotify('bookingConfirmation','mobile',modalData.venueNotify.bookingConfirmationMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Payment Confirmation</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.paymentConfirmationEmail"  (change)="venueNotify('paymentConfirmation','email',modalData.venueNotify.paymentConfirmationEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.paymentConfirmationMobile"  (change)="venueNotify('paymentConfirmation','mobile',modalData.venueNotify.paymentConfirmationMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Booking Reminders</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.bookingReminderEmail"  (change)="venueNotify('bookingReminder','email',modalData.venueNotify.bookingReminderEmail)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.bookingReminderMobile"  (change)="venueNotify('bookingReminder','mobile',modalData.venueNotify.bookingReminderMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="fleft">
+                                    <h5 class="notif-inner-left">Media</h5>
+                                </div>
+                                <div class="fright noti-right-block">
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                      <input type="checkbox" [(ngModel)]="modalData.venueNotify.mediaEmail"  (change)="venueNotify('mediaEmail','email',modalData.venueNotify.mediaEmail)">
+                                      <span class="slider"></span>
+                                    </label>
+                                    </div>
+                                    <div class="noti-inline-block switch-block">
+                                        <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="modalData.venueNotify.mediaMobile"  (change)="venueNotify('mediaMobile','mobile',modalData.venueNotify.mediaMobile)">
+                                        <span class="slider"></span>
+                                      </label>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Global Box End -->
+
+
+        </div>
+        <!-- Max With Box End -->
+
+    </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

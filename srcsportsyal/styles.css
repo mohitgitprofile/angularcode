@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+/* Theme for shareButton */
+/* @import '~@ngx-share/button/themes/default/default-theme'; */
+
+.max-WT-900 {
+  width: 100%;
+  max-width: 900px;
+}

@@ -1,0 +1,157 @@
+<app-header></app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <div class="content-box-filter">
+        <form class="modal-add-card-form" autocomplete="off" novalidate [formGroup]="addVenueForm">
+          <div class="modal-body text-center">
+            <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Venue</h5>
+            <div class="modal-content-body modalform-body text-left">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Venue Name</label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control round-input" [formControl]="gVenueF.venueName" placeholder="Venue name" maxlength="50"
+                      />
+                      <div class="errorMsg" *ngIf="gVenueF.venueName.dirty && gVenueF.venueName.invalid">
+                        <span *ngIf="gVenueF.venueName.hasError('required')">*Please enter venue name.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Venue Address</label>
+                    <div class="col-md-9">
+                      <ng4geo-autocomplete (componentCallback)="autoCompleteCallback1($event)" [formControl]="gVenueF.venueLocationData" placeholder=""
+                        [(ngModel)]="venueLocation" ngDefaultControl></ng4geo-autocomplete>
+                      <div class="errorMsg" *ngIf="gVenueF.venueLocationData.dirty && gVenueF.venueLocationData.invalid">
+                        <span *ngIf="gVenueF.venueLocationData.hasError('required')">*Please enter venue address.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Sports</label>
+                    <div class="col-md-9">
+                      <ng-multiselect-dropdown [formControl]="gVenueF.sportData" [placeholder]="'Select Sport'" [data]="list.sportsList" [settings]="dropdownSettings">
+                      </ng-multiselect-dropdown>
+                      <div class="errorMsg" *ngIf="gVenueF.sportData.dirty && gVenueF.sportData.invalid">
+                        <span *ngIf="gVenueF.sportData.hasError('required')">*Please select sport.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Start Time</label>
+                    <div class="col-md-9">
+                      <select class="form-control select-style1 round-input" [formControl]="gVenueF.startTime" (change)="ontime($event)">
+                        <option value="">Start Time</option>
+                        <option *ngFor="let i of timeslot" value="{{i?.time}}">{{i?.time}}</option>
+                      </select>
+                      <div class="errorMsg" *ngIf="gVenueF.startTime.dirty && gVenueF.startTime.invalid">
+                        <span *ngIf="gVenueF.startTime.hasError('required')">*Please select start time.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">End Time</label>
+                    <div class="col-md-9">
+                      <select class="form-control select-style1 round-input" [formControl]="gVenueF.endTime">
+                        <option *ngFor="let i of endtime" value="{{i?.time}}">{{i?.time}}</option>
+                      </select>
+                      <div class="errorMsg" *ngIf="gVenueF.endTime.dirty && gVenueF.endTime.invalid">
+                        <span *ngIf="gVenueF.endTime.hasError('required')">*Please select end time.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Duration</label>
+                    <div class="col-md-9">
+                      <select class="form-control select-style1 round-input" [formControl]="gVenueF.duration">
+                        <option value="">Select Duration</option>
+                        <option value="30">30 Minutes</option>
+                        <option value="60">60 Minutes</option>
+                        <option value="90">90 Minutes</option>
+                      </select>
+                      <div class="errorMsg" *ngIf="gVenueF.duration.dirty && gVenueF.duration.invalid">
+                        <span *ngIf="gVenueF.duration.hasError('required')">*Please select duration.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Week off</label>
+                    <div class="col-md-9">
+                      <ng-multiselect-dropdown [placeholder]="'Select week off'" [data]="weekOff" [formControl]="gVenueF.weekoff" [settings]="dropdownSettings"
+                        name="week">
+                      </ng-multiselect-dropdown>
+                      <div class="errorMsg" *ngIf="gVenueF.weekoff.dirty && gVenueF.weekoff.invalid">
+                        <span *ngIf="gVenueF.weekoff.hasError('required')">*Please select week off.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Venue Image</label>
+                    <div class="col-md-9">
+                      <div class="col-md-9">
+                        <ul class="create-album-list">
+                          <li *ngFor="let image of imgArr;let i = index">
+                            <div class="album-part">
+                              <span class="cross-icon" (click)="onDeleteImg(i)">
+                                <i class="far fa-times-circle"></i>
+                              </span>
+                              <img class="logo_img" src="{{image}}">
+                            </div>
+                          </li>
+                          <li>
+                            <div class="album-part">
+                              <img class="logo_img" src="assets/images/addCard.png" style="object-fit:contain;max-width: 130px;">
+                              <div class="file-upload">
+                                <label for="upload" class="file-upload__label" style="height:130px;"></label>
+                                <input id="upload" class="file-upload__input" type="file" name="file-upload" accept="image/*" [formControl]="gVenueF.venueImages"
+                                  (change)="fileChange($event)">
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Description</label>
+                    <div class="col-md-9">
+                      <textarea class="form-control" [formControl]="gVenueF.description"></textarea>
+                      <div class="errorMsg" *ngIf="gVenueF.description.dirty && gVenueF.description.invalid">
+                        <span *ngIf="gVenueF.description.hasError('required')">*Please enter description.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <div class="col-md-9">
+                      <input type="checkbox" id="publicAllowCheck" [formControl]="gVenueF.allowPublic">
+                      <label for="publicAllowCheck">Allow public to follow your venue.</label>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <div class="col-md-9">
+                      <input type="checkbox" id="venueAllowCheck" [formControl]="gVenueF.allowShareable">
+                      <label for="venueAllowCheck">Allow venue to have shareable sports.</label>
+                    </div>
+                  </div>
+                  <div class="clearfix calendar-action mt30 text-left">
+                    <button type="button" class="mb25 btn btn-gray max-WT-150" [routerLink]="['/organizer/venList']">Cancel</button>
+                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="onAddVenue()">Create</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

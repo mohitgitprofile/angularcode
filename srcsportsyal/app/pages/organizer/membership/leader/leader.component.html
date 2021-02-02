@@ -1,0 +1,163 @@
+<!--  Header Start -->
+<app-header></app-header>
+<!-- Header  End    -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Filter BY</h2>
+            <div class="content-box-filter">
+                <form class="filter-form fullwidth" [formGroup]="filterForm">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <div class="filter-box ">
+                                <label class="control-label">MemberShip Name</label>
+                                <select class="form-control select-style1" formControlName="membershipName" (change)="getMembershipId($event)">
+                          <option value="">All</option>
+                          <option  *ngFor="let i of memberList"  value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                          </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="filter-box">
+                                <label class="control-label">Service</label>
+                                <select class="form-control select-style1" formControlName="serviceName" (change)="getServiceId($event)">
+                          <option value="">Select Service</option>
+                           <option  *ngFor="let i of servicelist"  value="{{i?.serviceName}}">{{i?.serviceName}}</option>
+                         </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="filter-box">
+                                <label class="control-label">Service Status</label>
+                                <my-date-picker name="startdate" formControlName='serviceDate' [disabled]='disable' [options]="myDatePickerOptions" placeholder="Choose the service date"></my-date-picker>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <button class="btn btn btn-dark-blue-s max-WT-150" [disabled]="!filterForm.valid" (click)="getLeaderBoard(filterForm.value)">Apply</button>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                     <div class="col-md-8">
+                     <div class="search-block-main fiter-full-search">
+                       <div class="search_block">
+                           <div class="input-group">
+                             <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                             <div class="input-group-append">
+                               <button class="btn btn_search" type="button">Search</button>
+                             </div>
+                           </div>
+                       </div>
+                   </div>
+                  </div>
+                  <div class="col-md-4 text-right">
+                      <button class="btn btn btn-dark-blue-s" type="button" data-toggle="modal" data-target="#create_club">Add Membership</button>
+                  </div>
+               </div> -->
+                </form>
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered  text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th>Player Name</th>
+                                <th>Points</th>
+                                <!-- <th>End Date</th>
+                         <th>Start Time</th>
+                          <th>End Time</th>
+                          <th>Duration</th>
+                          <th>Amount</th>
+                          <th style="min-width:350px">Action</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <form class="filter-form fullwidth" [formGroup]="pointForm"> -->
+                            <tr *ngIf="show == 'hide'">
+                                No Data Found Apply Filter To Get Result!!
+                            </tr>
+                            <tr *ngIf="(show == 'hide')&&(leaderList =='')">
+                                No Data Found
+                            </tr>
+                            <tr *ngFor="let item of leaderboardList">
+                                <td>{{item?.playerId?.firstName}} {{item?.playerId?.lastName}}</td>
+                                <td><input type="number" [value]="item?.leaderBoard[searchYear][searchMonth]" (input)="onSearchChange($event.target.value,item._id)" [ngModel]="item?.leaderBoard[searchYear][searchMonth]"></td>
+                                <!-- <td>02/19/2018</td>
+                         <td>09:00 AM</td>
+                         <td>06:00 Am</td>
+                         <td>30 Mins</td>
+                         <td>$200</td>
+                         <td class="action-td">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#edit_matches_config"><i class="far fa-edit"></i></button>
+                           <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                         </td> -->
+                            </tr>
+                            <button *ngIf="(show != 'hide')&&(leaderList !='')" class="btn btn-info" (click)="update()">Submit</button>
+                            <!-- </form> -->
+                            <!-- <tr>
+                       <td>Body Massage</td>
+                         <td>02/19/2018</td>
+                         <td>02/19/2018</td>
+                         <td>09:00 AM</td>
+                         <td>06:00 Am</td>
+                         <td>30 Mins</td>
+                         <td>$200</td>
+                         <td class="action-td">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#edit_matches_config"><i class="far fa-edit"></i></button>
+                           <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                         </td>
+                      </tr>
+                     <tr>
+                       <td>Body Massage</td>
+                         <td>02/19/2018</td>
+                         <td>02/19/2018</td>
+                         <td>09:00 AM</td>
+                         <td>06:00 Am</td>
+                         <td>30 Mins</td>
+                         <td>$200</td>
+                         <td class="action-td">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#edit_matches_config"><i class="far fa-edit"></i></button>
+                           <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                         </td>
+                      </tr> -->
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- <div class="clearfix pagination-entity">
+               <div class="pagination-block text-right">
+                <ul class="pagination">
+                 <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-caret-left"></i> Prev</a></li>
+                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                 <li class="page-item"><a class="page-link" href="#">2</a></li>
+                 <li class="page-item"><a class="page-link" href="#">3</a></li>
+                 <li class="page-item"><a class="page-link" href="#">4</a></li>
+                 <li class="page-item"><a class="page-link" href="#">5</a></li>
+                 <li class="page-item"><a class="page-link" href="#">6</a></li>
+                 <li class="page-item"><a class="page-link" href="#">Next <i class="fas fa-caret-right"></i></a></li>
+                 </ul>
+               </div>
+               <div class="entity-text">
+                  <span>showing 1 to 6 entries</span>
+                  <select class="form-control select-style1 mw50">
+                     <option>4</option>
+                     <option>4</option>
+                     <option>4</option>
+                  </select>
+                   <span>entries</span>
+               </div>
+             
+             </div> -->
+            </div>
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- main End -->
+<!-- Footer Start -->
+<app-footer></app-footer>
+<!-- Footer End -->

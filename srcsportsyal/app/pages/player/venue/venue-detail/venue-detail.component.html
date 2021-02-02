@@ -1,0 +1,142 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="venue-booking-view-section w-100 center-box">
+      <!-- Global Box Start -->
+      <div class="global-box grey-box">
+        <app-venue-player-header></app-venue-player-header>
+        <div class="venue-booking-view">
+          <div class="venue_block">
+            <div style="float: right;">
+              <div class="rating-block">
+                <rating [(ngModel)]="averageRating" fullIcon="★" emptyIcon="☆" [max]="5" [readonly]="true">
+                </rating>
+                <br/>
+                <br/>
+              </div>
+            </div>
+            <h3 class="venue-heading">{{venueDetail.venueName}}</h3>
+            <p class="txt">{{venueDetail.description}}</p>
+          </div>
+          <div class="venue_block">
+            <div class="row">
+              <div class="col-md-2">
+                <label class="venue-heading">Available Sports</label>
+              </div>
+              <div class="col-md-10">
+                <span *ngFor="let sportImage of venueDetail.sportIcon" class="venue-img">
+                  <img *ngIf="sportImage" src="{{sportImage}}">
+                  <img *ngIf="!venueDetail.sportIcon.length" src="assets/images/sport1.png">
+                </span>
+              </div>
+            </div>
+          </div>
+          <form class="filter-form">
+            <div class="filter-box d-inline-block">
+              <label class="control-label">Select Sport</label>
+              <select *ngIf="venueDetail.partialBooking === true" class="form-control select-style1 d-inline-block width200" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="selectedSport" (change)="onSportSelect()" style="width: 337px;" disabled>
+                <option value="">Select Sport</option>
+                <option *ngFor="let sports of sportsList" value="{{sports}}">{{sports}}</option>
+              </select>
+              <select *ngIf="venueDetail.partialBooking === false" class="form-control select-style1 d-inline-block width200" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="selectedSport" (change)="onSportSelect()" style="width: 337px;">
+                <option value="">Select Sport</option>
+                <option *ngFor="let sports of sportsList" value="{{sports}}">{{sports}}</option>
+              </select>
+            </div>
+          </form>
+          <div class="row" *ngIf="selectedSport != '' ">
+            <div class="col-lg-5">
+              <div class="calender-block">
+                <h6 class="mt-3" *ngIf="date.selectedDate == '' && selectedSport != '' ">Selected A Date</h6>
+                <h6 class="pl-3 mb-4" *ngIf="!date.selectedDate == '' && selectedSport != '' ">{{date.selectedDate.formatted}}</h6>
+                <form #myForm="ngForm" novalidate>
+                  <my-date-picker name="mydate" [options]="myDatePickerOptions" [(ngModel)]="date.selectedDate" (dateChanged)="onDateSelect($event)"
+                    required></my-date-picker>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="colors mt10" *ngIf="selectedSport != '' ">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="text-center d-flex">
+                  <span class="box green">
+                  </span>
+                  <span class="mL5">Available</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="text-center d-flex">
+                  <span class="box red">
+                  </span>
+                  <span class="mL5">Booked</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="text-center d-flex">
+                  <span class="box yellow">
+                  </span>
+                  <span class="mL5">Partially Booked</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view_btns">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="btn-right">
+                <button type="button" class="btn btn-grey" (click)="getparticularRating()">Rate the venue</button>
+                <button type="button" class="btn btn-blue" *ngIf="selectedSport == ''" (click)="bookSlot()" disabled>Select Sport</button>
+                <button type="button" class="btn btn-blue" *ngIf="date.selectedDate == '' && selectedSport != '' && venueDetail.partialBooking === true"
+                  (click)="bookNow()">Book - Basket({{totalCourt}})</button>
+                <button type="button" class="btn btn-blue" *ngIf="date.selectedDate == '' && selectedSport != '' && venueDetail.partialBooking === false"
+                  (click)="bookSlot()" disabled>Select date</button>
+                <button type="button" class="btn btn-blue" *ngIf="selectedSport != '' && date.selectedDate!=''" (click)="bookSlot()">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Global Box End -->
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+<!-- Modal Start -->
+<div class="modal fade" id="venue_rating" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="rating-form">
+        <div class="modal-header d-block bdr-none pb0 clearfix">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="head_lagend mb25 navy-blue font_uni_sans">Rate Venue</p>
+          <div class="rating-block">
+            <div class="d-inline-block active">
+              <rating [(ngModel)]="userRating" fullIcon="★" emptyIcon="☆" [max]="5" (click)='onRatingClicked()' [ngModelOptions]="{standalone: true}">
+              </rating>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-block text-center bdr-none">
+          <button type="submit" class="mb25 btn btn-navy-blue max-WT-170" [disabled]="!this.newRating" (click)="saveRatingFun()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- book_slot End -->

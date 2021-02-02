@@ -1,0 +1,328 @@
+
+    <!--  Header Start    -->
+    <app-header></app-header>
+    <!--  Header End    -->
+      <div class="topBanner">
+         <div class="container">
+         </div>
+      </div>
+      <!-- main Start -->
+      <main class="main-container pt0 mt-min60">
+         <div class="container">
+            <div class="content-box bg-gray">
+               <h2 class="content-box-head">Product</h2>
+               <div class="content-box-filter">
+                  <form class="filter-form fullwidth">  
+                    <div class="row">
+                       <div class="col-md-4">
+                         <div class="filter-box mt10">
+            
+                            <select class="form-control select-style1">
+                               <option>Select Product</option>
+                               <option>Select Product</option>
+
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="button-box text-right mobTL mt10">
+                            <button class="btn btn btn-dark-blue-s max-WT-180 mb10" data-target="#config_pro"  data-toggle="modal" type="button">Configure Product Type</button>
+                            <button class="btn btn btn-dark-blue-s max-WT-120 mb10" type="button" (click)="addProductModal()">Add Product</button>
+                          </div>
+                        </div>
+                      </div>
+                  </form>
+               </div>
+               <div class="content-box-filter mt20 pt30">
+                 <div class="row">
+                   <div class="col-md-4">
+                      <div class="product-box">
+                        <div class="pro-top-part clearfix">
+                          <p class="head-sm pull-left"> Poster</p>
+                          <p class="head-sm pull-right"> <a href="#addpro_detail" data-toggle="modal">View</a></p>
+                        </div>
+                        <div class="product-box-img">
+                          <img class="logo_img" src="assets/images/dummy.png"/>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="col-md-4">
+                      <div class="product-box">
+                        <div class="pro-top-part clearfix">
+                          <p class="head-sm pull-left"> Poster</p>
+                          <p class="head-sm pull-right"> <a href="#addpro_detail" data-toggle="modal">View</a></p>
+                        </div>
+                        <div class="product-box-img">
+                          <img class="logo_img" src="assets/images/dummy.png"/>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="col-md-4">
+                      <div class="product-box">
+                        <div class="pro-top-part clearfix">
+                          <p class="head-sm pull-left"> Poster</p>
+                          <p class="head-sm pull-right"> <a href="#addpro_detail" data-toggle="modal">View</a></p>
+                        </div>
+                        <div class="product-box-img">
+                          <img class="logo_img" src="assets/images/dummy.png"/>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="col-md-4">
+                      <div class="product-box">
+                        <div class="pro-top-part clearfix">
+                          <p class="head-sm pull-left"> Poster</p>
+                          <p class="head-sm pull-right"> <a href="#addpro_detail" data-toggle="modal">View</a></p>
+                        </div>
+                        <div class="product-box-img">
+                          <img class="logo_img" src="assets/images/dummy.png"/>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="col-md-4">
+                      <div class="product-box">
+                        <div class="pro-top-part clearfix">
+                          <p class="head-sm pull-left"> Poster</p>
+                          <p class="head-sm pull-right"> <a href="#addpro_detail" data-toggle="modal">View</a></p>
+                        </div>
+                        <div class="product-box-img">
+                          <img class="logo_img" src="assets/images/dummy.png"/>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="col-md-4">
+                      <div class="product-box">
+                        <div class="pro-top-part clearfix">
+                          <p class="head-sm pull-left"> Poster</p>
+                          <p class="head-sm pull-right"> <a href="#addpro_detail" data-toggle="modal">View</a></p>
+                        </div>
+                        <div class="product-box-img">
+                          <img class="logo_img" src="assets/images/dummy.png"/>
+                        </div>
+                      </div>
+                   </div>
+                 </div>
+               </div>
+            </div>
+            <!-- Max With Box End -->
+         </div>
+      </main>
+      <!-- main End -->
+      <!--   Footer Start  -->
+      <app-footer></app-footer>
+      <!--   Footer End  -->
+      <!--   Add product Modal -->
+    <div class="modal fade common-modal" id="org_add_product" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-900" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" >
+                  <div class="modal-body text-center">
+                      <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Product</h5>
+                     <div class="modal-content-body modalform-body text-left">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <div class="profile-img" id="profile_img">
+                            <img src="assets/images/profile-img.png" alt="Profile img">
+                            <span class="camera fa fa-pencil-alt"><input type="file"></span>
+                         </div>
+                        </div>
+                        <div class="col-md-9">
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Product Type</label>
+                             <div class="col-md-9">
+                              <select class="form-control select-style1 round-input">
+                                    <option>Tshirt</option>
+                                     <option>Tshirt</option>
+                                      <option>Tshirt</option>
+                               </select>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Description</label>
+                             <div class="col-md-9">
+                              <textarea class="form-control common-textarea"></textarea>
+                             </div>
+                           </div>
+                            <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Select Size</label>
+                             <div class="col-md-9">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <div class="custom-checkbox clearfix">
+                                        <input type="checkbox" id="check2">
+                                        <label for="check2">S</label>
+                                   </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Quantity</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <div class="custom-checkbox clearfix">
+                                        <input type="checkbox" id="check2">
+                                        <label for="check2">L</label>
+                                   </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Quantity</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <div class="custom-checkbox clearfix">
+                                        <input type="checkbox" id="check2">
+                                        <label for="check2">XL</label>
+                                   </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Quantity</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <div class="custom-checkbox clearfix">
+                                        <input type="checkbox" id="check2">
+                                        <label for="check2">XXL</label>
+                                   </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Quantity</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="pro-des">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control">
+                                  </div>
+                                </div>
+                              </div>
+                             </div>
+                           </div>
+                          <div class="clearfix calendar-action mt30 text-right">
+                            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 "  type="button" data-toggle="modal" data-target="#edit_venue">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!--  Modal End Config Product--> 
+
+            <!--   Add product Modal -->
+    <div class="modal fade common-modal" id="config_pro" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-800" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" >
+                  <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Configure Product Type</h5>
+                     <div class="modal-content-body modalform-body text-left">
+                     <div class="form-group clearfix row">
+                       <label class="col-md-3 label-blue">Product Type</label>
+                       <div class="col-md-9">
+                        <input type="text" class="form-control" placeholder="T-shirt">
+                       </div>
+                     </div>
+
+                    <div class="clearfix calendar-action mt30 text-center">
+                      <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                      <button class="mb25 btn btn-navy-blue max-WT-150 mL5 "  type="button" data-toggle="modal" data-target="#edit_venue">Submit</button>
+                    </div>
+                    </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!--  Modal End Config Product--> 
+
+      <!--  manage product detail modal -->
+    <div class="modal fade common-modal" id="addpro_detail" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-900" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" >
+                  <div class="modal-body text-center">
+                      <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Manage Product</h5>
+                       <button type="button" class="close close-icon" data-dismiss="modal">&times;</button>
+                     <div class="modal-content-body modalform-body text-left">
+                   
+                            <h5 class="head-sub">T-shirt </h5> 
+                            <div class="product-image mb20">
+                              <img src="assets/images/dummy.png" alt="Logo"/>
+                            </div>
+                            <p class="head-sm"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                           </p>
+                            <div class="form-group max-WT-500 clearfix row">
+                             <label class="col-md-2 label-blue"> Size</label>
+                             <div class="col-md-10">
+                              <div class="row">
+                                <div class="col-4">
+                           
+                                      <div class="size-box">
+                                        <label for="check2">S</label>
+                                      </div>
+                           
+                                </div>
+                                <div class="col-4">
+                                  <div class="text-label">
+                                    <label>40</label>
+                                  
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="text-label">
+                                    <label>$440</label>
+                                 
+                                  </div>
+                                </div>
+                              </div>
+                             </div>
+                           </div>
+                          <div class="clearfix calendar-action mt30 text-right">
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 "  type="button" data-toggle="modal" data-target="#edit_venue">Edit</button>
+                          </div>
+                    </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!--  Modal End manage product detail -->
+

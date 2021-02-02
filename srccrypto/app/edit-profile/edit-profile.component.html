@@ -1,0 +1,169 @@
+
+<div class="wrapper">
+  
+    <!-- Header End -->
+
+
+    <!-- Aside End -->
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title" style="color: black">Edit Profile</h1>
+           
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+
+            <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                <div class="main-block-innner mb40 mt40">
+                    <div class="add-store-block input-style">
+                        <form [formGroup]="editForm">
+                        <div class="user-profile">
+                            <div class="image-box">
+                                <img [src]="editImage" class="profile-pic">
+                                <label class="upload-label">
+                                    <input type="file" class="hidden" accept=".png, .jpg, .jpeg" (change)="uploadImg($event)"/>
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            </div>
+
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4">Name </label>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control form-control2" formControlName="name" maxlength="30" (keypress)="preventSpace($event)"/>
+                                <span class="error">
+                                    <p *ngIf="editForm.get('name').hasError('pattern') && editForm.get('name').dirty" class="error"
+                                    padding>*Please enter valid name</p>
+                                    </span>
+                            </div>
+                           
+                           
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4">Email </label>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7">
+                                <input type="email" class="form-control form-control2" formControlName="email" maxlength="64"/>
+                                <span class="error">
+                                    <p *ngIf="editForm.get('email').hasError('pattern') && editForm.get('email').dirty" class="error"
+                                    padding>*Please enter valid email</p>
+                                    </span>
+                            </div>
+                            
+                           
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4">Phone </label>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control form-control2" formControlName="phone" maxlength="15"/>
+                                <span class="error">
+                                    <p *ngIf="editForm.get('phone').hasError('pattern') && editForm.get('phone').dirty" class="error"
+                                    padding>*Please enter valid phone number</p>
+                                    </span>
+                            </div>
+                           
+                            
+                        </div>
+
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4">City </label>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control form-control2" formControlName="city" maxlength="15" (keypress)="preventSpace($event)"/>
+                                <span class="error">
+                                    <p *ngIf="editForm.get('city').hasError('pattern') && editForm.get('city').dirty" class="error"
+                                    padding>*Please enter valid city</p>
+                                    </span>
+                            </div>
+                            
+                           
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label class="col-md-4">Country </label>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control form-control2" formControlName="country" maxlength="15" (keypress)="preventSpace($event)"/>
+                                <span class="error">
+                                    <p *ngIf="editForm.get('country').hasError('pattern') && editForm.get('country').dirty" class="error"
+                                    padding>*Please enter valid country name</p>
+                                    </span>
+                            </div>
+                            
+                            
+                        </div>
+                       
+                        <div class="form-group row align-items-basline">
+                            <label class="col-md-4" style="margin-top: 11px;">Address </label>
+                            <div class="col-md-1">:</div>
+                            <div class="col-md-7">
+                                <div class="w-100">
+                                    <textarea class="form-control form-control2" formControlName="address" minlength="50" maxlength="100" (keypress)="preventSpace($event)"></textarea>
+                                   
+                                </div>
+                               
+                               
+                            </div>
+                        </div>
+                        <div class="text-center mt40">
+                            <a  class="btn btn-large  max-WT-200 font-100 btn-green mr-2" (click)="updateProfile()">Update Profile</a>
+                            <a href="javascript:void(0)" class="btn btn-large  max-WT-200 font-100 btn-green ml5" [routerLink]="['/my-profile']">Cancel</a>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Middle Content End -->
+<!-- Wrapper End -->
+<!--Modal Start-->
+<div class="modal fade global-modal reset-modal" id="delet_farms_modal">
+    <div class="modal-dialog max-WT-500">
+        <div class="modal-content">
+            <!-- Modal body -->
+            <div class="modal-body  text-center">
+                <div class="row align-items-center modal_flax_height">
+                    <div class="col">
+                        <div class="box-title mb40 d-inline-block">
+                            <h2>Are you sure?</h2>
+                            <p>You won’t be able to revert this!</p>
+                        </div>
+                        <div class="max-WT-300 d-inline-block">
+                            <button type="button" class="btn btn-gray btn-large radius0 btn-block">YES</button>
+                            <button type="button" class="btn btn-red btn-large radius0 btn-block" data-dismiss="modal">CANCEL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- signout_modal Start -->
+
+<!-- Signout Modal -->
+<!-- Change Password_modal Start -->
+<div class="modal fade global-modal reset-modal" id="update-prof">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password" action="my-profile.html">
+            <div class="modal-content">
+                <div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Profile Update Successfully</p>
+                                <div class="form-group mt40">
+                                    <button type="submit" class="btn btn-info">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

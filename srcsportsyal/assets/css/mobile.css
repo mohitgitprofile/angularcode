@@ -1,0 +1,1084 @@
+@media (min-width: 767px) {
+    .venue-booking-view-section .global-box {
+        padding: 40px 70px 30px;
+    }
+}
+
+@media (max-width:1200px) {
+    .container-common {
+        max-width: 991px;
+    }
+}
+
+@media (max-width:1279px) {
+    .head-user-name {
+        display: none;
+    }
+    .header-right-box {
+        width: 60px;
+        min-width: auto;
+    }
+    .header-left-box {
+        min-width: auto;
+        width: 140px;
+    }
+}
+
+
+/* Media Query end */
+
+@media (max-width: 1024px) {
+    .logo {
+        max-width: 125px;
+        margin-left: 15px;
+        margin-top: 20px;
+    }
+    .menu ul li a {
+        font-size: 13px;
+        padding: 27px 10px;
+    }
+    .header_bg .menu ul li a {
+        padding: 25px 10px;
+    }
+    .logSign-box {
+        padding: 15px 50px 15px 0px;
+    }
+    .btn-mobmenu {
+        display: block;
+    }
+    .btn-mobmenu:hover {
+        color: #ddd;
+    }
+    .menu {
+        position: fixed;
+        width: 240px;
+        height: 100vh;
+        background: #0a151c;
+        top: 0px;
+        right: 0px;
+        padding-top: 55px;
+        padding-right: 0px;
+        overflow: hidden;
+        overflow-y: auto;
+        transition: 400ms;
+        transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        -ms-transform: translateX(100%);
+        padding-left: 0;
+        z-index: 0;
+    }
+    .menu.mobmenushow {
+        transform: translate(0%);
+        -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+    }
+    .menu ul li {
+        display: block;
+        width: 100%;
+        position: relative;
+    }
+    .menu ul li a {
+        display: block;
+        width: 100%;
+        color: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 15px;
+    }
+    .menu ul li:hover a~ul.drpdown {
+        display: none;
+    }
+    .plus-minus {
+        display: block;
+        position: absolute;
+        top: 5px;
+        right: 0;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+    }
+    .dropdown.pin-menu {
+        margin: 0 0 10px;
+    }
+    .evaluation-box h3 {
+        font-size: 18px;
+    }
+    /****************Amit(24-05-2018)********************/
+    .create-album-blocks {
+        margin-top: 20px;
+    }
+    /*******************************************/
+}
+
+@media(max-width:1023px) {
+    .menu_box {
+        display: inline-block;
+        position: relative;
+    }
+    .toggle_menu {
+        display: block;
+        background: #000;
+        color: #fff;
+        border: none;
+        padding: 3px 10px;
+        border-radius: 4px;
+    }
+    .menu_box_list {
+        background: #347280;
+        border: 1px solid #ddd;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 230px;
+        text-align: left;
+        display: none;
+    }
+    .menu_box_list.show {
+        display: block;
+    }
+    .menu_box_list li {
+        display: block;
+    }
+    .menu_box_list li a {
+        padding: 6px 12px;
+        display: block;
+    }
+    .menu_box_list li a:hover,
+    .menu_box_list li a:focus {
+        background: #000;
+    }
+    .menu_box_list li+li {
+        margin: 0;
+    }
+    .booking-tabs {
+        margin-bottom: 0;
+        height: 30px;
+    }
+    .service_block,
+    .sport_manage_block {
+        margin-bottom: 30px;
+    }
+}
+
+
+/* Media Query end */
+
+@media (max-width: 991px) {
+    .container-common {
+        max-width: 767px;
+    }
+    .filter-box select.width200 {
+        min-width: 195px;
+    }
+    .content-box-filter .col-lg-3.text-right {
+        text-align: left!important;
+    }
+    .table-man-leader {
+        padding: 20px;
+    }
+}
+
+
+/* Media Query end */
+
+@media(min-width:768px) {
+    .tab_pad_L60 {
+        padding-left: 60px!important;
+    }
+    .tab_pad_R60 {
+        padding-right: 60px!important;
+    }
+    .chat-modal .modal-content {
+        padding: 10px 20px 10px;
+    }
+}
+
+@media(min-width:768px) and (max-width:1023px) {
+    .topBanner {
+        margin-top: 65px;
+    }
+    .header-middle-box {
+        width: calc(100% - 140px);
+    }
+    .booking-tabs .btn,
+    .head-user-name {
+        font-size: 13px;
+    }
+    .booking-tabs .btn {
+        margin-right: 0;
+    }
+    .head-user-img {
+        border: 3px solid #8ca7ac;
+        width: 35px;
+        height: 35px;
+    }
+    .logo {
+        margin-left: 0;
+        margin-top: 0;
+    }
+    .filter-box {
+        margin-bottom: 10px;
+    }
+    .venue-booking-view-section .global-box {
+        padding: 40px 50px 30px;
+    }
+    .custom-breadcrumb .breadcrumb .breadcrumb-item {
+        padding: 11px 8px;
+        font-size: 14px;
+    }
+    .profile-box {
+        padding: 20px;
+    }
+    .move_inner_block {
+        padding: 30px;
+    }
+    .ftr-hdng {
+        font-size: 14px;
+    }
+    .ftr-links>li>a,
+    .social-links>li>a {
+        font-size: 12px;
+    }
+    header {
+        min-height: 60px;
+        padding: 15px 0;
+    }
+}
+
+@media(min-width:1024px) and (max-width:1279px) {
+    .ftr-hdng {
+        font-size: 18px;
+    }
+    .ftr-links>li>a,
+    .social-links>li>a {
+        font-size: 14px;
+    }
+}
+
+@media(min-width:1280px) and (max-width:1460px) {
+    header {
+        padding-right: 70px;
+    }
+    .logo {
+        max-width: 110px;
+    }
+    .top-left-menu {
+        padding-left: 128px;
+        padding-top: 20px;
+    }
+    .logSign-box {
+        padding: 30px 15px;
+    }
+    .menu ul li a {
+        padding: 31px 10px;
+        font-size: 14px;
+    }
+    .footer-download-box {
+        padding: 87px 0px 80px;
+    }
+}
+
+
+/* Media Query end */
+
+@media (max-width:767px) {
+    .menu_box {
+        position: absolute;
+        top: 10px;
+        right: 73px;
+    }
+    .menu_box_list {
+        top: 47px;
+        right: -88px;
+        width: 100vw;
+    }
+    .bdr-left {
+        border-left: none;
+    }
+    body {
+        overflow-x: hidden;
+    }
+    .content-wrapper {
+        padding-top: 70px;
+        padding-bottom: 20px;
+    }
+    header {
+        min-height: 50px;
+        padding: 10px 0;
+    }
+    .logo {
+        max-width: 130px;
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+    .logSign-box {
+        padding: 7px 15px 7px 0px;
+        padding-right: 50px;
+    }
+    .btn-mobmenu {
+        display: block;
+        top: 4px;
+    }
+    .btn-mobmenu:hover {
+        color: #ddd;
+    }
+    .menu {
+        position: fixed;
+        width: 240px;
+        height: 100vh;
+        background: #0a151c;
+        top: 0px;
+        right: 0px;
+        padding-top: 55px;
+        padding-right: 0px;
+        overflow: hidden;
+        overflow-y: auto;
+        transition: 400ms;
+        transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        -ms-transform: translateX(100%);
+    }
+    .menu.mobmenushow {
+        transform: translate(0%);
+        -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+    }
+    .menu ul li {
+        display: block;
+        width: 100%;
+        position: relative;
+    }
+    .menu ul li a {
+        display: block;
+        width: 100%;
+        color: #fff;
+        border-bottom: 1px solid #10212b;
+        padding: 10px 15px;
+    }
+    .menu ul li:hover a~ul.drpdown {
+        display: none;
+    }
+    .plus-minus {
+        display: block;
+        position: absolute;
+        top: 5px;
+        right: 0;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+    }
+    .topBanner {
+        margin-top: 118px;
+        min-height: 200px;
+    }
+    .player_header .d-flex {
+        display: block!important;
+        position: relative;
+    }
+    .header-middle-box {
+        display: block;
+        width: 100%;
+        margin-top: 15px;
+        position: static;
+        padding: 0;
+    }
+    .header-left-box {
+        display: inline-block;
+        min-width: auto;
+    }
+    .header-right-box {
+        min-width: auto;
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0px;
+    }
+    .topBanner-content {
+        min-height: 170px;
+    }
+    .topBanner-content h1 {
+        font-size: 18px;
+    }
+    .topBanner-content p {
+        font-size: 14px;
+    }
+    .global-box {
+        padding: 15px!important;
+        text-align: center;
+    }
+    .player-img {
+        margin-bottom: 15px;
+    }
+    .player-links-list {
+        margin: 0 0 20px;
+    }
+    .player-social-info li a {
+        font-size: 12px;
+    }
+    .player-social-info li img {
+        max-width: 16px;
+    }
+    .link-col {
+        text-align: left;
+        min-height: auto;
+    }
+    .head-user-name {
+        display: none;
+    }
+    .booking-tabs {
+        height: 40px;
+        padding: 0px;
+        line-height: 38px;
+        width: 100%
+    }
+    .booking-tabs .btn,
+    .select-box.form-control {
+        font-size: 11px;
+    }
+    .booking-tabs .btn {
+        padding: 6px 0;
+    }
+    .booking-tabs .btn+.btn {
+        margin-left: 2px;
+    }
+    .select-box.form-control {
+        padding: 3px 18px 3px 0;
+        background-size: 7px auto;
+        background-position: calc(100% - 7px) 53%;
+    }
+    .booking-tabs .btn+.btn:after {
+        content: "";
+    }
+    .head-user-img {
+        border: 3px solid #8ca7ac;
+        width: 50px;
+        height: 50px;
+    }
+    .chat-box {
+        right: 0;
+    }
+    .content-box {
+        padding: 15px;
+    }
+    .content-box-head {
+        font-size: 20px;
+    }
+    .filter-form {
+        margin-bottom: 10px;
+    }
+    .filter-form .btn[type="submit"] {
+        margin: 0 auto;
+        display: block;
+    }
+    .filter-box label {
+        margin: 0 0 5px;
+    }
+    .filter-box {
+        margin: 0 0 10px;
+        display: block!important;
+        text-align: left
+    }
+    .filter-box select {
+        width: 100%;
+    }
+    .pagination-block .pagination li .page-link {
+        padding: 2px 6px;
+        font-size: 12px;
+    }
+    .global-datepicker-block {
+        padding: 0;
+    }
+    .calendar-action .btn,
+    .modal-footer .btn {
+        font-size: 14px;
+        width: 48%;
+    }
+    /*======= akanksha start =======*/
+    .heading-search-block .page-headng {
+        margin: 10px 0 20px;
+    }
+    .following_list>li {
+        padding: 15px 0;
+    }
+    .follow_img {
+        width: 70px;
+    }
+    .follow_img img {
+        width: 70px;
+        height: 70px;
+    }
+    .follow_txt_col {
+        padding-left: 0px;
+        padding-top: 10px;
+        text-align: left;
+    }
+    .following_list .d-flex {
+        display: block !important;
+    }
+    .follow_btn_col .btn {
+        padding: 6px 12px;
+        height: 35px;
+        width: 110px;
+        font-size: 13px;
+    }
+    .following_list>li {
+        position: relative;
+    }
+    .follow_btn_col {
+        width: 130px;
+        position: absolute;
+        right: 0;
+        top: 13px;
+    }
+    .custom_tabs .nav-pills .nav-link {
+        font-size: 13px;
+        padding: 10px 9px;
+        min-width: auto;
+    }
+    .custom_tabs li.nav-item {
+        width: 33%;
+    }
+    .follow_btn_col .btn-book {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    .following_list .follow_btn_col {
+        display: flex !important;
+        width: 130px;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 77px;
+    }
+    .venue-booking-view-section .global-box {
+        text-align: left;
+    }
+    .venue-heading {
+        width: 100%;
+    }
+    .venue-booking-view {
+        padding: 0;
+    }
+    .google-btn {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .view_btns .btn {
+        font-size: 16px;
+    }
+    .view_btns .btn-right {
+        text-align: center;
+    }
+    .booking-carousel .carousel-indicators li {
+        width: 10px;
+        height: 10px;
+    }
+    .booking-carousel .carousel-indicators {
+        bottom: 0;
+    }
+    .fixture-inner {
+        padding: 0;
+    }
+    .shop {
+        padding: 15px;
+    }
+    /*======= akanksha end =======*/
+    /*======= shubham start =======*/
+    .notification-inner-block {
+        padding: 0 10px;
+    }
+    .notif-main-heading {
+        font-size: 17px;
+    }
+    .grey-bg-pannel {
+        padding: 10px;
+    }
+    .notification-inner-block li {
+        padding: 8px;
+    }
+    /*.table-bottom-button .btn-blue{min-width:auto;}*/
+    .content-box {
+        padding: 15px 10px;
+    }
+    .content-box-filter .col-md-4.text-right {
+        text-align: left!important;
+        margin-top: 10px;
+    }
+    .basket-hound-box .inline-block.middle {
+        margin: 0 35px;
+        margin-top: -30px;
+    }
+    .tab-scoreboard .container.tab-pane {
+        padding: 20px;
+    }
+    .tab-inner-text-block {
+        padding: 10px
+    }
+    .search-box.max-WT-300 {
+        max-width: 100%!important
+    }
+    .table-man-leader {
+        padding: 20px 10px;
+    }
+    .filter-box select.width80 {
+        max-width: 80px;
+        width: 100%;
+    }
+    .evaluation-box {
+        text-align: left;
+        border-right: 0px
+    }
+    .evl-bottom-inner {
+        text-align: left
+    }
+    .regstration-page {
+        text-align: left;
+    }
+    /*======= shubham end =======*/
+    .logo_block {
+        width: 100px;
+        height: 100px;
+        top: -58px;
+    }
+    .fixtures-section .heading-block {
+        padding-top: 20px;
+    }
+    .following_btn.text-right {
+        margin-top: 40px;
+        text-align: center !important;
+    }
+    .custom-breadcrumb .breadcrumb {
+        padding-right: 0;
+        display: block;
+    }
+    .breadcrumb-item+.breadcrumb-item:before {
+        content: ""!important;
+    }
+    .custom-breadcrumb .breadcrumb-item+.breadcrumb-item+.breadcrumb-item {
+        border-left: none;
+    }
+    .custom-breadcrumb .breadcrumb .breadcrumb-item {
+        border-bottom: 1px solid #ddd;
+    }
+    .btn_row .btn {
+        min-width: auto;
+        color: #595959;
+        font-size: 12px;
+        margin: 0;
+        padding: 10px 15px;
+    }
+    .media-link-block ul.like_comment {
+        margin-bottom: 5px;
+    }
+    .media-link-block ul li a {
+        font-size: 14px;
+    }
+    .comment_list li {
+        padding: 0 0 15px;
+    }
+    .comment-detail {
+        padding-left: 10px;
+    }
+    .commented-time {
+        margin-top: -9px;
+        font-size: 12px;
+    }
+    .comment-detail h5 {
+        font-size: 14px;
+    }
+    .comment-detail p {
+        font-size: 13px;
+    }
+    .media-link-block ul li+li:before {
+        top: 0;
+    }
+    .media-img-list li {
+        float: none;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .media-img-list li.lastli {
+        width: 100%;
+    }
+    .profile-box {
+        padding: 15px;
+    }
+    .profile-box h3 {
+        font-size: 18px;
+    }
+    .add-to-card-box {
+        margin-top: 0;
+    }
+    .profile-img {
+        margin: 0 auto 15px;
+    }
+    .page_head {
+        text-align: center;
+    }
+    .mt-60 {
+        margin-top: -35px;
+    }
+    .modal-head {
+        font-size: 18px;
+    }
+    .head_lagend {
+        font-size: 14px;
+    }
+    .book_slot_list li {
+        font-size: 12px;
+    }
+    .book_slot_box .btn {
+        width: 47%;
+    }
+    .booking-field {
+        padding-left: 0;
+    }
+    .modal-dialog {
+        margin: 20px 0px 0;
+        padding: 0 10px;
+    }
+    .modal_booking_table .table tbody tr td,
+    .modal_booking_table .table thead tr th,
+    .modal_booking_table .table tfoot tr td {
+        text-align: left;
+        font-size: 13px;
+        padding: 8px 6px;
+    }
+    .modal-body {
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+    .modal-chat-lis {
+        max-height: calc(100vh - 170px)
+    }
+    .modal-chat-list li {
+        padding: 0;
+    }
+    .modal-chat-img {
+        width: 50px;
+    }
+    .modal-chat-img img {
+        width: 40px;
+        height: 40px;
+    }
+    .modal-chat-msg {
+        width: calc(100% - 50px);
+    }
+    .modal-chat-msg p {
+        font-size: 13px;
+    }
+    .modal-chat-list {
+        max-height: 310px;
+        margin-bottom: 12px;
+    }
+    .modal-comment-box input[type="text"],
+    .modal-comment-box .btn {
+        height: 40px;
+        ;
+    }
+    .modal-comment-box input[type="text"] {
+        width: calc(100% - 116px);
+        margin-right: 5px;
+    }
+    .modal-comment-box .btn {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+    /* ==============landing Page========== */
+    .landing_header .header-left-box {
+        width: 110px;
+    }
+    .landing_header .navbar-nav.head_menu {
+        width: calc(100% - 110px);
+    }
+    .navbar-nav.head_menu li a {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    .navbar-nav.head_menu li+li {
+        margin-left: 10px;
+    }
+    .landing_top_banner .topBanner-content h1 {
+        font-size: 28px;
+    }
+    .landing_top_banner .topBanner-content p {
+        font-size: 16px;
+    }
+    .landing_top_banner .topBanner-content p br {
+        display: none;
+    }
+    .landing_top_banner .btn.btn-large {
+        font-size: 16px;
+    }
+    .section_head h2 {
+        font-size: 24px;
+    }
+    .section_head p {
+        font-size: 16px;
+    }
+    .move-right-block {
+        margin-top: 30px;
+    }
+    .move_outer_block,
+    .mobile_inner_block {
+        position: static;
+    }
+    .video_event_section {
+        height: auto;
+        padding: 4em 0;
+    }
+    .event_video {
+        margin-top: 30px;
+        height: 256px;
+    }
+    .mobile_frame_block {
+        margin-bottom: 30px;
+    }
+    .searc-form-box {
+        text-align: center;
+    }
+    .searc-form-box .form-control {
+        width: 100%;
+    }
+    .searc-form-box .form-control,
+    .searc-form-box .btn.btn-join {
+        float: none;
+    }
+    .searc-form-box .btn.btn-join {
+        margin-top: 15px;
+        width: 130px;
+    }
+    /* ==============landing Page End========== */
+    /* ==============Shop============ */
+    .shop_purchase-action .btn {
+        width: 47%;
+        margin-bottom: 15px;
+    }
+    .dropdown-menu.head-drop-down {
+        top: 62px;
+    }
+    .modal_flax_height {
+        min-height: 280px;
+    }
+    /********usersection-Amit**********/
+    .form-box label.text-right {
+        text-align: left!important;
+    }
+    .form-head-block {
+        padding: 10px;
+    }
+    .log-head {
+        font-size: 16px;
+    }
+    .form-box.p30 {
+        padding: 15px 20px!important;
+    }
+    .nolabel {
+        display: none;
+    }
+    .form-box.mt60 {
+        margin-top: 30px!important;
+    }
+    /*.content-box {padding: 15px 0px!important;}*/
+    .form-button.mt40 {
+        margin-top: 5px!important;
+    }
+    .form-box label {
+        font-size: 14px;
+    }
+    .checkbox-grp .custom-checkbox {
+        min-width: 49%;
+    }
+    .timing {
+        padding: 0;
+    }
+    .custom-breadcrumb1 .breadcrumb-item {
+        border-left: none;
+    }
+    .status-btn .max-WT-100 {
+        width: 100%;
+        max-width: 89px!important;
+    }
+    /**************************************/
+    /*********Amit(23-05-2018)***********/
+    .text-right.share {
+        text-align: left!important;
+    }
+    .text-right.mobTL {
+        text-align: left!important;
+    }
+    .creted-block h5 {
+        border-right: none;
+    }
+    /****************(24-05-2018)********************/
+    .media-head-info p span {
+        display: block;
+    }
+    .modal-content-body.modalform-body.carosal-custom {
+        padding: 20px 40px;
+    }
+    .carosal-custom .carousel-control-prev {
+        left: -36px;
+    }
+    .carosal-custom .carousel-control-next {
+        right: -36px;
+    }
+    .pro-des {
+        margin-top: 10px;
+    }
+}
+
+
+/*======= 767 End=======*/
+
+@media (max-width:480px) {
+    .logo {
+        margin-top: 11px;
+        max-width: 115px;
+    }
+    .btn-mobmenu {
+        right: 10px;
+    }
+    .btn-header {
+        padding: 5px 7px;
+        font-size: 12px;
+    }
+    /*======= akanksha start =======*/
+    .following_list>li {
+        padding: 15px 0;
+    }
+    .follow_img {
+        width: 70px;
+    }
+    .follow_img img {
+        width: 70px;
+        height: 70px;
+    }
+    .follow_txt_col {
+        padding-left: 0px;
+        padding-top: 10px;
+        text-align: left;
+    }
+    .following_list .d-flex {
+        display: block !important;
+    }
+    .follow_btn_col .btn {
+        padding: 6px 12px;
+        height: 35px;
+        width: 110px;
+        font-size: 13px;
+    }
+    .following_list>li {
+        position: relative;
+    }
+    .follow_btn_col {
+        width: auto;
+        position: absolute;
+        right: 0;
+        top: 32px;
+    }
+    .custom_tabs .nav-pills .nav-link {
+        font-size: 13px;
+        padding: 10px 9px;
+        min-width: auto;
+    }
+    .custom_tabs li.nav-item {
+        width: 33%;
+    }
+    /*======= akanksha end =======*/
+    /*======= shubham start =======*/
+    .notification-inner-block {
+        padding: 0px;
+    }
+    .notif-main-heading {
+        font-size: 15px;
+    }
+    .grey-bg-pannel {
+        padding: 10px;
+    }
+    .notification-inner-block li {
+        padding: 5px;
+    }
+    .notification-inner-block li .notif-inner-left {
+        font-size: 14px;
+    }
+    .notification-inner-block li .notif-inner-left {
+        font-size: 14px;
+        max-width: 90px;
+        text-align: left;
+    }
+    .noti-right-block {
+        max-width: 109px;
+    }
+    .noti-right-block .noti-inline-block {
+        max-width: 40px;
+    }
+    .notif-inner-left {
+        max-width: 96px;
+    }
+    .noti-inline-block:last-child {
+        margin-left: 0px;
+    }
+    .noti-right-block .noti-inline-block.switch-block {
+        max-width: 48px;
+    }
+    .table-bottom-button .fleft {
+        float: none
+    }
+    .table-bottom-button .fright {
+        float: none
+    }
+    .table-bottom-button .btn {
+        margin: 0 0 10px;
+    }
+    .basket-hound-box .inline-block span {
+        width: 40px;
+        height: 46px;
+        margin: 0 10px;
+    }
+    .basket-hound-box .inline-block.middle {
+        margin: 0 10px;
+        margin-top: -30px;
+    }
+    .basket-hound-box .img-box {
+        max-width: 85px;
+        margin: 0 auto
+    }
+    .scoreboard-banner-inner p {
+        font-size: 14px;
+    }
+    .tab-scoreboard .container.tab-pane {
+        padding: 20px 10px;
+    }
+    /*======= shubham end =======*/
+    .business-image {
+        float: none
+    }
+    .business-name {
+        float: none;
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+    }
+}
+
+@media (max-width:360px) {
+    .basket-hound-box .inline-block.middle {
+        margin: 0 0px;
+        margin-top: -30px;
+    }
+    .basket-hound-box .img-box {
+        max-width: 70px;
+        margin: 0 auto
+    }
+    .basket-hound-box .inline-block span {
+        width: 34px;
+        height: 38px;
+        margin: 0 10px;
+        font-size: 24px;
+    }
+}

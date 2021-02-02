@@ -1,0 +1,113 @@
+<app-header></app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-right">
+              <button class="btn btn btn-dark-blue-s" type="button" *ngIf="sportsVal == false" [routerLink]="['/organizer/addVenue']">Add Venue</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <h4 *ngIf="sportsVal == true">Add Sports first, so that you can add a venue</h4>
+          <button class="btn btn btn-dark-blue-s" type="button" *ngIf="sportsVal == true" [routerLink]="['/organizer/addSports']">Add Sports</button>
+
+          <table class="table table-bordered large-table text-center" *ngIf="sportsVal == false">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Venue</th>
+                <th>Location</th>
+                <th>Sport</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!venueList.docs.length">
+                <td colspan="5" class="text-center">No data found.</td>
+              </tr>
+              <tr *ngFor="let item of venueList.docs  | paginate: { itemsPerPage: venueList.limit, currentPage: venueList.page,  totalItems: venueList.total } ">
+                <td>{{item?.venueName}}</td>
+                <td>{{item?.locationName}}</td>
+                <td>Football</td>
+                <td class="action-td">
+                  <a class="btn btn-info" [routerLink]="['/organizer/editVenue', item._id]">
+                    <i class="far fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger" (click)="deleteVenueModal(item._id)" data-toggle="modal" data-target="#membership_service_booking">
+                    <i class="far fa-trash-alt"></i>
+                  </a>
+                  <a class="btn btn-info" [routerLink]="['/organizer/venueDetails', item._id]">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block mt10 text-right" *ngIf="venueList.total > venueList.limit">
+            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="venueList.docs.length">
+            <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+              < venueList.total) ? (page.limit * page.currPage) : venueList.total || 0}} of {{venueList.total}} entries </span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                  <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="deleteVenue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">Are you sure you want to delete this venue?</p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="onDeleteVenue()">YES</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- delete-modal-end -->

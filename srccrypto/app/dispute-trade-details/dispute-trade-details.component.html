@@ -1,0 +1,260 @@
+<main class="middle-content">
+  <div class="page_title_block">
+    <h1 class="page_title">Disputed Trade Details</h1>
+    <!-- <div class="common-bredcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item active">User Management</li>
+          </ol>
+      </div> -->
+  </div>
+  <div class="content-section">
+    <div class="outer-box">
+      <div class="global-table no-radius p0">
+        <div class="tab-content1">
+          <div class="tab-pane1">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="chat-box-main">
+                  <div class="chat-box">
+                    <div class="chat-head">
+                      <!-- <img src="assets/img/user-img.png"> -->
+                      <h4>Chat</h4>
+                    </div>
+                    <div class="chat-div" #scrollMe style="overflow-y: auto; height: 350px">
+
+                      <div *ngFor="let item of service?.supportChatArr">
+                          <div *ngIf="item?.toEmail == adminEmail" class="left-chat">
+                              <div class="chat">
+                                  <p>{{item?.message}}</p>
+                              </div>
+                              <span>{{item?.createdAt | date}}</span>
+                          </div>
+                          
+                          <div *ngIf="item?.fromEmail == adminEmail"class="right-chat">
+                              <div class="chat2">
+                                  <p>{{item?.message}}</p>
+                              </div>
+                              <span>{{currentDate | date}}</span>
+                          </div>
+                          
+                      </div>
+
+                      <!-- <div class="left-chat">
+                          <div class="chat">
+                              <p>Buy trade request from test 115</p>
+                          </div>
+                          <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                          <div class="chat2">
+                              <p>Buy trade request from test 115</p>
+                          </div>
+                          <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                          <div class="chat2">
+                              <p>Buy trade request from test 115 Buy trade request from test 115
+                                  Buy trade request from 115
+                                  Buy trade request from 115 Buy trade request from test 115</p>
+                          </div>
+                          <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="left-chat">
+                          <div class="chat">
+                              <p>Buy trade request from test 115</p>
+                          </div>
+                          <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                          <div class="chat2">
+                              <p>Buy trade request from test 115</p>
+                          </div>
+                          <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                          <div class="chat2">
+                              <p>Buy trade request from test 115</p>
+                          </div>
+                          <span>18/10/2019 13:21:27</span>
+                      </div> -->
+
+                  </div>
+                    <div class="form-group custm-inpt" style="display: flex;">
+                      <input type="text" id="usr" class="form-control" name="chat" style="    margin-top: 1%;"
+                          placeholder="Write something here..." [(ngModel)]="obj.chat"
+                          (keyup.enter)="sendChat()" autocomplete="off">
+                      <button type="button" class="btn btn-theme" style="z-index: 100;"
+                          (click)="sendChat()">Send</button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="sec_head_new">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Trade Type </label>
+                        <div class="col-sm-5">
+                          <!-- <label class=" col-form-label">Buy</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.type || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Advertisement</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">BTC</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.tradingPartner || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Ad Creator</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">uhs</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.tradingPartner || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Status</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">CANCEl</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.statusType || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Amount BTC</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">0.0001254</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.totalBTC || 'N/A'}} <span
+                              *ngIf="tradeDetails?.totalBTC">{{tradeDetails?.cryptoCoin}}</span> </label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">For</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">CANCEL</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.tradeAmount || 'N/A'}} <span
+                              *ngIf="tradeDetails?.tradeAmount">{{tradeDetails?.fiatCoin}}</span> </label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Exchange Rate</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">62584.26</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.price || 'N/A'}} <span
+                              *ngIf="tradeDetails?.price">{{tradeDetails?.cryptoCoin}}/{{tradeDetails?.fiatCoin}}</span></label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Payment Method</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">Cash</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.paymentType || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+                      <div class="form-group" style="display: flex;">
+                        <button *ngIf="buyerSeller == 'BUY'" type="button" class="btn btn-theme" style="z-index: 100;"
+                            (click)="releaseForDetails()">Release For Buyer</button>
+                            <button *ngIf="buyerSeller == 'SELL'" type="button" class="btn btn-theme" style="z-index: 100;"
+                            (click)="releaseForDetails()">Release For Seller</button>
+                    </div>
+                      <!-- <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Staff assigned</label>
+                        <div class="col-sm-6">
+                          <label class=" col-form-label">manager</label>
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Recommended Action </label>
+                        <div class="col-sm-6">
+                          <button class="view-all-btn">View all</button>
+                        </div>
+                      </div>
+                      <div class="mt-3 text-center">
+                        <button class="take-action">Take Action</button>
+                      </div> -->
+                      <!-- <div class="form-group row trafe-row">
+                        <div class="col-sm-6">
+                          <button type="submit" (click)="openDispute()" class="btn  btn-theme mr-2">Dispute</button>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="transaction">
+              <h3>Dispute History</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="no_wrap_th">
+                    <th>Report Id</th>
+                    <th>Date </th>
+                    <th>User</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#1234567</td>
+                    <td>02/03/2017</td>
+                    <td>test15</td>
+                    <td>Cancel</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="custom-pagination mt20 text-center">
+              <pagination-controls (pageChange)="pagination( $event)"></pagination-controls>
+            </div> -->
+
+            <!-- <div class="transaction">
+              <h3>Trade History</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="no_wrap_th">
+                    <th>Report Id</th>
+                    <th>Date </th>
+                    <th>User</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#1234567</td>
+                    <td>02/03/2017</td>
+                    <td>test15</td>
+                    <td>Cancel</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="custom-pagination mt20 text-center">
+              <pagination-controls (pageChange)="pagination( $event)"></pagination-controls>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

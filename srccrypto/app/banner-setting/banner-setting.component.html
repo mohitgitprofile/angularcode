@@ -1,0 +1,285 @@
+
+<div class="wrapper">
+    
+        <!-- Aside End -->
+        <main class="middle-content">
+            <!-- Page Title Start -->
+            <div class="page_title_block">
+                <h1 class="page_title" style="color:black">WITHDRAWL LIMIT</h1>
+                
+            </div>
+            <!-- Page Title End -->
+            <div class="content-section">
+                <div class="outer-box">
+                    <!-- Gloabl Table Box Start -->
+                    <div class="global-table no-radius p0">
+                        <div class="tab-content1">
+                            <div class="tab-pane1">
+                               
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr class="no_wrap_th">
+                                                <th>S.No</th>
+                                                <th>Coin Full Name</th>
+                                                <th>Coin Short Name</th>
+                                                <th>Withdrawl Fee</th>
+                                                <th class="action_td_btn3">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let coin of coinList; let i=index">
+                                                <td>{{10 * (1 - 1) + i+1}}</td>
+                                                <td>{{coin?.coinFullName}}</td>
+                                                <td>{{coin?.coinShortName}}</td>
+                                                <td><input type="text" [(ngModel)]="coin.withdrawalAmount" class="form-control" /></td>
+                                                <td class="action_td_btn3">
+                                                        <button type="submit" class="btn btn-info" (click)="updateCoinWithdrawFee(coin.withdrawalAmount,coin.coinShortName)" >Update</button>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+            <!-- Table Responsive End -->
+    
+    </main>
+    <!-- Middle Content End -->
+    </div>
+    <!-- Wrapper End -->
+    <!--Modal Start-->
+    <div class="modal fade global-modal reset-modal" id="delet_farms_modal">
+        <div class="modal-dialog max-WT-500">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body  text-center">
+                    <div class="row align-items-center modal_flax_height">
+                        <div class="col">
+                            <div class="box-title mb40 d-inline-block">
+                                <h2>Are you sure?</h2>
+                                <p>You won’t be able to revert this!</p>
+                            </div>
+                            <div class="max-WT-300 d-inline-block border-top">
+                                <button type="button" class="btn btn-gray btn-large radius0 btn-block">YES</button>
+                                <button type="button" class="btn btn-red btn-large radius0 btn-block" data-dismiss="modal">CANCEL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- signout_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="signout_modal">
+        <div class="modal-dialog max-WT-500">
+            <div class="modal-content">
+                <div>
+                    <!-- Modal body -->
+                    <div class="modal-body  text-center">
+                        <div class="row align-items-center modal_flax_height">
+                            <div class="col">
+                                <div class="box-title mb40 d-inline-block">
+                                    <i class="fas fa-power-off off-icon"></i>
+                                    <p class="mt40">Are you sure you want to logout?</p>
+                                </div>
+                                <div class="text-center">
+                                    <a href="login.html" class="btn btn-blue btn-noYes">YES</a>
+                                    <button type="button" class="btn btn-red btn-noYes" data-dismiss="modal">CANCEL</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Signout Modal -->
+    <!-- invite_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="invite">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header ">
+                            <h4 class="modal-title text-center">Invite</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row align-items-center modal_flax_height">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="control-labe">Email*</label>
+                                        <input class="form-control" placeholder="" required="" type="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-labe">Subject</label>
+                                        <input class="form-control" placeholder="" required="" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-labe">Message</label>
+                                        <textarea name="" id="" cols="20" rows="5" class="form-control">
+                                    </textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button type="submit" class="btn btn-gray btn-large radius0 btn-block">SUBMIT</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-red btn-large radius0 btn-block" data-dismiss="modal">CANCEL</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- invite_modal End -->
+    <!-- invite_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="accept">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-header ">
+                            <h4 class="modal-title text-center">Accept</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row align-items-center modal_flax_height">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="d-flex align-items-center text-center justify-content-center">
+                                            <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                            <strong> R/W Accesbility</strong>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="d-flex align-items-center">
+                                            <div class="w-100">
+                                                <h6>User Type</h6>
+    
+                                                <div class="radio_btn_cst d-flex">
+                                                    <label class="radio_style">End User
+                                                    <input type="radio" checked="checked" name="radio" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                    <label class="radio_style">Service User
+                                                    <input type="radio" name="radio" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                    <label class="radio_style">Admin User
+                                                    <input type="radio" name="radio" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="w-100">
+                                            <h6>Role</h6>
+                                            <select name="" class="form-control form-control2 select_opt">
+                                            <option value="">Select</option>
+                                            <option value="" selected>Abuja region</option>
+                                            <option value="">Nigeria region</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="d-flex align-items-center flex-wrap text-center justify-content-center">
+                                            <div class="w-50 d-inline-flex align-items-center">
+                                                <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                                <span> Admin Rights</span>
+                                            </div>
+                                            <div class="w-50 d-inline-flex align-items-center">
+                                                <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                                <span> Approved</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt20 text-center">
+                                        <button class="btn btn-small btn-info">Set</button>
+                                        <button class="btn btn-small btn-danger" data-dismiss="modal">Cancel</button>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- invite_modal End -->
+    
+    <!-- delete_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="delete">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p>Are you sure want to delete this user?</p>
+                                    <div>
+                                        <button type="submit" class="btn btn-info">Submit</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- delete_modal End -->
+    <!-- block_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="block">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p>Are you sure want to block this user?</p>
+                                    <div>
+                                        <button type="submit" class="btn btn-success">Yes</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    

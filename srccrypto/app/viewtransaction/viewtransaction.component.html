@@ -1,0 +1,75 @@
+
+
+<main class="middle-content">
+  <!-- Page Title Start -->
+  <div class="page_title_block">
+      <h1 class="page_title" style="color:black">Transaction Details</h1>
+     
+  </div>
+  <!-- Page Title End -->
+  <div class="content-section">
+      <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+          <div class="main-block-innner mb40 mt40">
+              <div class="add-store-block input-style">
+                  <h4 class="mb30">Transaction Details</h4>
+                  <div class="form-group row align-items-baseline">
+                      <label class="col-md-6">Transaction ID</label>
+                      <div class="col-md-1">:</div>
+                      <div class="col-md-5">
+                          <label>{{walletDetailArry?.txnId}}</label>
+                      </div>
+                  </div>
+                  <div class="form-group row align-items-baseline">
+                      <label class="col-md-6">Coin</label>
+                      <div class="col-md-1">:</div>
+                      <div class="col-md-5">
+                          <label>{{walletDetailArry?.coinType}}</label>
+                      </div>
+                  </div>
+                  <div class="form-group row align-items-baseline">
+                      <label class="col-md-6">Ammount</label>
+                      <div class="col-md-1">:</div>
+                      <div class="col-md-5">
+                          <label>{{walletDetailArry?.units}}</label>
+                      </div>
+                  </div>
+                  <div class="form-group row align-items-baseline">
+                      <label class="col-md-6">Type</label>
+                      <div class="col-md-1">:</div>
+                      <div class="col-md-5">
+                          <label>{{walletDetailArry?.txnType}}</label>
+                      </div>
+                  </div>
+                 
+                  <div class="form-group row align-items-baseline">
+                      <label class="col-md-6">Transaction #</label>
+                      <div class="col-md-1">:</div>
+                      <div class="col-md-5">
+                          <p  class="rap">{{walletDetailArry?.txnHash  || "---"}}</p>
+                      </div>
+                  </div>
+
+                  <div class="form-group row align-items-baseline">
+                      <label class="col-md-6">Address</label>
+                      <div class="col-md-1">:</div>
+                      <div class="col-md-5">
+                        <p class="rap2" >{{walletDetailArry?.address  || "---"}}</p>
+                      </div>
+                  </div>
+
+                  <div class="form-group row align-items-baseline">
+                      <label class="col-md-6"> Date & Time</label>
+                      <div class="col-md-1">:</div>
+                      <div class="col-md-5">
+                          <label>{{walletDetailArry?.txnTime |date:'MM/dd/yyy'}}</label>
+                      </div>
+                  </div>
+                  <div class="text-left mt40 text-center">
+                      <a (click)="back()" class="btn btn-large  max-WT-200 font-100 btn-green">Back</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</main>

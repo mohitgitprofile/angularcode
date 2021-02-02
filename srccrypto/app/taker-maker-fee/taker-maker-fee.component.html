@@ -1,0 +1,348 @@
+
+
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+      <h1 class="page_title" style="color:black">Taker Maker Fee</h1>
+    </div>
+    <!-- Page Title End -->
+    <div class="content-section">
+  
+      <div class="order-view">
+        <div class="custom_tabs common-tabs">
+          <!-- <div class="row mb20 justify-content-center">
+            <div class="col-sm-12">
+              <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                <li class="nav-item flex-fill">
+                  <a class="nav-link active show" [ngClass]="{'active': currTab=='Fee'}" (click)="selectTab('Fee')" href="javascript:;">Fee Management</a>
+                </li>
+               
+                <li class="nav-item flex-fill">
+                  <a class="nav-link active show" [ngClass]="{'active': currTab=='Tacker'}" (click)="selectTab('Tacker')" href="javascript:;">Taker & Maker Fee</a>
+                </li>
+  
+              
+              </ul>
+            </div>
+          </div> -->
+  
+          <div class="tab-content">
+            <!-- <div class="tab-pane active show" *ngIf="this.currTab == 'Feer'">
+              <div class="row">
+                <div class="col-md-4">
+                  <label>
+                    <b>Coin</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>
+                    <b>Withdraw Fee%</b>
+                  </label>
+                </div>
+                
+                <div class="col-md-2">
+    <label class="di-action">
+                    <b>Action</b>
+                  </label>
+                </div>
+              </div>
+  
+              <div class="row" *ngFor="let item of feecoinArry ;let i = index;">
+              
+                <div class="col-md-4">
+                  <label>{{item.coinShortName}}</label>
+  
+                </div>
+                <div class="col-md-3">
+                  <label>
+                    <input type="text" name="{{i}}" [(ngModel)]="item.withdrawlFee" class="form-control" autocomplete="off" />
+                  </label>
+                  
+                 
+                </div>
+  
+                <div class="col-md-2">
+                  <button class="btn btn-theme" (click)="updatefeeapi(item.coinShortName,item.withdrawlFee)">Update</button>
+                </div>
+              </div>
+            </div>
+  
+  
+            <div class="tab-pane active show" *ngIf="this.currTab == 'Fee'">
+            <div class="global-table no-radius p0">
+              <div class="table-responsive">
+                <div id="table-scroll" class="table-scroll">
+                  <div class="table-wrap">
+                    <table class="main-table">
+                      <thead>
+  
+                        <th class="text-center">Coin</th>
+                        <th class="text-center">Withdraw Fee</th>
+                        <th class="text-center">Action</th>
+  
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of feecoinArry ;let i = index">
+                          <th class="fixed-side">{{item.coinShortName}}</th>
+  
+                          <td>
+                            <input type="text" class="form-control" name="{{i}}" [(ngModel)]="item.withdrawlFee" placeholder="Withdraw Fee">
+                          </td>
+                         
+                          <td>
+                            <a class="btn btn-large  max-WT-200 font-100 btn-green" (click)="updatefeeapi(item.coinShortName,item.withdrawlFee)">Update</a>
+                          </td>
+                         
+                        </tr>
+  
+                       
+  
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+            <div class="tab-pane active show" *ngIf="this.currTab == 'MINI'">
+              <div class="row">
+                <div class="col-md-4">
+                  <label>
+                    <b>Coin</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>
+                    <b>Min Withdraw Fee</b>
+                  </label>
+                </div>
+  
+                <div class="col-md-2">
+                  <label>
+                    <b>Action</b>
+                  </label>
+                </div>
+              </div>
+              <div class="row" *ngFor="let item of feecoinArry ;let i = index;">
+                <div class="col-md-4">
+                  <label>{{item.coinShortName}}</label>
+                </div>
+                <div class="col-md-3">
+                  <label>
+                    <input type="text" name="{{i}}" [(ngModel)]="item.withdrawalAmount" class="form-control" autocomplete="off" />
+                  </label>
+                  
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-theme" (click)="updateMiniwithdraw(item.coinShortName,item.withdrawalAmount)">Update</button>
+                </div>
+              </div>
+            </div> -->
+  
+  
+            <div class="tab-pane active show">
+              <div class="global-table no-radius p0">
+                <div class="table-responsive">
+                  <div id="table-scroll" class="table-scroll">
+                    <div class="table-wrap">
+                      <table class="main-table" aria-describedby="">
+                        <thead>
+  
+                          <th id="" class="text-center">Coin</th>
+                          <th id="" class="text-center">Taker Fee %</th>
+                          <th id="" class="text-center">Maker Fee %</th>
+                          <th id="" class="text-center">Action</th>
+  
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of feecoinArry ;let i = index">
+                            <th id="" class="fixed-side">{{item.coinShortName}}</th>
+  
+                            <td>
+                              <input type="text" class="form-control" name="{{i}}" [(ngModel)]="item.takerFee" placeholder="Taker Fee %">
+                            </td>
+                            <td>
+                              <input type="text" class="form-control" name="{{i}}" [(ngModel)]="item.makerFee" placeholder="Maker Fee %">
+                            </td>
+                            <td>
+                              <a class="btn btn-large  max-WT-200 font-100 btn-green" (click)="updateTacker(item.coinShortName,item.takerFee,item.makerFee)">Update</a>
+                            </td>
+                           
+                          </tr>
+  
+                          
+  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+  
+              </div> 
+              
+            </div>
+  
+  
+  
+            <div class="tab-pane active show" *ngIf="this.currTab == 'income'">
+              <div class="page_title_block">
+  
+              </div>
+              <div class="global-table no-radius p0">
+                <div class="sec_head_new">
+                  <div class="row justify-content-between">
+                        <div class="col-12">
+                                <div class="filter_fields d-inline-flex flex-wrap">
+                         
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1 label-popup">
+                                          <span class="d-flex align-items-center">Enter Coin</span>
+                                          <select class="form-control"  name="currencycoin"  [(ngModel)]="currencycoin">
+                                            <option *ngFor="let coin of feecoinArry">{{coin.coinShortName}}</option>
+                                           
+                                          </select>
+                                        </div>
+                                   
+                                      </div>
+  
+                                      <div class="head_flt_select">
+                                          <div class="head_flt_select input-label input-label1 label-popup">
+                                            <span class="d-flex align-items-center">Enter Fee type</span>
+                                            <select class="form-control"  name="currencycoin"  [(ngModel)]="type">
+                                              <option value="WITHDRAW">WITHDRAW </option>
+                                              <option value="TAKER_FEE">TAKER FEE </option>
+                                              <option value="MAKER_FEE">MAKER FEE </option>
+                                             
+                                             
+                                            </select>
+                                          </div>
+                                     
+                                        </div>
+  
+                              <div class="head_flt_select">
+                                  <div class="head_flt_select input-label input-label1">
+                                      <span class="d-flex align-items-center">From Date</span>
+                                      <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}" name="formdate" [(ngModel)]="calender.formdate" (change)="formdate()"   class="form-control datepicker" placeholder="Search by date">
+                                  </div>
+                              </div>
+                      
+                              <div class="head_flt_select">
+                                  <div class="head_flt_select input-label input-label1">
+                                      <span class="d-flex align-items-center">To Date</span>
+                                      <input type="date" name="todate"    min="{{fromDate | date:'yyyy-MM-dd'}}" (change)="todate()"    [disabled]="!calender.formdate"  [(ngModel)]="calender.todate"  class="form-control datepicker" placeholder="Search by date">
+                                  </div>
+                              </div>
+                  
+                              <div class="text-left" style="display: inline-block;">
+                                <button type="submit" class="btn  btn-theme" (click)="search()" style="
+                                margin-left: 146px;" >Search</button>
+                            </div>
+                    
+                          </div>
+                  </div>
+                  </div>
+              </div>
+  
+  
+  
+                <!-- Page Title End -->
+                <div class="content-section">
+                  <div class="outer-box">
+                    <div class="custom_tabs common-tabs">
+                      <div class="row mb20 justify-content-center">
+  
+                      </div>
+                      <div class="tab-content">
+                        <div class="tab-pane active show" id="btc">
+                          <div class="tab-pane1">                    
+                            <div class="table-responsive">
+                              <table class="table table-bordered " style="width:400px;" aria-describedby="">
+                                <thead>
+                                  <tr class="no_wrap_th">                                                     
+                                    <th id=""> No Of Transaction</th>
+                                    <th id="">Total Fee</th>
+                                  </tr>
+                                </thead>
+                                <tbody>             
+                                  <tr>                                                             
+                                    <td>{{profitobj.totalCount}}</td>
+                                    <td>{{profitobj.totalFee}} </td>
+                                  </tr>                         
+                                  <tr *ngIf="show">
+                                    <td colspan="4" vertical-align="middle">
+                                      <div class="no-record">
+                                        <div class="no-recordin">
+                                          <H5 style="margin-left: 44%;">No record found</H5>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr> 
+  
+                                </tbody>
+                              </table>
+                            </div>
+  
+                          </div>
+                        </div>
+  
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Table Responsive End -->
+                </div>
+              </div>
+  
+            </div>
+  
+  
+            <!-- privilege -->
+            <div class="tab-pane active show" *ngIf="this.currTab == 'privilege'">
+              <div class="row">
+                <div class="col-md-4">
+                  <label>
+                    <b>Coin</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>
+                    <b>Privilege Fee HGG</b>
+                  </label>
+                </div>
+                
+                <div class="col-md-2">
+                  <label>
+                    <b>Action</b>
+                  </label>
+                </div>
+              </div>
+  
+           
+                  <div class="row">
+           
+                <div class="col-md-4">
+                  <label>HGG Coin</label>
+  
+                </div>
+                <div class="col-md-3">
+                  <label>
+                    <input type="number" name="Hggcoin" [(ngModel)]="Hggcoin" class="form-control" autocomplete="off" />
+                  </label>
+                </div>
+  
+                <div class="col-md-2">
+                  <button class="btn btn-theme" (click)="hggfee()">Update</button>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+  
+        </div>
+      </div>
+    
+  </main>

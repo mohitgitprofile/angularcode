@@ -1,0 +1,27 @@
+<div class="custom-breadcrumb custom-breadcrumb1 mt0 clearfix">
+    <div class="fleft">
+      <nav class="breadcrumb">
+          <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'organizer/compConfigure'}"  [routerLink]="['/organizer/compConfigure', competitionId, '1']" > Configuration</a>
+          <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'organizer/compRegistration'}" [routerLink]="['/organizer/compRegistration', competitionId]">Registration</a>
+          <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'organizer/compTeam'}" [routerLink]="['/organizer/compTeam', competitionId]">Teams</a>
+          <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'organizer/standing'}" [routerLink]="['/organizer/standing', competitionId]"> Standing </a>
+          <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'organizer/compSection'}" [routerLink]="['/organizer/compSection', competitionId]"> Sections </a>
+          <!-- <a class="breadcrumb-item" href="javascript:;"> Financial </a> -->
+      </nav>
+    </div>
+
+  </div>
+  <div class="box-top-row mb5">
+    <div class="row">
+      <div class="col-md-9">
+        <p *ngIf="competitionDetail.published  == false">The competitions is not published, click on publish button to make it accessible for public.
+        </p>
+        <p *ngIf="competitionDetail.published  == true">The competitions is  published, click on unpublish button to disable accessible for public.
+        </p>
+      </div>
+      <div class="col-md-3 text-right">
+        <button *ngIf="competitionDetail.published  == false" class="btn btn btn-dark-blue-s max-WT-100" type="button" (click)="publishFun()">Publish</button>
+        <button *ngIf="competitionDetail.published  == true" class="btn btn btn-dark-blue-s max-WT-100" type="button" (click)="unpublishFun()">UnPublish</button>
+      </div>
+    </div>
+  </div>

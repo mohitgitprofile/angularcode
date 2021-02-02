@@ -1,0 +1,54 @@
+<div class="wrapper">
+    <!-- Aside End -->
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title">Withdrawal Limit</h1>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+            <div class="outer-box">
+
+                <!-- Gloabl Table Box Start -->
+                <div class="global-table no-radius p0">
+
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="no_wrap_th">
+                                            <th>Name</th>
+                                            <th>Withdrawl Limit</th>
+                                            <th class="action_td_btn3">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of kyclimitdata;">
+                                            <td>{{item.limitName}}</td>
+                                            <td>
+                                                <input type="text" class="form-control" name="{{i}}" [(ngModel)]="item.limitPrice" placeholder="Withdraw Limit">
+                                              </td>
+                                            <td>
+                                                <button class="btn-sm" data-toggle="modal" (click)="withdrawalUpdateFunc(item.limitPrice)">Update</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+    </main>
+    <!-- Middle Content End -->
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright © 2020 <strong class="theme-text-color">CryptoBiz Exchange</strong> All
+                Rights Reserved.</p>
+        </div>
+    </footer>
+    <!-- Footer Finish -->
+</div>

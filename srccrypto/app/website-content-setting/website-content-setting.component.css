@@ -1,0 +1,25 @@
+.btn1{
+    background-color: #00AEFF;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 20px;
+    border-width :1px;
+    border-color: black;
+    color : white ;
+   
+    
+}
+
+.btnDiv{
+    margin-left: 420px;
+}
+
+.btn2{
+    padding-left: 120px;
+    padding-right: 120px;
+    border-width :1px;
+    border-color: black;
+    
+    
+}
+

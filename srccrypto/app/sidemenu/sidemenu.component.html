@@ -1,0 +1,529 @@
+<div class="wrapper" *ngIf="isLoggedIn">
+    <header class="header">
+        <nav class="navbar clearfix">
+            <div class="logo-box">
+                <a class="navbar-brand logo" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">
+                    <img src="/assets/image_2020_10_29T13_04_06_914Z.png" alt="logo" class="lg-logo">
+                    <img src="/assets/image_2020_10_29T13_04_06_914Z.png" alt="logo" class="lg-logo1">
+                </a>
+            </div>
+            <div class="header-right-part">
+                <button class="btn btn-toggle" type="button" style="color: black">
+                    <em class="fas fa-bars" style="color:aliceblue"></em>
+                </button>
+                <button class="btn btn-outline-secondary btn-mobsearch" type="button"><em
+                        class="fas fa-search"></em></button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- side bar -->
+    <aside class="sidebar" aria-labelledby="" *ngIf="!flag">
+        <div class="sidebar-scroller">
+            <div id="accordion" class="sidebar-menu">
+                <div class="user-panel clearfix">
+                    <div class="pull-left image">
+                        <img src="assets/img/testimonial-img1.jpg" class="img-circle" alt="User Image">
+                        <a [routerLink]="['/my-profile']" class="online-icon"><em
+                                class="fa fa-circle text-success"></em></a>
+                    </div>
+                    <div class="pull-left info mt10">
+                        <a>
+                            <p>Welcome</p>
+                            <h4>{{userDetail?.firstName}}</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'dashboard'}">
+                    <div class="card-header clearfix" id="headingOne">
+                        <a class="side_menu" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/dashboard-icon.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Dashboard</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'staff-management' || currUrl == 'add-new-staff'}">
+                    <div class="card-header clearfix" id="headingTwo">
+                        <a class="side_menu" [routerLink]="['/staff-management']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/user-manage.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Staff Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'user-management'}">
+                    <div class="card-header clearfix" id="headingTwo">
+                        <a class="side_menu" [routerLink]="['/user-management']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/user-manage.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">User Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'admin-management' || currUrl == 'add-admin'}">
+                    <div class="card-header clearfix" id="headingTwo">
+                        <a class="side_menu" [routerLink]="['/admin-management']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/user-manage.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Admin Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'user-management-exchange'}">
+                    <div class="card-header clearfix" id="headingTwo">
+                        <a class="side_menu" [routerLink]="['/user-management-exchange']"
+                            routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/user-manage.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">User Management Of Exchange</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'hotcoldwallet-management'}">
+                    <div class="card-header clearfix" id="headingThree">
+                        <a class="side_menu" [routerLink]="['/hotcoldwallet-management']"
+                            routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/wallet.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Hot Wallet Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'kyc-management' || currUrl == 'kyc-action'}">
+                    <div class="card-header clearfix" id="headingThree">
+                        <a class="side_menu" [routerLink]="['/kyc-management']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/user.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">KYC Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box"
+                    [ngClass]="{'active':currUrl == 'setting' || currUrl == 'my-profile' || currUrl == 'daily-limit' || currUrl == 'banner-setting' || currUrl == 'website-content-setting'}">
+                    <div class="card-header clearfix" id="headingThree">
+                        <a class="side_menu" [routerLink]="['/setting']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/setting-icon.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Settings</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'wallet-management'}">
+                    <div class="card-header clearfix" id="headingThree">
+                        <a class="side_menu" [routerLink]="['/wallet-management']"
+                            routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/setting-icon.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Wallet Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'bank-management'}">
+                    <div class="card-header clearfix" id="headingThree">
+                        <a class="side_menu" [routerLink]="['/bank-management']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/setting-icon.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Bank Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box" [ngClass]="{'active':currUrl == 'fee-management'}">
+                    <div class="card-header clearfix" id="headingThree">
+                        <a class="side_menu" [routerLink]="['/fee-management']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/fees (1).png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Fee Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-box"
+                    [ngClass]="{'active':currUrl == 'statics-content' || currUrl == 'about-us' || currUrl == 'privacy' ||  currUrl == 'term-and-service'}">
+                    <div class="card-header clearfix" id="headingThree">
+                        <a class="side_menu" [routerLink]="['/statics-content']" routerLinkActive="router-link-active">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/static-content.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Static Content Management</span>
+                        </a>
+                    </div>
+                </div>
+
+                     <div class="menu-box" [ngClass]="{'active':currUrl == 'logs-management'}">
+                        <div class="card-header clearfix" id="headingThree">
+                             <a class="side_menu" [routerLink]="['/logs-management']" routerLinkActive="router-link-active" >
+                                 <span class="side_menu_icon">
+                                     <img src="assets/img/setting-icon.png" alt="icon"/>
+                                 </span>
+                                 <span class="side_page_name">Logs Management</span>
+                             </a>
+                         </div>
+                     </div>
+
+                     <div class="menu-box" [ngClass]="{'active':currUrl == 'advertisement-management'}">
+                        <div class="card-header clearfix" id="headingThree">
+                             <a class="side_menu" [routerLink]="['/advertisement-management']" routerLinkActive="router-link-active" >
+                                 <span class="side_menu_icon">
+                                     <img src="assets/img/setting-icon.png" alt="icon"/>
+                                 </span>
+                                 <span class="side_page_name">Advertisement Management</span>
+                             </a>
+                         </div>
+                     </div>
+                     <div class="menu-box" [ngClass]="{'active':currUrl == 'ticket-management'}">
+                        <div class="card-header clearfix" id="headingThree">
+                             <a class="side_menu" [routerLink]="['/ticket-management']" routerLinkActive="router-link-active" >
+                                 <span class="side_menu_icon">
+                                     <img src="assets/img/setting-icon.png" alt="icon"/>
+                                 </span>
+                                 <span class="side_page_name">Ticket Management</span>
+                             </a>
+                         </div>
+                     </div>
+                     <div class="menu-box" [ngClass]="{'active':currUrl == 'trade-management'}">
+                        <div class="card-header clearfix" id="headingThree">
+                             <a class="side_menu" [routerLink]="['/trade-management']" routerLinkActive="router-link-active" >
+                                 <span class="side_menu_icon">
+                                     <img src="assets/img/setting-icon.png" alt="icon"/>
+                                 </span>
+                                 <span class="side_page_name">Trade Management</span>
+                             </a>
+                         </div>
+                     </div>
+
+                     <div class="menu-box" [ngClass]="{'active':currUrl == 'dispute-management'}">
+                        <div class="card-header clearfix" id="headingThree">
+                             <a class="side_menu" [routerLink]="['/dispute-management']" routerLinkActive="router-link-active" >
+                                 <span class="side_menu_icon">
+                                     <img src="assets/img/setting-icon.png" alt="icon"/>
+                                 </span>
+                                 <span class="side_page_name">Dispute Management</span>
+                             </a>
+                         </div>
+                     </div>
+              
+
+                <div class="menu-box">
+                    <div class="card-header clearfix">
+                        <a class="side_menu" href="#signout_modal" data-toggle="modal">
+                            <span class="side_menu_icon">
+                                <img src="assets/img/logout.png" alt="icon" />
+                            </span>
+                            <span class="side_page_name">Logout</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- menu-box End -->
+            </div>
+            <!--Accordion End -->
+        </div>
+    </aside>
+
+    <!---------------------------------------------------------------SUB ADMIN----------------------------------------------------------------------------------------------------------------->
+
+    <!-- side bar -->
+    <aside class="sidebar"  *ngIf="flag" aria-labelledby="">
+    <div class="sidebar-scroller">
+        <div id="accordion" class="sidebar-menu">
+            <div class="user-panel clearfix">
+                <div class="pull-left image">
+                    <img src="assets/img/testimonial-img1.jpg" class="img-circle" alt="User Image">
+                    <a [routerLink]="['/my-profile']" class="online-icon"><em
+                            class="fa fa-circle text-success"></em></a>
+                </div>
+                <div class="pull-left info mt10">
+                    <a>
+                        <p>Welcome</p>
+                        <h4>{{userDetail?.firstName}}</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'dashboard'}" *ngIf="dashboardflag == true">
+                <div class="card-header clearfix" id="headingOne">
+                    <a class="side_menu" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/dashboard-icon.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'staff-management' || currUrl == 'add-new-staff'}" *ngIf="staticusermgmt == true">
+                <div class="card-header clearfix" id="headingTwo">
+                    <a class="side_menu" [routerLink]="['/staff-management']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/user-manage.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Staff Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'user-management'}" *ngIf="usermanagementflag == true">
+                <div class="card-header clearfix" id="headingTwo">
+                    <a class="side_menu" [routerLink]="['/user-management']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/user-manage.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">User Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'admin-management' || currUrl == 'add-admin'}" *ngIf="adminmgmt == true">
+                <div class="card-header clearfix" id="headingTwo">
+                    <a class="side_menu" [routerLink]="['/admin-management']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/user-manage.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Admin Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- <div class="menu-box" [ngClass]="{'active':currUrl == 'user-management-exchange'}" *ngIf="staticusfghdfermgmt == true">
+                <div class="card-header clearfix" id="headingTwo">
+                    <a class="side_menu" [routerLink]="['/user-management-exchange']"
+                        routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/user-manage.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">User Management Of Exchange</span>
+                    </a>
+                </div>
+            </div> -->
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'hotcoldwallet-management'}" *ngIf="statichotcoldmgmt == true">
+                <div class="card-header clearfix" id="headingThree">
+                    <a class="side_menu" [routerLink]="['/hotcoldwallet-management']"
+                        routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/wallet.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Hot Wallet Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'kyc-management' || currUrl == 'kyc-action'}" *ngIf="statickycmgmt == true">
+                <div class="card-header clearfix" id="headingThree">
+                    <a class="side_menu" [routerLink]="['/kyc-management']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/user.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">KYC Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box"
+                [ngClass]="{'active':currUrl == 'setting' || currUrl == 'my-profile' || currUrl == 'daily-limit' || currUrl == 'banner-setting' || currUrl == 'website-content-setting'}" *ngIf="settingmgmt == true">
+                <div class="card-header clearfix" id="headingThree">
+                    <a class="side_menu" [routerLink]="['/setting']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/setting-icon.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Settings</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'wallet-management'}" *ngIf="staticwalletmgmt == true">
+                <div class="card-header clearfix" id="headingThree">
+                    <a class="side_menu" [routerLink]="['/wallet-management']"
+                        routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/setting-icon.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Wallet Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'bank-management'}" *ngIf="bankmgmt == true">
+                <div class="card-header clearfix" id="headingThree">
+                    <a class="side_menu" [routerLink]="['/bank-management']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/setting-icon.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Bank Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" [ngClass]="{'active':currUrl == 'fee-management'}" *ngIf="feemgmt == true">
+                <div class="card-header clearfix" id="headingThree">
+                    <a class="side_menu" [routerLink]="['/fee-management']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/fees (1).png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Fee Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-box" *ngIf="staticflag == true"
+                [ngClass]="{'active':currUrl == 'statics-content' || currUrl == 'about-us' || currUrl == 'privacy' ||  currUrl == 'term-and-service'}">
+                <div class="card-header clearfix" id="headingThree">
+                    <a class="side_menu" [routerLink]="['/statics-content']" routerLinkActive="router-link-active">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/static-content.png" alt="icon" />
+                        </span>
+                        <span class="side_page_name">Static Content Management</span>
+                    </a>
+                </div>
+            </div>
+
+                 <div class="menu-box" [ngClass]="{'active':currUrl == 'logs-management'}" *ngIf="logsmgmt == true">
+                    <div class="card-header clearfix" id="headingThree">
+                         <a class="side_menu" [routerLink]="['/logs-management']" routerLinkActive="router-link-active" >
+                             <span class="side_menu_icon">
+                                 <img src="assets/img/setting-icon.png" alt="icon"/>
+                             </span>
+                             <span class="side_page_name">Logs Management</span>
+                         </a>
+                     </div>
+                 </div>
+
+                 <div class="menu-box" [ngClass]="{'active':currUrl == 'advertisement-management'}" *ngIf="advertisementmgmt == true">
+                    <div class="card-header clearfix" id="headingThree">
+                         <a class="side_menu" [routerLink]="['/advertisement-management']" routerLinkActive="router-link-active" >
+                             <span class="side_menu_icon">
+                                 <img src="assets/img/setting-icon.png" alt="icon"/>
+                             </span>
+                             <span class="side_page_name">Advertisement Management</span>
+                         </a>
+                     </div>
+                 </div>
+                 <div class="menu-box" [ngClass]="{'active':currUrl == 'ticket-management'}" *ngIf="ticketmgmt == true">
+                    <div class="card-header clearfix" id="headingThree">
+                         <a class="side_menu" [routerLink]="['/ticket-management']" routerLinkActive="router-link-active" >
+                             <span class="side_menu_icon">
+                                 <img src="assets/img/setting-icon.png" alt="icon"/>
+                             </span>
+                             <span class="side_page_name">Ticket Management</span>
+                         </a>
+                     </div>
+                 </div>
+                 <div class="menu-box" [ngClass]="{'active':currUrl == 'trade-management'}" *ngIf="trademgmt == true">
+                    <div class="card-header clearfix" id="headingThree">
+                         <a class="side_menu" [routerLink]="['/trade-management']" routerLinkActive="router-link-active" >
+                             <span class="side_menu_icon">
+                                 <img src="assets/img/setting-icon.png" alt="icon"/>
+                             </span>
+                             <span class="side_page_name">Trade Management</span>
+                         </a>
+                     </div>
+                 </div>
+
+                 <div class="menu-box" [ngClass]="{'active':currUrl == 'dispute-management'}" *ngIf="disputemgmt == true">
+                    <div class="card-header clearfix" id="headingThree">
+                         <a class="side_menu" [routerLink]="['/dispute-management']" routerLinkActive="router-link-active" >
+                             <span class="side_menu_icon">
+                                 <img src="assets/img/setting-icon.png" alt="icon"/>
+                             </span>
+                             <span class="side_page_name">Dispute Management</span>
+                         </a>
+                     </div>
+                 </div>
+          
+            <div class="menu-box">
+                <div class="card-header clearfix">
+                    <a class="side_menu" href="#signout_modal" data-toggle="modal">
+                        <span class="side_menu_icon">
+                            <img src="assets/img/logout.png" alt="icon"/>
+                        </span>
+                        <span class="side_page_name">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </aside>
+
+    <!-- Logout Modal -->
+    <div class="modal fade global-modal reset-modal" id="signout_modal">
+        <div class="modal-dialog max-WT-500">
+            <div class="modal-content">
+                <div>
+                    <!-- Modal body -->
+                    <div class="modal-body  text-center">
+                        <div class="row align-items-center modal_flax_height">
+                            <div class="col">
+                                <div class="box-title mb40 d-inline-block">
+                                    <em class="fas fa-power-off off-icon"></em>
+                                    <p class="mt40">Are you sure you want to logout?</p>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-theme" (click)="onLogout()" >YES</button> &nbsp; &nbsp; &nbsp;
+                                    &nbsp;
+                                    <button type="button" class="btn btn-theme"
+                                        data-dismiss="modal">CANCEL</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- signout modal -->
+    <!-- delete_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="delete">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p>Are you sure want to delete this user?</p>
+                                    <div>
+                                        <button type="submit" class="btn btn-info">Submit</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- delete_modal End -->
+
+
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright © 2020 <strong class="theme-text-color">CryptoBiz Exchange</strong> All
+                Rights Reserved.</p>
+        </div>
+    </footer>
+</div>

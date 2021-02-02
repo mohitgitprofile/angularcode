@@ -1,0 +1,708 @@
+<!--    Header Start  -->
+<app-header></app-header>
+<!--    Header End  -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+
+<!-- <main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('COMPETITION'))">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Filter BY COMPETITION</h2>
+            <div class="content-box-filter">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form class="filter-form">
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2" [(ngModel)]="bodyData.search" name="search"
+                                            autocomplete="off" (keyup)="onSearch(1, $event)">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn btn btn-dark-blue-s max-WT-150" (click)="addSponsorModal()">Add Sponsor
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered large-table text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Link</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="list.sponsorList.total == 0">
+                                <td colspan="6" class="text-center">No data found.</td>
+                            </tr>
+                            <tr *ngFor="let sponsor of list.sponsorList.docs | paginate: { itemsPerPage: list.sponsorList.limit, currentPage: list.sponsorList.page,  totalItems: list.sponsorList.total }">
+                                <td>{{sponsor.sponsorName}}</td>
+                                <td style="word-wrap: break-word;max-width: 142px;text-align: left;">{{sponsor.description}}</td>
+                                <td><a href="{{sponsor.link}}" target="_blank">{{sponsor.link}}</a></td>
+                                <td>{{sponsor.position || '- - -'}}</td>
+                                <td>{{sponsor.status || '- - -'}}</td>
+                                <td class="action-td" style="min-width:350px">
+                                    <button type="button" class="btn btn-book" (click)="editSponsorModal(sponsor)">Edit</button>
+                                    <button class="btn btn-danger" (click)="deletememberSponsor(sponsor._id)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix pagination-entity">
+                    <div class="pagination-block text-right" *ngIf="list.sponsorList.total > list.sponsorList.limit">
+                        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                    </div>
+                    <div class="entity-text" *ngIf="list.sponsorList.total!=0">
+                        <span>Showing {{list.sponsorList?.limit * (list.sponsorList?.page - 1) + 1}} to
+                            {{((list.sponsorList?.limit
+                            * list.sponsorList?.page) < list.sponsorList?.total) ? (list.sponsorList?.limit *
+                                list.sponsorList?.page) : list.sponsorList?.total || 0}} entries</span> <select class="form-control select-style1 mw50"
+                                [(ngModel)]="limitChange" (change)="changeLimit()">
+                                <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                                </select>
+                                <span>entries</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</main> -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Filter BY </h2>
+            <div class="content-box-filter">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form class="filter-form" [formGroup]="membersponserForm">
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2" formControlName="search" name="search"
+                                            autocomplete="off">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button" (click)="getSponserList(membersponserForm.value,filters.currentPage)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn btn btn-dark-blue-s max-WT-150" data-toggle="modal" data-target="#addSponsor">Add
+                            Sponsor
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered large-table text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Link</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="membersponsorList == 0">
+                                <td colspan="6" class="text-center">No data found.</td>
+                            </tr>
+                            <tr *ngFor="let sponsor of membersponsorList | paginate: { itemsPerPage: pageLimit, currentPage: filters.currPage,  totalItems: pageTotal }">
+                                <td>{{sponsor.sponsorName}}</td>
+                                <td style="word-wrap: break-word;max-width: 142px;text-align: left;">{{sponsor.description}}</td>
+                                <td><a href="{{sponsor.link}}" target="_blank">{{sponsor.link}}</a></td>
+                                <td>{{sponsor.position || '- - -'}}</td>
+                                <td>{{sponsor.status || '- - -'}}</td>
+                                <td class="action-td" style="min-width:350px">
+                                    <button type="button" class="btn btn-info" (click)="editMemberSponsorModal(sponsor._id)">Edit</button>
+                                    <button class="btn btn-danger" (click)="deletememberSponsor(sponsor._id)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix pagination-entity">
+                    <div class="pagination-block text-right" *ngIf="pageTotal > pageLimit">
+                        <pagination-controls (pageChange)="getSponserList(membersponserForm.value,$event)"></pagination-controls>
+                    </div>
+                    <!-- <div class="entity-text" *ngIf="list.sponsorList.total!=0">
+                            <span>Showing {{list.sponsorList?.limit * (list.sponsorList?.page - 1) + 1}} to {{((list.sponsorList?.limit
+                                * list.sponsorList?.page) < list.sponsorList?.total) ? (list.sponsorList?.limit * list.sponsorList?.page)
+                                    : list.sponsorList?.total || 0}} entries</span>
+                                    <select class="form-control select-style1 mw50" [(ngModel)]="limitChange" (change)="changeLimit()">
+                                        <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                                    </select>
+                                    <span>entries</span>
+                        </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- <main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('VENUE'))">
+      <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Filter BY VENUE</h2>
+            <div class="content-box-filter">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form class="filter-form" >
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" [(ngModel)]="venueSearch" placeholder="Search Here.." aria-label="Recipient's username"
+                                            aria-describedby="basic-addon2"  name="search"
+                                            autocomplete="off">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button"  (click)="getVenueSponserList(venueSearch,filters.currPage)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn btn btn-dark-blue-s max-WT-150" data-toggle="modal" data-target="#addVenueSponsor">Add
+                            Sponsor
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered large-table text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Link</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="venueSponsorList == 0">
+                                <td colspan="6" class="text-center">No data found.</td>
+                            </tr>
+                            <tr *ngFor="let sponsor of venueSponsorList | paginate: { itemsPerPage: pageLimit, currentPage: filters.currPage,  totalItems: pageTotal }">
+                                <td>{{sponsor.sponsorName}}</td>
+                                <td style="word-wrap: break-word;max-width: 142px;text-align: left;">{{sponsor.description}}</td>
+                                <td><a href="{{sponsor.link}}" target="_blank">{{sponsor.link}}</a></td>
+                                <td>{{sponsor.position || '- - -'}}</td>
+                                <td>{{sponsor.status || '- - -'}}</td>
+                                <td class="action-td" style="min-width:350px">
+                                    <button type="button" class="btn btn-info" (click)="editVenueSponsorModal(sponsor._id)">Edit</button>
+                                    <button class="btn btn-danger" (click)="deletememberSponsor(sponsor._id)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix pagination-entity">
+                    <div class="pagination-block text-right" *ngIf="pageTotal > pageLimit">
+                        <pagination-controls (pageChange)="getVenueSponserList(venueSearch,$event)"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</main> -->
+<!-- Max With Box End -->
+<!-- main End -->
+<!--   Footer Start  -->
+<app-footer></app-footer>
+<!--   Footer End  -->
+
+<!-- add sponsor modal -->
+<!-- <div class="modal fade common-modal" id="add_sponsor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="addSponsorForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">ADD SPONSOR
+                    </h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img [src]="ImageBase64" class="sponser">
+                                    <span class="camera fa fa-pencil-alt"><input type="file" (change)="fileChangeEvent($event)"
+                                            accept="image/*"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Sponsor Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" [formControl]="addSponsorForm.controls.name"
+                                            placeholder="Enter sponsor name" maxlength="50" />
+                                        <div class="errorMsg" *ngIf="addSponsorForm.controls.name.dirty && addSponsorForm.controls.name.invalid">
+                                            <span *ngIf="addSponsorForm.controls.name.hasError('required')">*Please
+                                                enter
+                                                sponsor name.
+                                            </span>
+                                            <span *ngIf="addSponsorForm.controls.name.hasError('minlength')">*Sponsor
+                                                name
+                                                must be between 2 to 50 characters.</span>
+                                            <span *ngIf="addSponsorForm.controls.name.hasError('pattern') &&!addSponsorForm.controls.name.hasError('minlength')">*Please
+                                                enter valid sponsor name.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Link</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" [formControl]="addSponsorForm.controls.link"
+                                            placeholder="https://www.google.com" maxlength="100" />
+                                        <div class="errorMsg" *ngIf="addSponsorForm.controls.link.dirty && addSponsorForm.controls.link.invalid">
+                                            <span *ngIf="addSponsorForm.controls.link.hasError('required')">*Please
+                                                enter
+                                                link.
+                                            </span>
+                                            <span *ngIf="addSponsorForm.controls.link.hasError('pattern') &&!addSponsorForm.controls.link.hasError('minlength')">*Please
+                                                enter valid link.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Description</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control round-input" [formControl]="addSponsorForm.controls.description"
+                                            placeholder="Please enter description" maxlength="1000"></textarea>
+                                        <div class="errorMsg" *ngIf="addSponsorForm.controls.description.dirty && addSponsorForm.controls.description.invalid">
+                                            <span *ngIf="addSponsorForm.controls.description.hasError('required')">*Please
+                                                enter description.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="addSponsorForm.invalid"
+                                        (click)="addSponsor()">Add</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+<!-- end add sponsor -->
+<!-- edit sponsor modal -->
+<!-- <div class="modal fade common-modal" id="edit_sponsor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="editSponsorForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT SPONSOR
+                    </h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img [src]="ImageBase64" class="sponser">
+                                    <span class="camera fa fa-pencil-alt"><input type="file" (change)="fileChangeEvent($event)"
+                                            accept="image/*"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Sponser Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" [formControl]="editSponsorForm.controls.name"
+                                            placeholder="Enter sponsor name" maxlength="50" />
+                                        <div class="errorMsg" *ngIf="editSponsorForm.controls.name.dirty && editSponsorForm.controls.name.invalid">
+                                            <span *ngIf="editSponsorForm.controls.name.hasError('required')">*Please
+                                                enter
+                                                sponsor name.
+                                            </span>
+                                            <span *ngIf="editSponsorForm.controls.name.hasError('minlength')">*Sponsor
+                                                name
+                                                must be between 2 to 50 characters.</span>
+                                            <span *ngIf="editSponsorForm.controls.name.hasError('pattern') &&!editSponsorForm.controls.name.hasError('minlength')">*Please
+                                                enter valid sponsor name.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Link</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" [formControl]="editSponsorForm.controls.link"
+                                            placeholder="https://www.google.com" maxlength="100" />
+                                        <div class="errorMsg" *ngIf="editSponsorForm.controls.link.dirty && editSponsorForm.controls.link.invalid">
+                                            <span *ngIf="editSponsorForm.controls.link.hasError('required')">*Please
+                                                enter
+                                                link.
+                                            </span>
+                                            <span *ngIf="editSponsorForm.controls.link.hasError('pattern') &&!editSponsorForm.controls.link.hasError('minlength')">*Please
+                                                enter valid link.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row" *ngIf="modalType == 'editSponsorModal'">
+                                    <label class="col-md-4 label-blue">Status</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control select-style1 round-input" [formControl]="editSponsorForm.controls.status">
+                                            <option value=''>Select Status</option>
+                                            <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                                         </select>
+                                        <div class="errorMsg" *ngIf="editSponsorForm.controls.status.dirty && editSponsorForm.controls.status.invalid">
+                                            <span *ngIf="editSponsorForm.controls.status.hasError('required')">*Please
+                                                select
+                                                status.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row" *ngIf="modalType == 'editSponsorModal'">
+                                    <label class="col-md-4 label-blue">Visible In</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control select-style1 round-input" [formControl]="editSponsorForm.controls.visibleIn">
+                                                <option value=''>Select Visible In</option>
+                                                <option *ngFor="let competition of list.competitionList" [value]="competition._id">{{competition.competitionName}}</option>
+                                            </select>                                       
+                                        <div class="errorMsg" *ngIf="editSponsorForm.controls.visibleIn.dirty && editSponsorForm.controls.visibleIn.invalid">
+                                                <span *ngIf="editSponsorForm.controls.visibleIn.hasError('required')">*Please
+                                                    select status.
+                                                </span>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row" *ngIf="modalType == 'editSponsorModal'">
+                                    <label class="col-md-4 label-blue">Position</label>
+                                    <div class="col-md-8">
+                                        <input type="number" class="form-control round-input" [formControl]="editSponsorForm.controls.position"
+                                            placeholder="Enter Position" maxlength="10" />
+                                        <div class="errorMsg" *ngIf="editSponsorForm.controls.position.dirty && editSponsorForm.controls.position.invalid">
+                                            <span *ngIf="editSponsorForm.controls.position.hasError('required')">*Please
+                                                enter
+                                                position.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Description</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control round-input" [formControl]="editSponsorForm.controls.description"
+                                            placeholder="Please enter description" maxlength="100"></textarea>
+                                        <div class="errorMsg" *ngIf="editSponsorForm.controls.description.dirty && editSponsorForm.controls.description.invalid">
+                                            <span *ngIf="editSponsorForm.controls.description.hasError('required')">*Please
+                                                enter description.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="editSponsorForm.invalid || (!filter.visibleIn.length)"
+                                        (click)="editSponsor()">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+<!-- end edit sponsor -->
+<!-- Sponsor Modals Through Membership Start Here -->
+<!-- Add Sponsor Modal Start Here -->
+<div class="modal fade common-modal" id="addSponsor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="addmemberSponsorForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">ADD SPONSOR
+                    </h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img *ngFor="let item of addSponsorphoto" src="{{item}}" alt="Sponsor Image" class="profile-pic">
+                                    <label class="upload-label">
+                                        <input type="file" name="image" formControlName="image" (change)="onUploadChange($event)"
+                                            accept=".png, .jpg, .jpeg">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Sponsor Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" formControlName="sponsorname"
+                                            placeholder="Enter sponsor name" maxlength="50" />
+                                        <p *ngIf="addmemberSponsorForm.get('sponsorname').hasError('required') &&  addmemberSponsorForm.get('sponsorname').dirty"
+                                            style="color:red" padding>*Sponsorname field can not be empty</p>
+                                        <p *ngIf="addmemberSponsorForm.get('sponsorname').hasError('pattern') &&  addmemberSponsorForm.get('sponsorname').dirty"
+                                            style="color:red" padding>*Invalid Sponsor Name</p>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Link</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" formControlName="link"
+                                            placeholder="https://www.google.com" maxlength="100" />
+                                        <p *ngIf="addmemberSponsorForm.get('link').hasError('required') &&  addmemberSponsorForm.get('link').dirty"
+                                            style="color:red" padding>*Link field can not be empty</p>
+                                        <!-- <p  *ngIf="addmemberSponsorForm.get('link').hasError('pattern') &&  addmemberSponsorForm.get('link').dirty" style="color:red"  padding>*Invalid Sponsor Link</p> -->
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Description</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control round-input" placeholder="Please enter description"
+                                            formControlName="description" maxlength="1000"></textarea>
+                                        <p *ngIf="addmemberSponsorForm.get('description').hasError('required') &&  addmemberSponsorForm.get('description').dirty"
+                                            style="color:red" padding>*Description field can not be empty</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="addmemberSponsorForm.invalid"
+                                        (click)="addMemberSponsor(addmemberSponsorForm.value)">Add</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Sponsor Modal Ends Here -->
+<!-- edit sponsor modal -->
+<div class="modal fade common-modal" id="editSponsor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="editmemberSponsorForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT SPONSOR
+                    </h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img *ngFor="let item of editSponsorphoto" src="{{item}}" alt="Sponsor Image" class="profile-pic">
+                                    <label class="upload-label">
+                                        <input type="file" name="image" formControlName="image" (change)="oneditChange($event)"
+                                            accept=".png, .jpg, .jpeg">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Sponsor Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" formControlName="sponsorname"
+                                            [(ngModel)]="viewSponsorDetail.sponsorName" placeholder="Enter sponsor name"
+                                            maxlength="50" />
+                                        <!-- <p *ngIf="editmemberSponsorForm.get('sponsorname').hasError('required') &&  editmemberSponsorForm.get('sponsorname').dirty"
+                                            style="color:red" padding>*Sponsorname field can not be empty</p> -->
+                                        <p *ngIf="editmemberSponsorForm.get('sponsorname').hasError('pattern') &&  editmemberSponsorForm.get('sponsorname').dirty"
+                                            style="color:red" padding>*Invalid Sponsor Name</p>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Link</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" formControlName="link"
+                                            [(ngModel)]="viewSponsorDetail.link" placeholder="https://www.google.com"
+                                            maxlength="100" />
+                                        <!-- <p *ngIf="editmemberSponsorForm.get('link').hasError('required') &&  editmemberSponsorForm.get('link').dirty"
+                                            style="color:red" padding>*Sponsorname field can not be empty</p> -->
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Status</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control select-style1 round-input" formControlName="status" [(ngModel)]="viewSponsorDetail.status">
+                                            <option value=''>Select Status</option>
+                                            <option value='Confirmed'>Confirmed</option>
+                                            <option value='Unconfirmed'>Unconfirmed</option>
+                                        </select>
+                                        <!-- <p *ngIf="editmemberSponsorForm.get('status').hasError('required') &&  editmemberSponsorForm.get('status').dirty"
+                                            style="color:red" padding>*Sponsorname field can not be empty</p> -->
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row" *ngIf="loginTypeArr.length > 1 && !loginRole"> 
+                                    <label class="col-md-4 label-blue">Select Role</label>
+                                    <div class="col-md-8" >
+                                      <select class="form-control select-style1 round-input" (change)="getRole($event)">
+                                          <option value="">Select Role</option>
+                                          <option *ngIf="loginTypeArr.includes('COMPETITION')" value="COMPETITION">COMPETITION</option>
+                                          <option *ngIf="loginTypeArr.includes('MEMBERSHIP')"  value="MEMBERSHIP">MEMBERSHIP</option>
+                                          <option *ngIf="loginTypeArr.includes('VENUE')" value="VENUE">VENUE</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row" *ngIf="loginRole || loginTypeArr.length == 1">
+                                    <label class="col-md-4 label-blue">Visible In</label>
+                                    <div class="col-md-8">
+                                        <ng-multiselect-dropdown [placeholder]="'Select VisibleIn'" formControlName="visibleIn" [data]="list.competitionList"
+                                             [settings]="dropdownSettings" name="visibleIn">
+                                        </ng-multiselect-dropdown>
+                                        <!-- <ng-multiselect-dropdown [placeholder]="'Select visibleIn'" [data]="organizerList" formControlName="visibleIn" [settings]="dropdownSettings" name="visibleIn">
+                                        </ng-multiselect-dropdown> [(ngModel)]="filter.visibleIn"  [ngModelOptions]="{standalone: true}"-->
+                                        <p *ngIf="editmemberSponsorForm.get('visibleIn').hasError('required') &&  editmemberSponsorForm.get('visibleIn').dirty"
+                                            style="color:red" padding>*Sponsorname field can not be empty</p>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Position</label>
+                                    <div class="col-md-8">
+                                        <input type="number" class="form-control round-input" formControlName="position" [value]="viewSponsorDetail.position"
+                                            placeholder="Enter Position" maxlength="10" />
+                                        <!-- <p *ngIf="editmemberSponsorForm.get('position').hasError('required') &&  editmemberSponsorForm.get('position').dirty"
+                                            style="color:red" padding>*position field can not be empty</p> -->
+                                        <p *ngIf="editmemberSponsorForm.get('position').hasError('pattern') &&  editmemberSponsorForm.get('position').dirty"
+                                            style="color:red" padding>*Invalid Sponsor Name</p>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Description</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control round-input" formControlName="description"
+                                            [(ngModel)]="viewSponsorDetail.description" placeholder="Please enter description"
+                                            maxlength="100"></textarea>
+                                        <!-- <p *ngIf="editmemberSponsorForm.get('description').hasError('required') &&  editmemberSponsorForm.get('description').dirty"
+                                            style="color:red" padding>*Sponsorname field can not be empty</p> -->
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" (click)="editMemberSponsor(editmemberSponsorForm.value)">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end edit sponsor  [disabled]="editSponsorForm.invalid || (!filter.visibleIn.length)"  -->
+<!-- Delete Sponsor Modal -->
+<div class="modal fade common-modal" id="deleteSponsor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Delete Sponsor</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="deleteModal">Are you sure want to delete this sponsor ?</label>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button"
+                                        (click)="deletesponsorApi()">Yes</button>
+                                    <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Delete Sponsor Modal -->
+<!-- Sponsor Modals Through Membership Ends Here -->
+<!--  Venue  Section Modals -->
+<!-- Add VenueSponsor Modal -->
+<!-- <div class="modal fade common-modal" id="addVenueSponsor" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="addvenueSponsorForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">ADD SPONSOR
+                    </h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img *ngFor="let item of addSponsorphoto" src="{{item}}" alt="Sponsor Image" class="profile-pic">
+                                    <label class="upload-label">
+                                        <input type="file" name="image" formControlName="image" (change)="onUploadChange($event)"
+                                            accept=".png, .jpg, .jpeg">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Sponsor Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" formControlName="sponsorname"
+                                            placeholder="Enter sponsor name" maxlength="50" />
+                                        <p *ngIf="addvenueSponsorForm.get('sponsorname').hasError('required') &&  addvenueSponsorForm.get('sponsorname').dirty"
+                                            style="color:red" padding>*Sponsorname field can not be empty</p>
+                                        <p *ngIf="addvenueSponsorForm.get('sponsorname').hasError('pattern') &&  addvenueSponsorForm.get('sponsorname').dirty"
+                                            style="color:red" padding>*Invalid Sponsor Name</p>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Link</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control round-input" formControlName="link"
+                                            placeholder="https://www.google.com" maxlength="100" />
+                                        <p *ngIf="addvenueSponsorForm.get('link').hasError('required') &&  addvenueSponsorForm.get('link').dirty"
+                                            style="color:red" padding>*Link field can not be empty</p>
+                                        <p  *ngIf="addvenueSponsorForm.get('link').hasError('pattern') &&  addvenueSponsorForm.get('link').dirty" style="color:red"  padding>*Invalid Sponsor Link</p>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-4 label-blue">Description</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control round-input" placeholder="Please enter description"
+                                            formControlName="description" maxlength="300"></textarea>
+                                        <p *ngIf="addvenueSponsorForm.get('description').hasError('required') &&  addvenueSponsorForm.get('description').dirty"
+                                            style="color:red" padding>*Description field can not be empty</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="addvenueSponsorForm.invalid"
+                                        (click)="addVenueSponsor(addvenueSponsorForm.value)">Add</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+

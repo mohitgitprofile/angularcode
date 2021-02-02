@@ -1,0 +1,445 @@
+<!--    Header start   -->
+<app-header></app-header>
+<!--    Header end   -->
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<!-- <main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('COMPETITION'))">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <h2 class="content-box-head">Filter BY COMEPETITION</h2>
+      <div class="content-box-filter">
+        <div class="row">
+          <div class="col-md-8">
+            <form class="filter-form">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="searchKey" [ngModelOptions]="{standalone: true}" (keyup)="onSearch(1,$event)">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-4 text-right">
+            <button class="btn btn btn-dark-blue-s max-WT-150" type="button" data-toggle="modal" (click)="addVenue()">Add
+              Venue</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Venue</th>
+                <th>Club Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="!VenuesList.docs.length">
+                    <td colspan="4" class="text-center">No data found.</td>
+                  </tr>
+              <tr *ngFor="let item of VenuesList?.docs | paginate: { itemsPerPage: VenuesList?.limit, currentPage: VenuesList?.page,  totalItems: VenuesList?.total } ">
+                <td>{{item?.venue}}</td>
+                <td>{{item?.club?.clubName}}</td>
+                <td>{{item?.status}}</td>
+                <td class="action-td">
+                  <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book" (click)="getDetails(item._id)">Edit</button>
+                  <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book red" (click)="delete(item._id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block text-right" *ngIf="VenuesList?.total > VenuesList?.limit">
+            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="VenuesList.docs.length">
+            <span>Showing {{VenuesList?.limit * (VenuesList?.page - 1) + 1}} to {{((VenuesList?.limit * VenuesList?.page) < VenuesList?.total)
+              ? (VenuesList?.limit * VenuesList?.page) : VenuesList?.total || 0}} entries</span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                  <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main> -->
+<main class="main-container pt0 mt-min60" >
+    <div class="container">
+      <div class="content-box bg-gray">
+        <h2 class="content-box-head">Filter BY </h2>
+        <div class="content-box-filter">
+          <div class="row">
+            <div class="col-md-8">
+              <form class="filter-form" [formGroup]="searchForm">
+                <div class="search-block-main fiter-full-search">
+                  <div class="search_block">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                         formControlName = "search" >
+                      <div class="input-group-append">
+                        <button class="btn btn_search" type="button" (click)="getVenueList(searchForm.value,filter.currPage)">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-4 text-right">
+              <button class="btn btn btn-dark-blue-s max-WT-150" type="button" data-toggle="modal"data-toggle="modal" data-target="#addVenue">Add
+                Venue</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-block mt10 white-bg">
+          <div class="table-responsive">
+            <table class="table table-bordered large-table text-center">
+              <thead>
+                <tr class="table-head-bg">
+                  <th>Venue</th>
+                  <th>Club Name</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr *ngIf="!membervenueList.length">
+                      <td colspan="4" class="text-center">No data found.</td>
+                    </tr>
+                <tr *ngFor="let item of membervenueList | paginate: { itemsPerPage: pageLimit, currentPage: filter.currPage,  totalItems: pageTotal } ">
+                  <td>{{item?.venue}}</td>
+                  <td>{{item?.club?.clubName}}</td>
+                  <td>{{item?.status}}</td>
+                  <td class="action-td">
+                    <button type="button" class="btn btn-info" (click)="editData(item._id)">Edit</button>
+                    <button type="button" class="btn btn-danger"  (click)="deleteData(item._id)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="clearfix pagination-entity">
+            <div class="pagination-block text-right" *ngIf="pageTotal > pageLimit">
+              <pagination-controls (pageChange)="getVenueList(searchForm.value,$event)"></pagination-controls>
+            </div>
+            <!-- <div class="entity-text" *ngIf="VenuesList.docs.length">
+              <span>Showing {{VenuesList?.limit * (VenuesList?.page - 1) + 1}} to {{((VenuesList?.limit * VenuesList?.page) < VenuesList?.total)
+                ? (VenuesList?.limit * VenuesList?.page) : VenuesList?.total || 0}} entries</span>
+                  <select class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                    <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                  </select>
+                  <span>entries</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- Max With Box End -->
+    </div>
+  </main>
+<!-- main End -->
+
+
+
+
+<!-- add-venue -->
+<div class="modal fade common-modal" id="add_venue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">ADD VENUE</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Venue</label>
+                  <div class="col-md-9">
+                    <!-- <ng4geo-autocomplete (componentCallback)="autoCompleteCallback1($event)" placeholder="" [(ngModel)]="venueLocation" [ngModelOptions]="{standalone: true}"></ng4geo-autocomplete> -->
+                    <input type="text" placeholder="Enter venue" class="form-control round-input" [formControl]="CreateVenueForm.controls['venue']" maxlength="100"/>
+                    <span class="error-box" style="color:red" *ngIf="CreateVenueForm.controls['venue'].hasError('required') && CreateVenueForm.controls['venue'].dirty">* Please enter venue</span>
+                  </div>
+                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Status</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="CreateVenueForm.controls['status']" name="status">
+                      <option value="">Select Status</option>
+                      <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                    </select>
+                    <span class="error-box" style="color:red" *ngIf="CreateVenueForm.controls['status'].hasError('required') && CreateVenueForm.controls['status'].dirty">*
+                        Please select status</span>
+                  </div>
+                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Club</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="CreateVenueForm.controls['club']" name="clubName">
+                      <option value="">Select Club</option>
+                      <option [value]="club.clubName" *ngFor="let club of ClubsList">{{club?.clubName}}</option>
+                    </select>
+                    <span class="error-box" style="color:red" *ngIf="CreateVenueForm.controls['club'].hasError('required') && CreateVenueForm.controls['club'].dirty">*
+                        Please select club</span>
+                  </div>
+                  
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" data-toggle="modal" (click)="createVenue()"
+                    [disabled]="!CreateVenueForm.valid">Add</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End add-venue-->
+
+<!-- edit-venue -->
+<div class="modal fade common-modal" id="edit_venue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT VENUE</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Venue</label>
+                  <div class="col-md-9">
+                    <!-- <ng4geo-autocomplete (componentCallback)="autoCompleteCallback1($event)" placeholder="" [(ngModel)]="venueLocation1" [ngModelOptions]="{standalone: true}"></ng4geo-autocomplete> -->
+                    <input type="text" placeholder="Enter venue" class="form-control round-input" [formControl]="CreateVenueForm.controls['venue']" maxlength="100"/>
+                    <span class="error-box" style="color:red" *ngIf="CreateVenueForm.controls['venue'].hasError('required') && CreateVenueForm.controls['venue'].dirty">* Please enter venue</span>
+                  </div>
+                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Status</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="CreateVenueForm.controls['status']" name="status">
+                      <option value="">Select Status</option>
+                      <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                    </select>
+                    <span class="error-box" style="color:red" *ngIf="CreateVenueForm.controls['status'].hasError('required') && CreateVenueForm.controls['status'].dirty">*
+                        Please select status</span>
+                  </div>
+                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Club</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="CreateVenueForm.controls['club']" name="clubName">
+                      <option value="">Select Club</option>
+                      <option [value]="club.clubName" *ngFor="let club of ClubsList">{{club?.clubName}}</option>
+                    </select>
+                    <span class="error-box" style="color:red" *ngIf="CreateVenueForm.controls['club'].hasError('required') && CreateVenueForm.controls['club'].dirty">*
+                        Please select club</span>
+                  </div>
+                  
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" data-toggle="modal" (click)="editVenue()"
+                    [disabled]="!CreateVenueForm.valid">Update</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End edit-venue-->
+
+<!-- Delete Venue Modal -->
+<div class="modal fade common-modal" id="delete_venue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Delete Venue</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <label class="deleteModal">Are you sure want to delete this venue ?</label>
+
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button" (click)="onDeleteVenue()">Yes</button>
+                  <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Delete Venue Modal -->
+
+
+<!--    Footer start   -->
+<app-footer></app-footer>
+<!--    Footer end   -->
+<!-- MemberShip Section Modal -->
+<!-- add-venue -->
+<div class="modal fade common-modal" id="addVenue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="addMemberVenueForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">ADD VENUE</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Venue</label>
+                  <div class="col-md-9">
+                    <input type="text" placeholder="Enter venue" class="form-control round-input" formControlName="venuename" maxlength="100"/>
+                    <p  *ngIf="addMemberVenueForm.get('venuename').hasError('required') &&  addMemberVenueForm.get('venuename').dirty" style="color:red"  padding>*venuename  field can not be empty</p>
+                  <p  *ngIf="addMemberVenueForm.get('venuename').hasError('pattern') &&  addMemberVenueForm.get('venuename').dirty" style="color:red"  padding>*Invalid Sponsor Name</p>
+                  </div>
+                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Status</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" formControlName="status" name="status">
+                      <option value="">Select Status</option>
+                      <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                    </select>
+                    <p  *ngIf="addMemberVenueForm.get('status').hasError('required') &&  addMemberVenueForm.get('status').dirty" style="color:red"  padding>*status  field can not be empty</p>
+                  </div>
+                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Club</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" formControlName="clubname" name="clubName">
+                      <option value="">Select Club</option>
+                      <option [value]="club.clubName" *ngFor="let club of ClubsList">{{club?.clubName}}</option>
+                    </select>
+                    <p  *ngIf="addMemberVenueForm.get('clubname').hasError('required') &&  addMemberVenueForm.get('clubname').dirty" style="color:red"  padding>*clubName  field can not be empty</p>
+                  </div>
+                  
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" data-toggle="modal" (click)="addmemberVenue(addMemberVenueForm.value)"
+                    [disabled]="!addMemberVenueForm.valid">Add VENUE</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End add-venue-->
+<!-- edit-venue -->
+<div class="modal fade common-modal" id="editVenue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="editmemberVenueForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT VENUE</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Venue</label>
+                  <div class="col-md-9">
+                    <input type="text" placeholder="Enter venue" class="form-control round-input" formControlName="venuename" [(ngModel)]="viewVenueDetail.venue" maxlength="100" />
+                    <p  *ngIf="editmemberVenueForm.get('venuename').hasError('required') &&  editmemberVenueForm.get('venuename').dirty" style="color:red"  padding>*venuename  field can not be empty</p>
+                    <p  *ngIf="editmemberVenueForm.get('venuename').hasError('pattern') &&  editmemberVenueForm.get('venuename').dirty" style="color:red"  padding>*Invalid Sponsor Name</p>                 
+                  </div>                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Status</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" formControlName="status" name="status" [(ngModel)]="viewVenueDetail.status">
+                      <option value="">Select Status</option>
+                      <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                    </select>
+                    <p  *ngIf="editmemberVenueForm.get('status').hasError('required') &&  editmemberVenueForm.get('status').dirty" style="color:red"  padding>*status  field can not be empty</p>
+                  </div>                  
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Club</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" formControlName="clubname" name="clubName" [(ngModel)]="viewVenueDetail.club.clubName">
+                      <option value="">Select Club</option>
+                      <option [value]="club.clubName" *ngFor="let club of ClubsList">{{club?.clubName}}</option>
+                    </select>
+                    <p  *ngIf="editmemberVenueForm.get('clubname').hasError('required') &&  editmemberVenueForm.get('clubname').dirty" style="color:red"  padding>*clubName  field can not be empty</p>
+                  </div>                  
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" data-toggle="modal" (click)="editMemberVenue(editmemberVenueForm.value)"
+                    [disabled]="!editmemberVenueForm.valid">Update</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End edit-venue-->
+<!-- Delete Venue Modal -->
+<div class="modal fade common-modal" id="deleteVenue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Delete Venue</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <label class="deleteModal">Are you sure want to delete this venue ?</label>
+
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button" (click)="deleteMembershipVenue()">Yes</button>
+                  <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Delete Venue Modal -->

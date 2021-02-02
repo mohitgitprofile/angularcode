@@ -1,0 +1,124 @@
+<!--  Header Start -->
+<app-header></app-header>
+<!-- Header  End    -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<main class="main-container pt0 mt-min60">
+    <div class="custom-container">
+        <div class="fixtures-section w-100 center-box">
+            <!-- Global Box Start -->
+            <div class="global-box grey-box">
+                <div class="custom-breadcrumb custom-breadcrumb1 mt0 clearfix">
+                    <div class="fleft">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item active" [routerLink]="['/organizer/service']"> Service</a>
+                            <a class="breadcrumb-item" [routerLink]="['/organizer/professional']">Professional</a>
+                            <a class="breadcrumb-item" [routerLink]="['/organizer/booking']"> Booking </a>
+                            <!-- <a class="breadcrumb-item"        [routerLink]="['/organizer/option']"> Option </a> -->
+                        </nav>
+                    </div>
+
+                </div>
+                <h2 class="content-box-head" style="margin-left: 40%">Detail Of {{serviceDetail?.serviceName}}</h2>
+                <div class="fixture-inner">
+                    <div class="white-box-pannel mt20">
+                        <div class="row justify-content-center">
+                            <!-- <div class="col-md-3 col-sm-4">
+                              <div class="member-img-box">
+                                  <img src="{{assets/images/evel-profile.png}}">
+                              </div>
+                          </div> -->
+                            <div class="col-md-5 col-sm-8">
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Service Name</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.serviceName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Membership Name</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.membershipName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Duration</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.duration}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Venue</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.venueName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Start and End Date</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.startDate | date: 'MMM d, y,'}} &nbsp; And &nbsp; {{serviceDetail?.endDate | date: 'MMM d, y,'}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Start and End Time</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.startDuration}}&nbsp; And &nbsp;{{serviceDetail?.endDuration}}</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Published</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.published}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meber-detail">
+                                    <div class="row">
+                                        <div class="col-md-6"><label class="member-label">Description</label></div>
+                                        <div class="col-md-6">
+                                            <p class="member-text">{{serviceDetail?.description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="meber-detail">
+                                <div class="row">
+                                   
+                                    &nbsp;<button class="btn btn-info" >LeaderBoard</button>&nbsp;
+                                    <button class="btn btn-info">Attendence</button>&nbsp;
+                                    <button class="btn btn-info" >Evaluation</button> 
+                                  
+                                </div>
+                            </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Global Box End -->
+
+
+        </div>
+        <!-- Max With Box End -->
+
+    </div>
+</main>
+<!-- Footer Start -->
+<app-footer></app-footer>
+<!-- Footer End -->

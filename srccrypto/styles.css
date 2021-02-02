@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+img.lg-logo1 {
+    display: none;
+}
+body.body-class.toggle-wrapper img.lg-logo {
+    display: none;
+}
+body.body-class.toggle-wrapper img.lg-logo1 {
+    display: block;
+}
+td.action_td_btn3 {
+    text-align: center;
+}
+.create-subadmin {
+    width: 100%;
+    min-width: 150px;
+}
+
+

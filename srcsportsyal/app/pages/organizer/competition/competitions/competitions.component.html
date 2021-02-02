@@ -1,0 +1,177 @@
+    <!--   Header Start  -->
+    <app-header></app-header>
+    <!--   Header End  -->
+    <div class="topBanner height300">
+        <div class="container">
+            <!--
+            <div class="row">
+               <div class="col">
+                  <div class="topBanner-content d-flex align-items-center w-100">
+                     <div class="w-100">
+                        <h1>COMPREHENSIVE MANAGEMENT OF<br> ANY SPORTS COMPETITION</h1>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+-->
+        </div>
+    </div>
+    <!-- main Start -->
+    <main class="main-container pt0 mt-min60">
+        <div class="container">
+            <div class="content-box bg-gray">
+                <div class="heading-search-block mb30">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="content-box-head">Competition Management</h3>
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+						<div class="col-md-3 text-right">
+							<button type="button" class="btn btn-navy-blue" [routerLink]="['/organizer/addCompetition']" >Create A Competition</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box-filter">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <form class="filter-form">
+								<div class="top_p_search">
+									<div class="filter-box d-inline-block">
+										<label class="control-label">Period</label>
+										<select class="form-control select-style1 d-inline-block " [(ngModel)]="filter.period" name="period" >
+											<option value="">Select Period</option>
+											<option *ngFor="let period of list.periodList" [value]="period.periodName">{{period?.periodName}}</option>
+										</select>
+									</div>
+									<div class="filter-box d-inline-block">
+                                        <label class="control-label">Division</label>
+                                        <ng-multiselect-dropdown
+                                        [placeholder]="'Select Division'"
+                                        [data]="list.divisionList"
+                                        [(ngModel)]="filter.division"
+                                        [settings]="dropdownSettings"
+                                        name="division" class="d-inline-block">
+                                        </ng-multiselect-dropdown>
+										<!-- <select class="form-control select-style1 d-inline-block ">
+											<option value="">Select Division</option>
+											<option *ngFor="let period of list.divisionList" >{{division?.divisionName}}</option>
+										</select> -->
+									</div>
+									<div class="filter-box d-inline-block">
+										<label class="control-label">Sports</label>
+										<!-- <select class="form-control select-style1 d-inline-block">
+											<option>Select Sports</option>
+											<option>Cricket</option>
+											<option>Football</option>
+											<option>Volleyball</option>
+                                        </select> -->
+                                        <ng-multiselect-dropdown
+                                        [placeholder]="'Select Sports'"
+                                        [data]="list.sportsList"
+                                        [(ngModel)]="filter.sports"
+                                        [settings]="dropdownSettings"
+                                        name="sports" class="d-inline-block">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                    <div class="filter-box d-inline-block">
+										<label class="control-label">Status</label>
+										<select class="form-control select-style1 d-inline-block " [(ngModel)]="filter.status" name="status">
+											<option value="">Select Status</option>
+											<option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+										</select>
+									</div>
+									<button type="button" class="btn btn-navy-blue max-WT-100" (click)="onSearch(2)">Apply</button>
+								</div>
+								<div class="search_p_section">
+									<div class="search-block-main text-left">
+										<div class="search_block">
+											<div class="input-group">
+												<input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="filter.search" name="search" (keyup)="onSearch(1, $event)" autocomplete="off">
+												<div class="input-group-append">
+													<button class="btn btn_search" type="button" (click)="onSearch(2)" ><i class="fas fa-search"></i> Search</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-block mt30">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Division</th>
+                                    <th>Period</th>
+                                    <th>Sports</th>
+                                    <th>Address</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="!competitionData.docs.length">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center">No Data Found.</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr *ngFor="let item of competitionData.docs | paginate: { itemsPerPage: competitionData.limit, currentPage: competitionData.page,  totalItems: competitionData.total } ">
+                                    <td>{{item?.competitionName}}</td>
+                                    <td>{{item?.division}}</td>
+                                    <td>{{item?.period}}</td>
+                                    <td>{{item?.sports}}</td>
+                                    <td>{{item?.venue}}</td>
+                                    <td>{{getStatus(item?.status)}}</td>
+                                    <td><a class="btn btn-navy-blue btn-sm" [routerLink]="['/organizer/compConfigure',item._id,'1']">Configure</a></td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>Outdoor - Sports</td>
+                                    <td>Indoor</td>
+                                    <td>Summer</td>
+                                    <td>Cricket	</td>
+                                    <td>1 Sheikh Mohammed bin Rashid Blvd - Dubai</td>
+                                    <td>Completed</td>
+                                    <td><a href="javascript:;" class="btn btn-navy-blue btn-sm">Configure</a></td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+					<div class="shoing_entries">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="show_ent" *ngIf="competitionData.docs.length">
+									Showing {{filter.limit * (filter.currPage - 1) + 1 || 0}} to {{((filter.limit * filter.currPage) < competitionData.total) ? (filter.limit * filter.currPage) : competitionData.total || 0}} of {{competitionData.total}} entries
+										<select class="form-control select-style1 d-inline" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+											<option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+										</select>
+									entries
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="pagination-block mt10 text-right" *ngIf="competitionData.docs.length">
+                                    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Max With Box End -->
+
+        </div>
+    </main>
+    <!-- main End -->
+    <!--   Footer Start   -->
+    <app-footer></app-footer>
+    <!--   Footer End   -->

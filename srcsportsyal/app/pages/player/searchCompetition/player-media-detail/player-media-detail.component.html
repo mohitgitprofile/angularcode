@@ -1,0 +1,103 @@
+<app-header></app-header>
+<div class="topBanner">
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="fixtures-section w-100 center-box">
+      <!-- Global Box Start -->
+      <div class="global-box grey-box">
+        <div class="fixture-inner">
+          <!-- media-detail-box Start -->
+          <div class="media-box max-WT-940">
+            <div class="media-box-head">
+              <div class="media-head-img">
+                <!-- <img *ngIf="!list.mediaDetail?.competitionId.imageURL" src="assets/images/follow-img.png">
+                <img *ngIf="list.mediaDetail?.competitionId.imageURL" src="{{list.mediaDetail?.competitionId.imageURL}}"> -->
+              </div>
+              <div class="media-head-info">
+                <h4>{{list.mediaDetail?.competitionName}}</h4>
+                <p>{{list.mediaDetail?.title}}</p>
+              </div>
+            </div>
+            <div class="media-banner-img text-center" *ngIf="list.mediaDetail?.typeOfMedia == 'NEWS'">
+              <img src="assets/images/competition-news.png" alt="Media Image" />
+            </div>
+            <div class="media-banner-img text-center media-bammer-video" *ngIf="list.mediaDetail?.typeOfMedia == 'VIDEO'">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/C-UwOWB9Io4" frameborder="0" allow="autoplay; encrypted-media"
+                allowfullscreen></iframe>
+            </div>
+            <div class="media-banner-img" *ngIf="list.mediaDetail?.typeOfMedia == 'ALBUM'">
+              <ul class="media-img-list clearfix media-new">
+                <li *ngFor="let image of list.mediaDetail?.mediaUrls">
+                  <figure class="thumb-img"><img src="{{image.url}}" alt="Image"></figure>
+                </li>
+              </ul>
+            </div>
+            <div class="media-description">
+              <p class="more">
+                {{list.mediaDetail?.description}}
+              </p>
+            </div>
+            <div class="media-link-block">
+              <div class="row">
+                <div class="col-md-5">
+                  <ul class="like_comment">
+                    <li><a href="javascript:void(0);"><span>{{list.mediaDetail?.noOfLike}}</span> Like</a></li>
+                    <li><a href="javascript:void(0);"><span>{{list.mediaDetail?.noOfComment}}</span> Comments</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-7">
+                  <ul class="share_list">
+                    <li *ngIf='list.mediaDetail?.likeStatus == "False"'><a href="javascript:void(0);" (click)="like(list.mediaDetail)"><i class="far fa-heart"></i> Like</a></li>
+                    <li *ngIf='list.mediaDetail?.likeStatus == "True"'><a href="javascript:void(0);" (click)="like(list.mediaDetail)"><i class="fa fa-heart active"></i> Unlike</a></li>
+                    <li><a href="javascript:void(0);"><i class="fas fa-share-alt"></i> Share</a></li>
+                    <li><a href="javascript:void(0);"><i class="far fa-comment"></i> Comment</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+               <!-- media-comment-box Start -->
+            <div class="media-comment-box mt20">
+              <ul class="comment_list">
+              
+                <li>
+                  <form class="comment-form d-table">
+                  <div class="comment-user-img"><img src="{{profileData?.image || 'assets/images/dummy-user-img.png'}}" alt="User Image"/></div>
+              <div class="comment-detail">
+                <textarea class="form-control" rows="3" id="comment" placeholder="Write here your comment..."></textarea>
+              <button type="submit" class="btn btn-navy-blue max-WT-170 mt15" (click)='comment()'>Comment Send</button>
+              </div>
+              </form>
+                </li>
+                <li  class="d-table" *ngFor=' let comment of list.mediaDetail?.comments'>
+                  <div class="comment-user-img"><img src="{{comment?.commentImage}}" alt="User Image"/></div>
+              <div class="comment-detail">
+                <h5>{{comment?.commentFirstName}} {{comment?.commentLastName}}<span class="commented-time">{{comment?.createdAt}}</span></h5>
+                <p>{{comment?.text}}</p>
+              </div>
+                </li>
+                <!-- <li  class="d-table">
+                  <div class="comment-user-img"><img src="assets/images/dummy-user-img.png" alt="User Image"/></div>
+              <div class="comment-detail">
+                <h5>Mitchell Marsh<span class="commented-time">27/032018</span></h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type</p>
+              </div>
+                </li> -->
+              </ul>
+              
+              </div>
+  <!-- media-comment-box End -->
+
+          </div>
+          <!-- media-detail-box End -->
+        </div>
+      </div>
+      <!-- Global Box End -->
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

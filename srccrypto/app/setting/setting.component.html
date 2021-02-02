@@ -1,0 +1,82 @@
+
+<div class="wrapper">
+  
+  <!-- Aside End -->
+  <main class="middle-content">
+      <!-- Page Title Start -->
+      <div class="page_title_block">
+          <h1 class="page_title" style="color:black">Account Settings</h1>
+         
+      </div>
+      <!-- Page Title End -->
+      <div class="content-section">
+
+          <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+              <div class="main-block-innner mb40 mt40 setting-page">
+                  <ul>
+                      <li class="clearfix">
+                          <h5 class="f-left" style="color:black">MY PROFILE</h5> <a [routerLink]="['/my-profile']" routerLinkActive="router-link-active"  class="pull-right"><em class="fas fa-arrow-right"></em></a></li>
+                      <li class="clearfix">
+                          <h5 class="f-left" style="color:black">WITHDRAWAL FEE</h5> <a [routerLink]="['/daily-limit']" routerLinkActive="router-link-active"  class="pull-right"><em class="fas fa-arrow-right"></em></a></li>
+                   
+                      <li class="clearfix">
+                          <h5 class="f-left" style="color:black">WITHDRAWAL LIMIT</h5> <a [routerLink]="['/banner-setting']" routerLinkActive="router-link-active"  class="pull-right"><em class="fas fa-arrow-right"></em></a></li>
+                      <li class="clearfix">
+                          <h5 class="f-left" style="color:black">TAKER MAKER FEE</h5> <a [routerLink]="['/taker-maker-fee']" routerLinkActive="router-link-active"  class="pull-right"><em class="fas fa-arrow-right"></em></a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </main>
+  <!-- Middle Content End -->
+</div>
+
+<!-- Wrapper End -->
+<!--Modal Start-->
+<div class="modal fade global-modal reset-modal" id="delet_farms_modal">
+  <div class="modal-dialog max-WT-500">
+      <div class="modal-content">
+          <!-- Modal body -->
+          <div class="modal-body  text-center">
+              <div class="row align-items-center modal_flax_height">
+                  <div class="col">
+                      <div class="box-title mb40 d-inline-block">
+                          <h2>Are you sure?</h2>
+                          <p>You won’t be able to revert this!</p>
+                      </div>
+                      <div class="max-WT-300 d-inline-block">
+                          <button type="button" class="btn btn-gray btn-large radius0 btn-block">YES</button>
+                          <button type="button" class="btn btn-red btn-large radius0 btn-block" data-dismiss="modal">CANCEL</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- signout_modal Start -->
+
+<!-- Signout Modal -->
+<!-- Change Password_modal Start -->
+<div class="modal fade global-modal reset-modal" id="update-prof">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password" action="my-profile.html">
+          <div class="modal-content">
+              <div>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                  <div class="modal-body">
+                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                          <div class="w-100">
+                              <p>Profile Update Successfully</p>
+                              <div class="form-group mt40">
+                                  <button type="submit" class="btn btn-info">OK</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

@@ -1,0 +1,220 @@
+<app-header></app-header>
+<div class="topBanner height300">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="custom-container">
+    <div class="fixtures-section w-100 center-box">
+      <!-- Global Box Start -->
+      <div class="global-box grey-box">
+        <app-comp-header></app-comp-header>
+        <div class="fixture-inner">
+          <div class="profile-box regstration-page" [formGroup]="registrationForm" *ngIf="regStatus == false && regFormCreated == true">
+            <div>
+              <h1 *ngIf="freeOrPaid =='paid'">Pay and Register</h1>
+              <h1 *ngIf="freeOrPaid =='free'">Register for free</h1>
+              <div class="row" style="margin-top: 30px" *ngIf="freeOrPaid =='paid'">
+                <div class="col-3">
+                  <label>Registration Fee</label>
+                </div>
+                <div class="col-3">
+                  <span class="font-weight-bold text-dark pl-2">Rs {{registrationDetail.registrationFee}}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <label>Start Date</label>
+                </div>
+                <div class="col-3">
+                  <span class="font-weight-bold text-dark pl-2">{{registrationDetail.startDate | date: "d MMMM, y"}}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <label>End Date</label>
+                </div>
+                <div class="col-3">
+                  <span class="font-weight-bold text-dark pl-2">{{registrationDetail.endDate | date: "d MMMM, y"}}</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <label>Description</label>
+                </div>
+                <div class="col-3">
+                  <span class="font-weight-bold text-dark pl-2">{{registrationDetail.description}}</span>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 30px">
+                <div class="col-3">
+                  <label>Payment In hand Detail</label>
+                </div>
+                <div class="col-3">
+                  <span class="font-weight-bold text-dark pl-2">{{registrationDetail.paymentInHandDetails}}</span>
+                </div>
+              </div>
+            </div>
+            <h1>Player Detail</h1>
+            <div class="row" *ngIf="profileDetail">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Email</label>
+                  <input type="email" class="form-control" disabled value="{{profileDetail.email}}" placeholder="rasual.butler@yahoo.com">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Date of Birth</label>
+                  <input type="text" class="form-control datepicker" disabled value="{{profileDetail.dob}}" placeholder="12/01/1982">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Mobile Number</label>
+                  <input type="text" class="form-control" disabled value="{{profileDetail.mobileNumber}}" placeholder="+XX XXXXXXXXXX">
+                </div>
+              </div>
+            </div>
+            <h1>Other Detail</h1>
+            <div class="row">
+              <!-- <div class="col-md-6" *ngIf="sportType != 'single'">
+                <div class="form-group">
+                  <label class="control-label">Team</label>
+                  <select class="form-control select-style1" placeholder="Select Team" [formControl]="registrationForm.controls.team" [(ngModel)]="register.team">
+                    <option value="">Select Team</option>
+                    <option *ngFor="let team of teamList" [value]="team">{{team.teamName}}</option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="col-md-6" *ngIf="sportType != 'single'">
+                <div class="form-group">
+                  <label class="control-label">Team</label>
+                  <select class="form-control select-style1" placeholder="Select Team" [formControl]="registrationForm.controls.team" [(ngModel)]="register.team">
+                    <option value="">Select Team</option>
+                    <option *ngFor="let team of teamList" [value]="team._id">{{team.teamName}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6" *ngIf="freeOrPaid =='paid'">
+                <div class="form-group">
+                  <label class="control-label">Select Payment mode</label>
+                  <select class="form-control select-style1" placeholder="Select Payment mode" (ngModelChange)="payModeFun($event)" [(ngModel)]="register.payMode"
+                    [formControl]="registrationForm.controls.payMode">
+                    <option value="">Select Payment mode</option>
+                    <option value="online">Online</option>
+                    <option value="offline">Offline</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6" *ngFor="let form of regForm">
+                <div class="form-group">
+                  <label class="control-label">{{form.field}}</label>
+                  <input class="form-control" *ngIf="form.importance == 'mandatory'" [(ngModel)]="form.itemValue" [ngModelOptions]="{standalone: true}"
+                    type=" {{form.fieldType}}" placeholder="Please enter {{form.field}}">
+                  <input class="form-control" *ngIf="form.importance != 'mandatory'" [(ngModel)]="form.itemValue" [ngModelOptions]="{standalone: true}"
+                    type=" {{form.fieldType}}" placeholder="Please enter {{form.field}}">
+                </div>
+              </div>
+            </div>
+            <div class="text-center pt10 pb10">
+              <button type="submit" class="btn btn-navy-blue max-WT-170 font_uni_sans" [disabled]="!registrationForm.valid" (click)="saveRegister()">Submit</button>
+            </div>
+          </div>
+          <div class="profile-box regstration-page" *ngIf="regStatus ==true">
+            <h5>You have registered for this competition.</h5>
+          </div>
+          <div class="profile-box regstration-page" *ngIf="regFormCreated == false">
+            <h5>You cannot register in this competition as registration form for this competition is not created yet!</h5>
+          </div>
+        </div>
+      </div>
+      <!-- Global Box End -->
+
+
+    </div>
+    <!-- Max With Box End -->
+
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+
+<!-- Card Modal Start -->
+<div class="modal fade common-modal" id="playerRegPay" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+
+      <div *ngIf="list.cardList.length" class="add-to-card-box">
+        <table class="table table-bordered bor-table large-table">
+          <thead>
+            <tr class="table-head-bg">
+              <th>Card Number</th>
+              <th>Expiry Date</th>
+              <th>Choose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let card of list.cardList">
+              <td>{{card.cardNumber}}</td>
+              <td>{{card.expiryDate}}</td>
+              <td class="action-td">
+                <span class="radio-checkbox">
+                  <input type="radio" id="check2" [value]="card._id" name="currCard" [(ngModel)]="currCard" (click)="selectCard(card)">
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <form class="modal-add-card-form" autocomplete="off" [formGroup]="cardForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans">Payment</h5>
+          <div class="modal-content-body">
+            <p class="head_lagend mb20  text-center para">Please enter details for payment</p>
+            <div class="center-box">
+              <div class="form-group clearfix row">
+                <label class="col-md-3 label-blue">Card Number</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" placeholder="Card number" maxlength="16" [formControl]="cf.card">
+                  <div class="errorMsg" style="float: left" *ngIf="cf.card.dirty && cf.card.invalid">
+                    <span *ngIf="cf.card.hasError('required')">*Please enter card no.</span>
+                    <span *ngIf="cf.card.hasError('pattern')">*Please enter valid card no.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group clearfix row">
+                <label class="col-md-3 label-blue">Expiry Date</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control " [formControl]="cf.expiryDate" placeholder="yyyy - mm" maxlength="7" />
+                  <div class="errorMsg" style="float: left;" *ngIf="cf.expiryDate.dirty && cf.expiryDate.invalid">
+                    <span *ngIf="cf.expiryDate.hasError('required')">*Please enter expiry date.</span>
+                    <span *ngIf="cf.expiryDate.hasError('pattern')">*Please enter valid expiry date(YYYY-MM).</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group clearfix row">
+                <label class="col-md-3 label-blue">CVV</label>
+                <div class="col-md-9">
+                  <input type="password" class="form-control" placeholder="CVV" maxlength="3" [formControl]="cf.cvv">
+                  <div class="errorMsg" style="float: left" *ngIf="cf.cvv.dirty && cf.cvv.invalid">
+                    <span *ngIf="cf.cvv.hasError('required')">*Please enter cvv.</span>
+                    <span *ngIf="cf.cvv.hasError('pattern')">*Please enter valid cvv.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix calendar-action text-center pL15 pR15 mt30">
+              <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: left;" data-dismiss="modal">Cancel</button>
+              <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: right;" (click)="pay()" [disabled]="cardForm.invalid">Pay</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Card  Modal End -->

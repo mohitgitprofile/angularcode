@@ -1,0 +1,9 @@
+.mx-WT-HT{
+    max-width: 100%;
+    max-height:400px;
+}
+.booking-carousel .carousel-item img{
+    max-width: 100%;
+    min-height: 400px;
+    object-fit: cover;
+}

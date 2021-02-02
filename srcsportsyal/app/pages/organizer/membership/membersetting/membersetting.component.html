@@ -1,0 +1,56 @@
+  <!--  Header Start -->
+  <app-header></app-header>
+  <!-- Header  End    -->
+  <div class="topBanner">
+     <div class="container">
+     </div>
+  </div>
+  <!-- main Start -->
+  <main class="main-container pt0 mt-min60">
+     <div class="container">
+        <div class="content-box bg-gray">
+          <h2 class="content-box-head">Select Membership to Proceed for Futher Setting Changes</h2>
+           <div class="content-box-filter">
+            <form class="filter-form fullwidth" [formGroup]= 'applyForm'>
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="filter-box ">
+                          <label class="control-label">Membership Name</label>
+                           <select class="form-control select-style1" (change)="getMembershipId($event)">
+                             <option value="">Select Membership</option>
+                              <option  *ngFor="let i of memberlist"  value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                            </select>
+                         </div>
+                       </div>
+                       <br>
+                  <div class="col-md-6 col-lg-3" *ngIf="show != 'hide'">
+                     <div class="filter-box mb0">
+                        <input type="checkbox" formControlName="comments" > Allow Comments<br>
+                        <input type="checkbox" formControlName="club" > Enable Club Registration
+                      </div>
+                    </div>
+                    <br>
+                   <div class="col-md-6 col-lg-4" *ngIf="show != 'hide'">
+                     <div class="filter-box">
+                       <label class="control-label">Follow Permission</label>
+                        <select class="form-control select-style1" formControlName="follow" >
+                          <option value ="">Select Follow Permission</option>
+                           <option value="true">Public</option>
+                           <option value="false">Private</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-2 text-right">
+                       <button class="btn btn btn-dark-blue-s max-WT-150"  (click)="settingsApi(applyForm.value)">Save</button>
+                    </div>
+                   </div>
+                   </form>
+                </div>
+            </div>
+        <!-- Max With Box End -->
+     </div>
+  </main>
+  <!-- main End -->
+  <!-- Footer Start -->
+  <app-footer></app-footer>
+  <!-- Footer End -->

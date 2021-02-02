@@ -1,0 +1,386 @@
+      <div class="wrapper">
+      <!--  Header Start -->
+      <app-header></app-header>
+      <!--  Header End -->
+      <div class="topBanner">
+         <div class="container">
+            
+         </div>
+      </div>
+      <!-- main Start -->
+      <main class="main-container pt0">
+
+         <div class="container">
+            <!-- content-box -->
+            <!-- <div class="content-box bg-gray mt-60"> -->
+               <!-- Profile-form Start -->
+               <!-- <div class="box-top-row mb5">
+                <div class="row">
+                  <div class="col-md-9">
+                    <p>The competitions is not publish, click on publish button to to make it accessible for public.
+                    </p>
+                  </div>
+                  <div class="col-md-3 text-right">
+                    <button class="btn btn btn-dark-blue-s max-WT-100" type="button">Publish</button>
+                  </div>
+                </div>
+              </div> -->
+               <!-- <div class="content-box-filter p20  pt35">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <input type="text" class="form-control" placeholder="https://leverade.com/en/admin/tournament/580820/registration">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group text-right share">
+                           <p class="head-sm">share via <i class="fab fa-facebook"></i></p>
+                        </div>
+                     </div>
+                  </div>
+               </div> -->
+               <!-- <div class="content-box-filter p20  pt35 mt20">
+               <div class="row">
+                  <div class="col-lg-4 col-md-4">
+                     <div class="profile-img" id="profile_img">
+                        <img src="assets/images/profile-img.png" alt="Profile img"/>
+                        <span class="camera fa fa-pencil-alt"><input type="file"></span>
+                     </div>
+                  </div>
+                 
+                  <div class="col-lg-8 col-md-8">
+                    
+                   <form>
+                     <div class="form-group row mb30">
+                        <div class="col-4">
+                           <div class="custom-checkbox clearfix">
+                                <input type="checkbox" id="check2">
+                                <label for="check2">Free</label>
+                           </div>
+                        </div>
+                        <div class="col-8">
+                           <div class="custom-checkbox clearfix">
+                                <input type="checkbox" id="check2">
+                                <label for="check2">Paid</label>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="control-label col-md-4">Select Membership</label>
+                        <div class="col-md-8">
+                           <select class="form-control select-style1">
+                               <option>Select Membership</option>
+                               <option>Select Membership</option>
+                               <option>Select Membership</option>
+                            </select>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="control-label col-md-4">Registration free</label>
+                        <div class="col-md-8">
+                           <input type="text" class="form-control">
+                        </div>
+                     </div>
+                      <div class="form-group row">
+                        <label class="control-label col-md-4">custom free</label>
+                        <div class="col-md-8">
+                           <input type="text" class="form-control">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="control-label col-md-4">Account Number</label>
+                        <div class="col-md-8">
+                           <input type="text" class="form-control">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="control-label col-md-4">Payment in Hand details</label>
+                        <div class="col-md-8">
+                           <input type="text" class="form-control">
+                        </div>
+                     </div>
+                      <div class="form-group row">
+                        <label class="control-label col-md-4">Membership field</label>
+                        <div class="col-md-8">
+                           <input type="text" class="form-control">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="control-label col-md-4">Start Date</label>
+                        <div class="col-md-8">
+                           <input type="text" class="form-control">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="control-label col-md-4">End Date</label>
+                        <div class="col-md-8">
+                           <input type="text" class="form-control">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="control-label col-md-4">Description</label>
+                        <div class="col-md-8">
+                           
+                           <textarea class="form-control textareaheight"></textarea>
+                        </div>
+                     </div>
+                     <div class="text-center pt10 pb10">
+                      <button type="submit" class="btn btn-navy-blue max-WT-170 font_uni_sans">Save</button>
+                    </div>
+                   </form>
+                                         
+                  </div>
+                
+               </div>
+            </div> -->
+              
+            <!-- </div> -->
+            <div class="content-box bg-gray mt20">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="content-box-filter p20  pt35  reg-height" style="width: 600px;">
+                   <div class="text-right mb10">
+                      <button class="btn btn btn-dark-blue-s max-WT-150" [disabled]="membershipname==''" type="button" data-toggle="modal" data-target="#add_player">Configure Field</button>
+                   </div>
+                  <div class="max-WT-600 mrgn-0-auto">
+                   <h5 class="head-sub text-center mb30" *ngIf="configurePlayerList.length"> Dynamic Fields : </h5>
+                   <h5 class="head-sub text-center mb30" *ngIf="!configurePlayerList.length"> Select any of the Membership to Add or Get Dynamic Fields . </h5>
+                   <label class="col-md-4">Membership Name:</label>
+                   <div class="col-md-8">
+                          <select class="form-control select-style1"  (change)="getMembershipIdApi($event)">
+                          <option value="">Select</option>  
+                          <option *ngFor="let i of memberlist"  value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                       </select>
+                   </div> 
+                   <br>
+                   <div class="row form-group"  *ngFor="let configData of configurePlayerList; let i = index">
+                         <label class="col-md-4">{{configData.field}}:</label>
+                         <div class="col-md-8">
+                            <select class="form-control select-style1" [(ngModel)]="configData.importance">
+                                <option value="mandatory">Mandatory</option>
+                                <option  value="optional">Optional</option>
+                                <option  value="hidden">Hidden</option>
+                            </select>
+                         </div>
+                      </div>
+                      <div class="text-center calendar-action mt30" *ngIf="configurePlayerList.length">
+                         <button type="submit" class=" btn btn-navy-blue max-WT-150 mL5" (click)="saveConfigPlayerFields('form')">Saved</button>
+                      </div>
+                  </div>
+             </div>
+               </div>
+                 <!-- <div class="col-md-6">
+                    <div class="content-box-filter p20  pt35  reg-height">
+                     <div class="text-right mb10">
+                        <button class="btn btn btn-dark-blue-s max-WT-150" type="button" data-toggle="modal" data-target="#add_player">Configure Field</button>
+                     </div>
+                    <div class="max-WT-600 mrgn-0-auto">
+                     <h5 class="head-sub text-center mb30" *ngIf="configurePlayerList.length"> Configurable Player Fields  </h5>
+                     <h5 class="head-sub text-center mb30" *ngIf="!configurePlayerList.length" style="margin-top: 50%"> No Configurable Player Fields added yet. </h5>
+                        <div class="row form-group"  *ngFor="let configData of configurePlayerList; let i = index">
+                           <label class="col-md-4">{{configData.field}}:</label>
+                           <div class="col-md-8">
+                              <select class="form-control select-style1" [(ngModel)]="configData.importance">
+                                  <option value="mandatory">Mandatory</option>
+                                  <option  value="optional">Optional</option>
+                                  <option  value="hidden">Hidden</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="text-center calendar-action mt30" *ngIf="configurePlayerList.length">
+                           <button type="submit" class=" btn btn-navy-blue max-WT-150 mL5" (click)="saveConfigPlayerFields('form')">Save</button>
+                        </div>
+                    </div>
+               </div>
+                 </div> -->
+              </div>
+               
+            </div>
+         </div>
+      </main>
+      <!-- main End -->
+      <!--  Footer  Start  -->
+      <app-footer></app-footer>
+      <!--  Footer  End  -->
+      </div>
+      <!-- Wrapper End -->
+      <!-- Configure Player field -->
+      <div class="modal fade common-modal" id="add_player" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog max-WT-600" role="document">
+           <div class="modal-content">
+              <!-- <form class="modal-add-card-form" action="profile-with-card.html" novalidate [formGroup]="configureForm"> -->
+                 <div class="modal-body text-center">
+                     <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Configure Player Field
+                      </h5>
+                    <div class="modal-content-body modalform-body text-left">
+                     <div class="row">
+                       <div class="col-md-12">
+                         
+                          <div class="form-group clearfix row"  *ngFor="let data of configurePlayerArr; let i = index">
+                           
+                            <label class="col-md-3 label-blue" >Field Name</label>
+                            <div class="col-md-9">
+                             <input type="text" class="form-control round-input"  [(ngModel)]="data.field" placeholder="Please enter Field Name."/>
+                            </div>
+                            <label class="col-md-3 label-blue" >Field Type</label>
+                            <div class="col-md-9">
+                              <select class="form-control round-input"  [(ngModel)]="data.fieldType">
+                                 <option value="">Select Field Type</option>
+                                 <option value="text">Text</option>
+                                 <option value="date">Date</option>
+                                 <option value="email">Email</option>
+                                 <option value="number">Number</option>
+                              </select>
+                           </div>
+                            
+                            <div class="form-group">
+                               <div class="text-right">
+                                  <button class="btn-sm btn btn-primary" *ngIf="i==configurePlayerArr.length-1" (click)="addOtherPlayerField(data.name,i)" ><i class="fas fa-plus"></i> Add More Field</button>
+                              </div>
+                             </div>
+
+                          </div>
+                         <div class="clearfix calendar-action mt30 text-right">
+                           <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                           <button class="mb25 btn btn-navy-blue max-WT-150 mL5 "  (click)="saveConfigPlayerFields('modal')" type="button" data-toggle="modal" data-target="#edit_venue">Submit</button>
+                         </div>
+                        </div>
+                     </div>
+                   </div>
+                 </div>
+              <!-- </form> -->
+           </div>
+        </div>
+     </div>
+     <!--  Modal End Configure Player field--> 
+      <!-- Modal Start -->
+      <div class="modal fade" id="add_to_card1" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" >
+                  <div class="modal-body text-center">
+                     <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans" >Add Card</h5>
+                     <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                     <div class="max-WT-400 center-box">
+                        <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Card Number" required/>
+                        </div>
+                        <div class="form-group">
+                           <input type="text" class="form-control datepicker" placeholder="Expire Date" required/>
+                        </div>
+                        <div class="form-group mb5">
+                           <input type="text" class="form-control" placeholder="CVC" required/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="clearfix calendar-action text-center pL15 pR15">
+                     <button type="button" class="mb25 btn btn-gray max-WT-150">Cancel</button>
+                     <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5">Add</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!-- book_slot End -->
+      <div class="modal fade common-modal" id="add_to_card" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" >
+                  <div class="modal-body text-center">
+                     <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Card</h5>
+                     <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group clearfix row">
+                                 <label class="col-md-3 label-blue">Card Number</label>
+                                 <div class="col-md-9">
+                                    <input type="text" class="form-control round-input" placeholder=""/>
+                                 </div>
+                              </div>
+                              <div class="form-group clearfix row">
+                                 <label class="col-md-3 label-blue">Expiry Date</label>
+                                 <div class="col-md-9">
+                                    <input type="text" class="form-control round-input" placeholder=""/>
+                                 </div>
+                              </div>
+                              <div class="form-group clearfix row">
+                                 <label class="col-md-3 label-blue">CVC</label>
+                                 <div class="col-md-9">
+                                    <input type="text" class="form-control round-input "  placeholder=""/>
+                                 </div>
+                              </div>
+                              <div class="clearfix calendar-action mt30 text-left">
+                                 <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                 <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" data-toggle="modal" data-target="#edit_venue">Add</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+            <!-- add-venue -->
+      <div class="modal fade common-modal" id="add_venue" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" >
+                  <div class="modal-body text-center">
+                      <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Configure Field
+                       </h5>
+                     <div class="modal-content-body modalform-body text-left">
+                      <div class="row">
+
+                        <div class="col-md-12">
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Field Name</label>
+                             <div class="col-md-9">
+                              <input type="text" class="form-control round-input" placeholder="Date of Birth"/>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Field Name</label>
+                             <div class="col-md-9">
+                              <input type="text" class="form-control round-input" placeholder="Place of Birth"/>
+                             </div>
+                           </div>
+                           <div class="form-group">
+                             <div class="text-right">
+                                <button class="btn-sm btn btn-primary"><i class="fas fa-plus"></i> Add More Field</button>
+                            </div>
+                           </div>
+                          <div class="clearfix calendar-action mt30 text-right">
+                            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                            <button class="mb25 btn btn-navy-blue max-WT-150 mL5 "  type="button" data-toggle="modal" data-target="#edit_venue">Submit</button>
+                          </div>
+                         </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!--  Modal End add-venue--> 
+      <script>
+         /* ========For Image Change========== */
+            $('input[type=file]').change(function() {
+              readURL(this);
+            });
+         
+         
+         function readURL(input) {
+         
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+         
+                    reader.onload = function(e) {
+                        $('.profile-img img').attr('src', e.target.result).fadeIn('slow');
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+      </script>
+  

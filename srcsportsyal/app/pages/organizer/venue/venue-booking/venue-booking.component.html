@@ -1,0 +1,360 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="content-box bg-gray">
+      <div class="tab-block mt10">
+        <ul class="nav nav-pills">
+          <li class="nav-item ">
+            <a class="nav-link active" data-toggle="tab" href="#booking" (click)="changeTabFunc('booking')">Booking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#invoices" (click)="changeTabFunc('invoices')">Invoices</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#export" (click)="changeTabFunc('export')">Export</a>
+          </li>
+        </ul>
+
+        <div class="content-box-filter">
+          <form class="filter-form fullwidth">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="search-block-main fiter-full-search">
+                  <div class="form-group clearfix row" *ngIf="!venueList.length">
+                    <label class="col-md-9 label-blue">Add venue to see booking</label>
+                  </div>
+                  <div class="form-group clearfix row" *ngIf="venueList.length">
+                    <label class="col-md-3 label-blue text-center">Select Venue</label>
+                    <div class="col-md-9">
+                      <select class="form-control select-style1 round-input" (change)="onVenueSelect()" [ngModelOptions]="{standalone: true}" [(ngModel)]="venueId">
+                        <option value="">All</option>
+                        <option *ngFor="let i of venueList" value="{{i._id}}">{{i?.venueName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row" *ngIf="venueList.length && currTab != 'invoices'">
+                    <label class="col-md-3 label-blue text-center">Filter by Status</label>
+                    <div class="col-md-9">
+                      <select class="form-control select-style1 round-input" (change)="statusFilterFun()" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="venueStatus">
+                        <option value="all">All</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="unconfirmed">Unconfirmed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="search_block" *ngIf="currTab != 'export'">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                        [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                      <div class="input-group-append">
+                        <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row" *ngIf="currTab == 'export'">
+                    <label class="col-md-3 label-blue text-center">Filter From Date</label>
+                    <div class="col-md-9">
+                      <div class="col-md-15">
+                        <div class="search-block-main fiter-full-search">
+                          <div class="filter-box">
+                              <my-date-picker name="mydate" [options]="myDatePickerOptions1"  (dateChanged)="fromDateSelect($event)" placeholder="Select From Date" [(ngModel)]="fromDate"
+                              required></my-date-picker>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <label class="col-md-3 label-blue text-center">Filter To Date</label>
+                    <div class="col-md-9">
+                      <div class="col-md-15">
+                        <div class="search-block-main fiter-full-search">
+                          <div class="filter-box">
+                            <my-date-picker name="mydate" [options]="myDatePickerOptions" placeholder="Select To Date" [(ngModel)]="toDate"
+                              required></my-date-picker>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group-append apply-btn">
+                        <button class="btn btn-dark-blue-s" type="button" (click)="filterByToFromDate()">Apply</button>
+                      </div>
+                  </div>
+                  <!-- <div class="form-group clearfix row" *ngIf="currTab == 'export'">
+                    <label class="col-md-3 label-blue text-center">Filter by period</label>
+                    <div class="col-md-9">
+                      <select class="form-control select-style1 round-input" (change)="filterBydate()" [ngModelOptions]="{standalone: true}" [(ngModel)]="bookingDate">
+                        <option value="">Select period</option>
+                        <option value="Today">Today</option>
+                        <option value="Tomorrow">Tomorrow</option>
+                        <option value="This week">This week</option>
+                        <option value="Next week">Next week</option>
+                        <option value="This month">This month</option>
+                        <option value="Next month">Next month</option>
+                      </select>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 text-right mt20" *ngIf="currTab == 'export'">
+              <button class="btn btn btn-dark-blue-s" type="button" (click)="print()">Print</button>
+              <button class="btn btn btn-dark-blue-s" type="button" (click)="exportToCSV()">Export To CSV</button>
+            </div>
+          </form>
+        </div>
+        <div class="tab-scroll-block">
+          <div class="tab-content mt20 sms-tab">
+            <div class="tab-pane active" id="booking">
+              <div class="container-common">
+                <div class="content-box bg-gray">
+                  <div class="tab-block mt20" *ngIf="currTab == 'booking'">
+                    <div class="tab-content">
+                      <div class="tab-pane  active">
+                        <div class="table-block white-bg">
+                          <table class="table table-bordered large-table text-center">
+                            <thead>
+                              <tr class="table-head-bg">
+                                <th>Venue Name</th>
+                                <th>Sports</th>
+                                <th>Time Slots</th>
+                                <th> Customer details</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="!bookingList.result || bookingList.result.length == 0">
+                                <td colspan="9" class="text-center">No data found.</td>
+                              </tr>
+                              <tr *ngFor="let booking of bookingList.result | paginate: { itemsPerPage: bookingList.limit, currentPage: bookingList.page,  totalItems: bookingList.total }">
+                                <td> {{booking.venueName}}</td>
+                                <td> {{booking.sportName}}</td>
+                                <td> {{booking.bookingDate}}, {{booking.slotArray[0].startTime}}</td>
+                                <td>{{booking.playerId[0].firstName}} ({{booking.playerId[0].email}}) {{booking.playerId[0].mobileNumber}}
+                                </td>
+                                <td>{{currency}} {{booking.totalAmount}}</td>
+                                <td>
+                                  {{booking.status}}
+                                </td>
+                                <td class="action-td">
+                                  <button class="btn btn-info" (click)="editBookingModal(booking)" *ngIf="booking.status == 'unconfirmed'">
+                                    <i class="far fa-edit"></i>
+                                  </button>
+                                  <button class="btn btn-danger" (click)="deleteBookingModal(booking._id)">
+                                    <i class="far fa-trash-alt"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="clearfix pagination-entity">
+                            <div class="pagination-block mt10 text-right" *ngIf="bookingList.total > bookingList.limit">
+                              <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                            </div>
+                            <div class="entity-text" *ngIf="!bookingList.docs || !bookingList.docs.length == 0">
+                              <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+                                < bookingList.total) ? (page.limit * page.currPage) : bookingList.total || 0}} of {{bookingList.total}} entries</span>
+                                  <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                                    <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                                  </select>
+                                  <span>entries</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="invoices">
+              <div class="tab-content">
+                <div class="tab-pane  active" id="home">
+                  <div class="table-block white-bg">
+                    <div class="table-responsive">
+                      <table class="table table-bordered large-table text-center">
+                        <thead>
+                          <tr class="table-head-bg">
+                            <th> Order Number</th>
+                            <th>Venue Name</th>
+                            <th>Sports Name</th>
+                            <th>Booking Date</th>
+                            <th> Customer details</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngIf="!bookingList.result || bookingList.result.length == 0">
+                            <td colspan="9" class="text-center">No data found.</td>
+                          </tr>
+                          <tr *ngFor="let booking of bookingList.result | paginate: { itemsPerPage: bookingList.limit, currentPage: bookingList.page,  totalItems: bookingList.total }">
+                            <td> {{booking._id}}</td>
+                            <td> {{booking.venueName}}</td>
+                            <td> {{booking.sportName}}</td>
+                            <td> {{booking.bookingDate}}</td>
+                            <td>{{booking.playerId[0].firstName}} ({{booking.playerId[0].email}}) {{booking.playerId[0].mobileNumber}}
+                            </td>
+                            <td>{{currency}} {{booking.totalAmount}}</td>
+                            <td>
+                              {{booking.status}}
+                            </td>
+                            <td class="action-td">
+                              <button class="btn btn-danger" (click)="deleteBookingModal(booking._id)">
+                                <i class="far fa-trash-alt"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="clearfix pagination-entity">
+                      <div class="pagination-block mt10 text-right" *ngIf="bookingList.total > bookingList.limit">
+                        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                      </div>
+                      <div class="entity-text" *ngIf="!bookingList.docs || !bookingList.docs.length == 0">
+                        <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+                          < bookingList.total) ? (page.limit * page.currPage) : bookingList.total || 0}} of {{bookingList.total}} entries</span>
+                            <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                              <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                            </select>
+                            <span>entries</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="export">
+              <div class="tab-content">
+                <div class="tab-pane  active" id="home">
+                  <div class="table-block white-bg">
+                    <div class="table-responsive">
+                      <table class="table table-bordered large-table text-center">
+                        <thead>
+                          <tr class="table-head-bg">
+                            <th> Order Number</th>
+                            <th>Venue Name</th>
+                            <th>Sports Name</th>
+                            <th>Booking Date</th>
+                            <th> Customer details</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngIf="!bookingList.result || bookingList.result.length == 0">
+                            <td colspan="9" class="text-center">No data found.</td>
+                          </tr>
+                          <tr *ngFor="let booking of bookingList.result | paginate: { itemsPerPage: bookingList.limit, currentPage: bookingList.page,  totalItems: bookingList.total }">
+                            <td> {{booking._id}}</td>
+                            <td> {{booking.venueName}}</td>
+                            <td> {{booking.sportName}}</td>
+                            <td> {{booking.bookingDate}}</td>
+                            <td>{{booking.playerId[0].firstName}} ({{booking.playerId[0].email}}) {{booking.playerId[0].mobileNumber}}
+                            </td>
+                            <td>{{currency}} {{booking.totalAmount}}</td>
+                            <td>
+                              {{booking.status}}
+                            </td>
+                            <td class="action-td">
+                              <button class="btn btn-danger" (click)="deleteBookingModal(booking._id)">
+                                <i class="far fa-trash-alt"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="clearfix pagination-entity">
+                      <div class="pagination-block mt10 text-right" *ngIf="bookingList.total > bookingList.limit">
+                        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                      </div>
+                      <div class="entity-text" *ngIf="!bookingList.docs || !bookingList.docs.length == 0">
+                        <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+                          < bookingList.total) ? (page.limit * page.currPage) : bookingList.total || 0}} of {{bookingList.total}} entries</span>
+                            <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                              <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                            </select>
+                            <span>entries</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>
+
+
+
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="delete-booking-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">Are you sure you want to delete this booking?</p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="onDeleteBooking()">YES</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- delete-modal-end -->
+
+<!-- change-status-modal -->
+<div class="modal fade common-modal" id="changeStatus-booking-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <p class="text-center modal-text-s">Are you sure you want to delete this booking?</p> -->
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Select Status</label>
+                  <div class="col-md-9">
+                    <!-- <select class="form-control select-style1 round-input" (change)="onVenueSelect()" [(ngModel)]="venueId"> -->
+                    <select class="form-control select-style1 round-input">
+                      <option value="confirmed">Confirmed</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="onEditBookingStatus()">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

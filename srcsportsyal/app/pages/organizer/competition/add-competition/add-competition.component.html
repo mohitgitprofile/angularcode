@@ -1,0 +1,138 @@
+    <!--   Header  Start  -->
+    <app-header></app-header>
+    <!--   Header  End  -->
+    <div class="topBanner height300">
+        <div class="container">
+            <!--
+            <div class="row">
+               <div class="col">
+                  <div class="topBanner-content d-flex align-items-center w-100">
+                     <div class="w-100">
+                        <h1>COMPREHENSIVE MANAGEMENT OF<br> ANY SPORTS COMPETITION</h1>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+-->
+        </div>
+    </div>
+    <!-- main Start -->
+    <main class="main-container pt0 mt-min60">
+        <div class="container">
+			<div class="content-box max-WT-767 m-auto">
+				<h2 class="log-head text-center m-3">Add New Competition</h2>
+				<div class="form-box m-auto mt60">
+				  <form autocomplete="off" novalidate [formGroup]="addCompForm" >
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3 text-right">Competition Name</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" [formControl]="form.compName" maxlength="50" placeholder="Competition name">
+							<div class="errorMsg" *ngIf="form.compName.dirty && form.compName.invalid">
+								<span *ngIf="form.compName.hasError('required')">*Please enter company name.</span>
+							</div>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3 text-right">Venue</label>
+						<div class="col-md-8">
+						  <select class="form-control select-style1 d-inline-block width200" [formControl]="form.venue" *ngIf="list.venueList != ''">
+								<option value="">Select Venue</option>
+								<option *ngFor="let venue of list.venueList" [value]="venue.venue">{{venue?.venue}}</option>
+							</select>
+							<a *ngIf="list.venueList == ''" [routerLink]="['/organizer/dataVenues']" >Go To Venue To Venue</a>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3 text-right">Division</label>
+						<div class="col-md-8">
+							<select class="form-control select-style1 d-inline-block width200" [formControl]="form.division" *ngIf="list.divisionList != ''">
+								<option value="">Select Division</option>
+								<option *ngFor="let division of list.divisionList" [value]="division.divisionName">{{division?.divisionName}}</option>
+							</select>
+							<a *ngIf="list.divisionList == ''" [routerLink]="['/organizer/menuCompConfDivision']" >Go To Division To Division</a>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3 text-right">Period</label>
+						<div class="col-md-8">
+							<select class="form-control select-style1 d-inline-block width200" [formControl]="form.period"  *ngIf="list.periodList != ''">
+								<option value="">Select Period</option>
+								<option *ngFor="let period of list.periodList" [value]="period.periodName">{{period?.periodName}}</option>
+							</select>
+							<a *ngIf="list.periodList == ''" [routerLink]="['/organizer/menuCompConfPeriod']" >Go To Period To Add Period</a>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3 text-right">Sports</label>
+						<div class="col-md-8">
+							<select class="form-control select-style1 d-inline-block width200" [formControl]="form.sports" *ngIf="list.sportsList != ''">
+								<option value="">Select Sports</option>
+								<option *ngFor="let sport of list.sportsList" [value]="sport._id" >{{ sport?.sportName }}  {{ sport?.sportType }}</option>
+							</select>
+							<a *ngIf="list.sportsList == ''" [routerLink]="['/organizer/menuCompConfSports']" >Go To Sports To Add Sport</a>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3 text-right">Club</label>
+						<div class="col-md-8">
+							<select class="form-control select-style1 d-inline-block width200" [formControl]="form.club">
+								<option value="">Select Club</option>
+								<option *ngFor="let club of list.clubList" [value]="club.clubName">{{club.clubName}}</option>
+							</select>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3 text-right">Status</label>
+						<div class="col-md-8">
+							<select class="form-control select-style1 d-inline-block width200" [formControl]="form.status">
+								<option value="">Select Status</option>
+								<option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+							</select>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3">&nbsp;</label>
+						<div class="custom-checkbox col-md-8 clearfix">
+						  <input type="checkbox" id="publicAllowCheck" [formControl]="form.allowPublic">
+						  <label for="publicAllowCheck">Allow public to follow  your competition.</label>
+						</div>
+					  </div>
+					</div>
+					<div class="form-group">
+					  <div class="row">
+						<label class="control-label col-md-3">&nbsp;</label>
+						<div class="custom-checkbox col-md-7 clearfix mt40 text-center">
+						  <button type="button" class="btn btn-danger font_uni_sans" (click)="goBack()">Cancel</button>
+						  <button type="button" class="btn btn-navy-blue font_uni_sans" [disabled]="addCompForm.invalid" (click)="addCompetition()" >Submit</button>
+						</div>
+					  </div>
+					</div>
+				  </form>
+				</div>
+			</div>
+            
+            <!-- Max With Box End -->
+
+        </div>
+    </main>
+    <!-- main End -->
+    <!--  Footer  Start  -->
+    <app-footer></app-footer>
+    <!--  Footer  End  -->
+  

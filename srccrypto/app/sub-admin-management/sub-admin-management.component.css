@@ -1,0 +1,15 @@
+.sec_head_new button.btn.btn-theme{
+    background: #101010;
+    opacity: 1;
+
+}
+.btn-theme{
+    width:100%;
+}
+element.style {
+    margin-top: -84px;
+    padding: 11px;
+}
+.change {
+    color: green;
+}

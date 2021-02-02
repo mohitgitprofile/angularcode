@@ -1,0 +1,163 @@
+<app-header></app-header>
+
+<div class="topBanner height300">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="custom-container">
+    <div class="fixtures-section w-100 center-box">
+      <!-- Global Box Start -->
+      <div class="global-box grey-box">
+        <app-comp-header></app-comp-header>
+        <div class="fixture-inner">
+          <div class="fixture-table summery-table">
+            <!-- <div class="date-block">
+              <a href="javascript:;"><i class="far fa-calendar-alt"></i>Fixtures</a>
+            </div> -->
+            <!-- <div class="table-responsive">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td class="text-left">
+                      <img class="fixture-img" src="assets/images/fixture-img.png"> Metito
+                    </td>
+                    <td class="text-center">40-39</td>
+                    <td class="text-right">
+                      Emirates Building Systems
+                      <img class="fixture-img" src="assets/images/fixture-img.png">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">
+                      <img class="fixture-img" src="assets/images/fixture-img.png"> Rapid Access (A)
+                    </td>
+                    <td class="text-center">8-10</td>
+                    <td class="text-right">
+                      WME Engineering Consultants
+                      <img class="fixture-img" src="assets/images/fixture-img.png">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">
+                      <img class="fixture-img" src="assets/images/fixture-img.png"> Rapid Access (B)
+                    </td>
+                    <td class="text-center">19-24</td>
+                    <td class="text-right">
+                      Emrill Servcies
+                      <img class="fixture-img" src="assets/images/fixture-img.png">
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="round-tr" style="background-color:transparent;">
+                    <th class="rounds" colspan="2">round 1</th>
+                    <th class=" blue-txt text-right" colspan="2"><a href="javascript:;" class="table-show-cal">Show Calender</a></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div> -->
+            <div class="table-block mt30">
+              <div class="table-responsive">
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th>Player Name</th>
+                              <th>Organizer Name</th>
+                              <th>Organizer Email</th>
+                              <th>Organizer Mobile Number</th>
+                              <th>Payment Method</th>
+                              <th>Date</th>
+                              <th>Product Status</th>
+                              <!-- <th class="W-150">Action</th> -->
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngIf="financialList.length == 0">
+                              <td colspan="8">No data found.</td>
+                          </tr>
+                          <tr class="pointer" *ngFor='let financial of financialList| paginate : { itemsPerPage: paginationData.limit, currentPage: paginationData.page, totalItems: paginationData.total }'>
+                              <td>{{financial?.playerId.firstName}}</td>
+                              <td>{{financial?.organizerId.firstName}}</td>
+                              <td>{{financial?.organizerId.email}}</td>
+                              <td>{{financial?.organizerId.mobileNumber}}</td>
+                              <td>{{financial?.paymentMethod}}</td>
+                              <td>{{financial?.createdAt | date : 'dd/MMM/yyyy'}}</td>
+                              <td>{{financial?.productStatus}}</td>
+                            </tr>
+                            <!-- <tr>
+                  <td>Face Therapist</td>
+                  <td>$50.00</td>
+                  <td>30 Minutes</td>
+                  <td>22/03/2018</td>
+                  <td>3:00 PM</td>
+                  <td>Service</td>
+                  <td>
+                     <a href="javascript:;" class="btn btn-book">Book</a>
+                  </td>
+                </tr>    
+               <tr>
+                  <td>Face Therapist</td>
+                  <td>$50.00</td>
+                  <td>30 Minutes</td>
+                  <td>22/03/2018</td>
+                  <td>3:00 PM</td>
+                  <td>Service</td>
+                  <td>
+                     <a href="javascript:;" class="btn btn-book">Book</a>
+                  </td>
+                </tr> 
+                <tr>
+                  <td>Face Therapist</td>
+                  <td>$50.00</td>
+                  <td>30 Minutes</td>
+                  <td>22/03/2018</td>
+                  <td>3:00 PM</td>
+                  <td>Service</td>
+                  <td>
+                     <a href="javascript:;" class="btn btn-book">Book</a>
+                  </td>
+                </tr>  
+                <tr>
+                  <td>Face Therapist</td>
+                  <td>$50.00</td>
+                  <td>30 Minutes</td>
+                  <td>22/03/2018</td>
+                  <td>3:00 PM</td>
+                  <td>Service</td>
+                  <td>
+                     <a href="javascript:;" class="btn btn-book">Book</a>
+                  </td>
+                </tr> 
+                <tr>
+                  <td>Face Therapist</td>
+                  <td>$50.00</td>
+                  <td>30 Minutes</td>
+                  <td>22/03/2018</td>
+                  <td>3:00 PM</td>
+                  <td>Service</td>
+                  <td>
+                     <a href="javascript:;" class="btn btn-book">Book</a>
+                  </td>
+                </tr>  -->
+                      </tbody>
+                  </table>
+              </div>
+              <div class="pagination-block mt10 text-right" *ngIf="paginationData.total > paginationData.limit">
+                  <pagination-controls (pageChange)="getFinancial($event)"></pagination-controls>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <!-- Global Box End -->
+
+
+    </div>
+    <!-- Max With Box End -->
+
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

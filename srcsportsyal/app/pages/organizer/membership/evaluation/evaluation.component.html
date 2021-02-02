@@ -1,0 +1,185 @@
+<!--  Header Start -->
+<app-header></app-header>
+<!-- Header  End    -->
+<div class="topBanner">
+   <div class="container">
+   </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+       <div class="content-box bg-gray">
+         <h2 class="content-box-head">Apply Filter To Get The Result</h2>
+          <div class="content-box-filter">
+           <form class="filter-form fullwidth" [formGroup]="filterForm">
+               <div class="row align-items-center">
+                  <div class="col-md-4">
+                    <div class="filter-box ">
+                      <label class="control-label">MemberShip Name</label>
+                      <select class="form-control select-style1" formControlName="membershipName"   (change)="getMembershipId($event)">
+                          <option value="">All</option>
+                          <option  *ngFor="let i of memberList"  value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                          </select>
+                     </div>
+                   </div>
+                  <div class="col-md-4">
+                    <div class="filter-box">
+                      <label class="control-label">Service Name</label>
+                      <select class="form-control select-style1" formControlName="serviceName" (change)="getServiceId($event)">
+                          <option value="">Select Service</option>
+                           <option  *ngFor="let i of servicelist"  value="{{i?.serviceName}}">{{i?.serviceName}}</option>
+                         </select>
+                     </div>
+                   </div>
+                    <div class="col-md-4">
+                    <div class="filter-box">
+                      <label class="control-label">Date Filter</label>
+                      <my-date-picker name="startdate" formControlName='serviceDate'  [disabled]='disable' [options]="myDatePickerOptions" (dateChanged)="onChange($event)" placeholder="Choose the service date" ></my-date-picker>
+                     </div>
+                   </div>
+                   <div class="col-md-4" *ngIf="show == true">
+                      <div class="filter-box">
+                        <label class="control-label">Player Name</label>
+                        <select class="form-control select-style1" formControlName="playerName" (change)="getPlayerId($event)" >
+                            <option value="">Select Service</option>
+                             <option  *ngFor="let i of evaluationList"  value="{{i?.playerId?.firstName}}">{{i?.playerId?.firstName}}</option>
+                           </select>
+                       </div>
+                     </div>
+                   <div class="col-md-3 text-right">
+                      <button class="btn btn btn-dark-blue-s max-WT-150" [disabled]="!filterForm.valid" (click)="getLeaderBoard()">Apply</button>
+                   </div>
+                  </div>
+                  <!-- <div class="row">
+                  <div class="col-md-8">
+                     <div class="search-block-main fiter-full-search">
+                       <div class="search_block">
+                           <div class="input-group">
+                             <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                             <div class="input-group-append">
+                               <button class="btn btn_search" type="button">Search</button>
+                             </div>
+                           </div>
+                       </div>
+                   </div>
+                  </div>
+                  <div class="col-md-4 text-right">
+                      <button class="btn btn btn-dark-blue-s" type="button" data-toggle="modal" data-target="#create_club">Add Membership</button>
+                  </div>
+               </div> -->
+             </form>
+          </div>
+         <div class="table-block mt10 white-bg">
+             <div class="table-responsive">
+              <form class="filter-form fullwidth" [formGroup]="evaluateForm"> 
+                <div class="row align-items-center">
+                  <div class="col-md-4">
+                    <div class="filter-box ">
+                      <label class="control-label">Bad</label>
+                     <input type="text" class="form-control" formControlName="bad" >
+                     </div>
+                     <p *ngIf="evaluateForm.get('bad').hasError('pattern') &&  evaluateForm.get('bad').dirty"  style="color:red" padding>*Enter valid points</p>
+
+                   </div>
+                  <div class="col-md-4">
+                    <div class="filter-box">
+                      <label class="control-label">Pass</label>
+                      <input type="text" class="form-control" formControlName="pass" >
+                     </div>
+                     <p *ngIf="evaluateForm.get('pass').hasError('pattern') &&  evaluateForm.get('pass').dirty"  style="color:red" padding>*Enter valid points</p>
+
+                   </div>
+                    <div class="col-md-4">
+                    <div class="filter-box">
+                      <label class="control-label">Shooting</label>
+                      <input type="text" class="form-control" formControlName="shooting" >
+                     </div>
+                     <p *ngIf="evaluateForm.get('shooting').hasError('pattern') &&  evaluateForm.get('shooting').dirty"  style="color:red" padding>*Enter valid points</p>
+
+                   </div>
+                   <div class="col-md-4">
+                      <div class="filter-box">
+                        <label class="control-label">Strenght</label>
+                        <input type="text" class="form-control" formControlName="strenght" >
+                       </div>
+                       <p *ngIf="evaluateForm.get('strenght').hasError('pattern') &&  evaluateForm.get('strenght').dirty"  style="color:red" padding>*Enter valid points</p>
+
+                     </div>
+                   </div>
+                   <div class="row align-items-center">
+                    <div class="col-md-4">
+                      <div class="filter-box ">
+                        <label class="control-label">Speed</label>
+                       <input type="text" class="form-control" formControlName="speed" >
+                       </div>
+                       <p *ngIf="evaluateForm.get('speed').hasError('pattern') &&  evaluateForm.get('speed').dirty"  style="color:red" padding>*Enter valid points</p>
+                     </div>
+                    <div class="col-md-4">
+                      <div class="filter-box">
+                        <label class="control-label">Flexibility</label>
+                        <input type="text" class="form-control" formControlName="flexibility" >
+                       </div>
+                       <p *ngIf="evaluateForm.get('flexibility').hasError('pattern') &&  evaluateForm.get('flexibility').dirty"  style="color:red" padding>*Enter valid points</p>
+
+                     </div>
+                      <div class="col-md-4">
+                      <div class="filter-box">
+                        <label class="control-label">Deicison</label>
+                        <input type="text" class="form-control" formControlName="decision" >
+                       </div>
+                       <p *ngIf="evaluateForm.get('decision').hasError('pattern') &&  evaluateForm.get('decision').dirty"  style="color:red" padding>*Enter valid points</p>
+
+                     </div>
+                     <div class="col-md-4">
+                        <div class="filter-box">
+                          <label class="control-label">Offensive</label>
+                          <input type="text" class="form-control" formControlName="offensive" >
+                         </div>
+                         <p *ngIf="evaluateForm.get('offensive').hasError('pattern') &&  evaluateForm.get('offensive').dirty"  style="color:red" padding>*Enter valid points</p>
+
+                       </div>
+                     </div>
+                   <div class="row align-items-center">
+                      <div class="col-md-4">
+                        <div class="filter-box ">
+                          <label class="control-label">Concentration</label>
+                         <input type="text" class="form-control" formControlName="concentration" >
+                         </div>
+                         <p *ngIf="evaluateForm.get('concentration').hasError('pattern') &&  evaluateForm.get('concentration').dirty"  style="color:red" padding>*Enter valid points</p>
+                       </div>
+                      <div class="col-md-4">
+                        <div class="filter-box">
+                          <label class="control-label">Competitive</label>
+                          <input type="text" class="form-control" formControlName="competitivenedd" >
+                         </div>
+                         <p *ngIf="evaluateForm.get('competitivenedd').hasError('pattern') &&  evaluateForm.get('competitivenedd').dirty"  style="color:red" padding>*Enter valid points</p>
+                       </div>
+                       <div class="col-md-4">
+                        <div class="filter-box ">
+                          <label class="control-label">SelfConfidence</label>
+                         <input type="text" class="form-control" formControlName="selfConfidence" >
+                         </div>
+                         <p *ngIf="evaluateForm.get('selfConfidence').hasError('pattern') &&  evaluateForm.get('selfConfidence').dirty"  style="color:red" padding>*Enter valid points</p>
+                       </div>
+                      <div class="col-md-4">
+                        <div class="filter-box">
+                          <label class="control-label">Average</label>
+                          <input type="text" class="form-control" formControlName="avg" >
+                         </div>
+                         <p *ngIf="evaluateForm.get('avg').hasError('pattern') &&  evaluateForm.get('avg').dirty"  style="color:red" padding>*Enter valid points</p>
+                       </div>
+                       </div>
+                  <div class="col-md-3 text-right">
+                    <button class="btn btn btn-dark-blue-s max-WT-150" [disabled]="!evaluateForm.valid" (click)="update(evaluateForm.value)">Apply</button>
+                 </div>
+              </form> 
+             </div>
+          </div>
+       </div>
+       <!-- Max With Box End -->
+    </div>
+ </main>
+ <!-- main End -->
+ <!-- Footer Start -->
+ <app-footer></app-footer>
+ <!-- Footer End -->

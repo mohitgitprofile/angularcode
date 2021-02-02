@@ -1,0 +1,202 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">ACTIVITY LOGS <span
+                style="text-transform: uppercase;">{{currTab}}</span></h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        <!-- tab section -->
+                        <div class="custom_tabs common-tabs">
+                            <div class="row mb20 justify-content-center">
+                                <div class="col-sm-12">
+                                    <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                                        <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                [ngClass]="{'active': currTab=='customer'}"
+                                                (click)="selectTab('customer')" href="javascript:;">Customer Logs</a>
+                                        </li>
+                                        <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                [ngClass]="{'active': currTab=='staff'}" (click)="selectTab('staff')"
+                                                href="javascript:;">Staff Logs</a>
+                                        </li>
+                                        <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                [ngClass]="{'active': currTab=='admin'}" (click)="selectTab('admin')"
+                                                href="javascript:;">Admin Logs</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- common search section -->
+                        <div class="sec_head_new">
+                            <div class="row">
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Start Date</span>
+                                            <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}" name="fromdate"
+                                                [(ngModel)]="calender.fromdate" (change)="fromdate()"
+                                                class="form-control" placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">End Date</span>
+                                            <input type="date" name="todate" min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                (change)="todate()" [disabled]="!calender.fromdate"
+                                                [(ngModel)]="calender.todate" class="form-control"
+                                                placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select" style="margin-top: 20px;">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center"> </span>
+                                            <input type="text" placeholder="Search by Email" class="form-control"
+                                                [(ngModel)]="searchByEmail" style="height: 38px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 user-pl">
+                                    <div class="user-frmbtn" style="display: flex;">
+                                        <button type="submit" (click)="search()"
+                                            class="btn btn-theme mr-2">Search</button>
+                                        <button type="submit" (click)="reset()" class="btn btn-theme">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- second row -->
+                            <div class="row mt-3">
+                                <div class="col-md-6 col-xl-12 col-lg-4 mt10">
+                                    <div class="text-left" style="float: right;">
+                                        <button type="submit" style="margin-top: -90%; margin-left: -60%;" class="btn btn-theme" (click)="exportAsXLXS()">Export As
+                                            Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end common search section -->
+
+                        <!-- table for customer -->
+                        <div *ngIf="currTab == 'customer'" class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="trade table">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th id="">ID</th>
+                                        <th id="">Email</th>
+                                        <th id="">Date and Time</th>
+                                        <th id="">IP</th>
+                                        <th id="">Browser Agent</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let data of customerLogsData | paginate:{itemsPerPage: itemsPerPage, currentPage: currentPage,totalItems: totalItems}; let i=index; ">
+                                        <td>{{data?.userId || 'N/A'}}</td>
+                                        <td>{{data?.email || 'N/A'}}</td>
+                                        <td>{{(data?.createTime | date) || 'N/A'}}</td>
+                                        <td>{{data?.ipAddress || 'N/A'}}</td>
+                                        <td>{{data?.userAgent || 'N/A'}}</td>
+                                    </tr>
+                                    <tr *ngIf="customerLogsData?.length==0">
+                                        <td colspan="11" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5>No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table for customer -->
+
+                        <!-- table for staff -->
+                        <div *ngIf="currTab == 'staff'" class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="trade table">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th id="">ID</th>
+                                        <th id="">Staff Email</th>
+                                        <th id="">Date</th>
+                                        <th id="">IP</th>
+                                        <th id="">Browser Agent</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let data of staffLogsData | paginate:{itemsPerPage: itemsPerPage, currentPage: currentPage,totalItems: totalItems}; let i=index; ">
+                                        <td>{{data?.userId || 'N/A'}}</td>
+                                        <td>{{data?.email || 'N/A'}}</td>
+                                        <td>{{(data?.createTime | date) || 'N/A'}}</td>
+                                        <td>{{data?.ipAddress || 'N/A'}}</td>
+                                        <td>{{data?.userAgent || 'N/A'}}</td>
+                                    </tr>
+                                    <tr *ngIf="staffLogsData?.length==0">
+                                        <td colspan="11" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5>No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table for staff -->
+
+                        <!-- table for admin -->
+                        <div *ngIf="currTab == 'admin'" class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="trade table">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th id="">ID</th>
+                                        <th id="">Email</th>
+                                        <th id="">Activity</th>
+                                        <th id="">Date</th>
+                                        <th id="">IP</th>
+                                        <th id="">Browser Agent</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let data of adminLogsData | paginate:{itemsPerPage: itemsPerPage, currentPage: currentPage,totalItems: totalItems}; let i=index; ">
+                                        <td>{{data?.userId || 'N/A'}}</td>
+                                        <td>{{data?.email || 'N/A'}}</td>
+                                        <td>{{data?.activity || 'N/A'}}</td>
+                                        <td>{{(data?.createTime | date) || 'N/A'}}</td>
+                                        <td>{{data?.ipAddress || 'N/A'}}</td>
+                                        <td>{{data?.userAgent || 'N/A'}}</td>
+                                    </tr>
+                                    <tr *ngIf="adminLogsData?.length==0">
+                                        <td colspan="11" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5>No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table for admin -->
+
+                        <div class="custom-pagination mt20 text-center" style="float: right;" *ngIf="totalItems > 5 ">
+                            <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,269 @@
+<!--    Header start   -->
+<app-header></app-header>
+<!--    Header end   -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <div class="content-box-filter">
+                <form class="filter-form fullwidth" [formGroup]="applyFilterForm">
+                    <div class="row align-items-center">
+                        <div class="col-md-4" *ngIf="loginTypeArr.includes('COMPETITION')">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">Competition List</label>
+                                    <select class="form-control select-style1" 
+                                        (change)="getorganizerFunctionality($event)">
+                                        <option value="">Select Competition </option>
+                                        <option *ngFor="let i of orgCompetitionList" value="{{i?._id}}">{{i?.competitionName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="loginTypeArr.includes('MEMBERSHIP')">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">MemberShip List</label>
+                                    <select class="form-control select-style1" 
+                                        (change)="getMembershipId($event)">
+                                        <option value="">Select Membership </option>
+                                        <option *ngFor="let i of memberlist" value="{{i?._id}}">{{i?.membershipName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" *ngIf="loginTypeArr.includes('VENUE')">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">Venue List</label>
+                                    <select class="form-control select-style1"  (change)="getVenueId($event)">
+                                        <option value="">Select Venue</option>
+                                        <option *ngFor="let i of venuelist" value="{{i?._id}}">{{i?.venue}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">Venue List</label>
+                                    <select class="form-control select-style1" formControlName="venuename" (change)="getVenueId($event)">
+                                        <option value="">Select Venue</option>
+                                        <option *ngFor="let i of venuelist" value="{{i?.venue}}">{{i?.venue}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-4">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">Start Date </label>
+                                    <my-date-picker name="startdate" formControlName="startdate" [options]="myDatePickerOptions"
+                                        (dateChanged)="onChange($event)" placeholder="start Date"></my-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">End Date</label>
+                                    <my-date-picker name="enddate" [disabled]='beDisable' formControlName="enddate"
+                                        [options]="toDate" placeholder="End Date"></my-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="button-box text-right">
+                                <label class="mb0">&nbsp;</label>
+                                <button class="btn btn btn-dark-blue-s max-WT-150" type="button" (click)="emailList(applyFilterForm.value,filter.currPage,1)">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form class="filter-form fullwidth" [formGroup]="searchForm">
+                    <div class="row align-items-left">
+                        <div class="col-md-8">
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="search" placeholder="Search Here.."
+                                            aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button" (click)="emailList(searchForm.value,filter.currPage,2)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-4">
+                            <div class="button-box text-right">
+                                <p *ngFor="let item of pdfdoc" alt="Token Image" class="profile-pic"></p>
+                                <label class="upload-label">
+                     <input type="file" name="image"  (change)="onUploadChange($event)" accept=".pdf">
+                    </label>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </form>
+                <!-- <div class="input-group-append">
+                    <label>&nbsp;</label>
+                    <button class="btn btn btn-dark-blue-s max-WT-150 mt10" type="button">Send Mail</button>
+                </div> -->
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th *ngIf="(counter == 1)"><input type="checkbox" (click)="selectAll()">Select All</th>
+                                <th *ngIf="(counter == 0)"><input type="checkbox" (click)="unselectAll()">Unselect All</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="emaillist == 0">
+                                <td colspan="6" class="text-center">No data found.</td>
+                            </tr>
+                            <tr *ngFor="let news of emaillist | paginate: { itemsPerPage: pageLimit, currentPage: filter.currPage,  totalItems: pageTotal }">
+                                <td *ngIf="check == true"><input type="checkbox" checked (click)="select(news?._id?.email)"></td>
+                                <td *ngIf="check == false"><input type="checkbox" (click)="select(news?._id?.email)"></td>
+                                <td>{{news?._id?.email}}</td>
+                                <td class="action-td">
+                                 <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix pagination-entity">
+                    <div class="pagination-block text-right" *ngIf="pageTotal > pageLimit">
+                        <pagination-controls (pageChange)="emailList(searchForm.value,$event)"></pagination-controls>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Max With Box End -->
+        </div>
+    </div>
+</main>
+<!-- <main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('VENUE'))">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <div class="content-box-filter">
+                <form class="filter-form fullwidth" [formGroup]="applyFilterForm">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">Venue Membership List</label>
+                                    <select class="form-control select-style1"  (change)="getMembershipId($event)">
+                              <option value="">Select Membership </option>
+                               <option  *ngFor="let i of memberlist"  value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                             </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">Venue List</label>
+                                    <select class="form-control select-style1" formControlName="venuename" (change)="getVenueId($event)">
+                              <option value="">Select Venue</option>
+                               <option  *ngFor="let i of venuelist"  value="{{i?.venue}}">{{i?.venue}}</option>
+                             </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">Start Date </label>
+                                    <my-date-picker name="startdate" formControlName="startdate" [options]="myDatePickerOptions" (dateChanged)="onChange($event)" placeholder="start Date"></my-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class=" fiter-full-search">
+                                <div class="">
+                                    <label class="control-label">End Date</label>
+                                    <my-date-picker name="enddate" [disabled]='beDisable' formControlName="enddate" [options]="toDate" placeholder="End Date"></my-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="button-box text-right">
+                                <label class="mb0">&nbsp;</label>
+                                <button class="btn btn btn-dark-blue-s max-WT-150" type="button" (click)="emailList(applyFilterForm.value,filter.currPage,1)">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form class="filter-form fullwidth" [formGroup]="searchForm">
+                    <div class="row align-items-left">
+                        <div class="col-md-8">
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" formControlName="search" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button" (click)="emailList(searchForm.value,filter.currPage,2)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                    </div>
+
+                </form>
+              
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th *ngIf="(counter == 1)"><input type="checkbox" (click)="selectAll()">Select All</th>
+                                <th *ngIf="(counter == 0)"><input type="checkbox" (click)="unselectAll()">Unselect All</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="emaillist == 0">
+                                <td colspan="6" class="text-center">No data found.</td>
+                            </tr>
+                            <tr *ngFor="let news of emaillist | paginate: { itemsPerPage: pageLimit, currentPage: filter.currPage,  totalItems: pageTotal }">
+                                <td *ngIf="check == true"><input type="checkbox" checked (click)="select(news?._id?.email)"></td>
+                                <td *ngIf="check == false"><input type="checkbox" (click)="select(news?._id?.email)"></td>
+                                <td>{{news?._id?.email}}</td>
+                                <td class="action-td">
+                                    <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix pagination-entity">
+                    <div class="pagination-block text-right" *ngIf="pageTotal > pageLimit">
+                        <pagination-controls (pageChange)="emailList(searchForm.value,$event)"></pagination-controls>
+                    </div>
+
+                </div>
+            </div>
+         
+        </div>
+    </div>
+</main> -->
+<!-- main End -->
+<!--    Footer start   -->
+<app-footer></app-footer>
+<!--    Footer end   -->

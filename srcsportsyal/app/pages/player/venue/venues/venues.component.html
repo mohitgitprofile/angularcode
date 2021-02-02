@@ -1,0 +1,126 @@
+<div class="wrapper">
+	<app-header></app-header>
+	<div class="topBanner">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="topBanner-content d-flex align-items-center w-100">
+						<div class="w-100">
+							<h1>COMPREHENSIVE MANAGEMENT OF
+								<br> ANY SPORTS venue</h1>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- main Start -->
+	<main class="main-container pt0">
+		<div class="venue-booking-container">
+			<!-- content-box -->
+			<div class="content-box bg-gray mt-60">
+				<h2 class="content-box-head">venue booking</h2>
+				<div class="content-box-filter">
+					<div class="row">
+						<div class="col-md-12 col-lg-9">
+							<form class="filter-form">
+								<div class="filter-box d-inline-block">
+									<label class="control-label">Following Status</label>
+									<select [(ngModel)]="filterfollowStatus" [ngModelOptions]="{standalone: true}" class="form-control select-style1 d-inline-block">
+										<option value="">Select status</option>
+										<option value="APPROVED">Approved</option>
+										<option value="PENDING">Pending</option>
+										<option value="NOT FOLLOWED">Not Followed</option>
+									</select>
+								</div>
+								<div class="filter-box d-inline-block">
+									<label class="control-label">Nearby</label>
+									<select [(ngModel)]="distance" [ngModelOptions]="{standalone: true}" (change)="selectDistance()" class="form-control select-style1 d-inline-block">
+										<option value="">Select Distance</option>
+										<option value="1000">1 KM</option>
+										<option value="10000">10 KM</option>
+										<option value="20000">20 KM</option>
+										<option value="50000">50 KM</option>
+										<option value="100000">100 KM</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-navy-blue max-WT-100" (click)="applyFilter()">Apply</button>
+							</form>
+						</div>
+						<div class="col-md-12 col-lg-3 text-right">
+							<div class="search-box max-WT-300">
+								<input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2"
+								 [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+								<i class="fas fa-search" (click)="onSearch(2)"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- content-box-filter End -->
+				<div class="table-block mt30">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Venue Name</th>
+									<th>Location</th>
+									<th>Faciliator</th>
+									<th>Request</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngIf="venueList.total == 0">
+									<td colspan="6">No data found.</td>
+								</tr>
+								<tr [ngClass]="{'pointer': venue.playerFollowStatus == 'APPROVED', 'default':venue.playerFollowStatus == 'NOT FOLLOWED', 'default':venue.playerFollowStatus == 'PENDING'}"
+								 *ngFor="let venue of venueList.docs | paginate: { itemsPerPage: venueList.limit, currentPage: venueList.page,  totalItems: venueList.total }">
+									<td style="cursor: pointer;" (click)="venueDetailFun(venue)">
+										<div class="text-left d-flex align-items-center">
+											<span class="image-box image-box_1" *ngIf="venue.images">
+												<img *ngIf="!venue.images[0]" src="assets/images/follow-img.png">
+												<img *ngIf="venue.images[0]" src="{{venue.images[0]}}">
+											</span>
+											<div>{{venue.venueName}}</div>
+										</div>
+									</td>
+									<td style="cursor: pointer;" (click)="venueDetailFun(venue)">{{venue.locationName}}</td>
+									<td style="cursor: pointer;" (click)="venueDetailFun(venue)">{{venue.organizerId[0].firstName}} {{venue.organizerId[0].lastName}}</td>
+									<td class="tbl_btn">
+										<button *ngIf="venue?.playerFollowStatus == 'NOT FOLLOWED'" (click)="follow(venue)" type="button" class="btn btn-follow">Follow</button>
+										<button *ngIf="venue?.playerFollowStatus == 'PENDING'" (click)="unfollow(venue)" type="button" class="btn btn-follow">Cancel Request
+										</button>
+										<button *ngIf="venue?.playerFollowStatus == 'APPROVED'" (click)="unfollow(venue)" type="button" class="btn btn-follow">Unfollow</button>
+
+										<button *ngIf="venue?.playerFollowStatus.followStatus == 'PENDING'" (click)="unfollow(venue)" type="button" class="btn btn-follow">Cancel Request
+										</button>
+										<button *ngIf="venue?.playerFollowStatus.followStatus  == 'APPROVED'" (click)="unfollow(venue)" type="button" class="btn btn-follow">Unfollow</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="clearfix pagination-entity">
+						<div class="pagination-block mt10 text-right" *ngIf="venueList.total > venueList.limit">
+							<pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+						</div>
+						<div class="entity-text" *ngIf="venueList.docs.length">
+							<span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+								< venueList.total) ? (page.limit * page.currPage) : venueList.total || 0}} of {{venueList.total}} entries </span>
+									<select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+										<option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+									</select>
+									<span>entries</span>
+						</div>
+					</div>
+				</div>
+				<!-- Row End -->
+			</div>
+			<!-- content-box End-->
+		</div>
+	</main>
+	<!-- main End -->
+	<app-footer></app-footer>
+</div>
+<!-- Wrapper End -->

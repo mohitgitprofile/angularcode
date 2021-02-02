@@ -1,0 +1,107 @@
+<div class="wrapper">
+    <!--  Header   Start  -->
+    <app-header></app-header>
+    <!--  Header   End  -->
+    <div class="topBanner">
+        <div class="container">
+
+        </div>
+    </div>
+    <!-- main Start -->
+    <main class="main-container pt0">
+
+        <div class="container">
+            <div class="content-box bg-gray mt20">
+                <div class="content-box-filter p20  pt35">
+                    <form autocomplete="off" novalidate [formGroup]="addVideoForm">
+                        <div class="max-WT-800 mrgn-0-auto">
+                            <h5 class="head-sub text-center mb30"> Create Video</h5>
+                            <div class="row form-group" *ngIf="(loginTypeArr.length > 1)">
+                                <label class="col-md-4">Select Role:</label>
+                                <div class="col-md-8">
+                                   <select class="form-control select-style1"  (change)="getRole($event)">
+                                    <option value="">Select Role</option>
+                                    <option *ngIf="(loginTypeArr.includes('COMPETITION'))" value="COMPETITION">COMPETITION</option>
+                                    <option *ngIf="(loginTypeArr.includes('MEMBERSHIP'))"  value="MEMBERSHIP">MEMBERSHIP</option>
+                                    <option *ngIf="(loginTypeArr.includes('VENUE'))" value="VENUE">VENUE</option>
+                                    <!-- <option *ngFor="let item of list.orgList" [value]="item._id" >{{item?.competitionName}}</option> -->
+                                   </select>                             
+                                </div>
+                             </div>
+                            <div class="row form-group" *ngIf="loginRole == 'COMPETITION'&&(loginTypeArr.includes('COMPETITION'))">
+                                <label class="col-md-4">Tag Video To Competition:</label>
+                                <div class="col-md-8"  >
+                                    <select class="form-control select-style1" (change)="getCompetitionId($event)">
+                                        <option value="">Tag Video To Competition</option>
+                                        <option *ngFor="let item of list.orgList" [value]="item._id">{{item?.competitionName}}</option>
+                                    </select>
+                                   
+                                </div>
+                            </div>
+                            <div class="row form-group" *ngIf="loginRole == 'MEMBERSHIP'&&(loginTypeArr.includes('MEMBERSHIP'))">
+                                <label class="col-md-4">Tag Video To membership:</label>
+                                <div class="col-md-8"  >
+                                    <select class="form-control select-style1" (change)="getMembershipId($event)">
+                                        <option value="">Tag Video To membership</option>
+                                        <option *ngFor="let item of memberlist" [value]="item._id">{{item?.membershipName}}</option>
+                                    </select>
+                                  
+                                </div>
+                            </div>
+                            <div class="row form-group" *ngIf="loginRole == 'VENUE' && (loginTypeArr.includes('VENUE'))">
+                                <label class="col-md-4">Tag Video To Venue:</label>
+                                <div class="col-md-8"  >
+                                    <select class="form-control select-style1" (change)="getVenueId($event)">
+                                        <option value="">Tag Video To Venue</option>
+                                        <option *ngFor="let item of venueList" [value]="item._id">{{item?.venueName}}</option>
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-4">Title:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" maxlength="50" formControlName="title" placeholder="Title">
+                                    <div class="errorMsg" *ngIf="form.title.dirty && form.title.invalid">
+                                        <span *ngIf="form.title.hasError('required')">*Plese enter title.</span>
+                                        <span *ngIf="form.title.hasError('pattern')">*Plese enter valid title.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-4">Description:</label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control textareaheight" maxlength="1000" formControlName="description" placeholder="Description"></textarea>
+                                    <div class="errorMsg" *ngIf="form.description.dirty && form.description.invalid">
+                                        <span *ngIf="form.description.hasError('required')">*Please enter album description.</span>
+                                        <span *ngIf="form.description.hasError('pattern')">*Please enter valid album description.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-md-4">Youtube URL:</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" formControlName="url" maxlength="50" placeholder="Youtube url">
+                                    <div class="errorMsg" *ngIf="form.url.dirty && form.url.invalid">
+                                        <span *ngIf="form.url.hasError('required')">*Please enter url.</span>
+                                        <span *ngIf="form.url.hasError('pattern')">*Please enter valid url.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right calendar-action mt30">
+                                <button type="button" class=" btn btn-gray max-WT-150" (click)="goBack()">Cancel</button>
+                                <button type="button" class=" btn btn-navy-blue max-WT-150" [disabled]="addVideoForm.invalid" (click)="onPublish(1)" *ngIf="!currId">Publish Video</button>
+                                <button type="button" class=" btn btn-navy-blue max-WT-150"  (click)="onPublish(2)" *ngIf="currId">Update Video</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- main End -->
+    <!--  Footer Start  -->
+    <app-footer></app-footer>
+    <!--  Footer End  -->
+</div>
+<!-- Wrapper End -->

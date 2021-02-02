@@ -1,0 +1,10 @@
+.active{
+    color:  #faca29;
+}
+.btn_row .btn {
+    background-color: #779EA5;
+    padding: 12px;
+    min-width: 120px;
+    font-size: 18px;
+    margin: 0 3px;
+}

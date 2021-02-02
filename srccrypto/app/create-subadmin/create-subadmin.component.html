@@ -1,0 +1,170 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title" style="color: black">Create Sub Admin</h1>       
+    </div>
+    <!-- Page Title End -->
+    <div class="content-section">
+  
+  
+  
+      
+        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+            <div class="main-block-innner mb40 mt40">
+                <form [formGroup]="subadminform">
+                <div class="add-store-block input-style">
+                    <div class="user-profile">
+                        <div class="image-box">
+                            <img src="{{again || 'assets/img/profile-img.jpg'}}" class="profile-pic"  >
+                            <label class="upload-label">
+                           <input type="file"  formControlName="imageUrl" accept="image/jpeg,image/jpg,image/png"   (change)="fileSelect($event)">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                        </div>
+  
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-md-4">First Name</label>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control2" maxlength="30" formControlName="name" placeholder="Enter First Name" maxlength="15" />
+                            <span class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+                                <span *ngIf="name.errors.required" class="danger">
+                                     *First name field is required.
+                                </span>    
+                                <span *ngIf="name.errors.pattern" class="danger" >
+                                    *Please enter a valid first name.
+                                    </span>
+                        </span>                     
+                        </div>
+                    </div>
+  
+                    <div class="form-group row align-items-center">
+                        <label class="col-md-4">Last Name</label>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control2"  maxlength="30" placeholder="Enter Last Name" formControlName="lastname" maxlength="15" (keypress)="preventSpace($event)"/>
+                            <span class="error" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+                                <span *ngIf="lastname.errors.required" class="danger">
+                                     *LastName field is required.
+                                </span>    
+                                <span *ngIf="lastname.errors.pattern" class="danger" >
+                                    *Please enter a valid last name.
+                                    </span>
+                        </span>                     
+                        </div>
+                    </div>
+  
+                    <div class="form-group row align-items-center">
+                        <label class="col-md-4">Email</label>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                            <input type="email" class="form-control form-control2" formControlName="email" placeholder="Enter Email Address" maxlength="64" />
+                            <span class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+                                <span *ngIf="email.errors.required" class="danger">
+                                    *Please enter a email id.
+                                </span>
+                                <span *ngIf="email.errors.pattern" class="danger">
+                                    *Please enter a valid email id.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+ 
+                    
+  
+                    <div class="form-group row align-items-center">
+                        <label class="col-md-4">Contact Number</label>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control2" formControlName="contact" placeholder="Enter Contact Number"  id="phoneNum"/>
+                            <span class="error" *ngIf="contact.invalid && (contact.dirty || contact.touched)">
+                                  <span *ngIf="contact.errors.required" class="danger">
+                                  *Contact field is required.
+                                  </span>
+                                  <span *ngIf="contact.errors.pattern" class="danger" >
+                                  *Please enter a valid contact.
+                                  </span>
+                                  </span>
+                        </div>
+                    </div>
+                    
+                
+                    <div class="form-group row align-items-center">
+                        <label class="col-md-4">Gender</label>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                            <div class="inline-block-radio">
+                                <label class="radio-design ">
+                                      <input type="radio" value="Male"   name="gender" formControlName="gender" ><span></span>Male
+                                 </label>
+                            </div>
+                            <div class="inline-block-radio">
+                                <label class="radio-design ">
+                                      <input type="radio" value="Female"  name="gender" formControlName="gender" ><span></span>Female
+                                 </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label class="col-md-4">Address</label>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control2 "  formControlName="address" placeholder="Enter Address" (keypress)="preventSpace($event)" />
+                            <span class="error" *ngIf="address.invalid && (address.dirty || address.touched)">
+                                    <span *ngIf="address.errors.required" class="danger">
+                                    *Address field is required.
+                                    </span>
+                                    </span>
+                        </div>
+                    </div>
+  
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-4">Country</label>
+                      <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                          <input type="text" class="form-control form-control2 "  formControlName="country" placeholder="Enter Country" (keypress)="preventSpace($event)"/>
+                          <span class="error" *ngIf="country.invalid && (country.dirty || country.touched)">
+                                  <span *ngIf="country.errors.required" class="danger">
+                                  *Country field is required.
+                                  </span>
+                                  <span *ngIf="country.errors.pattern" class="danger" >
+                                        *Please enter a valid country name.
+                                        </span>
+                                  </span>
+                      </div>
+                  </div>
+  
+  
+  
+  
+                    <div class="form-group row ">
+                        <label class="col-md-4">Roles </label>
+                        <div class="col-md-1">:</div>
+                        <div class="col-md-7">
+                            <div class="checkbox privellage-checkbox" *ngFor="let data of pageArry">
+                                <label><input type="checkbox" [value]="data" (change)="checkboxClick(data.pageId,$event.target.checked)"> <span>{{data.pageName}}</span></label>
+                            </div>
+                            <div class="checkbox privellage-checkbox" *ngIf="pageArry.length==0">
+                                <label>Please add page for subadmin to give previlage.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt40">
+                    
+  
+                        <button class="btn btn-large  max-WT-200 font-100 btn-green" [disabled]="subadminform.invalid" (click)="createsubadmin()" >Create Sub Admin</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </main>
+  <!-- Middle Content End -->
+
+  <footer>
+      <div class="container-fluid">
+          <p class="copyright">Copyright © 2020 <strong class="theme-text-color">CryptoBiz Exchange</strong> All Rights Reserved.</p>
+      </div>
+  </footer>

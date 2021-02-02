@@ -1,0 +1,729 @@
+<div class="wrapper">
+  <!-- Aside End -->
+  <main class="middle-content">
+      <!-- Page Title Start -->
+      <div class="page_title_block">
+          <h1 class="page_title">Wallet Management</h1>
+         
+      </div>
+      <!-- Page Title End -->
+      <div class="content-section">
+          <div class="outer-box">
+              <div class="custom_tabs common-tabs">
+                  <!-- <div class="row mb20 justify-content-center">
+                      <div class="col-sm-12">
+                          <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                              <li class="nav-item flex-fill">
+                                  <a class="nav-link active show" data-toggle="tab" [ngClass]="{active : selected === 'btc'}" (click)="selectTab('btc')">BTC</a>
+                              </li>
+
+                              <li class="nav-item flex-fill">
+                                  <a class="nav-link" data-toggle="tab" [ngClass]="{active : selected === 'eth'}" (click)="selectTab('eth')">ETH</a>
+                              </li>
+                              <li class="nav-item flex-fill">
+                                  <a class="nav-link" data-toggle="tab" [ngClass]="{active : selected === 'xrp'}" (click)="selectTab('xrp')">XRP</a>
+                              </li>
+                              <li class="nav-item flex-fill">
+                                  <a class="nav-link" data-toggle="tab" [ngClass]="{active : selected === 'ltc'}" (click)="selectTab('ltc')">LTC</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div> -->
+                  <div class="tab-content">
+                      <div [formGroup]="transferForm" class="tab-pane active show" id="btc"  *ngIf="selected=='btc'">
+                          <div class="tab-pane1 global-table">
+                              <div class="sec_head_new">
+                                  <div class="row">
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Currency</span>
+                                                      <select formControlName="currency" (change)="searchcoin()" class="form-control">
+                                                          <option  value="">Select</option>
+                                                            <option  *ngFor = "let data of coinlist" [value]="data?.coinShortName">{{data?.coinShortName}}</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Type</span>
+                                                      <select (change)="searchcoinn()" formControlName="type" class="form-control">
+                                                          <option value="">Select</option>
+                                                          <option value="WITHDRAW">Withdraw</option>
+                                                          <option value="DEPOSIT">Deposit</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">From Date</span>
+                                                      <input formControlName="fromDate" type="date" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">To Date</span>
+                                                      <input formControlName="toDate" [min]="this.transferForm.controls['fromDate'].value" type="date" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-12 col-lg-4 mt10">
+                                            <div class="text-left" style="float: right;">
+                                                    <button type="submit" class="btn  btn-theme" (click)="reset()">Reset</button>
+                                                </div>
+                                          <div class="text-left" style="float: right;">
+                                              <button type="submit" class="btn  btn-theme" (click)="searchText()">Search</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="table-responsive">
+                                  <table class="table table-bordered" aria-describedby="">
+                                      <thead>
+                                          <tr class="no_wrap_th">
+                                              <th id="">ID</th>
+                                              <th id="">Coin</th>
+                                              <th id="">Transaction Type</th>
+                                              <th id="">Date</th>
+                                              <th id="">Transaction Hash</th>
+                                              <th id="">Amount</th>
+                                              <th id="">Email </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let data of loopData | paginate:{itemsPerPage: 10, currentPage: currentPage,totalItems: lengthTotal}; let i=index;">
+                                            <td>{{10 * (currentPage - 1) + i+1}}</td>
+                                              <td>{{data?.coinType}}</td>
+                                              <td>{{data?.txnType}}</td>
+                                              <td>{{data?.txnTime | date}}</td>
+                                              <td>{{data?.txnHash || '---'}}</td>
+                                              <td>{{data?.amount}}</td>
+                                              <td>{{data?.userEmail}}</td>
+                                          </tr>
+                                          <tr *ngIf="lengthTotal == ''">
+                                                <td colspan="8"> No User Found</td>
+                                            </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <div class="custom-pagination mt20 text-center" style="float: right;"  >
+                                    <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                </div>
+                          </div>
+                      </div>
+                      <div class="tab-pane" id="eth"  *ngIf="selected=='eth'">
+                          <div class="tab-pane1">
+                              <div class="sec_head_new">
+                                  <div class="row">
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Currency</span>
+                                                      <select class="form-control">
+                                                          <option>BTC</option>
+                                                          <option>LTC</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Type</span>
+                                                      <select class="form-control">
+                                                          <option>Withdrwal</option>
+                                                          <option>Withdrwal</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">From Date</span>
+                                                      <input type="" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">To Date</span>
+                                                      <input type="" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-12 col-lg-4 mt10">
+                                          <div class="text-left">
+                                              <button type="submit" class="btn  btn-theme">Search</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="mb10 mt20 show-txt">
+                                  <span>Show</span>
+                                  <select name="" class="form-control form-control2 select_opt">
+                                      <option value="" selected="">3</option>
+                                      <option value="">2</option>
+                                      <option value="">1</option>
+                                  </select>
+                                  <span>from all</span>
+                              </div>
+                              <div class="table-responsive">
+                                  <table class="table table-bordered">
+                                      <thead>
+                                          <tr class="no_wrap_th">
+                                              <th>Sno</th>
+                                              <th>Currency</th>
+                                              <th> Type</th>
+                                              <th>Date</th>
+                                              <th>Transaction ID</th>
+                                              <th>Amount</th>
+                                              <th> Action </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="tab-pane" id="xrp"  *ngIf="selected=='xrp'">
+                          <div class="tab-pane1 global-table">
+                              <div class="sec_head_new">
+                                  <div class="row">
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Currency</span>
+                                                      <select class="form-control">
+                                                          <option>BTC</option>
+                                                          <option>LTC</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Type</span>
+                                                      <select class="form-control">
+                                                          <option>Withdrwal</option>
+                                                          <option>Withdrwal</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">From Date</span>
+                                                      <input type="" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">To Date</span>
+                                                      <input type="" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-12 col-lg-4 mt10">
+                                          <div class="text-left">
+                                              <button type="submit" class="btn  btn-theme">Search</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="mb10 mt20 show-txt">
+                                  <span>Show</span>
+                                  <select name="" class="form-control form-control2 select_opt">
+                                      <option value="" selected="">3</option>
+                                      <option value="">2</option>
+                                      <option value="">1</option>
+                                  </select>
+                                  <span>from all</span>
+                              </div>
+                              <div class="table-responsive">
+                                  <table class="table table-bordered">
+                                      <thead>
+                                          <tr class="no_wrap_th">
+                                              <th>Sno</th>
+                                              <th>Currency</th>
+                                              <th> Type</th>
+                                              <th>Date</th>
+                                              <th>Transaction ID</th>
+                                              <th>Amount</th>
+                                              <th> Action </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="tab-pane" id="ltc"  *ngIf="selected=='ltc'">
+                          <div class="tab-pane1 global-table">
+                              <div class="sec_head_new">
+                                  <div class="row">
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Currency</span>
+                                                      <select class="form-control">
+                                                          <option>BTC</option>
+                                                          <option>LTC</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">Type</span>
+                                                      <select class="form-control">
+                                                          <option>Withdrwal</option>
+                                                          <option>Withdrwal</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">From Date</span>
+                                                      <input type="" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-3 col-lg-4">
+                                          <div class="filter_fields">
+                                              <div class="head_flt_select">
+                                                  <div class="head_flt_select input-label input-label1">
+                                                      <span class="d-flex align-items-center">To Date</span>
+                                                      <input type="" name="" class="form-control datepicker" placeholder="Search by date">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-xl-12 col-lg-4 mt10">
+                                          <div class="text-left">
+                                              <button type="submit" class="btn  btn-theme">Search</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="mb10 mt20 show-txt">
+                                  <span>Show</span>
+                                  <select name="" class="form-control form-control2 select_opt">
+                                      <option value="" selected="">3</option>
+                                      <option value="">2</option>
+                                      <option value="">1</option>
+                                  </select>
+                                  <span>from all</span>
+                              </div>
+                              <div class="table-responsive">
+                                  <table class="table table-bordered">
+                                      <thead>
+                                          <tr class="no_wrap_th">
+                                              <th>Sno</th>
+                                              <th>Currency</th>
+                                              <th> Type</th>
+                                              <th>Date</th>
+                                              <th>Transaction ID</th>
+                                              <th>Amount</th>
+                                              <th> Action </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>01</td>
+                                              <td>LTC</td>
+                                              <td>Withdrawl</td>
+                                              <td>02/01/2018</td>
+                                              <td>543536363</td>
+                                              <td>2</td>
+                                              <td class="action_td_btn3">
+                                                  <a href="view-wallet.html"><i class="fa fa-eye"></i></a>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- Table Responsive End -->
+      </div>
+  </main>
+  <!-- Middle Content End -->
+</div>
+<!-- Wrapper End -->
+<!--Modal Start-->
+<div class="modal fade global-modal reset-modal" id="delet_farms_modal">
+  <div class="modal-dialog max-WT-500">
+      <div class="modal-content">
+          <!-- Modal body -->
+          <div class="modal-body  text-center">
+              <div class="row align-items-center modal_flax_height">
+                  <div class="col">
+                      <div class="box-title mb40 d-inline-block">
+                          <h2>Are you sure?</h2>
+                          <p>You won’t be able to revert this!</p>
+                      </div>
+                      <div class="max-WT-300 d-inline-block border-top">
+                          <button type="button" class="btn btn-gray btn-large radius0 btn-block">YES</button>
+                          <button type="button" class="btn btn-red btn-large radius0 btn-block" data-dismiss="modal">CANCEL</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- signout_modal Start -->
+
+<!-- Signout Modal -->
+<!-- invite_modal Start -->
+<div class="modal fade global-modal reset-modal" id="invite">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password">
+          <div class="modal-content">
+              <div>
+                  <div class="modal-header ">
+                      <h4 class="modal-title text-center">Invite</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row align-items-center modal_flax_height">
+                          <div class="col">
+                              <div class="form-group">
+                                  <label class="control-labe">Email*</label>
+                                  <input class="form-control" placeholder="" required="" type="email">
+                              </div>
+                              <div class="form-group">
+                                  <label class="control-labe">Subject</label>
+                                  <input class="form-control" placeholder="" required="" type="text">
+                              </div>
+                              <div class="form-group">
+                                  <label class="control-labe">Message</label>
+                                  <textarea name="" id="" cols="20" rows="5" class="form-control">
+                              </textarea>
+                              </div>
+                              <div class="row">
+                                  <div class="col-6">
+                                      <button type="submit" class="btn btn-gray btn-large radius0 btn-block">SUBMIT</button>
+                                  </div>
+                                  <div class="col-6">
+                                      <button type="button" class="btn btn-red btn-large radius0 btn-block" data-dismiss="modal">CANCEL</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- invite_modal End -->
+<!-- invite_modal Start -->
+<div class="modal fade global-modal reset-modal" id="accept">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password">
+          <div class="modal-content">
+              <div>
+                  <div class="modal-header ">
+                      <h4 class="modal-title text-center">Accept</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row align-items-center modal_flax_height">
+                          <div class="col">
+                              <div class="form-group">
+                                  <div class="d-flex align-items-center text-center justify-content-center">
+                                      <label class="switch">
+                                      <input type="checkbox">
+                                      <span class="slider round"></span>
+                                  </label>
+                                      <strong> R/W Accesbility</strong>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="form-group">
+                                  <div class="d-flex align-items-center">
+                                      <div class="w-100">
+                                          <h6>User Type</h6>
+
+                                          <div class="radio_btn_cst d-flex">
+                                              <label class="radio_style">End User
+                                              <input type="radio" checked="checked" name="radio" />
+                                              <span class="checkmark"></span>
+                                          </label>
+                                              <label class="radio_style">Service User
+                                              <input type="radio" name="radio" />
+                                              <span class="checkmark"></span>
+                                          </label>
+                                              <label class="radio_style">Admin User
+                                              <input type="radio" name="radio" />
+                                              <span class="checkmark"></span>
+                                          </label>
+                                          </div>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="w-100">
+                                      <h6>Role</h6>
+                                      <select name="" class="form-control form-control2 select_opt">
+                                      <option value="">Select</option>
+                                      <option value="" selected>Abuja region</option>
+                                      <option value="">Nigeria region</option>
+                                  </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="d-flex align-items-center flex-wrap text-center justify-content-center">
+                                      <div class="w-50 d-inline-flex align-items-center">
+                                          <label class="switch">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                      </label>
+                                          <span> Admin Rights</span>
+                                      </div>
+                                      <div class="w-50 d-inline-flex align-items-center">
+                                          <label class="switch">
+                                          <input type="checkbox">
+                                          <span class="slider round"></span>
+                                      </label>
+                                          <span> Approved</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="mt20 text-center">
+                                  <button class="btn btn-small btn-info">Set</button>
+                                  <button class="btn btn-small btn-danger" data-dismiss="modal">Cancel</button>
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- invite_modal End -->
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="delete">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password">
+          <div class="modal-content">
+              <div>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                  <div class="modal-body">
+                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                          <div class="w-100">
+                              <p>Are you sure want to delete this user?</p>
+                              <div>
+                                  <button type="submit" class="btn btn-info">Submit</button>
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- delete_modal End -->
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+  <div class="modal-dialog max-WT-500">
+      <form class="change_password">
+          <div class="modal-content">
+              <div>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                  <div class="modal-body">
+                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                          <div class="w-100">
+                              <p>Are you sure want to block this user?</p>
+                              <div>
+                                  <button type="submit" class="btn btn-success">Yes</button>
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

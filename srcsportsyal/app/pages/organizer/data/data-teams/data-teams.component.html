@@ -1,0 +1,466 @@
+<!--    Header start   -->
+<app-header></app-header>
+<!--    Header end   -->
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <h2 class="content-box-head">Filter BY COMPETITON</h2>
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <div class="row align-items-center">
+            <div class="col-md-3">
+              <div class="filter-box ">
+                <label class="control-label">Team Status</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.status" name="status">
+                  <option value="">Select Team Status</option>
+                  <option *ngFor="let status of list.teamStatusList" [value]="status.value">{{status?.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box">
+                <label class="control-label">Venue</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.venue" name="venue">
+                  <option value="">Select Venue</option>
+                  <option *ngFor="let venue of list.venueList" [value]="venue.venue">{{venue?.venue}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box">
+                <label class="control-label">Competition</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.competitionName" name="competitionName">
+                  <option value="">Select Competition</option>
+                  <option *ngFor="let comp of list.comptList" [value]="comp.competitionName">{{comp?.competitionName}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="filter-box ">
+                <label class="control-label">Competition Status</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.competitionStatus" name="competitionStatus">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let status of list.statusList" [value]="status.value">{{status?.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box ">
+                <label class="control-label">Division</label>
+                <ng-multiselect-dropdown [placeholder]="'Select Division'" [data]="list.divisionList" [(ngModel)]="filter.division" [settings]="dropdownSettings"
+                  name="division">
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box ">
+                <label class="control-label">Period</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.period" name="period">
+                  <option value="">Select Period</option>
+                  <option *ngFor="let period of list.periodList" [value]="period.periodName">{{period?.periodName}}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box">
+                <label class="control-label">Sports</label>
+                <!-- <select class="form-control select-style1">
+                               <option>Select Sport</option>
+                                <option>Select Sport</option>
+                            </select> -->
+                <ng-multiselect-dropdown [placeholder]="'Select Sports'" [data]="list.sportsList" [(ngModel)]="filter.sports" [settings]="dropdownSettings"
+                  name="sports">
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn btn-dark-blue-s max-WT-170" (click)="onSearch(2)" style="float: right;">Apply</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="filter.search" name="search" (keyup)="onSearch(1, $event)" autocomplete="off">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-white-bg" (click)="printTeam(1)">Print</button>
+              <button class="btn btn-white-bg" (click)="printTeam(2)">Export To CSV</button>
+            </div>
+            <div class="col-md-3 text-right">
+              <button class="btn btn btn-dark-blue-s max-WT-170" type="button" (click)="sendMsgModal('', true)">Send message to All</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Name</th>
+                <th>Signup date</th>
+                <!-- <th>Phone</th> -->
+                <th>Email</th>
+                <th>Venue</th>
+                <th>Competition</th>
+                <th>Status</th>
+                <th>Sports</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!teamsDet.docs.length">
+                <td colspan="8" class="text-center">No Data Found</td>
+              </tr>
+
+              <tr *ngFor="let item of teamsDet.docs | paginate: { itemsPerPage: teamsDet?.limit, currentPage: teamsDet?.page,  totalItems: teamsDet?.total } "
+               >
+                <td>{{item?.teamName}}</td>
+                <td>{{item?.createdAt | date: 'dd/MM/yyyy'}}</td>
+                <!-- <td>{{item?.teamDynamicDetail?.mobileNumber || '- - -'}}</td> -->
+                <td>{{item?.email}}</td>
+                <td>{{item?.Comp?.venue || '- - -'}}</td>
+                <td>{{item?.Comp?.competitionName}}</td>
+                <td>{{getStatus(item?.status)}}</td>
+                <td>{{item?.Comp?.sports || '- - - ' | letterCase }}</td>
+                <td class="action-td">
+                  <button type="button" (click)="teamData(item._id)" class="btn btn-book">View</button>
+                  <button type="button" class="btn btn-book" (click)="sendMsgModal(item._id, false)">Message</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block mt10 text-right" *ngIf="teamsDet.total > teamsDet.limit">
+            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="teamsDet.docs.length">
+            <span>Showing {{teamsDet.limit * (teamsDet.page - 1) + 1 || 0}} to {{((teamsDet.limit * teamsDet.page)
+              < teamsDet.total)
+                ? (teamsDet.limit * teamsDet.page) : teamsDet.total || 0}} of {{teamsDet.total}} entries</span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                  <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<div class="table-responsive" id="table_dataTeams" [hidden]="true">
+  <table class="table table-bordered large-table text-center">
+    <thead>
+      <tr class="table-head-bg">
+        <th>Name</th>
+        <th>Signup date</th>
+        <!-- <th>Phone</th> -->
+        <th>Email</th>
+        <th>Venue</th>
+        <th>Competition</th>
+        <th>Status</th>
+        <th>Sports</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="!printData.length">
+        <td colspan="8" class="text-center">No Data Found</td>
+      </tr>
+
+      <tr *ngFor="let item of printData">
+        <td>{{item?.teamName}}</td>
+        <td>{{item?.createdAt | date: 'dd/MM/yyyy'}}</td>
+        <!-- <td>{{item?.Comp?.mobileNumber || '- - -'}}</td> -->
+        <td>{{item?.email}}</td>
+        <td>{{item?.Comp?.venue || '- - -'}}</td>
+        <td>{{item?.Comp?.competitionName}}</td>
+        <td>{{getStatus(item?.status)}}</td>
+        <td>{{item?.Comp?.sports || '- - - ' | letterCase }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!--    Footer start   -->
+<app-footer></app-footer>
+<!--    Footer end   -->
+
+<!-- Modal Start -->
+
+<!-- Send message -->
+<div class="modal fade common-modal" id="dataTeamSendMsg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb0 navy-blue font_uni_sans noborder">SEND MESSAGE</h5>
+          <div class="modal-content-body">
+            <div class="center-box">
+              <div class="form-group clearfix">
+                <textarea class="form-control textareaheight" placeholder="Message" [(ngModel)]="updateData.msg" name="msg"></textarea>
+              </div>
+            </div>
+            <div class="clearfix calendar-action mt10 text-left">
+              <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+              <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" (click)="updateData.msg ? onSendMsg(): ''">Send</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Send message modal End-->
+
+
+<div class="modal fade" id="teamDetail" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-800" role="document">
+    <div class="modal-content">
+      <form class="booking-proceed-form">
+        <div class="modal-header d-block bdr-none pb0 clearfix">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body tab_pad_L60 tab_pad_R60">
+          <h5 class="modal-head mt0 mb20 text-center navy-blue font_uni_sans" id="exampleModalLabel">Team Detail</h5>
+          <!-- <div class="modal_booking_table">
+                        <div class="table-responsive">
+                           <table class="table table-bordered">
+                              <thead>
+                                 <tr>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Price</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr>
+                                    <td>21/03/2018</td>
+                                    <td>6:00 PM</td>
+                                    <td>8:00 PM</td>
+                                    <td>8:00 PM</td>
+                                 </tr>
+								 <tr>
+                                    <td colspan="3">Outside 7 - Aside</td>
+                                    <td></td>
+                                 </tr>
+
+                              </tbody>
+                              <tfoot>
+                                 <tr>
+                                    <td colspan="3">Total</td>
+                                    <td>$300</td>
+                                 </tr>
+                              </tfoot>
+                           </table>
+                        </div>
+                     </div> -->
+          <div class="center-box booking-field mb30">
+            <div class="row mb15">
+              <label class="control-label col-md-3">Name</label>
+              <div class="col-md-6">
+                <label>{{teamDetailData?.teamName}}</label>
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Competition Name.</label>
+              <div class="col-md-6">
+                <label>{{teamDetailData?.Comp?.competitionName}}</label>
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Organizer Email ID</label>
+              <div class="col-md-6">
+                <label>{{teamDetailData?.email}}</label>
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Venue</label>
+              <div class="col-md-6">
+                <label>{{teamDetailData?.Comp?.venue}}</label>
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Sports</label>
+              <div class="col-md-6">
+                <label>{{teamDetailData?.Comp?.sports}}</label>
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Status</label>
+              <div class="col-md-6">
+                <label>{{teamDetailData?.status}}</label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="clearfix calendar-action">
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left" data-dismiss="modal">Back</button>
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right proceed-btn" data-dismiss="modal">Proceed</button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- preview_booking_info End -->
+
+
+
+<div class="modal fade" id="booking_calander" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog max-WT-900" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header d-block bdr-none pb0 clearfix">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5 class="modal-head mt0 mb5" id="exampleModalLabel">Booking</h5>
+        <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <div class="filter-box d-inline-block">
+          <label class="control-label">Space</label>
+          <select class="form-control select-style1 d-inline-block">
+            <option>Areobics</option>
+          </select>
+        </div>
+        <!-- global-datepicker Start -->
+        <div class="global-datepicker-block mt25">
+          <div id="demoPicker2" class="global-datepicker"></div>
+
+          <div class="clearfix calendar-action">
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left">Legend</button>
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right" data-toggle="modal" data-target="#book_slot">Book (0 Slots)</button>
+          </div>
+
+        </div>
+        <!-- global-datepicker End -->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!-- booking_calander End -->
+
+<div class="modal fade" id="booking_legend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog max-WT-900" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header d-block bdr-none pb0 clearfix">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5 class="modal-head mt0 mb5" id="exampleModalLabel">Booking</h5>
+        <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <div class="filter-box d-inline-block">
+          <label class="control-label">Space</label>
+          <select class="form-control select-style1 d-inline-block">
+            <option>Areobics</option>
+          </select>
+        </div>
+        <!-- global-datepicker Start -->
+        <div class="global-datepicker-block mt25">
+          <div id="demoPicker" class="global-datepicker"></div>
+
+          <ul class="color-instruction hide-tag">
+            <li>Available
+              <span class="color-code f-right"></span>
+            </li>
+            <li>
+              <span class="color-code f-left green-bg"></span>Today</li>
+            <li>Fully Booked
+              <span class="color-code f-right red-bg"></span>
+            </li>
+            <li>
+              <span class="color-code f-left yellow-bg "></span>Partly Booked</li>
+            <li>Day Off
+              <span class="color-code f-right magenta-bg"></span>
+            </li>
+            <li>
+              <span class="color-code f-left gray-bg"></span>Past</li>
+          </ul>
+          <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <div class="clearfix calendar-action">
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left openlegend">Legend</button>
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right" data-toggle="modal" data-target="#book_slot">Book (0 Slots)</button>
+          </div>
+
+        </div>
+        <!-- global-datepicker End -->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!-- booking_calander End -->
+
+<!-- Modal Start -->
+<div class="modal fade" id="book_slot" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="book-slot-form">
+        <div class="modal-header d-block bdr-none pb0 clearfix">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="head_lagend mb25">Select number of courts</p>
+          <div class="radio_btn radio-inline ">
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check11" checked="" type="radio" />
+              <label for="check11">1</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check12" type="radio" />
+              <label for="check12">2</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check13" checked="" type="radio" />
+              <label for="check13">3</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check14" type="radio" />
+              <label for="check14">4</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check15" type="radio" />
+              <label for="check15">5</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-block text-center bdr-none">
+          <button type="button" class="mb25 btn btn-navy-blue max-WT-170">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- book_slot End -->

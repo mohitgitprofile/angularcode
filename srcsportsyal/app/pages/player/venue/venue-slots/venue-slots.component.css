@@ -1,0 +1,15 @@
+.book-slot-form .custom-radio-btn+.custom-radio-btn {
+    margin-left: 0px;
+}
+.heading-main {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+.date-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+}

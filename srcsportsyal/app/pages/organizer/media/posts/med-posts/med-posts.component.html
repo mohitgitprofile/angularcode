@@ -1,0 +1,146 @@
+<div class="wrapper">
+    <!-- Header Start  -->
+    <app-header></app-header>
+    <!-- Header End  -->
+    <div class="topBanner">
+        <div class="container">
+
+        </div>
+    </div>
+    <!-- main Start -->
+    <main class="main-container pt0">
+        <div class="content-container">
+            <div class="content-box bg-gray mt20">
+                <div class="content-box-filter p20">
+                    <div class="max-WT-600 creted-block">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 class="head-sub makeLink" [routerLink]="['/organizer/medPCreateAlbum/add']"><i
+                                        class="fas fa-images"></i>
+                                    Create Album </h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="head-sub makeLink" [routerLink]="['/organizer/medPCreateVideo/add']"><i
+                                        class="fas fa-video"></i>
+                                    Create Video </h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="head-sub noborder makeLink" [routerLink]="['/organizer/medPCreateNews/add']"><i
+                                        class="fas fa-newspaper"></i> Create News </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box-filter p20  pt35 mt20" *ngFor="let item of postData.docs | paginate: { itemsPerPage: postData?.limit, currentPage: postData?.page,  totalItems: postData?.total } ">
+                    <form>
+                        <div class="media-box-head">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="media-head-img"><img src="{{item?.competitionId?.imageURL || 'assets/images/user-img.png'}}"
+                                            alt="Image"></div>
+                                    <div class="media-head-info">
+                                        <h4 class="mb5">{{item?.competitionName}}</h4>
+                                        <p><span class="pR30">{{item?.date}} at {{item?.time}}</span>{{item?.title}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-right pR36 mt10 mobTL">
+                                    <button class="btn btn btn-dark-blue-s max-WT-120" type="button" [routerLink]="['/organizer/medPCreateAlbum', item._id]"
+                                        *ngIf="item.typeOfMedia == 'ALBUM'">Edit Album</button>
+                                    <button class="btn btn btn-dark-blue-s max-WT-120" type="button" [routerLink]="['/organizer/medPCreateVideo', item._id]"
+                                        *ngIf="item.typeOfMedia == 'VIDEO'">Edit Video</button>
+                                    <button class="btn btn btn-dark-blue-s max-WT-120" type="button" [routerLink]="['/organizer/medPCreateNews', item._id]"
+                                        *ngIf="item.typeOfMedia == 'NEWS'">Edit News</button>
+
+                                    <button class="btn btn btn-dark-blue-s max-WT-120" type="button" (click)="deleteModal(item._id, item.typeOfMedia)"
+                                        *ngIf="item.typeOfMedia == 'ALBUM'">Delete Album</button>
+                                    <button class="btn btn btn-dark-blue-s max-WT-120" type="button" *ngIf="item.typeOfMedia == 'VIDEO'"
+                                        (click)="deleteModal(item._id, item.typeOfMedia)">Delete Video</button>
+                                    <button class="btn btn btn-dark-blue-s max-WT-120" type="button" *ngIf="item.typeOfMedia == 'NEWS'"
+                                        (click)="deleteModal(item._id, item.typeOfMedia)">Delete News</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Start For Video -->
+                        <div class="media-banner-img makeLink" *ngIf="item.typeOfMedia == 'VIDEO' " [routerLink]="['/organizer/medPostDetail', item._id]">
+                            <div class="vidoe-block-media">
+                                <iframe width="560" height="315" [src]="item.youtubeUrls" frameborder="0" allow="autoplay; encrypted-media"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <!-- End For Video -->
+                        <!-- Start For image -->
+                        <div class="media-banner-img makeLink" *ngIf="item.typeOfMedia == 'ALBUM' || item.typeOfMedia == 'NEWS' "
+                            [routerLink]="['/organizer/medPostDetail', item._id]">
+                            <ul class="media-img-list clearfix media-new">
+                                <li *ngFor="let image of item.mediaUrls | slice:0:4 ; let i=index">
+                                    <figure class="thumb-img" *ngIf="i < 3"><img [src]="image.url" alt="Image" style="height: 300px;"></figure>
+                                    <figure class="thumb-img" *ngIf="item.mediaUrls.length == 4 && i == 3"><img [src]="image.url"
+                                            alt="Image" style="height: 300px;"></figure>
+                                    <figure class="thumb-img thumb-img-more" *ngIf="item.mediaUrls.length > 4 && i == 3">
+                                        <img [src]="image.url" alt="Image" style="height: 300px;">
+                                        <span>+{{item.mediaUrls.length - 1 - i}}<br>more</span>
+                                    </figure>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End For image -->
+                        <div class="media-inner-head">
+                            <h4>{{item?.title}}</h4>
+                        </div>
+                        <div *ngIf="item.typeOfMedia == 'NEWS'">
+                            <p>{{item?.description | limitTo: 300 }} ...</p>
+                        </div>
+                        <div class="like-block-main comment-block">
+                            <span>{{item?.noOfLike}} Like</span>
+                            <span>{{item?.noOfComment}} Comment</span>
+                        </div>
+                        <div class="like-block-main">
+                            <span class="makeLink" (click)="onLike(item._id)"><i [ngClass]="item?.likeStatus == 'False' ? 'far fa-heart' : 'fas fa-heart errorMsg'"></i>{{(item?.likeStatus
+                                == 'False') ? 'Like' : 'Unlike'}}</span>
+                            <span><i class="far fa-comment"></i> Comment</span>
+                            <span><i class="fa fa-share-alt"></i> Share</span>
+                        </div>
+                    </form>
+
+                </div>
+                <div *ngIf="!postData.docs.length" class="mt60 mb25 text-center">
+                    <h3> No posts found. </h3>
+                </div>
+                <div class="clearfix pagination-entity mt20" *ngIf="postData?.total > postData?.limit">
+                    <div class="pagination-block text-right">
+                        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- main End -->
+    <!--   Footer Start -->
+    <app-footer></app-footer>
+    <!--   Footer End -->
+</div>
+<!-- Wrapper End -->
+<!-- Modal Start -->
+<div class="modal fade common-modal" id="media_org_delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-500" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="text-center modal-text-s">Are you sure you want to delete this
+                                    {{currData?.typeOfMedia | lowercase}}?</p>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button"
+                                        (click)="onDeletePost()">YES</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

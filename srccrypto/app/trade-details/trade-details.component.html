@@ -1,0 +1,210 @@
+<main class="middle-content">
+  <div class="page_title_block">
+    <h1 class="page_title">Trade Details</h1>
+  </div>
+  <div class="content-section">
+    <div class="outer-box">
+      <div class="global-table no-radius p0">
+        <div class="tab-content1">
+          <div class="tab-pane1">
+            <div class="row">
+              <div class="col-md-6">
+                <!-- chat section -->
+                <div class="chat-box-main">
+                  <div class="chat-box">
+                    <div class="chat-head">
+                      <!-- <img src="assets/img/user-img.png"> -->
+                      <h4>Chat</h4>
+                    </div>
+                    <div class="chat-div" #scrollMe style="overflow-y: auto; height: 350px;">
+                      <div *ngFor="let item of chatHistory">
+                        <!-- <div *ngIf="tradeDetails.fkUserId == item.fromUserId" class="left-chat"> -->
+                        <div *ngIf="tradeDetails.fkUserId != item.fromUserId" class="left-chat">
+                          <div class="chat">
+                            <p>{{item?.message}}</p>
+                          </div>
+                          <span>{{item?.creationTime | date}}</span>
+                        </div>
+
+                        <!-- <div *ngIf="tradeDetails.partnerId == item?.toUserId" class="right-chat"> -->
+                        <div *ngIf="tradeDetails.fkUserId == item.fromUserId" class="right-chat">
+                          <div class="chat2">
+                            <p>{{item?.message}}</p>
+                          </div>
+                          <span>{{item?.creationTime | date}}</span>
+                        </div>
+                      </div>
+
+                      <!-- <div class="left-chat">
+                        <div class="chat">
+                          <p>Buy trade request from test 115</p>
+                        </div>
+                        <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                        <div class="chat2">
+                          <p>Buy trade request from test 115</p>
+                        </div>
+                        <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                        <div class="chat2">
+                          <p>Buy trade request from test 115 Buy trade request from test 115 Buy trade request from 115
+                            Buy trade request from 115 Buy trade request from test 115</p>
+                        </div>
+                        <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="left-chat">
+                        <div class="chat">
+                          <p>Buy trade request from test 115</p>
+                        </div>
+                        <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                        <div class="chat2">
+                          <p>Buy trade request from test 115</p>
+                        </div>
+                        <span>18/10/2019 13:21:27</span>
+                      </div>
+
+                      <div class="right-chat">
+                        <div class="chat2">
+                          <p>Buy trade request from test 115</p>
+                        </div>
+                        <span>18/10/2019 13:21:27</span>
+                      </div> -->
+
+                    </div>
+                  </div>
+                </div>
+                <!-- end chat section -->
+              </div>
+              <div class="col-md-6">
+                <div class="sec_head_new">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Trade Type </label>
+                        <div class="col-sm-5">
+                          <!-- <label class=" col-form-label">Buy</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.type || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Advertisement</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">BTC</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.tradingPartner || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Ad Creator</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">uhs</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.tradingPartner || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Status</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">CANCEl</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.statusType || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Amount BTC</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">0.0001254</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.totalBTC || 'N/A'}} <span *ngIf="tradeDetails?.totalBTC">{{tradeDetails?.cryptoCoin}}</span></label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">For</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">CANCEL</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.tradeAmount || 'N/A'}} <span *ngIf="tradeDetails?.tradeAmount">{{tradeDetails?.fiatCoin}}</span> </label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Exchange Rate</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">62584.26</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.price || 'N/A'}} <span *ngIf="tradeDetails?.price">{{tradeDetails?.cryptoCoin}}/{{tradeDetails?.fiatCoin}}</span> </label>
+
+                        </div>
+                      </div>
+                      <div class="form-group row trafe-row">
+                        <label class="col-sm-6 col-form-label headinds">Payment Method</label>
+                        <div class="col-sm-6">
+                          <!-- <label class=" col-form-label">Cash</label> -->
+                          <label class=" col-form-label">{{tradeDetails?.paymentType || 'N/A'}}</label>
+
+                        </div>
+                      </div>
+
+                      <!-- <div class="col-md-2 user-pl">
+                        <div class="user-frmbtn" style="display: flex;">
+                            <button type="submit" (click)="search()"
+                                class="btn  btn-theme mr-2">Search</button>
+                            <button type="submit" (click)="reset()" class="btn  btn-theme">Reset</button>
+                        </div>
+                    </div> -->
+                      <!-- button -->
+                      <!-- <div class="form-group row trafe-row">
+                        <div class="col-sm-6">
+                          <button type="submit" (click)="openDispute()" class="btn  btn-theme mr-2">Open Dispute</button>
+                        </div>
+                      </div> -->
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- trade history section -->
+            <!-- <div class="transaction">
+              <h3>Trade History</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="no_wrap_th">
+                    <th>Report Id</th>
+                    <th>Date </th>
+                    <th>Trade Owner Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#1234567</td>
+                    <td>02/03/2017</td>
+                    <td>test15</td>
+                    <td>Cancel</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="custom-pagination mt20 text-center">
+              <pagination-controls (pageChange)="pagination( $event)"></pagination-controls>
+            </div> -->
+            <!-- end trade history section -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

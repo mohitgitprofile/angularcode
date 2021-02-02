@@ -1,0 +1,13 @@
+
+    .transaction{
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0px;
+    
+    }
+
+  
+.edit-text{
+    font-weight: 600;
+    font-size: 15px;
+}

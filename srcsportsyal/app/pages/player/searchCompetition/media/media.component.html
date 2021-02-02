@@ -1,0 +1,209 @@
+<app-header></app-header>
+<div class="topBanner">
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="content-container">
+        <div class="fixtures-section w-100 center-box">
+            <!-- Global Box Start -->
+            <div class="global-box grey-box">
+                <div *ngIf='num == 1'>
+                    <app-comp-header></app-comp-header>
+                </div>
+                <div *ngIf='num == 2'>
+                    <app-memb-header></app-memb-header>
+                </div>
+                <div *ngIf='num == 3'>
+                        <!-- <app-venue-player-header></app-venue-player-header> -->
+
+                    <div class="fixture-inner">
+                       
+                        <div class="custom-breadcrumb mt10 custom-breadcrumb1">
+                            <nav class="breadcrumb">
+                            <a class="breadcrumb-item" [routerLink]="['/player/venueDetail',competitionId]"> View
+                            </a>
+                            <a class="breadcrumb-item active" [routerLink]="['/player/media', competitionId, organizerId, 3]">Media</a>
+                            <a class="breadcrumb-item" [routerLink]="['/player/playerVenueSponsor',competitionId]">Sponsor</a>
+                            </nav>
+                            <div class="" style="float: right;" *ngIf='num != 3'>
+                            <div class="contact-organise">
+                            <span>Contact Organizer </span>
+                            <button type="button" class="btn btn-blue" (click)="messageModal()">Send Message
+                            </button>
+                            </div>
+                            </div>
+                            
+                            </div>
+                    </div>
+                </div>
+                <!-- <app-comp-header></app-comp-header> -->
+                <div class="fixture-inner">
+                    <div class="fixture-btn-row">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn_row mb20">
+                                    <button type="btn" [ngClass]="{'active': this.typeOfMedia == 'ALL'}" (click)="allMedia()"
+                                        class="btn">All</button>
+                                    <button type="btn" [ngClass]="{'active': this.typeOfMedia == 'ALBUM'}" (click)="albumMedia()"
+                                        class="btn">Albums</button>
+                                    <button type="btn" [ngClass]="{'active': this.typeOfMedia == 'VIDEO'}" (click)="videoMedia()"
+                                        class="btn">Videos</button>
+                                    <button type="btn" [ngClass]="{'active': this.typeOfMedia == 'NEWS'}" (click)="newsMedia()"
+                                        class="btn">News</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p *ngIf="!list.medialist.docs?.length" style="align-self: center">
+                        <span colspan="6">No data found.</span>
+                    </p>
+                    <!-- media-box Start -->
+                    <div class="content-box-filter p20  pt35 mt20" *ngFor="let media of list.medialist.docs | paginate: { itemsPerPage: list.medialist.limit, currentPage: list.medialist.page,  totalItems: list.medialist.total }">
+
+                        <form *ngIf="media.typeOfMedia == 'VIDEO'">
+                            <div class="media-box-head">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="media-head-img">
+                                            <img *ngIf="!media.competitionId?.imageURL" src="assets/images/follow-img.png">
+                                            <img *ngIf="media.competitionId?.imageURL" src="{{media.competitionId?.imageURL}}">
+                                        </div>
+                                        <div class="media-head-info">
+                                            <h4 class="mb5">{{media.competitionName}}</h4>
+                                            <p><span class="pR30">{{media.date}} at {{media.time}}</span>{{media.title}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media-banner-img">
+                                <div class="vidoe-block-media">
+                                    <iframe width="560" height="315" [src]='media.securedMediaURL' frameborder="0"
+                                        allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                    <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/wU2xJ7klKIQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+                                </div>
+                            </div>
+                            <div class="media-inner-head ">
+                                <h4 class='cursor' [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]">{{media.title}}</h4>
+                            </div>
+                            <div class="like-block-main comment-block cursor" [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]">
+                                <span>{{media.noOfLike}} Like</span>
+                                <span>{{media.noOfComment}} Comment</span>
+                            </div>
+                            <div class="like-block-main">
+                                <span (click)="like(media)" *ngIf="media.likeStatus == 'False'"><i class="far fa-heart"></i>Like</span>
+                                <span (click)="like(media)" *ngIf="media.likeStatus == 'True'"><i class="fa fa-heart active"></i>Unlike</span>
+                                <span class='cursor' [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]"><i
+                                        class="far fa-comment"></i> Comment</span>
+                                <span (click)="share(media)"><i class="fa fa-share-alt"></i> Share</span>
+                            </div>
+                        </form>
+
+                        <form *ngIf="media.typeOfMedia == 'ALBUM'">
+                            <div class="media-box-head">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="media-head-img">
+                                            <img *ngIf="!media.competitionId?.imageURL" src="assets/images/follow-img.png">
+                                            <img *ngIf="media.competitionId?.imageURL" src="{{media.competitionId?.imageURL}}">
+                                        </div>
+                                        <div class="media-head-info">
+                                            <h4 class="mb5">{{media.competitionName}}</h4>
+                                            <p><span class="pR30">{{media.date}} at {{media.time}}</span>{{media.title}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media-banner-img " class='cursor' [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]">
+                                <ul class="media-img-list clearfix media-new">
+                                    <li *ngFor="let image of media.newMediaUrls; let i = index">
+                                        <figure *ngIf="media.newMediaUrlsLength == 0" class="thumb-img"><img src="{{image.url}}"
+                                                alt="Image"></figure>
+                                        <figure *ngIf="media.newMediaUrlsLength > 0 && i<3" class="thumb-img"><img src="{{image.url}}"
+                                                alt="Image"></figure>
+                                        <figure *ngIf="media.newMediaUrlsLength > 0 &&  i == 3" class="thumb-img thumb-img-more lastli"><img
+                                                src="{{image.url}}" alt="Image"><span>+{{media.newMediaUrlsLength}}<br>more</span></figure>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="media-inner-head">
+                                <h4 class='cursor' [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]">{{media.title}}</h4>
+                            </div>
+                            <div class="like-block-main comment-block cursor" [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]">
+                                <span>{{media.noOfLike}} Like</span>
+                                <span>{{media.noOfComment}} Comment</span>
+                            </div>
+                            <div class="like-block-main">
+                                <span (click)="like(media)" *ngIf="media.likeStatus == 'False'"><i class="far fa-heart"></i>Like</span>
+                                <span (click)="like(media)" *ngIf="media.likeStatus == 'True'"><i class="fa fa-heart active"></i>Unlike</span>
+                                <span class='cursor' [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]"><i
+                                        class="far fa-comment"></i> Comment</span>
+                                <span (click)="share(media)"><i class="fa fa-share-alt"></i> Share</span>
+                            </div>
+                        </form>
+
+                        <form *ngIf="media.typeOfMedia == 'NEWS'">
+                            <div class="media-box-head">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="media-head-img">
+                                            <img *ngIf="!media.competitionId?.imageURL" src="assets/images/follow-img.png">
+                                            <img *ngIf="media.competitionId?.imageURL" src="{{media.competitionId?.imageURL}}">
+                                        </div>
+                                        <div class="media-head-info">
+                                            <h4 class="mb5">{{media.competitionName}}</h4>
+                                            <p><span class="pR30">{{media.date}} at {{media.time}}</span>{{media.title}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media-banner-img">
+                                <ul class="media-img-list clearfix media-new">
+                                    <li style="width: calc(50% - 5px);padding: 30px 0px 30px 0px;">
+                                        <figure class="thumb-img"><img src="{{media.mediaUrls[0].url}}" alt="Image"></figure>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="media-inner-head">
+                                <h4 class='cursor' [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]">{{media.title}}</h4>
+                                <div class="media-description">
+                                    <p class="more">{{media.description}}</p>
+                                </div>
+                            </div>
+                            <div class="like-block-main comment-block cursor" [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]">
+                                <span>{{media.noOfLike}} Like</span>
+                                <span>{{media.noOfComment}} Comment</span>
+                            </div>
+                            <div class="like-block-main">
+                                <span (click)="like(media)" *ngIf="media.likeStatus == 'False'"><i class="far fa-heart"></i>Like</span>
+                                <span (click)="like(media)" *ngIf="media.likeStatus == 'True'"><i class="fa fa-heart active"></i>Unlike</span>
+                                <span class="cursor" [routerLink]="['/player/media/PlayerMediaDetails', competitionId, organizerId, media._id]"><i
+                                        class="far fa-comment "></i> Comment</span>
+                                <span (click)="share(media)"><i class="fa fa-share-alt"></i> Share</span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- media-box End -->
+                    <div class="clearfix pagination-entity">
+                        <div class="pagination-block text-right" *ngIf="list.medialist.total > list.medialist.limit">
+                            <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                        </div>
+                        <div class="entity-text" *ngIf="list.medialist.total!=0">
+                            <span>Showing {{list.medialist?.limit * (list.medialist?.page - 1) + 1}} to
+                                {{((list.medialist?.limit
+                                * list.medialist?.page) < list.medialist?.total) ? (list.medialist?.limit *
+                                    list.medialist?.page) : list.medialist?.total || 0}} entries</span> <select class="form-control select-style1 mw50"
+                                    [(ngModel)]="limitChange" (change)="changeLimit()">
+                                    <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                                    </select>
+                                    <span>entries</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Global Box End -->
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

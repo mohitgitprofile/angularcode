@@ -1,0 +1,234 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <h2 class="content-box-head">Store</h2>
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-right" *ngIf="venueList.length">
+              <button class="btn btn btn-dark-blue-s" type="button" (click)="addStoreModal()">Add Store</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <div class="form-group clearfix row " *ngIf="!venueList.length">
+            <label class="col-md-9 label-blue">Add venue to add stores</label>
+          </div>
+          <div class="form-group clearfix row padding-default" *ngIf="venueList.length">
+            <label class="col-md-2 label-blue color-blue1">Select Venue</label>
+            <div class="col-md-4">
+              <select class="form-control select-style1 round-input" (change)="onVenueSelect()" [(ngModel)]="venueId">
+                <option *ngFor="let i of venueList" value="{{i._id}}">{{i?.venueName}}</option>
+              </select>
+            </div>
+          </div>
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Name</th>
+                <!-- <th>Quantity</th> -->
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!storeList.docs.length || !venueList.length">
+                <td colspan="5" class="text-center">No data found.</td>
+              </tr>
+              <tr *ngFor="let item of storeList.docs  | paginate: { itemsPerPage: storeList.limit, currentPage: storeList.page,  totalItems: storeList.total } ">
+
+                <td>{{item?.storeName}}</td>
+                <!-- <td>{{item?.quantity}}</td> -->
+                <td class="action-td">
+                  <a class="btn btn-info" (click)="editStoreModal(item._id)" data-toggle="modal">
+                    <i class="far fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger" (click)="deleteStoreModal(item._id)" data-toggle="modal">
+                    <i class="far fa-trash-alt"></i>
+                  </a>
+                  <a class="btn btn-info" [routerLink]="['/organizer/storeItemList',venueId, item._id]">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                </td>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block mt10 text-right" *ngIf="storeList.total > storeList.limit">
+            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="storeList.docs.length">
+            <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+              < storeList.total) ? (page.limit * page.currPage) : storeList.total || 0}} of {{storeList.total}} entries</span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                  <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+
+
+<!-- add-store -->
+<div class="modal fade common-modal" id="add_venue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="addStoreForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Store</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Select Venue</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="gStoreForm.venueData">
+                      <option value="">Select Venue</option>
+                      <option *ngFor="let i of venueList" value="{{i._id}}">{{i?.venueName}}</option>
+                    </select>
+                    <div class="errorMsg" *ngIf="gStoreForm.venueData.dirty && gStoreForm.venueData.invalid">
+                      <span *ngIf="gStoreForm.venueData.hasError('required')">*Please select venue.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Store Name</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control round-input" [formControl]="gStoreForm.storeName" placeholder="Enter Store Name" />
+                    <div class="errorMsg" *ngIf="gStoreForm.storeName.dirty && gStoreForm.storeName.invalid">
+                      <span *ngIf="gStoreForm.storeName.hasError('required')">*Please enter store name.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Quantity</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" [formControl]="gStoreForm.quantity" placeholder="" />
+                    <div class="errorMsg" *ngIf="gStoreForm.quantity.dirty && gStoreForm.quantity.invalid">
+                      <span *ngIf="gStoreForm.quantity.hasError('required')">*Please enter quantity.</span>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="addStoreForm.invalid" (click)="addStore()">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End add-store-->
+
+<!-- Edit-store Modal-->
+<div class="modal fade common-modal" id="edit_store" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="editStoreForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Edit Store</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Select Venue</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="eStoreForm.venueData">
+                      <option value="">Select Venue</option>
+                      <option *ngFor="let i of venueList" value="{{i._id}}">{{i?.venueName}}</option>
+                    </select>
+                    <div class="errorMsg" *ngIf="eStoreForm.venueData.dirty && eStoreForm.venueData.invalid">
+                      <span *ngIf="eStoreForm.venueData.hasError('required')">*Please select venue.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Store Name</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control round-input" [formControl]="eStoreForm.storeName" placeholder="Enter Store Name" />
+                    <div class="errorMsg" *ngIf="eStoreForm.storeName.dirty && eStoreForm.storeName.invalid">
+                      <span *ngIf="eStoreForm.storeName.hasError('required')">*Please enter store name.</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Quantity</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" [formControl]="eStoreForm.quantity" placeholder="" />
+                    <div class="errorMsg" *ngIf="eStoreForm.quantity.dirty && eStoreForm.quantity.invalid">
+                      <span *ngIf="gStoreForm.quantity.hasError('required')">*Please enter quantity.</span>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="editStoreForm.invalid" (click)="updateStoreModal()">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End Edit-Store-->
+
+
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">Are you sure you want to delete this store?</p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="onDeleteStore()">YES</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- delete-modal-end -->

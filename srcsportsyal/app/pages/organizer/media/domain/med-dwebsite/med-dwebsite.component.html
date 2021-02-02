@@ -1,0 +1,699 @@
+<div class="wrapper">
+    <!-- Header Start  -->
+    <app-header></app-header>
+    <!-- Header End  -->
+    <div class="topBanner">
+        <div class="container">
+
+        </div>
+    </div>
+
+
+    <main class="main-container pt0 mt-min60">
+        <div class="container">
+            <div class="content-box bg-gray">
+                <form [formGroup]='mainForm'>
+                    <div class="custom-breadcrumb mt0 custom-breadcrumb1">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item "
+                                [ngClass]="{'active': currUrl == 'organizer/domainCustomization'}"
+                                [routerLink]="['/organizer/domainCustomization']">Customization</a>
+
+                            <a class="breadcrumb-item "
+                                [ngClass]="{'active': currUrl == 'organizer/domainWebConfiguration'}"
+                                [routerLink]="['/organizer/domainWebConfiguration']"> Configure </a>
+                            <a class="breadcrumb-item active"
+                                [ngClass]="{'active': currUrl == 'organizer/dWebConfiguration'}"
+                                [routerLink]="['/organizer/dWebConfiguration']">Website Configuration </a>
+
+                        </nav>
+                    </div>
+                    <div class="content-box-filter custom-sectionsh">
+                        <h2 class="content-box-head">Widgets</h2>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable a list of your files on the homepage</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable a list of your competitions on the homepage</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable a gallery with the last images of your albums on the homepage</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable links to download mobile apps in the sidebar</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable a button in the sidebar so they can contact you</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable latest news ticker</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable a top bar with images of your competitions' teams/participants</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable a calendar of your matches in the sidebar</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="content-box-filter custom-sectionsh mt-2">
+                            <h2 class="content-box-head">
+                                Slider</h2>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="content-box-filter">
+                                        <span class="custom-checkbox"><input type="checkbox" formControlName="checkbox1"
+                                                (change)="toggleVisibility($event,sliderId1)" id="check1">
+                                            <label for="check1"> Delete</label>
+                                        </span>
+                                        <figure>
+                                            <div class="profile-img shop-configruration" id="profile_img">
+                                                <i class="fa fa-times" (click)="removeImage(imageSrc)"
+                                                    aria-hidden="false"><img
+                                                        [src]="imageSrc || 'assets/images/teamindia.jpg'"
+                                                        style="max-width:300px;max-height:113px;" /></i>
+                                                <span class="camera fa fa-pencil-alt">
+                                                    <input name="imageUrl" style="padding-top:35px;padding-left:35px;"
+                                                        type="file" accept="image/png,image/jpeg"
+                                                        (change)="handleInputChange($event)" />
+                                                </span>
+                                            </div>
+                                        </figure>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input class="form-control" maxlength="64"
+                                                    (keypress)="service.preventSpace($event)" type="text"
+                                                    formControlName="Link1" placeholder="Link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="content-box-filter">
+                                        <span class="custom-checkbox"><input type="checkbox" formControlName="checkbox2"
+                                                (change)="toggleVisibility($event, sliderId2)" id="check2">
+                                            <label for="check2"> Delete</label>
+                                        </span>
+                                        <figure>
+                                            <div class="profile-img shop-configruration" id="profile_img">
+                                                <i class="fa fa-times" (click)="removeImage(imageSrc1)"
+                                                    aria-hidden="true"><img
+                                                        [src]="imageSrc1 || 'assets/images/teamindia.jpg'"
+                                                        style="max-width:300px;max-height:113px;" /></i>
+                                                <span class="camera fa fa-pencil-alt"><input name="imageUrl"
+                                                        style="padding-top:35px;padding-left:35px" type="file"
+                                                        accept="image/png,image/jpeg"
+                                                        (change)="handleInputChange1($event)" /></span>
+                                                <!-- <img src="assets/images/teamindia.jpg">
+                                      <span class="camera fa fa-pencil-alt"><input type="file" formControlName="Image2"></span> -->
+                                            </div>
+                                        </figure>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input class="form-control" maxlength="64"
+                                                    (keypress)="service.preventSpace($event)" type="text"
+                                                    formControlName="Link2" placeholder="Link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="content-box-filter">
+                                        <span class="custom-checkbox"><input type="checkbox" formControlName="checkbox3"
+                                                (change)="toggleVisibility($event, sliderId3)" id="check3">
+                                            <label for="check3"> Delete</label>
+                                        </span>
+                                        <figure>
+                                            <div class="profile-img shop-configruration" id="profile_img">
+                                                <i class="fa fa-times" (click)="removeImage(imageSrc2)"
+                                                    aria-hidden="true"><img
+                                                        [src]="imageSrc2 || 'assets/images/teamindia.jpg'"
+                                                        style="max-width:300px;max-height:113px;" /></i>
+                                                <span class="camera fa fa-pencil-alt"><input name="imageUrl"
+                                                        style="padding-top:35px;padding-left:35px" type="file"
+                                                        accept="image/png,image/jpeg"
+                                                        (change)="handleInputChange2($event)" /></span>
+                                                <!-- <img src="assets/images/teamindia.jpg">
+                                      <span class="camera fa fa-pencil-alt"><input type="file" formControlName="Image3"></span> -->
+                                            </div>
+                                        </figure>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input class="form-control" maxlength="64"
+                                                    (keypress)="service.preventSpace($event)" type="text"
+                                                    formControlName="Link3" placeholder="Link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="content-box-filter">
+                                        <span class="custom-checkbox"><input type="checkbox" formControlName="checkbox4"
+                                                (change)="toggleVisibility($event, sliderId4)" id="check4">
+                                            <label for="check4"> Delete</label>
+                                        </span>
+                                        <figure>
+                                            <div class="profile-img shop-configruration" id="profile_img">
+                                                <i class="fa fa-times" (click)="removeImage(imageSrc3)"
+                                                    aria-hidden="true"><img
+                                                        [src]="imageSrc3 || 'assets/images/teamindia.jpg'"
+                                                        style="max-width:300px;max-height:113px;" /></i>
+                                                <span class="camera fa fa-pencil-alt"><input name="imageUrl"
+                                                        style="padding-top:35px;padding-left:35px" type="file"
+                                                        accept="image/png,image/jpeg"
+                                                        (change)="handleInputChange3($event)" /></span>
+                                                <!-- <img src="assets/images/teamindia.jpg">
+                                      <span class="camera fa fa-pencil-alt"><input type="file" formControlName="Image4"></span> -->
+                                            </div>
+                                        </figure>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input class="form-control" maxlength="64"
+                                                    (keypress)="service.preventSpace($event)" type="text"
+                                                    formControlName="Link4" placeholder="Link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="content-box-filter">
+                                        <span class="custom-checkbox"><input type="checkbox" formControlName="checkbox5"
+                                                (change)="toggleVisibility($event, sliderId5)" id="check5">
+                                            <label for="check5"> Delete</label>
+                                        </span>
+                                        <figure>
+                                            <div class="profile-img shop-configruration" id="profile_img">
+                                                <i class="fa fa-times" (click)="removeImage(imageSrc4)"
+                                                    aria-hidden="true"><img
+                                                        [src]="imageSrc4 || 'assets/images/teamindia.jpg'"
+                                                        style="max-width:300px;max-height:113px;" /></i>
+                                                <span class="camera fa fa-pencil-alt"><input name="imageUrl"
+                                                        style="padding-top:35px;padding-left:35px" type="file"
+                                                        accept="image/png,image/jpeg"
+                                                        (change)="handleInputChange4($event)" /></span>
+                                                <!-- <img src="assets/images/teamindia.jpg">
+                                      <span class="camera fa fa-pencil-alt"><input type="file" formControlName="Image5"></span> -->
+                                            </div>
+                                        </figure>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input class="form-control" maxlength="64"
+                                                    (keypress)="service.preventSpace($event)" type="text"
+                                                    formControlName="Link5" placeholder="Link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="content-box-filter">
+                                        <span class="custom-checkbox"><input type="checkbox" formControlName="checkbox6"
+                                                (change)="toggleVisibility($event, sliderId6)" id="check6">
+                                            <label for="check6"> Delete</label>
+                                        </span>
+                                        <figure>
+                                            <div class="profile-img shop-configruration" id="profile_img">
+                                                <i class="fa fa-times" (click)="removeImage(imageSrc5)"
+                                                    aria-hidden="true"><img
+                                                        [src]="imageSrc5 || 'assets/images/teamindia.jpg'"
+                                                        style="max-width:300px;max-height:113px;" /></i>
+                                                <span class="camera fa fa-pencil-alt"><input name="imageUrl"
+                                                        style="padding-top:35px;padding-left:35px" type="file"
+                                                        accept="image/png,image/jpeg"
+                                                        (change)="handleInputChange5($event)" /></span>
+                                                <!-- <img src="assets/images/teamindia.jpg">
+                                      <span class="camera fa fa-pencil-alt"><input type="file" formControlName="Image6"></span> -->
+                                            </div>
+                                        </figure>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input class="form-control" maxlength="64"
+                                                    (keypress)="service.preventSpace($event)" type="text"
+                                                    formControlName="Link6" placeholder="Link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                            <!-- </form> -->
+                        </div>
+                        <!-- <div> -->
+                        <button (click)="addSlider()" class=" btn btn-navy-blue max-WT-150 mL5">Save</button>
+                        <button (click)="editSlider()" class=" btn btn-navy-blue max-WT-150 mL5">Edit</button>
+                        <button (click)="deleteSlider()" class=" btn btn-navy-blue max-WT-150 mL5">Delete</button>
+                        <!-- </div> -->
+                    </div>
+
+                    <div class="content-box-filter custom-sectionsh mt-2">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h2 class="content-box-head">Secondary Menu</h2>
+                            </div>
+
+                            <div class="max-WT-150 d-flex align-items-center">
+                                <button class="btn btn btn-dark-blue-s max-WT-150" (click)="addBin()">Add</button>
+                            </div>
+                        </div>
+                        <form [formGroup]="binsForm" (ngSubmit)="addSecondaryMenuData()">
+                            <div formArrayName="bins">
+                                <div *ngFor="let bin of binsForm.get('bins').controls; let i=index">
+                                    <fieldset>
+                                        <div [formGroupName]="i">
+                                            <div class="row d-flex align-items-center">
+                                                <div for="secondaryImage" class="col-md-2">
+                                                    <figure>
+                                                        <div class="profile-img shop-configruration" id="profile_img">
+                                                            <img [src]="imageSrcImage[i] || 'assets/images/teamindia.jpg'"
+                                                                style="max-width:300px;max-height:113px;" />
+                                                            <span class="camera fa fa-pencil-alt"><input name="imageUrl"
+                                                                    style="padding-top:35px;padding-left:35px"
+                                                                    (click)="Indexxx(i)" type="file"
+                                                                    accept="image/png,image/jpeg"
+                                                                    (change)="handleInputChangeImage($event, i)" /></span>
+                                                        </div>
+                                                    </figure>
+                                                </div>
+                                                <div for="order" class="col-md-3">
+                                                    <input formControlName="order" maxlength="64"
+                                                        (keypress)="preventSpace($event, i)" (click)="Indexxx(i)"
+                                                        class="form-control" type="text" placeholder="Order">
+                                                </div>
+                                                <div for="secondaryMenuName" class="col-md-3">
+                                                    <input formControlName="secondaryMenuName" (click)="Indexxx(i)"
+                                                        maxlength="64" (keypress)="preventSpace($event, i)"
+                                                        class="form-control" type="text" placeholder="Name">
+                                                </div>
+                                                <div for="link" class="col-md-3">
+                                                    <input formControlName="link" maxlength="64"
+                                                        (keypress)="preventSpace($event, i)" (click)="Indexxx(i)"
+                                                        class="form-control" type="text" placeholder="Link">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="trash-icon">
+                                                        <i class="fas fa-trash-alt"
+                                                            (click)="deleteSecondaryMenuData(i)"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <!-- <div>
+                                    <button (click)="addSecondaryMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Save</button>
+                                    <button (click)="editSecondaryMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Edit</button>
+                                    <button (click)="deleteSecondaryMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Delete</button>
+                            </div> -->
+                        </form>
+                        <div>
+                            <button (click)="addSecondaryMenuData()"
+                                class=" btn btn-navy-blue max-WT-150 mL5">Save</button>
+                            <button (click)="editSecondaryMenuData()"
+                                class=" btn btn-navy-blue max-WT-150 mL5">Edit</button>
+                            <!-- <button (click)="deleteSecondaryMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Delete</button> -->
+                        </div>
+                        <!-- <div class="row d-flex align-items-center">
+                      <div class="col-md-2">
+                          <figure>
+                              <div class="profile-img shop-configruration" id="profile_img">
+                                  <img src="assets/images/shop-image2.jpg">
+                                  <span class="camera fa fa-pencil-alt"><input type="file"></span>
+                              </div>
+                          </figure>
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Order">
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Name">
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Link">
+                      </div>
+                      <div class="col-md-1">
+                          <div class="trash-icon">
+                              <i class="fas fa-trash-alt"></i></div>
+                      </div>
+                  </div> -->
+                    </div>
+                    <div class="content-box-filter custom-sectionsh mt-2">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h2 class="content-box-head">Footer</h2>
+                            </div>
+
+                            <div class="max-WT-150 d-flex align-items-center">
+                                <button class="btn btn btn-dark-blue-s max-WT-150" (click)="addBinn()">Add</button>
+                            </div>
+                        </div>
+                        <form [formGroup]="footerForm" (ngSubmit)="addFooterMenuData()">
+                            <div formArrayName="footerArray">
+                                <div *ngFor="let foot of footerForm.get('footerArray').controls; let i=index">
+                                    <fieldset>
+                                        <div [formGroupName]="i">
+                                            <div class="row d-flex align-items-center">
+                                                <div for="footerImage" class="col-md-2">
+                                                    <figure>
+                                                        <div class="profile-img shop-configruration" id="profile_img">
+                                                            <img [src]="imageSrcFooter[i] || 'assets/images/teamindia.jpg'"
+                                                                style="max-width:300px;max-height:113px;" />
+                                                            <span class="camera fa fa-pencil-alt"><input name="imageUrl"
+                                                                    style="padding-top:35px;padding-left:35px"
+                                                                    type="file" accept="image/png,image/jpeg"
+                                                                    (click)="Indexx(i)"
+                                                                    (change)="handleInputChangeFooter($event, i)" /></span>
+                                                        </div>
+                                                    </figure>
+                                                </div>
+                                                <div for="order" class="col-md-3">
+                                                    <input formControlName="order" maxlength="64"
+                                                        (keypress)="service.preventSpace($event)" (click)="Indexx(i)"
+                                                        class="form-control" type="text" placeholder="Order">
+                                                </div>
+                                                <div for="footerMenuName" class="col-md-3">
+                                                    <input formControlName="footerMenuName" maxlength="64"
+                                                        (keypress)="service.preventSpace($event)" (click)="Indexx(i)"
+                                                        class="form-control" type="text" placeholder="Name">
+                                                </div>
+                                                <div for="link" class="col-md-3">
+                                                    <input formControlName="link" maxlength="64"
+                                                        (keypress)="service.preventSpace($event)" (click)="Indexx(i)"
+                                                        class="form-control" type="text" placeholder="Link">
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="trash-icon">
+                                                        <i class="fas fa-trash-alt"
+                                                            (click)="deleteFooterMenuData(i)"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <!-- <div>
+                                    <button (click)="addFooterMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Save</button>
+                                    <button (click)="editFooterMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Edit</button>
+                                    <button (click)="deleteFooterMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Delete</button>
+                            </div> -->
+                        </form>
+                        <div>
+                            <button (click)="addFooterMenuData()"
+                                class=" btn btn-navy-blue max-WT-150 mL5">Save</button>
+                            <button (click)="editFooterMenuData()"
+                                class=" btn btn-navy-blue max-WT-150 mL5">Edit</button>
+                            <!-- <button (click)="deleteFooterMenuData()" class=" btn btn-navy-blue max-WT-150 mL5">Delete</button> -->
+                        </div>
+                        <!-- <div class="row d-flex align-items-center">
+                        <div class="col-md-2">
+                            <figure>
+                                <div class="profile-img shop-configruration" id="profile_img">
+                                    <img src="assets/images/shop-image2.jpg">
+                                    <span class="camera fa fa-pencil-alt"><input type="file"></span>
+                                </div>
+                            </figure>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control" type="text" placeholder="Order">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control" type="text" placeholder="Name">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-control" type="text" placeholder="Link">
+                        </div>
+                        <div class="col-md-1">
+                            <div class="trash-icon">
+                                <i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div> -->
+                    </div>
+                    <!-- <div class="content-box-filter custom-sectionsh mt-2">
+                  <div class="d-flex justify-content-between">
+                      <div>
+                          <h2 class="content-box-head">
+                              Fotter</h2>
+                      </div>
+
+                      <div class="max-WT-150 d-flex align-items-center"> <button
+                              class="btn btn btn-dark-blue-s max-WT-150">
+                              Add
+                          </button></div>
+                  </div>
+
+                  <div class="row d-flex align-items-center">
+                      <div class="col-md-2">
+                          <figure>
+                              <div class="profile-img shop-configruration" id="profile_img">
+                                  <img src="assets/images/shop-image2.jpg">
+                                  <span class="camera fa fa-pencil-alt"><input type="file"></span>
+                              </div>
+                          </figure>
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Order">
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Name">
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Link">
+                      </div>
+                      <div class="col-md-1">
+                          <div class="trash-icon">
+                              <i class="fas fa-trash-alt"></i></div>
+                      </div>
+                  </div>
+                  <div class="row d-flex align-items-center">
+                      <div class="col-md-2">
+                          <figure>
+                              <div class="profile-img shop-configruration" id="profile_img">
+                                  <img src="assets/images/shop-image2.jpg">
+                                  <span class="camera fa fa-pencil-alt"><input type="file"></span>
+                              </div>
+                          </figure>
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Order">
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Name">
+                      </div>
+                      <div class="col-md-3">
+                          <input class="form-control" type="text" placeholder="Link">
+                      </div>
+                      <div class="col-md-1">
+                          <div class="trash-icon">
+                              <i class="fas fa-trash-alt"></i></div>
+                      </div>
+                  </div>
+              </div> -->
+                    <div class="content-box-filter custom-sectionsh mt-2">
+                        <h2 class="content-box-head mb-4">
+
+                            Intigration With Facebook</h2>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Page of Facebook</p>
+                            </li>
+                            <li class="max-WT-300">
+                                <input class="form-control" [(ngModel)]="facebookLink" formControlName="facebook"
+                                    maxlength="64" (keypress)="service.preventSpace($event)" type="text" placeholder="">
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable icon with link to your profile in the sidebar</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-box-filter custom-sectionsh mt-2">
+                        <h2 class="content-box-head mb-4">
+                            Intigration With Instagram</h2>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Profile of Instagram</p>
+                            </li>
+                            <li class="max-WT-300">
+                                <input class="form-control" [(ngModel)]="instagramLink" formControlName="instagram"
+                                    maxlength="64" (keypress)="service.preventSpace($event)" type="text" placeholder="">
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable icon with link to your profile in the sidebar</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-box-filter custom-sectionsh mt-2">
+                        <h2 class="content-box-head mb-4">
+                            Intigration With Twitter</h2>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Profile of Instagram</p>
+                            </li>
+                            <li class="max-WT-300">
+                                <input class="form-control" [(ngModel)]="twitterLink" formControlName="twitter"
+                                    maxlength="64" (keypress)="service.preventSpace($event)" type="text" placeholder="">
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable icon with link to your profile in the sidebar</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-box-filter custom-sectionsh mt-2">
+                        <h2 class="content-box-head mb-4">
+                            Intigration With Google Analytics</h2>
+                        <ul class="widgets-pra-sh ">
+                            <li>
+                                <p>Profile of Instagram</p>
+                            </li>
+                            <li class="max-WT-300">
+                                <input class="form-control" [(ngModel)]="googleLink" formControlName="googleanalytics"
+                                    maxlength="64" (keypress)="service.preventSpace($event)" type="text" placeholder="">
+
+                            </li>
+                        </ul>
+                        <ul class="widgets-pra-sh">
+                            <li>
+                                <p>Enable icon with link to your profile in the sidebar</p>
+                            </li>
+                            <li><label><input type="checkbox" class="ios-switch green  bigswitch"
+                                        (change)="toggleVisibility1($event)" checked />
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </label>
+
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <!-- <div *ngFor="let data of sliderId" class="text-right calendar-action mt30"> -->
+                    <div class="text-right calendar-action mt30">
+                        <button (click)="addFacebookLink()" class=" btn btn-navy-blue max-WT-150 mL5">Save</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+
+
+    <!--   Footer  Start -->
+    <app-footer></app-footer>
+    <!--   Footer  End -->
+
+</div>

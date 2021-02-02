@@ -1,0 +1,47 @@
+<div class="logo_block">
+    <img *ngIf="!membershipDetail.imageURL" src="assets/images/follow-img.png">
+    <img *ngIf="membershipDetail.imageURL" src="{{membershipDetail.imageURL}}">
+
+</div>
+<div class="following_btn text-right"><button type="button" class="btn btn-blue" (click)='unfollowModal()'><i class="far fa-star"></i> Following</button></div>
+<div class="heading-block text-center">
+    <h2 class="heading_a">{{membershipDetail.membershipName}}</h2>
+    <p class="dark-grey-txt">{{membershipDetail.clubName}}</p>
+    <p class="txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took.</p>
+</div>
+
+<div class="fixture-inner">
+    <div class="custom-breadcrumb">
+        <nav class="breadcrumb">
+            <span class="breadcrumb-item active">{{membershipDetail.clubName}}</span>
+            <a [ngClass]="{'headerActive': pageName == 'service-details'}" class="breadcrumb-item" [routerLink]="['/player/service-details', membershipId, organizerId,serviceId]" [queryParams]="{ serId: serviceId}"> Service</a>
+            <a [ngClass]="{'headerActive': pageName == 'media'}" class="breadcrumb-item" [routerLink]="['/player/media', membershipId, organizerId, 2]" [queryParams]="{ serId: serviceId}"> Media</a>
+            <a [ngClass]="{'headerActive': pageName == 'product'}" class="breadcrumb-item" [routerLink]="['/player/product', membershipId, organizerId, 2]" [queryParams]="{ serId: serviceId}"> Products</a>
+            <a [ngClass]="{'headerActive': pageName == 'playerMemberSponsor'}" class="breadcrumb-item" [routerLink]="['/player/playerMemberSponsor', membershipId]" [queryParams]="{ serId: serviceId}"> Sponsor</a>
+            <a [ngClass]="{'headerActive': pageName == 'playerMemFinancial'}" class="breadcrumb-item" [routerLink]="['/player/playerMemFinancial', membershipId]" [queryParams]="{ serId: serviceId}"> Financial</a>
+        </nav>
+    </div>
+</div>
+<!-- detele modal -->
+<div class="modal fade common-modal" id="unfollow_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-500" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" action="profile-with-card.html">
+                <div class="modal-body text-center">
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="text-center modal-text-s">Are you sure you want to unfollow this competition?</p>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="unfollow()">YES</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- detele modal end -->

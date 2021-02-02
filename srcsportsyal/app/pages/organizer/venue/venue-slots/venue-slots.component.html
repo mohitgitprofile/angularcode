@@ -1,0 +1,213 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="search-block-main fiter-full-search">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                    [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                  <div class="input-group-append">
+                    <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-right">
+              <button class="btn btn btn-dark-blue-s" type="button" (click)="addSlotModal()">Add Slot</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Sport Name</th>
+                <th>No. of Slot</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!slotList.docs.length">
+                <td colspan="5" class="text-center">No data found.</td>
+              </tr>
+              <tr *ngFor="let item of slotList.docs  | paginate: { itemsPerPage: slotList.limit, currentPage: slotList.page,  totalItems: slotList.total } ">
+                <td>{{item.slots.sport}}</td>
+                <td>{{item.slots.noOfSlot}}</td>
+                <td>{{currency}} {{item.slots.price}}</td>
+                <td class="action-td">
+                  <a class="btn btn-info" (click)="editSlotModal(item.slots._id)" data-toggle="modal">
+                    <i class="far fa-edit"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block mt10 text-right" *ngIf="slotList.total > slotList.limit">
+            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="slotList.docs.length">
+            <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+              < slotList.total) ? (page.limit * page.currPage) : slotList.total || 0}} of {{slotList.total}} entries</span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                  <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+
+<!-- add-slot -->
+<div class="modal fade common-modal" id="add_slot" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="addSlotForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Slot</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Select Sport</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="gSlotForm.sportData">
+                      <option value="">Select Sport</option>
+                      <option *ngFor="let i of sportsList" value="{{i}}">{{i}}</option>
+                    </select>
+                    <div class="errorMsg" *ngIf="gSlotForm.sportData.dirty && gSlotForm.sportData.invalid">
+                      <span *ngIf="gSlotForm.sportData.hasError('required')">*Please select sport.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">No. of Slots</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" placeholder="" [formControl]="gSlotForm.numOfSlot" />
+                    <div class="errorMsg" *ngIf="gSlotForm.numOfSlot.dirty && gSlotForm.numOfSlot.invalid">
+                      <span *ngIf="gSlotForm.numOfSlot.hasError('required')">*Please enter no. of slot.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Price</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" placeholder="" [formControl]="gSlotForm.price" />
+                    <div class="errorMsg" *ngIf="gSlotForm.price.dirty && gSlotForm.price.invalid">
+                      <span *ngIf="gSlotForm.price.hasError('required')">*Please enter price.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" [disabled]="addSlotForm.invalid" (click)="addSlotFun()">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End add-slot-->
+
+<!-- edit-slot -->
+<div class="modal fade common-modal" id="edit_slot" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" [formGroup]="editSlotForm">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Edit Slot</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Select Sport</label>
+
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input" [formControl]="eStoreForm.sportData">
+                      <option value="">Select Sport</option>
+                      <option *ngFor="let i of sportsList" value="{{i}}">{{i}}</option>
+                    </select>
+                    <div class="errorMsg" *ngIf="eStoreForm.sportData.dirty && eStoreForm.sportData.invalid">
+                      <span *ngIf="eStoreForm.sportData.hasError('required')">*Please select sport.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">No. of Slots</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" placeholder="" [formControl]="eStoreForm.numOfSlot" />
+                    <div class="errorMsg" *ngIf="eStoreForm.numOfSlot.dirty && eStoreForm.numOfSlot.invalid">
+                      <span *ngIf="eStoreForm.numOfSlot.hasError('required')">*Please enter no. of slot.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Price</label>
+                  <div class="col-md-9">
+                    <input type="number" class="form-control round-input" placeholder="" [formControl]="eStoreForm.price" />
+                    <div class="errorMsg" *ngIf="eStoreForm.price.dirty && eStoreForm.price.invalid">
+                      <span *ngIf="eStoreForm.price.hasError('required')">*Please enter price.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" [disabled]="editSlotForm.invalid" (click)="updateSlotFun()">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End edit-slot-->
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="delete-slot" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">Are you sure you want to delete this slot?</p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="onDeleteSlot()">YES</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- delete-modal-end -->

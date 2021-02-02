@@ -1,0 +1,273 @@
+
+<div class="wrapper">
+    <!-- Header Start  -->
+    <app-header></app-header>
+    <!-- Header End  -->
+  
+    <div class="topBanner">
+        <div class="container">
+  
+        </div>
+    </div>
+     <main class="main-container pt0 mt-min60">
+              <div class="container">
+                 <div class="content-box bg-gray">
+                       <div class="custom-breadcrumb mt0 custom-breadcrumb1">
+                          <nav class="breadcrumb">
+                             <a class="breadcrumb-item " [ngClass]="{'active': currUrl == 'organizer/domainCustomization'}" [routerLink]="['/organizer/domainCustomization']"> Customization</a>
+                               <a class="breadcrumb-item " [ngClass]="{'active': currUrl == 'organizer/dConfigSection'}" [routerLink]="['/organizer/dConfigEditSection']">  Section </a>
+                               <a class="breadcrumb-item " [ngClass]="{'active': currUrl == 'organizer/dWebConfiguration'}" [routerLink]="['/organizer/dWebConfiguration']"> Website Configuration </a>
+                              
+                            </nav>
+                           </div>
+  
+                         <!-- <div class="content-box-filter">
+                            <h2 class="content-box-head">
+                                  Manage Section
+                            </h2>
+                               <div class="form-box p30">
+                                     <form [formGroup]="addMediaSectionForm" novalidate>
+                                       <div class="form-group">
+                                         <div class="row ">
+                                           <label class="control-label col-md-3 text-right">Section Name</label>
+                                           <div class="col-md-8">
+                                             <input type="text"formControlName="sectionName" class="form-control" placeholder="Section Name">
+                                           </div>
+                                         </div>
+                                       </div>
+                                       <div class="form-group">
+                                         <div class="row ">
+                                           <label class="control-label col-md-3 text-right">Priority</label>
+                                           <div class="col-md-8">
+                                             <div class="row priority-box">
+                                                 <div class="col-6">
+                                                       <input type="email"formControlName="priority" class="form-control" placeholder="Number">
+                                                     </div>
+                                                     <div class="col-1">
+                                                          <label class="control-label text-right status-label">Status</label>
+                                                     </div>
+                                               <div class="col-5">
+                                                 <select class="form-control select-arrow"  formControlName="status"  >
+                                                   <option value="">Select Status</option>
+                                                   <option value="Published">Published</option>
+                                                   <option value="Unpublished">Unpublished</option>
+                                                 </select>
+                                               </div>
+                                              
+                                             </div>
+                                           </div>
+                                         </div>
+                                       </div>
+                                       <div class="form-group">
+                                         <div class="row">
+                                          <div class="col-md-12 ml-4">
+                                              <div class="custom-checkbox clearfix">
+                                                    <input type="checkbox" id="check2">
+                                                    <label for="check2">Add this section to menu</label>
+                                              </div>
+                                          </div>
+                                          
+                                         </div>
+                                       </div>
+                                       <div class="form-group">
+                                           <div class="row">
+                                             <label class="control-label col-md-3 text-right">Menu</label>
+                                             <div class="col-md-8">
+                                               <input type="text" formControlName="menu" class="form-control" placeholder="Menu">
+                                             </div>
+                                           </div>
+                                         </div>
+                                         <div class="form-group">
+                                            <div class="row">
+                                                 <div class="col-md-2"></div>
+                                               <div class="col-md-3">
+                                                    <div class="control">
+                                                          <label class="radio">
+                                                            <input type="radio"  formControlName="formradio" name="content">
+                                                            Content
+                                                          </label>
+                                                          <label class="radio">
+                                                              <input type="radio" formControlName="formradio"  name="link">
+                                                              Link
+                                                            </label>
+                                                        </div>
+                                               </div>
+                                             
+                                            </div>
+                                         </div>
+                                         <div class="form-group">
+                                              <div class="row">
+                                                    <div class="col-md-2"></div>
+                                                 <div class="col-md-9"> 
+                                                  
+                                                      <input type="text" #link  class="form-control" placeholder="link" >
+                                                      <textarea class="form-control common-textarea"  #content  formControlName="content"></textarea>
+                                                    </div>
+                                              </div>
+                                         </div>
+                                         <div class="form-group mt-3">
+                                              <div class="row ">
+                                                <label class="control-label col-md-3 text-right">Choose File</label>
+                                                <div class="col-md-8">
+                                                   <div class="btn-browse">
+                                                    <input type="file" class="choose-btn" #fileInput>
+                                                 <button type="button" (click)="fileInput.click()" class="btn btn-navy-blue btn-block font_uni_sans ">
+                                                    
+                                                       Browse File
+                                                 </button>
+                                                 <p class="mt-2">
+                                                    <a href="#" class="mr-5">
+                                                          File.pdf
+                                                    </a>
+                                                    <a href="#">
+                                                          File.docx
+                                                    </a>
+                                                 </p>
+                                              
+                                              </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                             <div class="form-group">
+                                       <div class="row">
+                                           <div class="col-md-2"></div>
+                                     <div class="clearfix calendar-action mt30 text-center col-md-6">
+                             <button type="button" class="mb25 btn btn-gray max-WT-150"  [routerLink]="['/organizer/domainWebConfiguration']">Cancel</button>
+                             
+                             <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5"  (click)="postsApi()">Update</button>
+                          </div>
+                        </div>
+                                       </div>
+                                     </form>
+                                 </div>
+                         </div> -->
+  
+  
+                         <div class="content-box-filter">
+                          <h2 class="content-box-head">
+                                Manage Section
+                          </h2>
+                             <div class="form-box p30">
+                                   <form [formGroup]="addMediaSectionForm" novalidate>
+                                     <div class="form-group">
+                                       <div class="row ">
+                                         <label class="control-label col-md-3 text-right">Section Name</label>
+                                         <div class="col-md-8">
+                                           <input type="text" formControlName="sectionName" (keypress)="service.preventSpace($event)"class="form-control" placeholder="Section Name">
+                                         </div>
+                                       </div>
+                                     </div>
+                                     <div class="form-group">
+                                       <div class="row ">
+                                         <label class="control-label col-md-3 text-right">Priority</label>
+                                         <div class="col-md-8">
+                                           <div class="row priority-box">
+                                               <div class="col-6">
+                                                     <input type="email"formControlName="priority"(keypress)="service.toCheckSpaceChar($event)" class="form-control" placeholder="Number">
+                                                   </div>
+                                                   <div class="col-1">
+                                                        <label class="control-label text-right status-label">Status</label>
+                                                   </div>
+                                             <div class="col-5">
+                                               <select class="form-control select-arrow"  formControlName="status">
+                                                 <option value="">Select Status</option>
+                                                 <option value="Published">Published</option>
+                                                 <option value="Unpublished">Unpublished</option>
+                                               </select>
+                                             </div>
+                                            
+                                           </div>
+                                         </div>
+                                       </div>
+                                     </div>
+                                     <div class="form-group">
+                                       <div class="row">
+                                        <div class="col-md-12 ml-4">
+                                            <div class="custom-checkbox clearfix">
+                                                  <input type="checkbox" id="check2" value='false' formControlName="addSectionOption"  (change)='addSectionMenu($event)'>
+                                                  <label for="check2">Add this section to menu</label>
+                                            </div>
+                                        </div>
+                                        
+                                       </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <div class="row">
+                                           <label class="control-label col-md-3 text-right">Menu</label>
+                                           <div class="col-md-8">
+                                             <input type="text" formControlName="menu" (keypress)="service.preventSpace($event)" class="form-control" placeholder="Menu">
+                                           </div>
+                                         </div>
+                                       </div>
+                                       <div class="form-group">
+                                          <div class="row">
+                                               <div class="col-md-2"></div>
+                                             <div class="col-md-3">
+                                                  <div class="control">
+                                                        <label class="radio">
+                                                          <input type="radio" value="content"  (keypress)="service.preventSpace($event)" formControlName="selectContentLink" (click)="selectChange('content')">
+                                                          Content
+                                                        </label>
+                                                        <label class="radio">
+                                                            <input type="radio" value="link"  (keypress)="service.preventSpace($event)" formControlName="selectContentLink" (click)="selectChange(link)">
+                                                            Link
+                                                          </label>
+                                                      </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="form-group">
+                                            <div class="row">
+                                                  <div class="col-md-2"></div>
+                                               
+                                                  <div class="col-md-9" > 
+                                                
+                                                      <input type="text"(keypress)="service.preventSpace($event)"  *ngIf="this.addMediaSectionForm.controls['selectContentLink'].value === 'link'" class="form-control" formControlName="link" placeholder="link" >
+                                                      <textarea class="form-control common-textarea" (keypress)="service.preventSpace($event)" *ngIf="this.addMediaSectionForm.controls['selectContentLink'].value === 'content'"  formControlName="content"></textarea>
+                                                      <!-- <input type="text"  *ngIf="this.addMediaSectionForm.controls['selectContentLink'].value === 'link'" class="form-control" formControlName="content" placeholder="link" >
+                                                      <textarea class="form-control common-textarea" *ngIf="this.addMediaSectionForm.controls['selectContentLink'].value === 'content'"  formControlName="content"></textarea> -->
+                                                    </div>
+                                            </div>
+                                       </div>
+                                       <div class="form-group mt-3">
+                                            <div class="row ">
+                                              <label class="control-label col-md-3 text-right">Choose File</label>
+                                              <div class="col-md-8">
+                                                 <div class="btn-browse">
+                                                    <input type="file" (change)="fileChangeEvent($event)" class="form-control" style="width: 300px;" accept="application/pdf,application/msword,.doc,.docx" formControlName="fileUpload">
+                                                  <!-- <input type="file" class="choose-btn" #fileInput>
+                                               <button type="button" (click)="fileInput.click()" class="btn btn-navy-blue btn-block font_uni_sans ">
+                                                  
+                                                     Browse File
+                                               </button> -->
+                                               <p class="mt-2">
+                                                  <a href="#" [routerLink]="['/organizer/dConfigSection']" class="mr-5">
+                                                        File.pdf
+                                                  </a>
+                                                  <a href="#" [routerLink]="['/organizer/dConfigSection']">
+                                                        File.docx
+                                                  </a>
+                                               </p>
+                                            
+                                            </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                           <div class="form-group">
+                                     <div class="row">
+                                         <div class="col-md-2"></div>
+                                   <div class="clearfix calendar-action mt30 text-center col-md-6">
+                           <button type="button" class="mb25 btn btn-gray max-WT-150"  [routerLink]="['/organizer/domainWebConfiguration']">Cancel</button>
+                           <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5"  (click)="postsApi()">Update</button>
+                       
+                        </div>
+                      </div>
+                                     </div>
+                                   </form>
+                               </div>
+                       </div>
+                        </div>
+              </div>
+           </main>
+     <app-footer></app-footer>
+    </div>

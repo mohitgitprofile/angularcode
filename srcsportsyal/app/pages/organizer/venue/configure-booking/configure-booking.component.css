@@ -1,0 +1,23 @@
+.btn-primary {
+    color: #fff;
+    background-color:#faca29;
+    border-color: #faca29;
+}
+.select-venue-section{
+    padding-top: 8px;
+    margin-left: 6px;
+}
+.venue-dropdown{
+    display: flex;
+    justify-content: space-between;
+}
+.width-manage{
+    width: 32%;
+}
+.color-blue1{
+    color: #33727f;
+    font-weight: 600;
+}
+.btn-margin{
+    margin-right: 20px;
+}

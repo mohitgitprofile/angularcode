@@ -1,0 +1,443 @@
+<!--  Header Start -->
+<app-header></app-header>
+<!--  Header End -->
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container-common">
+    <div class="content-box bg-gray">
+      <!-- Subheader of Competition Configure -->
+      <app-comp-configure-header></app-comp-configure-header>
+      <!-- End Subheader of Competition Configure -->
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth pt20 pb20">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block mb20">
+                  <div class="input-group">
+                    <select [(ngModel)]="statusValue" [ngModelOptions]="{standalone: true}" class="form-control select-style1">
+                      <option value="">Select Status</option>
+                      <option value="APPROVED">Approved</option>
+                      <option value="PENDING">Pending</option>
+                    </select>
+                    <div class="input-group-append apply-btn">
+                      <button class="btn btn-dark-blue-s" type="button" (click)="filterStatus()">Apply</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="approvalListData.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Team</th>
+                <th>Creation Date</th>
+                <th>Location</th>
+                <th>Sports</th>
+                <th>Status</th>
+                <th class="action-td">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!list.approvalListData.docs || list.approvalListData.docs.length == 0">
+                <td colspan="9" class="text-center">No data found.</td>
+              </tr>
+              <tr *ngFor="let approval of list.approvalListData.docs | paginate: { itemsPerPage: list.approvalListData.limit, currentPage: list.approvalListData.page,  totalItems: list.approvalListData.total }">
+                <td>{{approval.Player.firstName+" "+approval.Player.lastName}}</td>
+                <td>{{approval.Player.email}}</td>
+                <td>{{approval.Player.countryCode+approval.Player.mobileNumber}}</td>
+                <td>{{approval.teamName || '- - -'}}</td>
+
+                <td>{{approval.createdAt.substring(0, 10)}}</td>
+                <td>{{approval.Comp.venue}}</td>
+                <td>{{approval.Comp.sports}}</td>
+                <td>{{approval.followStatus}}</td>
+                <td class="action-td">
+                  <button href="#delete-modal" type="button" data-toggle="modal" data-target="#delete-modal" class="btn btn-book red" (click)="deleteApproval(approval)">Delete</button>
+                  <button *ngIf="approval.followStatus != 'APPROVED'" type="button" data-toggle="modal" data-target="#edit_services" class="btn btn-book"
+                    (click)="approveFun(approval)">Approve</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="clearfix pagination-entity" >
+            <div class="pagination-block text-right" *ngIf="list?.approvalListData?.docs?.length">
+              <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+            </div>
+            <div class="entity-text">
+              <span>Showing {{list.approvalListData?.limit * (list.approvalListData?.page - 1) + 1}} to {{((list.approvalListData?.limit * list.approvalListData?.page) < list.approvalListData?.total)
+                ? (list.approvalListData?.limit * list.approvalListData?.page) : list.approvalListData?.total || 0}} entries</span>
+                  <select class="form-control select-style1 mw50" [(ngModel)]="limitChange" (change)="changeLimit()">
+                    <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                  </select>
+                  <span>entries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<!-- Footer Start -->
+<app-footer></app-footer>
+<!-- Footer End -->
+
+<!-- Modal Start -->
+<div class="modal fade" id="preview_booking_info" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-800" role="document">
+    <div class="modal-content">
+      <form class="booking-proceed-form">
+        <div class="modal-header d-block bdr-none pb0 clearfix">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body tab_pad_L60 tab_pad_R60">
+          <!-- <h5 class="modal-head mt0 mb20 text-center navy-blue font_uni_sans" id="exampleModalLabel">Booking Form</h5> -->
+          <div class="modal_booking_table">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>21/03/2018</td>
+                    <td>6:00 PM</td>
+                    <td>8:00 PM</td>
+                    <td>8:00 PM</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">Outside 7 - Aside</td>
+                    <td></td>
+                  </tr>
+
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3">Total</td>
+                    <td>$300</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="center-box booking-field hide-tag mb30">
+            <div class="row mb15">
+              <label class="control-label col-md-3">Name</label>
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Email ID</label>
+              <div class="col-md-6">
+                <input type="email" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Phone No.</label>
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+            <div class="row mb15">
+              <label class="control-label col-md-3">Payment Method</label>
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="" />
+              </div>
+            </div>
+
+          </div>
+
+          <div class="clearfix calendar-action">
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left">Back to calender</button>
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right proceed-btn">Proceed</button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- preview_booking_info End -->
+
+
+
+<div class="modal fade" id="booking_calander" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog max-WT-900" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header d-block bdr-none pb0 clearfix">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5 class="modal-head mt0 mb5" id="exampleModalLabel">Booking</h5>
+        <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <div class="filter-box d-inline-block">
+          <label class="control-label">Space</label>
+          <select class="form-control select-style1 d-inline-block">
+            <option>Areobics</option>
+          </select>
+        </div>
+        <!-- global-datepicker Start -->
+        <div class="global-datepicker-block mt25">
+          <div id="demoPicker2" class="global-datepicker"></div>
+
+          <div class="clearfix calendar-action">
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left">Legend</button>
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right" data-toggle="modal" data-target="#book_slot">Book
+              (0 Slots)</button>
+          </div>
+
+        </div>
+        <!-- global-datepicker End -->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!-- booking_calander End -->
+
+<div class="modal fade" id="booking_legend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog max-WT-900" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header d-block bdr-none pb0 clearfix">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5 class="modal-head mt0 mb5" id="exampleModalLabel">Booking</h5>
+        <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <div class="filter-box d-inline-block">
+          <label class="control-label">Space</label>
+          <select class="form-control select-style1 d-inline-block">
+            <option>Areobics</option>
+          </select>
+        </div>
+        <!-- global-datepicker Start -->
+        <div class="global-datepicker-block mt25">
+          <div id="demoPicker" class="global-datepicker"></div>
+
+          <ul class="color-instruction hide-tag">
+            <li>Available<span class="color-code f-right"></span></li>
+            <li><span class="color-code f-left green-bg"></span>Today</li>
+            <li>Fully Booked<span class="color-code f-right red-bg"></span></li>
+            <li><span class="color-code f-left yellow-bg "></span>Partly Booked</li>
+            <li>Day Off<span class="color-code f-right magenta-bg"></span></li>
+            <li><span class="color-code f-left gray-bg"></span>Past</li>
+          </ul>
+          <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <div class="clearfix calendar-action">
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left openlegend">Legend</button>
+            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right" data-toggle="modal" data-target="#book_slot">Book
+              (0 Slots)</button>
+          </div>
+
+        </div>
+        <!-- global-datepicker End -->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!-- booking_calander End -->
+
+<!-- Modal Start -->
+<div class="modal fade" id="book_slot" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form class="book-slot-form">
+        <div class="modal-header d-block bdr-none pb0 clearfix">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="head_lagend mb25">Select number of courts</p>
+          <div class="radio_btn radio-inline ">
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check11" checked="" type="radio" />
+              <label for="check11">1</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check12" type="radio" />
+              <label for="check12">2</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check13" checked="" type="radio" />
+              <label for="check13">3</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check14" type="radio" />
+              <label for="check14">4</label>
+            </div>
+            <div class="custom-radio-btn">
+              <input name="exchange" id="check15" type="radio" />
+              <label for="check15">5</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-block text-center bdr-none">
+          <button type="submit" class="mb25 btn btn-navy-blue max-WT-170">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- book_slot End -->
+
+<!-- add-venue -->
+<div class="modal fade common-modal" id="add_venue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">ADD Season</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Venue</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control round-input" placeholder="" />
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Status</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input">
+                      <option>Status</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Club</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input">
+                      <option>Select Club</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" data-toggle="modal" data-target="#edit_venue">Create</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End add-venue-->
+
+<!-- edit-venue -->
+<div class="modal fade common-modal" id="edit_venue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT Season</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+
+              <div class="col-md-12">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Venue</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control round-input" placeholder="Barcelon" />
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Status</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input">
+                      <option>Status</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Club</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input">
+                      <option>Select Club</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right">Create</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Modal End edit-venue-->
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">Are you sure you want to delete?</p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="confirmDelete()">YES</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- delete-modal-end -->

@@ -1,0 +1,163 @@
+<!--  Header Start -->
+<app-header></app-header>
+<!-- Header  End    -->
+<div class="topBanner">
+   <div class="container">
+   </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+       <div class="content-box bg-gray">
+          <h2 class="content-box-head">Services</h2>
+          <div class="content-box-filter">
+             <form class="filter-form fullwidth" [formGroup]= 'filterForm'>
+                 <div class="row">
+                
+                  
+                        <div class="col-md-6 col-lg-3">
+                            <div class="filter-box ">
+                              <label class="control-label">Membership Name</label>
+                               <select class="form-control select-style1" formControlName = "membershipname" (change)="getMembershipId($event)">
+                                 <option value="">Select Membership</option>
+                                  <option  *ngFor="let i of memberlist"  value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                                </select>
+                             </div>
+                           </div>
+                           <div class="col-md-6 col-lg-3">
+                              <div class="filter-box ">
+                                <label class="control-label">Service Name</label>
+                                 <select class="form-control select-style1" formControlName = "servicename" (change)="getServiceId($event)">
+                                   <option value="">Select Service</option>
+                                    <option  *ngFor="let i of servicelist"  value="{{i?.serviceName}}">{{i?.serviceName}}</option>
+                                  </select>
+                               </div>
+                             </div>
+                        <div class="col-md-6 col-lg-3">
+                          <div class="filter-box">
+                            <label class="control-label">From</label>
+                            <my-date-picker name="startdate" formControlName='startDate' [options]="myDatePickerOptions" (dateChanged)="onChange($event)"  placeholder="start Date" ></my-date-picker>
+                          </div>
+                         </div>
+               
+                
+               
+                
+                        <div class="col-md-6 col-lg-3">
+                          <div class="filter-box">
+                            <label class="control-label">TO</label>
+                            <my-date-picker name="enddate" [disabled]='beDisable' formControlName='endDate' [options]="toDate"  placeholder="end Date" ></my-date-picker> 
+                          </div>
+                         </div>
+                        <div class="col-md-6 col-lg-3">
+                          <div class="button-box text-left">
+                             <button class="btn btn btn-dark-blue-s max-WT-150" [disabled]="!filterForm.valid" (click)="createGraphApi(filterForm.value)">Generate</button>
+                           </div>
+                         </div>
+               
+               
+                 </div>
+             </form>
+          </div>
+          <div class="graph-section mt20 mb20" *ngIf="graphData == ''"> 
+            <h1 *ngIf="data ==''">Please Fill the Above Fields to get Graph</h1>
+         </div>
+         <div class="graph-section mt20 mb20" *ngIf="graphData == ''">
+           <h1 *ngIf="data !=''">{{data}}</h1></div>
+          <div class="graph-section mt20 mb20" *ngIf="graphData != ''">
+                 <div style="display: block">
+                    <canvas baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [chartType]="pieChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+                  </div>
+          </div>
+          <div class="table-block mt10 white-bg" *ngIf="graphData != ''">
+             <div class="table-responsive">
+                <table class="table table-bordered large-table text-center">
+                   <thead>
+                      <tr class="table-head-bg">
+                         <td>Membership Name</td>
+                         <th>Service Name</th>
+                         <th>All Booking</th>
+                         <th>Confirm Booking</th>
+                         <th>Pending Booking</th>
+                         <!-- <th>Confirmed Bookings</th>
+                         <th>Pending Bookings</th>
+                         <th>Cancelled Bookings</th> -->
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr>
+                         <td>{{membershipname}}</td>
+                         <td>{{servicename}}</td>
+                         <td>{{data1}}</td>
+                         <td>{{data2}}</td>
+                         <td>{{data3}}</td>
+                       
+                      </tr>
+                      <!-- <tr>
+                         <td>Martial Arts Academy - Ewan Residences</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>0</td>
+                      </tr>
+                      <tr>
+                         <td>Martial Arts Academy - Ewan Residences</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>0</td>
+                      </tr>
+                      <tr>
+                         <td>Martial Arts Academy - Ewan Residences</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>0</td>
+                      </tr>
+                      <tr>
+                         <td>Martial Arts Academy - Ewan Residences</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>1</td>
+                         <td>0</td>
+                      </tr> -->
+                   </tbody>
+                </table>
+             </div>
+             <!-- <div class="clearfix pagination-entity">
+                <div class="pagination-block text-right">
+                   <ul class="pagination">
+                      <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-caret-left"></i> Prev</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#">5</a></li>
+                      <li class="page-item"><a class="page-link" href="#">6</a></li>
+                      <li class="page-item"><a class="page-link" href="#">Next <i class="fas fa-caret-right"></i></a></li>
+                   </ul>
+                </div>
+                <div class="entity-text">
+                   <span>showing 1 to 6 entries</span>
+                   <select class="form-control select-style1 mw50">
+                      <option>4</option>
+                      <option>4</option>
+                      <option>4</option>
+                   </select>
+                   <span>entries</span>
+                </div>
+             </div> -->
+          </div>
+       </div>
+       <!-- Max With Box End -->
+    </div>
+ </main>
+ <!-- main End -->
+ <!-- Footer Start -->
+ <app-footer></app-footer>
+ <!-- Footer End -->

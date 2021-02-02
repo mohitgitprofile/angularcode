@@ -1,0 +1,419 @@
+<div class="wrapper">
+  <!-- Header Start -->
+  <app-header></app-header>
+  <!-- Header End -->
+  <div class="topBanner">
+     <div class="container">
+     </div>
+  </div>
+  <!-- main Start -->
+  <!-- main Start -->
+  <main class="main-container pt0 mt-min60">
+     <div class="container">
+        <div class="content-box bg-gray">
+           <app-comp-configure-header></app-comp-configure-header>
+           <div class="content-box-filter">
+              <div class="btn_row mb20 teamComp">
+                 <button type="button" class="btn" [ngClass]="{'active': tab == 'team'}" (click)="tabChange('team')">Teams</button>
+                 <button type="button" class="btn" [ngClass]="{'active': tab == 'player'}" (click)="tabChange('player')">Player</button>
+              </div>
+              <form class="filter-form fullwidth">
+                 <div class="row">
+                    <div class="col-md-8">
+                       <div class="search-block-main fiter-full-search">
+                          <div class="search_block">
+                             <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="filter.search" name="search" (keyup)="onSearch($event)" autocomplete="off">
+                                <div class="input-group-append">
+                                   <button class="btn btn_search" type="button" (click)="searchFun()" ><i class="fas fa-search"></i> Search</button>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-sm-4">
+                       <div class="text-right">
+                          <!-- <button class="btn btn btn-dark-blue-s max-WT-100" *ngIf="tab == 'team' && competitionDetail.sportType != 'single'" type="button" data-toggle="modal" (click)="openTeamModal('addTeam')" >Add Team </button> -->
+                          <button class="btn btn btn-dark-blue-s max-WT-100" *ngIf="tab == 'team'" type="button" data-toggle="modal" (click)="openTeamModal('addTeam')" >Add Team </button>
+                          <button class="btn btn btn-dark-blue-s max-WT-100"  *ngIf="tab == 'player'" type="button" data-target="#edit_Player" data-toggle="modal">Add Player</button>
+                       </div>
+                    </div>
+                 </div>
+              </form>
+           </div>
+           <div class="table-block mt10 white-bg" *ngIf="tab == 'team'" >
+              <div class="table-responsive">
+                 <table class="table table-bordered large-table text-center">
+                    <thead>
+                       <tr class="table-head-bg">
+                          <th>Team Name</th>
+                          <th>Player Count</th>
+                          <th>Email</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                       <tr *ngIf="!getTeamList.docs.length">
+
+                          <td class="text-center" colspan="5">No Data Found.</td>
+
+                       </tr>
+                       <tr *ngFor="let item of getTeamList.docs | paginate: { itemsPerPage: getTeamList.limit, currentPage: getTeamList.page,  totalItems: getTeamList.total, id:'getTeamList' } ">
+                          <td>{{item?.teamName}}</td>
+                          <td>{{item?.playerCount}}</td>
+                          <td>{{item?.email}}</td>
+                          <td>{{item?.status}}</td>
+                          <td class="action-td">
+                             <button class="btn btn-info" data-toggle="modal" data-target="#create_team" (click)="openTeamModal(item,'editTeam')"><i class="far fa-edit"></i></button>
+                             <button class="btn btn-danger" data-target="#team-delete" data-toggle="modal" (click)="deleteTeam(item._id)"><i class="far fa-trash-alt"></i></button>
+                          </td>
+                          <!-- <td><a class="btn btn-navy-blue btn-sm" [routerLink]="['/organizer/compConfigure', item._id, '1']">Configure</a></td> -->
+                       </tr>
+                    </tbody>
+                 </table>
+              </div>
+              <div class="clearfix pagination-entity">
+                <!-- *ngIf="getTeamList.total > getTeamList.limit" -->
+                 <div class="pagination-block text-right" *ngIf="getTeamList.docs.length" >
+                    <pagination-controls (pageChange)="onPageChange($event)" id="getTeamList"></pagination-controls>
+                 </div>
+                 <div class="entity-text" *ngIf="getTeamList.docs.length">
+                    <span> Showing {{filter.limit * (filter.currPage - 1) + 1 || 0}} to {{((filter.limit * filter.currPage) < getTeamList.total) ? (filter.limit * filter.currPage) : getTeamList.total || 0}} of {{getTeamList.total}}  entries</span>
+                    <select  class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                    <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                    </select>
+                    <span>entries</span>
+                 </div>
+              </div>
+           </div>
+           <div class="table-block mt10 white-bg"*ngIf="tab == 'player'">
+              <div class="table-responsive">
+                 <table class="table table-bordered large-table text-center">
+                    <thead>
+                       <tr class="table-head-bg">
+                          <th>Name</th>
+                          <th>DOB</th>
+                          <th>Place of Birth</th>
+                          <th>Phone</th>
+                          <th>Gender</th>
+                          <th>Email</th>
+                          <th>Status</th>
+                          <th>Team</th>
+                          <th>Action</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                       <tr *ngIf="!getPlayerList.docs.length">
+                          <td class="text-center" colspan="9">No Data Found.</td>
+
+                       </tr>
+                       <tr *ngFor="let item of getPlayerList.docs | paginate: { itemsPerPage: getPlayerList.limit, currentPage: getPlayerList.page,  totalItems: getPlayerList.total, id:'getPlayerList' } ">
+                          <td>{{item?.Player.firstName}}  {{item?.Player.lastName}}</td>
+                          <td>{{item?.Player.dob}}</td>
+                          <td>{{item?.Player.nationality}}</td>
+                          <td>{{item?.Player.mobileNumber}}</td>
+                          <td>{{item?.Player.gender}}</td>
+                          <td>{{item?.Player.email}}</td>
+                          <td>{{item?.status}}</td>
+                          <td>{{item?.teamName}}</td>
+                          <td class="action-td">
+                             <button class="btn btn-info" data-toggle="modal" data-target="#edit_Player" (click)="openPlayerModal(item,'editPlayer')"><i class="far fa-edit"></i></button>
+                             <button class="btn btn-danger" data-target="#player-delete" data-toggle="modal" (click)="deletePlayer(item.Player._id)"><i class="far fa-trash-alt"></i></button>
+                          </td>
+                       </tr>
+                    </tbody>
+                 </table>
+              </div>
+              <div class="clearfix pagination-entity">
+                 <div class="clearfix pagination-entity">
+                    <!-- *ngIf="getPlayerList.total > getPlayerList.limit" -->
+                    <div class="pagination-block text-right" *ngIf="getPlayerList.docs.length">
+                      <pagination-controls (pageChange)="onPageChangePlayer($event)" id="getPlayerList"></pagination-controls>
+                    </div>
+                    <div class="entity-text" *ngIf="getPlayerList.docs.length">
+                       <span> Showing {{filterPlayer.limitPlayer * (filterPlayer.currPagePlayer - 1) + 1 || 0}} to {{((filterPlayer.limitPlayer * filterPlayer.currPagePlayer) < getPlayerList.total) ? (filterPlayer.limitPlayer * filterPlayer.currPagePlayer) : getPlayerList.total || 0}} of {{getPlayerList.total}}  entries</span>
+                       <select  class="form-control select-style1 mw50" [(ngModel)]="filterPlayer.limitChangePlayer" name="limitChange" (change)="onChangeLimitPlayer()">
+                       <option [value]="item" *ngFor="let item of listPlayer.limitChangeArrPlayer">{{item}}</option>
+                       </select>
+                       <span>entries</span>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        <!-- Max With Box End -->
+     </div>
+  </main>
+  <!-- main End -->
+  <app-footer></app-footer>
+  <!-- Start Create Player Modal -->
+  <div class="modal fade common-modal" id="edit_Player" tabindex="-1" role="dialog"  aria-hidden="true">
+     <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+           <form class="modal-add-card-form" novalidate [formGroup]="addPlayerForm">
+              <div class="modal-body text-center">
+                 <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Create New Player</h5>
+                 <div class="modal-content-body modalform-body text-left">
+                    <div class="row">
+                       <div class="col-md-4">
+                          <div class="profile-img" id="profile_img">
+                             <img src="{{ playerData.imageURL || 'assets/images/user-img.png'}}" alt="Profile img">
+                             <span class="camera fa fa-camera"><input type="file" (change)="fileChangeEventPlayer($event)"></span>
+                          </div>
+                       </div>
+                       <div class="col-md-12">
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Name</label>
+                             <div class="col-md-9">
+                                <input type="text" class="form-control round-input"  maxlength="30" formControlName="playerName" [(ngModel)]="playerData.playerName" placeholder="Enter name of the player"/>
+                                <div class="errorMsg" *ngIf="(addPlayerForm.get('playerName').hasError('required')) && (addPlayerForm.get('playerName').dirty || addPlayerForm.get('playerName').touched)">
+                                   Please enter player name.
+                                </div>
+                                <div class="errorMsg" *ngIf="addPlayerForm.get('playerName').hasError('minlength')">
+                                   Name length should be between 2 to 30 characters.
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Email</label>
+                             <div class="col-md-9">
+                                <input type="email" class="form-control round-input" formControlName="email" [(ngModel)]="playerData.email"  placeholder="Enter email"/>
+                                <div class="errorMsg" *ngIf="(addPlayerForm.get('email').hasError('required')) && (addPlayerForm.get('email').dirty || addPlayerForm.get('email').touched)">
+                                   Please enter email id.
+                                </div>
+                                <div class="errorMsg" *ngIf="addPlayerForm.get('email').hasError('pattern') && (addPlayerForm.get('email').dirty || addPlayerForm.get('email').touched)">
+                                   Please enter valid email id.
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Mobile Number</label>
+                             <div class="col-md-9">
+                                <div class="row">
+                                   <div class="col-5 pR0">
+                                      <select class="form-control select-arrow" formControlName="countryCode" [(ngModel)]="playerData.countryCode">
+                                      <option value="">Select Country Code</option>
+                                      <option value="" *ngFor="let country of countryList" value="{{country.callingCode}}">{{country.callingCode}} {{country.countryName}}</option>
+                                      </select>
+                                   </div>
+                                   <div class="col-7">
+                                      <input type="text" class="form-control" placeholder="Mobile number" [(ngModel)]="playerData.mobileNumber" formControlName="mobile" maxlength="16" >
+                                      <div class="errorMsg" *ngIf="(addPlayerForm.get('mobile').hasError('required')) && (addPlayerForm.get('mobile').dirty || addPlayerForm.get('mobile').touched)">
+                                         Please enter mobile number.
+                                      </div>
+                                      <div class="errorMsg" *ngIf="addPlayerForm.get('mobile').hasError('pattern') && (addPlayerForm.get('mobile').dirty || addPlayerForm.get('mobile').touched)">
+                                         Please enter valid mobile number.
+                                      </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Date of Birth</label>
+                             <div class="col-md-9">
+                                <input style="float:none" class="form-control datepicker" [(ngModel)]="playerData.dob" placeholder="yyyy-mm-dd" formControlName="dob" ngx-mydatepicker name="date" [options]="myOptions" #dp="ngx-mydatepicker" (click)="dp.toggleCalendar()">
+                                <!-- <div class="errorMsg" *ngIf="(addPlayerForm.get('dob').hasError('required')) && (addPlayerForm.get('dob').dirty || addPlayerForm.get('dob').touched)">
+                                   Please enter dob id.
+                                   </div>
+                                   <div class="errorMsg" *ngIf="addPlayerForm.get('dob').hasError('pattern') && (addPlayerForm.get('dob').dirty || addPlayerForm.get('dob').touched)">
+                                   Please enter valid dob id.
+                                   </div> -->
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Gender</label>
+                             <div class="col-md-9">
+                                <select class="form-control select-arrow" [(ngModel)]="playerData.gender" placeholder="Select Gender" formControlName="gender" >
+                                <option value=" ">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                </select>
+                                <div class="errorMsg" *ngIf="(addPlayerForm.get('gender').hasError('required')) && (addPlayerForm.get('gender').dirty || addPlayerForm.get('gender').touched)">
+                                   *Please select gender.
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Nationality</label>
+                             <div class="col-md-9">
+                                <select class="form-control select-arrow" [(ngModel)]="playerData.nationality" formControlName="nationality" >
+                                <option value="">Select Nationality</option>
+                                <option *ngFor="let country of countryList" value="{{country.countryName}}">{{country.countryName}}</option>
+                                </select>
+                                <div class="errorMsg" *ngIf="(addPlayerForm.get('nationality').hasError('required')) && (addPlayerForm.get('nationality').dirty || addPlayerForm.get('nationality').touched)">
+                                   *Please select nationality.
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Status</label>
+                             <div class="col-md-9">
+                                <select class="form-control select-arrow" [(ngModel)]="playerData.status" formControlName="teamStatus">
+                                <option value=" ">Select Status</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="unconfirmed">Unconfirmed</option>
+                                </select>
+                                <div class="errorMsg" *ngIf="(addPlayerForm.get('teamStatus').hasError('required')) && (addPlayerForm.get('teamStatus').dirty || addPlayerForm.get('teamStatus').touched)">
+                                   *Please select Status.
+                                </div>
+                             </div>
+                          </div>
+                          <!-- <div class="form-group clearfix row" *ngIf="competitionDetail.sportType != 'single'"> -->
+                              <div class="form-group clearfix row" >
+                             <label class="col-md-3 label-blue">Team</label>
+                             <div class="col-md-9">
+                                <select class="form-control select-arrow" [(ngModel)]="playerData.teamVal" formControlName="team" (change)="check()">
+                                <option value="">Select Team</option>
+                                <option *ngFor="let teamDataVal of teamList" value="{{teamDataVal.teamName}}">{{teamDataVal.teamName}}</option>
+                                </select>
+                                <div class="errorMsg" *ngIf="(addPlayerForm.get('team').hasError('required')) && (addPlayerForm.get('team').dirty || addPlayerForm.get('team').touched)">
+                                   *Please select team.
+                                </div>
+                             </div>
+                          </div>
+                          <div>
+                             <div class="form-group clearfix row"  *ngFor="let form of dynamicFormPlayer">
+                                <label class="col-md-3 label-blue"  *ngIf="form.importance != 'hidden'">{{form.field}}</label>
+                                <div class="col-md-9">
+                                   <input class="form-control round-input" *ngIf="form.importance == 'mandatory'" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.itemValue" type=" {{form.fieldType}}"
+                                   required/>
+                                   <input class="form-control round-input" *ngIf="form.importance == 'optional'" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.itemValue" type=" {{form.fieldType}}"/>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="clearfix calendar-action mt30 text-right">
+                       <button type="button" class="mb25 btn btn-gray max-WT-150" (click)="closePlayerModal()">Cancel</button>
+                       <button class="mb25 btn btn-navy-blue max-WT-150 mL5" *ngIf="!playerData._id" type="button" [disabled]="!(addPlayerForm.valid)"  data-toggle="modal" (click)="createPlayerFun('addPlayer')">Add</button>
+                       <button class="mb25 btn btn-navy-blue max-WT-150 mL5" *ngIf="playerData._id" type="button" [disabled]="!(addPlayerForm.valid)" data-toggle="modal" (click)="createPlayerFun('editPlayer')">Update</button>
+                    </div>
+                 </div>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+  <!--  Modal End Create Player-->
+  <!--  Start Modal  Create Team -->
+  <div class="modal fade common-modal" id="create_team" tabindex="-1" role="dialog"  aria-hidden="true">
+     <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+           <form class="modal-add-card-form" novalidate [formGroup]="addTeamForm">
+              <div class="modal-body text-center">
+                 <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Create New Team
+                 </h5>
+                 <div class="modal-content-body modalform-body text-left">
+                    <div class="row">
+                       <div class="col-md-4" style="margin-left: 35%;">
+                          <div class="profile-img" id="profile_img">
+                             <img src="{{ teamData.imageURL || 'assets/images/user-img.png'}}" alt="Profile img">
+                             <span class="camera fa fa-camera"><input type="file" (change)="fileChangeEvent($event)"></span>
+                          </div>
+                       </div>
+                       <div class="col-md-12">
+                          <div class="form-group clearfix row mt20">
+                             <label class="col-md-3 label-blue">Name</label>
+                             <div class="col-md-9">
+                                <input type="text" class="form-control round-input"  maxlength="30" formControlName="teamName" [(ngModel)]="teamData.teamName" placeholder="Enter name of the team"/>
+                                <div class="errorMsg" *ngIf="(addTeamForm.get('teamName').hasError('required')) && (addTeamForm.get('teamName').dirty || addTeamForm.get('teamName').touched)">
+                                   Please enter team name.
+                                </div>
+                                <div class="errorMsg" *ngIf="addTeamForm.get('teamName').hasError('minlength')">
+                                   Name length should be between 2 to 30.
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Email</label>
+                             <div class="col-md-9">
+                                <input type="email" class="form-control round-input" formControlName="email" [(ngModel)]="teamData.email"  placeholder="Enter email"/>
+                                <div class="errorMsg" *ngIf="(addTeamForm.get('email').hasError('required')) && (addTeamForm.get('email').dirty || addTeamForm.get('email').touched)">
+                                   Please enter email id.
+                                </div>
+                                <div class="errorMsg" *ngIf="addTeamForm.get('email').hasError('pattern') && (addTeamForm.get('email').dirty || addTeamForm.get('email').touched)">
+                                   Please enter valid email id.
+                                </div>
+                             </div>
+                          </div>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Team Status</label>
+                             <div class="col-md-9">
+                                <select class="form-control select-style1" formControlName="teamStatus"  [(ngModel)]="teamData.status"  placeholder="Select Team Status">
+                                <option value=" ">Select Team Status</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="unconfirmed">Unconfirmed</option>
+                                </select>
+                             </div>
+                          </div>
+                          <div>
+                             <div class="form-group clearfix row"  *ngFor="let form of dynamicForm">
+                                <label class="col-md-3 label-blue"  *ngIf="form.importance != 'hidden'">{{form.field| letterCase}}</label>
+                                <div class="col-md-9">
+                                   <input class="form-control round-input" *ngIf="form.importance == 'mandatory'" placeholder="Enter {{form.field}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.itemValue" type=" {{form.fieldType}}"
+                                   required/>
+                                   <input class="form-control round-input" *ngIf="form.importance == 'optional'" placeholder="Enter {{form.field}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.itemValue" type=" {{form.fieldType}}"/>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="clearfix calendar-action mt30 text-right">
+                       <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                       <button class="mb25 btn btn-navy-blue max-WT-150 mL5" *ngIf="!teamData._id" type="button" [disabled]="addTeamForm.invalid || !teamData.imageURL" (click)="createTeamFun('addTeam')">Add</button>
+                       <button class="mb25 btn btn-navy-blue max-WT-150 mL5" *ngIf="teamData._id" type="button" [disabled]="!(addTeamForm.valid)" data-toggle="modal" (click)="createTeamFun('editTeam')">Update</button>
+                    </div>
+                 </div>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+  <!--  Modal End Create Team-->
+  <!-- detele-modal -->
+  <div class="modal fade common-modal" id="team-delete" tabindex="-1" role="dialog"  aria-hidden="true">
+     <div class="modal-dialog max-WT-500" role="document">
+        <div class="modal-content">
+           <form class="modal-add-card-form" >
+              <div class="modal-body text-center">
+                 <div class="modal-content-body modalform-body text-left">
+                    <div class="row">
+                       <div class="col-md-12">
+                          <p class="text-center modal-text-s">Are you sure you want to  delete this team?</p>
+                          <div class="clearfix calendar-action mt30 text-left">
+                             <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                             <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" (click)="deleteTeamFun()" >YES</button>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+  <!-- delete-modal-end -->
+  <!-- detele- PLAYER modal -->
+  <div class="modal fade common-modal" id="player-delete" tabindex="-1" role="dialog"  aria-hidden="true">
+     <div class="modal-dialog max-WT-500" role="document">
+        <div class="modal-content">
+           <form class="modal-add-card-form" >
+              <div class="modal-body text-center">
+                 <div class="modal-content-body modalform-body text-left">
+                    <div class="row">
+                       <div class="col-md-12">
+                          <p class="text-center modal-text-s">Are you sure you want to  delete this Player?</p>
+                          <div class="clearfix calendar-action mt30 text-left">
+                             <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                             <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" (click)="deletePlayerFun()" >YES</button>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+  <!-- delete-modal-end -->

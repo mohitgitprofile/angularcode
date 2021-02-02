@@ -1,0 +1,145 @@
+<header class="landing_header" [ngClass]="{'login-header': (currentUrl != '/landing/landingPage')}" *ngIf="header == 1">
+    <div class="container-fluid">
+        <div class="d-flex">
+            <div class="header-left-box">
+                <div class="logo">
+                    <a class="makeLink" href="javascript:;" [routerLink]="['/landing/landingPage']">
+                        <img src="assets/images/logo.png" alt="Logo" />
+                    </a>
+                </div>
+            </div>
+            <ul class="navbar-nav head_menu" *ngIf="currentUrl != '/landing/choosePlan'">
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/landing/login']">SIGN IN</a>
+                </li>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/landing/selectRole']">SIGN UP</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<header class="player_header" *ngIf="header == 2">
+    <div class="container-fluid">
+        <div class="d-flex align-item-center">
+            <div class="header-left-box">
+                <div class="logo">
+                    <a class="makeLink" href="javascript:;" [routerLink]="['/organizer/dataTeams']">
+                        <img src="assets/images/logo.png" alt="Logo" />
+                    </a>
+                </div>
+            </div>
+            <div class="header-middle-box text-center">
+                <div class="booking-tabs">
+                    <!-- <button class="btn" *ngIf="(loginTypeArr.includes('COMPETITION'))" [routerLink]="['/organizer/dataTeams']" [ngClass]="{ 'active': currHeader == 1 }">Data</button>
+                    <button class="btn" *ngIf="(loginTypeArr.includes('MEMBERSHIP'))" [routerLink]="['/organizer/dataPlayers']" [ngClass]="{ 'active': currHeader == 1 }">Data</button> -->
+                    <button class="btn" [routerLink]="['/organizer/dataPlayers']" [ngClass]="{ 'active': currHeader == 1 }">Data</button>
+                    <button class="btn" [routerLink]="['/organizer/competitions']"  *ngIf="(loginTypeArr.includes('COMPETITION'))" [ngClass]="{ 'active': currHeader == 2 }">My Competitions</button>
+                    <button class="btn" [routerLink]="['/organizer/membership']" *ngIf="(loginTypeArr.includes('MEMBERSHIP'))"   [ngClass]="{ 'active': currHeader == 3 }">My Membership</button>
+                    <button class="btn" [routerLink]="['/organizer/venDashboard']" *ngIf="(loginTypeArr.includes('VENUE'))"   [ngClass]="{ 'active': currHeader == 4 }">My Venue</button>
+                    <button class="btn" *ngIf="media" [routerLink]="['/organizer/medPosts']" [ngClass]="{ 'active': currHeader == 5 }">Media</button>
+                    <button class="btn" *ngIf="product"  [routerLink]="['/organizer/product']" [ngClass]="{ 'active': currHeader == 6 }">Product</button>
+                </div>
+                <div class="menu_box">
+                    <button class="toggle_menu"><i class="fas fa-bars"></i></button>
+                    <ul class="menu_box_list" *ngIf="(currHeader == 1)" >
+                        <li *ngIf="(subscriptionAccessDataBase.includes('Player'))"><a [routerLink]="['/organizer/dataPlayers']" [ngClass]="{'active': mainUrl == 'organizer/dataPlayers'}">Players</a></li>
+                        <li *ngIf="(loginTypeArr.includes('COMPETITION')) && (subscriptionAccessDataBase.includes('Team'))"><a [routerLink]="['/organizer/dataTeams']" [ngClass]="{'active': mainUrl == 'organizer/dataTeams'}">Teams</a></li>
+                        <li *ngIf="(loginTypeArr.includes('COMPETITION'))&& (subscriptionAccessDataBase.includes('Matches'))"><a [routerLink]="['/organizer/dataMatches']" [ngClass]="{'active': mainUrl == 'organizer/dataMatches'}">Matches</a></li>
+                        <li *ngIf="((loginTypeArr.includes('COMPETITION')||(loginTypeArr.includes('MEMBERSHIP'))))&& (subscriptionAccessDataBase.includes('Clubs'))"><a [routerLink]="['/organizer/dataClubs']" [ngClass]="{'active': mainUrl == 'organizer/dataClubs'}">Clubs</a></li>
+                        <li *ngIf="(loginTypeArr.includes('COMPETITION'))&& (subscriptionAccessDataBase.includes('Refree'))"><a [routerLink]="['/organizer/dataReferee']" [ngClass]="{'active': mainUrl == 'organizer/dataReferee'}">Referee</a></li>
+                        <li *ngIf="((loginTypeArr.includes('COMPETITION')||(loginTypeArr.includes('MEMBERSHIP'))))&& (subscriptionAccessDataBase.includes('Venue'))"><a [routerLink]="['/organizer/dataVenues']" [ngClass]="{'active': mainUrl == 'organizer/dataVenues'}">Venues</a></li>
+                        <li *ngIf="(subscriptionAccessDataBase.includes('Sponsor'))"><a [routerLink]="['/organizer/dataSponsors']" [ngClass]="{'active': mainUrl == 'organizer/dataSponsors'}">Sponsors</a></li>
+                        <li *ngIf="(subscriptionAccessDataBase.includes('NewsLatter'))"><a  [routerLink]="['/organizer/newsletter']" [ngClass]="{'active': mainUrl == 'organizer/newsletter'}">Newsletter</a></li>
+                        <!-- <li><a [routerLink]="['/organizer/dataActivityLog']" [ngClass]="{'active': mainUrl == 'organizer/dataActivityLog'}">Activity Log</a></li> -->
+                    </ul>
+                    <ul class="menu_box_list" *ngIf="((currHeader == 3)&&(loginTypeArr.includes('MEMBERSHIP')))">
+                        <li *ngIf="(subscriptionAccessMembership.includes('Registration'))"><a [routerLink]="['/organizer/membRegistration']" [ngClass]="{'active': mainUrl == 'organizer/membRegistration'}">Registration</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Member Card'))"><a [routerLink]="['/organizer/membercard']" [ngClass]="{'active': mainUrl == 'organizer/membercard'}">Member Cards</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Attendance'))"><a [routerLink]="['/organizer/attendance']" [ngClass]="{'active': mainUrl == 'organizer/attendance'}">Attendance</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Leaderboard'))"><a [routerLink]="['/organizer/leader']" [ngClass]="{'active': mainUrl == 'organizer/leader'}">Leaderboard</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Evaluation'))"><a [routerLink]="['/organizer/evaluation']" [ngClass]="{'active': mainUrl == 'organizer/evaluation'}">Evaluation</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Approval'))"><a [routerLink]="['/organizer/approval']" [ngClass]="{'active': mainUrl == 'organizer/approval'}">Approval</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Section'))"><a [routerLink]="['/organizer/service']" [ngClass]="{'active': ((mainUrl == 'organizer/service')||(mainUrl == 'organizer/professional')||(mainUrl == 'organizer/booking')||(mainUrl == 'organizer/servicedetail'))}">Section</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Setting'))"><a [routerLink]="['/organizer/membersetting']" [ngClass]="{'active': mainUrl == 'organizer/membersetting'}">Setting</a></li>
+                        <li *ngIf="(subscriptionAccessMembership.includes('Reports'))"><a [routerLink]="['/organizer/report']" [ngClass]="{'active': mainUrl == 'organizer/report'}">Reports</a></li>
+                        <!-- <li><a href="javascript:;">Install</a></li> -->
+                    </ul>
+                    <ul class="menu_box_list" *ngIf="((currHeader == 4)&&(loginTypeArr.includes('VENUE')))">
+                        <li *ngIf="(subscriptionAccessVenue.includes('Dashboard'))"><a [routerLink]="['/organizer/venDashboard']" [ngClass]="{'active': mainUrl == 'organizer/venDashboard'}">Dashboard</a></li>
+                        <li *ngIf="(subscriptionAccessVenue.includes('Venue'))"><a [routerLink]="['/organizer/venList']" [ngClass]="{'active': mainUrl == 'organizer/venList' }">Venues</a></li>
+                        <li *ngIf="(subscriptionAccessVenue.includes('Booking'))"><a [routerLink]="['/organizer/venueBooking']" [ngClass]="{'active': mainUrl == 'organizer/venueBooking'}">Booking</a></li>
+                        <li *ngIf="(subscriptionAccessVenue.includes('Section'))"><a [routerLink]="['/organizer/venueSection']" [ngClass]="{'active': mainUrl == 'organizer/venueSection'}">Approval</a></li>
+                        <!-- <li><a [routerLink]="['/organizer/venDashboard']">Time and Prices</a></li> -->
+                        <li *ngIf="(subscriptionAccessVenue.includes('Stores'))"><a [routerLink]="['/organizer/storeList']" [ngClass]="{'active': mainUrl == 'organizer/storeList' || mainUrl == 'organizer/storeItemList'}">Stores</a></li>
+                        <!-- <li *ngIf="(subscriptionAccessVenue.includes('Configuration'))"><a [routerLink]="['/organizer/venConfiguration']" [ngClass]="{'active': mainUrl == 'organizer/membRegistration'}">Configuration</a></li> -->
+                        <li *ngIf="(subscriptionAccessVenue.includes('Configuration'))"><a [routerLink]="['/organizer/venConfiguration']" [ngClass]="{'active': mainUrl == 'organizer/venConfiguration'}">Configuration</a></li>
+                        <li *ngIf="(subscriptionAccessVenue.includes('Users'))"><a [routerLink]="['/organizer/venDashboard']" [ngClass]="{'active': mainUrl == 'organizer/membRegistration'}">Users</a></li>
+                        <!-- <li><a href="javascript:;">NewsLetter</a></li>
+                        <li><a href="javascript:;">Activity Log</a></li> -->
+                    </ul>
+                    <!-- <ul class="menu_box_list" *ngIf="currHeader == 5">
+                        <li><a [routerLink]="['/organizer/medPosts']" [ngClass]="{'active': mainUrl == 'organizer/medPosts'}">Post</a></li>
+                        <li><a  [routerLink]="['/organizer/domainCustomization' ||  '/organizer/domainWebConfiguration' || '/organizer/dWebConfiguration' || '/organizer/dConfigSection'] " [ngClass]="{'active':mainUrl =='organizer/domainCustomization' || mainUrl=='organizer/domainWebConfiguration' || mainUrl=='organizer/dWebConfiguration' || mainUrl=='organizer/dConfigSection'}" >Domain</a></li>
+                       
+                    </ul> -->
+                    <ul class="menu_box_list" *ngIf="currHeader == 5">
+                            <li><a [routerLink]="['/organizer/medPosts']" [ngClass]="{'active': mainUrl == 'organizer/medPosts'}">Post</a></li>
+                            <li><a  [routerLink]="['/organizer/domainCustomization' ||  '/organizer/domainWebConfiguration' || '/organizer/dWebConfiguration' || '/organizer/dConfigSection' ] " [ngClass]="{'active':mainUrl =='organizer/domainCustomization' || mainUrl=='organizer/domainWebConfiguration' || mainUrl=='organizer/dWebConfiguration' || mainUrl=='organizer/dConfigSection' }" >Domain</a></li>
+                           
+                        </ul>
+                    
+                </div>
+            </div>
+            <div class="header-right-box">
+                <div class="head-user-detail">
+                    <strong class="head-user-name">Welcome, {{profileData?.firstName}} {{profileData?.lastName}}</strong>
+                    <span class="head-user-img"><img src="{{profileData?.image || 'assets/images/user-img.png'}}" alt="Logo"/></span>
+                </div>
+
+                <div class="dropdown-menu head-drop-down">
+                    <a class="dropdown-item makeLink" [routerLink]="['/organizer/profile']">Profile</a>
+                    <a class="dropdown-item makeLink" [routerLink]="['/organizer/settings']">Settings</a>
+                    <a *ngIf="userManagment&&(loginTypeArr.includes('COMPETITION')||loginTypeArr.includes('MEMBERSHIP'))" class="dropdown-item makeLink" [routerLink]="['/organizer/menuCompConfPlan']">Configuration</a>
+                    <a class="dropdown-item makeLink" (click)="logout()">Logout</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+
+<header class="player_header" *ngIf="header == 3">
+    <div class="container-fluid">
+        <div class="d-flex">
+            <div class="header-left-box">
+                <div class="logo">
+                    <a [routerLink]="['/player/home']">
+                        <img src="assets/images/logo.png" alt="Logo" />
+                    </a>
+                </div>
+            </div>
+            <div class="header-middle-box text-center">
+                <div class="booking-tabs">
+                    <button class="btn" [routerLink]="['/player/searchCompetition']" [ngClass]="{'active': currHeader == 10 }">Competitions</button>
+                    <button class="btn" [routerLink]="['/player/membership']" [ngClass]="{'active': currHeader == 11 }">Memberships</button>
+                    <button class="btn" [routerLink]="['/player/venues']" [ngClass]="{'active': currHeader == 12 }">Venue Booking</button>
+                    <!-- <select class="select-box form-control">
+                        <option>Venue Booking</option>
+                    </select> -->
+                </div>
+            </div>
+            <div class="header-right-box">
+                <div class="head-user-detail">
+                    <strong class="head-user-name">Welcome, {{profileData?.firstName}} {{profileData?.lastName}}</strong>
+                    <span class="head-user-img"><img src="{{profileData?.image || 'assets/images/user-img.png'}}" alt="Logo" /></span>
+                </div>
+                <div class="dropdown-menu head-drop-down">
+                    <a class="dropdown-item makeLink" [routerLink]="['/player/profile']">My Profile</a>
+                    <a class="dropdown-item makeLink" (click)="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

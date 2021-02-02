@@ -1,0 +1,113 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title">TICKET REPLY</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- chat section -->
+                                <div class="chat-box-main">
+                                    <div class="chat-box">
+                                        <div class="chat-head">
+                                            <!-- <img src="assets/img/user-img.png"> -->
+                                            <h4>Chat</h4>
+                                        </div>
+                                        <!-- <div class="chat-div"> -->
+                                        <div class="chat-div" #scrollMe style="overflow-y: auto; height: 350px">
+
+                                            <div *ngFor="let item of service?.supportChatArr">
+                                                <div *ngIf="item?.toEmail == adminEmail" class="left-chat">
+                                                    <div class="chat">
+                                                        <p>{{item?.message}}</p>
+                                                    </div>
+                                                    <span>{{item?.createdAt | date}}</span>
+                                                </div>
+                                                
+                                                <div *ngIf="item?.fromEmail == adminEmail"class="right-chat">
+                                                    <div class="chat2">
+                                                        <p>{{item?.message}}</p>
+                                                    </div>
+                                                    <span>{{currentDate | date}}</span>
+                                                </div>
+                                                
+                                            </div>
+
+                                            <!-- <div class="left-chat">
+                                                <div class="chat">
+                                                    <p>Buy trade request from test 115</p>
+                                                </div>
+                                                <span>18/10/2019 13:21:27</span>
+                                            </div>
+
+                                            <div class="right-chat">
+                                                <div class="chat2">
+                                                    <p>Buy trade request from test 115</p>
+                                                </div>
+                                                <span>18/10/2019 13:21:27</span>
+                                            </div>
+
+                                            <div class="right-chat">
+                                                <div class="chat2">
+                                                    <p>Buy trade request from test 115 Buy trade request from test 115
+                                                        Buy trade request from 115
+                                                        Buy trade request from 115 Buy trade request from test 115</p>
+                                                </div>
+                                                <span>18/10/2019 13:21:27</span>
+                                            </div>
+
+                                            <div class="left-chat">
+                                                <div class="chat">
+                                                    <p>Buy trade request from test 115</p>
+                                                </div>
+                                                <span>18/10/2019 13:21:27</span>
+                                            </div>
+
+                                            <div class="right-chat">
+                                                <div class="chat2">
+                                                    <p>Buy trade request from test 115</p>
+                                                </div>
+                                                <span>18/10/2019 13:21:27</span>
+                                            </div>
+
+                                            <div class="right-chat">
+                                                <div class="chat2">
+                                                    <p>Buy trade request from test 115</p>
+                                                </div>
+                                                <span>18/10/2019 13:21:27</span>
+                                            </div> -->
+
+                                        </div>
+
+                                        <div class="form-group custm-inpt">
+                                            <input type="text" id="usr" class="form-control" name="chat"
+                                                placeholder="Write something here..." [(ngModel)]="obj.chat"
+                                                (keyup.enter)="sendChat()" autocomplete="off">
+                                            <!-- <div class="chat-attachment-img-box">
+                                                    <input type="file" class="statusTradeUploadChat"
+                                                        (change)="handleFileInput1($event)">
+                                                    <img src="../../../assets/img/attached.png" alt=""
+                                                        class="chat-attachment-img">
+                                                </div> -->
+                                                
+                                            <button type="button" class="btn btn-theme"
+                                                (click)="sendChat()">Send</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- end chat section -->
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                        <!-- end trade history section -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

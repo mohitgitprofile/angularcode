@@ -1,0 +1,110 @@
+<app-header></app-header>
+<div class="topBanner height300">
+    <div class="container">
+    </div>
+</div>
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="fixtures-section w-100 center-box">
+            <div class="global-box grey-box">
+                <app-memb-header></app-memb-header>
+                <h2 class="content-box-head">Financial List</h2>
+                 <div class="table-block mt30">
+                  <div class="table-responsive">
+                      <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>Player Name</th>
+                                  <th>Organizer Name</th>
+                                  <th>Organizer Email</th>
+                                  <th>Organizer Mobile Number</th>
+                                  <th>Payment Method</th>
+                                  <th>Date</th>
+                                  <th>Product Status</th>
+                                  <!-- <th class="W-150">Action</th> -->
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngIf="financialList.length == 0">
+                                  <td colspan="8">No data found.</td>
+                              </tr>
+                              <tr class="pointer" *ngFor='let financial of financialList| paginate : { itemsPerPage: paginationData.limit, currentPage: paginationData.page, totalItems: paginationData.total }'>
+                                  <td>{{financial?.playerId.firstName}}</td>
+                                  <td>{{financial?.organizerId.firstName}}</td>
+                                  <td>{{financial?.organizerId.email}}</td>
+                                  <td>{{financial?.organizerId.mobileNumber}}</td>
+                                  <td>{{financial?.paymentMethod}}</td>
+                                  <td>{{financial?.createdAt | date : 'dd/MMM/yyyy'}}</td>
+                                  <td>{{financial?.productStatus}}</td>
+                                </tr>
+                                <!-- <tr>
+                      <td>Face Therapist</td>
+                      <td>$50.00</td>
+                      <td>30 Minutes</td>
+                      <td>22/03/2018</td>
+                      <td>3:00 PM</td>
+                      <td>Service</td>
+                      <td>
+                         <a href="javascript:;" class="btn btn-book">Book</a>
+                      </td>
+                    </tr>    
+                   <tr>
+                      <td>Face Therapist</td>
+                      <td>$50.00</td>
+                      <td>30 Minutes</td>
+                      <td>22/03/2018</td>
+                      <td>3:00 PM</td>
+                      <td>Service</td>
+                      <td>
+                         <a href="javascript:;" class="btn btn-book">Book</a>
+                      </td>
+                    </tr> 
+                    <tr>
+                      <td>Face Therapist</td>
+                      <td>$50.00</td>
+                      <td>30 Minutes</td>
+                      <td>22/03/2018</td>
+                      <td>3:00 PM</td>
+                      <td>Service</td>
+                      <td>
+                         <a href="javascript:;" class="btn btn-book">Book</a>
+                      </td>
+                    </tr>  
+                    <tr>
+                      <td>Face Therapist</td>
+                      <td>$50.00</td>
+                      <td>30 Minutes</td>
+                      <td>22/03/2018</td>
+                      <td>3:00 PM</td>
+                      <td>Service</td>
+                      <td>
+                         <a href="javascript:;" class="btn btn-book">Book</a>
+                      </td>
+                    </tr> 
+                    <tr>
+                      <td>Face Therapist</td>
+                      <td>$50.00</td>
+                      <td>30 Minutes</td>
+                      <td>22/03/2018</td>
+                      <td>3:00 PM</td>
+                      <td>Service</td>
+                      <td>
+                         <a href="javascript:;" class="btn btn-book">Book</a>
+                      </td>
+                    </tr>  -->
+                          </tbody>
+                      </table>
+                  </div>
+                  <div class="pagination-block mt10 text-right" *ngIf="paginationData.total > paginationData.limit">
+                      <pagination-controls (pageChange)="getFinancial($event)"></pagination-controls>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+
+        <!-- Max With Box End -->
+
+    </div>
+</main>
+<app-footer></app-footer>

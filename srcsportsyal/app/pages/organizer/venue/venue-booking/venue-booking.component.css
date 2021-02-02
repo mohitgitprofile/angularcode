@@ -1,0 +1,11 @@
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #faca29;
+}
+
+svg {
+    pointer-events: none;
+  }
+  .filter-box {
+    margin-right: 0px;
+}

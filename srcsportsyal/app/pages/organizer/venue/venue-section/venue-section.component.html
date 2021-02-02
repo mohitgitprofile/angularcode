@@ -1,0 +1,138 @@
+<!--  Header Start -->
+<app-header></app-header>
+<!--  Header End -->
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container-common">
+    <div class="content-box bg-gray">
+      <!-- Subheader of Competition Configure -->
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth pt20 pb20">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="search-block-main fiter-full-search">
+                <div class="form-group clearfix row" *ngIf="!venueList.length">
+                  <label class="col-md-9 label-blue">Add venue to see Approvals</label>
+                </div>
+                <div class="form-group clearfix row" *ngIf="venueList.length">
+                  <label class="col-md-3 label-blue text-align">Select Venue</label>
+                  <div class="col-md-9">
+                    <select class="form-control select-style1 round-input input-field12" (change)="onVenueSelect()" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="venueId">
+                      <option value="">All</option>
+                      <option *ngFor="let i of venueList" value="{{i.venueName}}">{{i?.venueName}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="search_block mb20">
+                  <div class="input-group">
+                    <select [(ngModel)]="statusValue" [ngModelOptions]="{standalone: true}" class="form-control select-style1">
+                      <option value="">Select Status</option>
+                      <option value="APPROVED">Approved</option>
+                      <option value="PENDING">Pending</option>
+                    </select>
+                    <div class="input-group-append apply-btn">
+                      <button class="btn btn-dark-blue-s" type="button" (click)="filterStatus()">Apply</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="page.search" name="search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Creation Date</th>
+                <th>Location</th>
+                <th>Venue Name</th>
+                <th class="action-td">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!approvalListData.docs || approvalListData.docs.length == 0">
+                <td colspan="9" class="text-center">No data found.</td>
+              </tr>
+              <tr *ngFor="let approval of approvalListData.docs | paginate: { itemsPerPage: approvalListData.limit, currentPage: approvalListData.page,  totalItems: approvalListData.total }">
+                <td>{{approval.playerFollowStatus.playerId[0].firstName+" "+approval.playerFollowStatus.playerId[0].lastName}}</td>
+                <td>{{approval.playerFollowStatus.playerId[0].email}}</td>
+                <td>{{approval.playerFollowStatus.playerId[0].countryCode+approval.playerFollowStatus.playerId[0].mobileNumber}}</td>
+                <td>{{approval.createdAt.substring(0, 10)}}</td>
+                <td>{{approval.playerFollowStatus.playerId[0].nationality}}</td>
+                <td>{{approval.venueName}}</td>
+                <td class="action-td">
+                  <button href="#delete-modal" type="button" data-toggle="modal" data-target="#delete-section-modal" class="btn btn-book red"
+                    (click)="deleteApproval(approval)">Delete</button>
+                  <button *ngIf="approval.playerFollowStatus.followStatus != 'APPROVED'" type="button" data-toggle="modal" data-target="#edit_services"
+                    class="btn btn-book" (click)="approveFun(approval)">Approve</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="clearfix pagination-entity">
+            <div class="pagination-block mt10 text-right" *ngIf="approvalListData.total > approvalListData.limit">
+              <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+            </div>
+            <div class="entity-text" *ngIf="!approvalListData.docs || !approvalListData.docs.length == 0">
+              <span>Showing {{page.limit * (page.currPage - 1) + 1 || 0}} to {{((page.limit * page.currPage)
+                < approvalListData.total) ? (page.limit * page.currPage) : approvalListData.total || 0}} of {{approvalListData.total}} entries</span>
+                  <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                    <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                  </select>
+                  <span>entries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<!-- Footer Start -->
+<app-footer></app-footer>
+<!-- Footer End -->
+<!-- detele-modal -->
+<div class="modal fade common-modal" id="delete-section-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">Are you sure you want to delete?</p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                  <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="confirmDelete()">YES</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- delete-modal-end -->

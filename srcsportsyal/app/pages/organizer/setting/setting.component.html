@@ -1,0 +1,77 @@
+      <!--   Header  Start  -->
+      <app-header></app-header>
+      <!--   Header  End  -->
+      <div class="topBanner">
+         <div class="container">
+         </div>
+      </div>
+      <!-- main Start -->
+      <main class="main-container pt0 mt-min60">
+         <div class="content-container">
+            <div class="content-box bg-gray">
+              <div class="fixture-btn-row">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="btn_row mb20 teamComp">
+                                 <button type="button" class="btn" [ngClass]="{'active': currTab == 1}" (click)="onTabChange(1)" >SMS</button>
+                                 <button type="button" class="btn" [ngClass]="{'active': currTab == 2}" (click)="onTabChange(2)" >SMTP</button>
+                                 <button type="button" class="btn" [ngClass]="{'active': currTab == 3}" (click)="onTabChange(3)" >Payment Gateway</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!--  Div For SMS -->
+                      <div class="form-block" *ngIf="currTab == 1" >
+                        <form>
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 col-lg-2 label-blue">API key</label>
+                             <div class="col-md-5 col-lg-3">
+                              <input type="text" class="form-control round-input" placeholder="">
+                             </div>
+                           </div>
+                           <div class="text-center col-lg-5 col-md-8">
+                              <button class="btn btn btn-dark-blue-s max-WT-100" type="button ">Save</button>
+                           </div>
+                         </form>
+                      </div>
+                      <!--  Div For SMS -->
+
+                      <!--  Div For SMTP -->
+                      <div class="form-block" *ngIf="currTab == 2">
+                        <form [formGroup]="addSmtpForm" autocomplete="off">
+                          <div class="form-group clearfix row">
+                             <label class="col-md-3 col-lg-2 label-blue">SMTP Username</label>
+                             <div class="col-md-5 col-lg-3">
+                              <input type="text" class="form-control round-input" placeholder="Smtp username" [formControl]="smtpForm.userName" maxlength="64">
+                              <div class="errorMsg" *ngIf="smtpForm.userName.dirty && smtpForm.userName.invalid">
+                                <span *ngIf="smtpForm.userName.hasError('required')">*Please enter username.</span>
+                                <span *ngIf="smtpForm.userName.hasError('pattern')">*Please enter valid username.</span>
+                              </div>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                            <label class="col-md-3 col-lg-2 label-blue">SMTP Password</label>
+                            <div class="col-md-5 col-lg-3">
+                             <input type="password" class="form-control round-input" placeholder="Smtp password" [formControl]="smtpForm.password" maxlength="16">
+                             <div class="errorMsg" *ngIf="smtpForm.password.dirty && smtpForm.password.invalid">
+                               <span *ngIf="smtpForm.password.hasError('required')">*Please enter password.</span>
+                               <span *ngIf="smtpForm.password.hasError('minlength')">*Password must be between 8 to 16 characters.</span>
+                               <span *ngIf="smtpForm.password.hasError('pattern') && !smtpForm.password.hasError('minlength')">*Please enter valid password.</span>
+                             </div>
+                            </div>
+                          </div>
+                           <div class="text-center col-lg-5 col-md-8">
+                              <button class="btn btn btn-dark-blue-s max-WT-100" type="button" (click)="onSaveSmtp()" [disabled]="addSmtpForm.invalid">Save</button>
+                           </div>
+                         </form>
+                      </div>
+                      <!--  Div For SMTP -->
+            </div>
+            <!-- Max With Box End -->
+         </div>
+      </main>
+      <!-- main End -->
+     <!-- Footer Start -->
+     <app-footer></app-footer>
+     <!-- Footer End -->
+

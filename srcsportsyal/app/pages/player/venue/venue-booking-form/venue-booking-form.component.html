@@ -1,0 +1,170 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container-common">
+        <div class="modal-dialog max-WT-800" role="document">
+            <div class="modal-content">
+                <form class="booking-proceed-form" [formGroup]="bookingForm">
+                    <div class="modal-body tab_pad_L60 tab_pad_R60">
+                        <h5 class="modal-head mt0 mb20 text-center navy-blue font_uni_sans">Booking Form</h5>
+                        <div class="modal_booking_table">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Venue Name</th>
+                                            <th>Sport Name</th>
+                                            <th>Start Time</th>
+                                            <th>Duration</th>
+                                            <th>Booking Type</th>
+                                            <th>No. of Court</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of bookingDetail.date">
+                                            <td>{{data.date}}</td>
+                                            <td>{{bookingDetail.venueName}}</td>
+                                            <td>{{bookingDetail.sportName}}</td>
+                                            <td>{{data.startTime}}</td>
+                                            <td>
+                                                <span>{{bookingDetail.duration}}</span>
+                                            </td>
+                                            <td>{{data.typeOfBooking}}</td>
+                                            <td>{{data.noOfCourt}}</td>
+                                            <td *ngIf="serviceDetails?.serviceType != 'free'">{{currency}} {{bookingDetail?.price * data?.noOfCourt}}</td>
+                                            <td *ngIf="serviceDetails?.serviceType == 'free'"> 00.00</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="7">Total</td>
+                                            <td>{{currency}} {{bookingDetail?.price * bookingDetail.totalCourt}}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-box booking-field mb30">
+                            <div class="row mb15" *ngFor="let form of regForm">
+                                <label class="control-label col-md-3">{{form.field}}</label>
+                                <div class="col-md-6">
+                                    <input class="form-control" *ngIf="form.fieldType != 'email'" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.itemValue"
+                                        type={{form.fieldType}} placeholder="Please enter {{form.field}}" />
+                                    <input [formControl]="gBookF.email" class="form-control" *ngIf="form.fieldType == 'email'" [(ngModel)]="form.itemValue" type="text"
+                                        placeholder="Please enter {{form.field}}" />
+                                    <div *ngIf="form.fieldType == 'email'">
+                                        <div class="errorMsg" *ngIf="gBookF.email.dirty && gBookF.email.invalid">
+                                            <span *ngIf="gBookF.email.hasError('pattern')">*Please enter a valid email address.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Payment method</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="paymenVal" required>
+                                        <option value="">Select Payment Type</option>
+                                        <option value="Online"> Online</option>
+                                        <option value="Offline"> Offline </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix calendar-action">
+                            <button type="button" class="btn btn-grey" (click)="goback()">Back to Calender - Basket({{totalCourt}})</button>
+                            <!-- <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left" (click)='goBack()'>Back to Slots ({{bookingDetail.noOfCourt}})</button> -->
+                            <button type="submit" class="mb25 btn btn-navy-blue max-WT-190 f-right" *ngIf="paymenVal == ''" [disabled]="paymenVal == '' || bookingForm.invalid">Select Payment Type</button>
+                            <button type="submit" class="mb25 btn btn-navy-blue max-WT-170 f-right" *ngIf="paymenVal != ''" [disabled]="paymenVal == '' || bookingForm.invalid"
+                                (click)='saveRegister()'>Book</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>
+
+<!-- payment -->
+<div class="modal fade common-modal" id="paymentPlanChange" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+            <div *ngIf="list.cardList.length" class="add-to-card-box">
+                <table class="table table-bordered bor-table large-table">
+                    <thead>
+                        <tr class="table-head-bg">
+                            <th>Card Number</th>
+                            <th>Expiry Date</th>
+                            <th>Choose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let card of list.cardList">
+                            <td>{{card.cardNumber}}</td>
+                            <td>{{card.expiryDate}}</td>
+                            <td class="action-td">
+                                <span class="radio-checkbox">
+                                    <input type="radio" id="check2" [value]="card._id" name="currCard" [(ngModel)]="currCard" (click)="selectCard(card)">
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <form class="modal-add-card-form" autocomplete="off" [formGroup]="cardForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans">Payment</h5>
+                    <div class="modal-content-body">
+                        <p class="head_lagend mb20  text-center para">Please enter details for payment</p>
+                        <div class="center-box">
+                            <div class="form-group clearfix row">
+                                <label class="col-md-3 label-blue">Card Number</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Card number" maxlength="16" [formControl]="cf.card">
+                                    <div class="errorMsg" style="float: left" *ngIf="cf.card.dirty && cf.card.invalid">
+                                        <span *ngIf="cf.card.hasError('required')">*Please enter card no.</span>
+                                        <span *ngIf="cf.card.hasError('pattern')">*Please enter valid card no.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix row">
+                                <label class="col-md-3 label-blue">Expiry Date</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control " [formControl]="cf.expiryDate" placeholder="yyyy - mm" maxlength="7" />
+                                    <div class="errorMsg" style="float: left;" *ngIf="cf.expiryDate.dirty && cf.expiryDate.invalid">
+                                        <span *ngIf="cf.expiryDate.hasError('required')">*Please enter expiry date.</span>
+                                        <span *ngIf="cf.expiryDate.hasError('pattern')">*Please enter valid expiry date(YYYY-MM).</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix row">
+                                <label class="col-md-3 label-blue">CVV</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" placeholder="CVV" maxlength="3" [formControl]="cf.cvv">
+                                    <div class="errorMsg" style="float: left" *ngIf="cf.cvv.dirty && cf.cvv.invalid">
+                                        <span *ngIf="cf.cvv.hasError('required')">*Please enter cvv.</span>
+                                        <span *ngIf="cf.cvv.hasError('pattern')">*Please enter valid cvv.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix calendar-action text-center pL15 pR15 mt30">
+                            <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: left;" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: right;" (click)="pay()" [disabled]="cardForm.invalid"
+                                (click)="pay()">Pay</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- payment -->

@@ -1,0 +1,22 @@
+<div class="booking-carousel">
+  <div id="demo" class="carousel slide" data-ride="carousel"> 
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="i"  [ngClass]="{'active':  i == '0'}" *ngFor="let images of venueImages; let i = index"></li>
+    </ul>
+    <!-- The slideshow -->
+    <div class="carousel-inner mx-WT-HT">
+      <div class="carousel-item"  [ngClass]="{'active':  i == '0'}" *ngFor="let images of venueImages; let i = index">
+        <img src="{{images}}" alt="stadium">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="custom-breadcrumb mt10 custom-breadcrumb1">
+  <nav class="breadcrumb">
+    <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'venueDetail'}" [routerLink]="['/player/venueDetail',venueId]">
+      View </a>
+    <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'media'}" [routerLink]="['/player/media', venueId, organizerId, 3]">Media</a>
+    <a class="breadcrumb-item" [ngClass]="{'active': currUrl == 'venueSponsor'}" [routerLink]="['/player/venueSponsor',venueId]">Sponsor</a>
+  </nav>
+</div>

@@ -1,0 +1,181 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title">Enquiry/Bulk Management</h1>
+    </div> <!-- Page Title End -->
+    <div class="content-section">
+        <div class="outer-box">
+            <!-- Gloabl Table Box Start -->
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+
+                       
+
+                        <!-- table content -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th>S.No.</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone No.</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let data of enquireListData; let i = index">
+                                        <!-- <td *ngIf="p == 1">{{i + 1}}</td> -->
+                                        <td>{{i + 1 + 10 * (p-1)}}</td>
+                                        <td>{{data.name || '--'}}</td>
+                                        <td>{{data.email || '--'}}</td>
+                                        <td>{{data.phoneNo || '--'}}</td>
+                                        <td>{{data.createdAt || '--'}}</td>
+                                        <td *ngIf="data.isResolved == true">Complete</td>
+                                        <td *ngIf="data.isResolved != true">Pending</td>
+                                        <td>
+                                            <button class="btn-sm" data-toggle="modal"
+                                                (click)="viewDetail(data.requestId)"
+                                                style="margin-right:5px">View</button>
+                                            <button class="btn-sm" data-toggle="modal"
+                                                (click)="resolve(data.requestId)">Resolve</button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="enquireListData.length==0">
+                                        <td colspan="100" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin text-center"> <span>No record found</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Table Responsive End -->
+</main>
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Copyright © 2020 <strong class="theme-text-color">CryptoBiz Exchange</strong> All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- view_modal Start -->
+<div class="modal fade global-modal reset-modal" id="view">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <h3 style="text-align: center;">User Details</h3>
+                    <hr />
+                    <button type="button" class="close" data-dismiss="modal" style="margin-top: -62px; margin-right: 8px;">&times;</button>
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100 ">
+                                <div style="height: 500px!important;width: 450px!important;margin-top:0px">
+                                    <table class="userdetails-table" style="border: solid 1px;width:100%;height: 100%;">
+                                        <tr>
+                                            <td colspan="6"></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Name </th>
+                                            <td>:</td>
+                                            <td colspan="3"> {{userDetail?.name || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Email </th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.email || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Mobile Number </th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.phoneNo || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Coin</th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.coin || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Other Coin</th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.othersCoin || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Quantity</th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.quantity || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Country </th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.country || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">State </th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.state || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Payment Mode </th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.paymentMode || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Message</th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.message || '---'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Date</th>
+                                            <td>:</td>
+                                            <td colspan="3">{{userDetail?.createdAt || '---'}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- view_modal End -->
+
+<!-- Resolve success modal -->
+<div class="modal fade global-modal reset-modal" id="active">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Query </h3>
+                        <hr>
+                       
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Query has been resolve?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success mr-2" data-dismiss="modal"
+                                        (click)="getEnquireList()">OK</button>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

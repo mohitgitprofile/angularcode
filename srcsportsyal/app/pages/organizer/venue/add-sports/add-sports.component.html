@@ -1,0 +1,97 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="content-box bg-gray">
+      <div class="fixture-btn-row">
+        <app-venue-configure-header></app-venue-configure-header>
+      </div>
+      <div class="form-block">
+        <form [formGroup]="addSportForm">
+          <div class="form-group clearfix row">
+            <label class="col-md-3 col-lg-2 label-blue">Sport name</label>
+            <div class="col-md-5 col-lg-3">
+              <input type="text" class="form-control round-input" [formControl]="gSportF.sportsName" placeholder="Sports name" maxlength="50"
+              />
+              <div class="errorMsg" *ngIf="gSportF.sportsName.dirty && gSportF.sportsName.invalid">
+                <span *ngIf="gSportF.sportsName.hasError('required')">*Please enter sports name.</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group clearfix row">
+            <label class="col-md-3 col-lg-2 label-blue">Sports Type</label>
+            <div class="col-md-5 col-lg-3">
+              <select class="form-control" [formControl]="gSportF.sportsType">
+                <option value="">Select Sports Type</option>
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+              </select>
+              <div class="errorMsg" *ngIf="gSportF.sportsType.dirty && gSportF.sportsType.invalid">
+                <span *ngIf="gSportF.sportsType.hasError('required')">*Please enter sports type.</span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="form-group clearfix row">
+            <label class="col-md-3 label-blue">Sports Image</label>
+            <div class="col-md-5 col-lg-3">
+              <div class="profile-img max-WT-200" id="profile_img">
+                <img src="{{ImageBase64}}" alt="Profile img" />
+                <label class="upload-btn">Browse Image
+                  <input type="file" (change)="fileChangeEvent($event)" [formControl]="gSportF.sportsIcon" accept="image/*">
+                  <div class="errorMsg" *ngIf="gSportF.sportsIcon.dirty && gSportF.sportsIcon.invalid">
+                    <span *ngIf="gSportF.sportsIcon.hasError('required')">*Please enter sports icon.</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div> -->
+          <div class="form-group clearfix row">
+            <label class="col-md-3 col-lg-2 label-blue">Venue Image</label>
+            <div class="col-md-5 ">
+              <div class="col-md-9">
+                <ul class="create-album-list">
+                  <!-- <li>
+                    <div class="album-part">
+                      <span class="cross-icon" (click)="onDeleteImg()">
+                        <i class="far fa-times-circle"></i>
+                      </span>
+                      <img class="logo_img" src="{{ImageBase64}}">
+                    </div>
+                  </li> -->
+                  <li>
+                    <div class="album-part">
+                      <!-- <span class="cross-icon" (click)="onDeleteImg()" >
+                        <i class="far fa-times-circle"></i>
+                      </span> -->
+                      <img class="logo_img" src="{{ImageBase64}}" style="object-fit:contain;max-width: 130px;">
+                      <div class="file-upload">
+                        <label for="upload" class="file-upload__label" style="height:130px;"></label>
+                        <input id="upload" class="file-upload__input" type="file" name="file-upload" accept="image/*" [formControl]="gSportF.sportsIcon"
+                          (change)="fileChangeEvent($event)">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="text-center col-lg-5 col-md-8">
+            <button class="btn btn btn-dark-blue-s max-WT-100 mr10" type="button" (click)="onAddSport(1)" [disabled]="addSportForm.invalid"
+              *ngIf="updateData.isAddSport">Add</button>
+            <button class="btn btn btn-dark-blue-s max-WT-100 mr10" type="button" (click)="onAddSport(2)" [disabled]="addSportForm.invalid"
+              *ngIf="!updateData.isAddSport">Update</button>
+            <button class="btn btn btn-dark-blue-s max-WT-100" type="button" (click)="goBack()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

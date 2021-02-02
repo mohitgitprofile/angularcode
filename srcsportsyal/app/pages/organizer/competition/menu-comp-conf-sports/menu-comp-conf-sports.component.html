@@ -1,0 +1,162 @@
+      <!--   Header  Start -->
+      <app-header></app-header>
+      <!--   Header End -->
+      <div class="topBanner">
+         <div class="container">
+         </div>
+      </div>
+      <!-- main Start -->
+      <main class="main-container pt0 mt-min60">
+         <div class="container">
+            <div class="content-box bg-gray">
+              <!-- Subheader of Menu Competition Configuration Header  -->
+              <app-menu-comp-conf-header></app-menu-comp-conf-header>
+              <!-- End Subheader of Menu Competition Configuration Header  -->
+               <div class="content-box-filter">
+                  <form class="filter-form fullwidth">
+                    <div class="row align-items-center">
+                       <div class="col-md-8">
+                          <div class="search-block-main fiter-full-search">
+                            <div class="search_block">
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="Search here.." aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="page.search" name="search" (keyup)="onSearch(1, $event)" autocomplete="off" >
+                                  <div class="input-group-append">
+                                    <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                       <div class="col-md-4 text-right">
+                            <button class="btn btn btn-dark-blue-s" type="button" (click)="addSportModal()">Add Sports</button>
+                       </div>
+                    </div>
+                  </form>
+                     
+               </div>
+              <div class="table-block mt10 white-bg">
+                  <div class="table-responsive">
+                     <table class="table table-bordered large-table text-center">
+                        <thead>
+                           <tr class="table-head-bg">
+                              <th>Name</th>
+                              <th>Sport Type</th>                             
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!sportsData.docs.length">
+                                <td colspan="3" class="text-center">No data found.</td>
+                             </tr>
+                           <tr *ngFor="let sport of sportsData.docs | paginate: { itemsPerPage: sportsData.limit, currentPage: sportsData.page,  totalItems: sportsData.total } ">
+                              <td>{{sport?.sportName}}</td>
+                              <td>{{sport?.sportType | letterCase}}</td>
+                             <td>
+                                <button class="btn btn-info" (click)="editSportModal(sport._id)"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-danger"  type="button" (click)="deleteSportModal(sport._id)"><i class="far fa-trash-alt"></i></button>
+                              </td>
+                           </tr>
+                            </tbody>
+                     </table>
+                  </div>
+                  <div class="clearfix pagination-entity">
+                    <div class="pagination-block mt10 text-right" *ngIf="sportsData?.total > sportsData?.limit">
+                      <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                    </div>
+                    <div class="entity-text" *ngIf="sportsData.docs.length">
+                       <span>Showing {{page.limit * (page.currPage - 1) + 1}} to {{((page.limit * page.currPage) < sportsData.total) ? (page.limit * page.currPage) : sportsData.total || 0}} of {{sportsData.total}} entries</span>
+                       <select class="form-control select-style1 mw50" [(ngModel)]="page.entryLimit" name="entryLimit" (change)="onLimitChange()">
+                          <option *ngFor="let item of page.limitChangeArr" [value]="item">{{item}}</option>
+                       </select>
+                        <span>entries</span>
+                    </div>
+                  
+                  </div>
+               </div>
+            </div>
+            <!-- Max With Box End -->
+         </div>
+      </main>
+      <!-- main End -->
+      <!--- Footer Start -->
+      <app-footer></app-footer>
+      <!--- Footer End -->
+      <!-- Add Sport Modal Start -->
+      <div class="modal fade common-modal" id="orgMenuCompAddSport" tabindex="-1" role="dialog"  aria-hidden="true">
+          <div class="modal-dialog max-WT-600" role="document">
+             <div class="modal-content">
+                <form class="modal-add-card-form" [formGroup]="addSportForm">
+                   <div class="modal-body text-center">
+                       <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" *ngIf="updateData.isAddSport">Add Sports</h5>
+                       <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" *ngIf="!updateData.isAddSport">Edit Sports</h5>
+                      <div class="modal-content-body modalform-body text-left">
+                       <div class="row">
+ 
+                         <div class="col-md-12">
+                            <div class="form-group clearfix row">
+                              <label class="col-md-3 label-blue">Name</label>
+                              <div class="col-md-9">
+                               <!-- <input type="text" class="form-control round-input" placeholder="Sports Name" [formControl]="gSportF.sportsName"   maxlength="50"/> -->
+                               <select class="form-control select-style1 round-input" [formControl]="gSportF.sportsName">
+                                  <option value="">Select Sports Name</option>
+                                  <option *ngFor="let sport of list.sportsNameArr" [value]="sport.value">{{sport?.name}}</option>
+                                </select>
+                               <!-- <div class="errorMsg" *ngIf="gSportF.sportsName.dirty && gSportF.sportsName.invalid">
+                                 <span *ngIf="gSportF.sportsName.hasError('required')">*Please enter sports name.</span>
+                               </div> -->
+                              </div>
+                            </div>
+                            <div class="form-group clearfix row">
+                              <label class="col-md-3 label-blue">Sports Type</label>
+                              <div class="col-md-9">
+                               <select class="form-control select-style1 round-input" [formControl]="gSportF.sportsType">
+                                 <option value="">Select Sports Type</option>
+                                 <option *ngFor="let type of list.sportsTypeArr" [value]="type.value">{{type?.name}}</option>
+                               </select>
+                              </div>
+                            </div>
+                           <div class="clearfix calendar-action mt30 text-left">
+                             <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                             <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" (click)="onAddSport(1)" [disabled]="addSportForm.invalid" *ngIf="updateData.isAddSport">Add</button>
+                             <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" (click)="onAddSport(2)" [disabled]="addSportForm.invalid" *ngIf="!updateData.isAddSport">Update</button>
+                           </div>
+                          </div>
+                       </div>
+                       
+                     </div>
+                   </div>
+                </form>
+             </div>
+          </div>
+       </div>
+       <!-- Add SPort Modal End -->
+
+       
+
+     <!-- detele-modal -->
+<div class="modal fade common-modal" id="orgMenuCompDeleteSport" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog max-WT-500" role="document">
+     <div class="modal-content">
+        <form class="modal-add-card-form" >
+           <div class="modal-body text-center">
+              <div class="modal-content-body modalform-body text-left">
+               <div class="row">
+                 <div class="col-md-12">
+                   <p class="text-center modal-text-s">Are you sure you want to  delete this sport?</p>
+                   <div class="clearfix calendar-action mt30 text-left">
+                     <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                     <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button"  (click)="onDeleteSport()" >YES</button>
+                   </div>
+                  </div>
+               </div>
+               
+             </div>
+           </div>
+        </form>
+     </div>
+  </div>
+</div>
+
+<!-- delete-modal-end -->
+	  
+    

@@ -1,0 +1,265 @@
+<app-header></app-header>
+<div class="topBanner height300">
+    <div class="container">
+    </div>
+</div>
+<main class="main-container pt0 mt-min60">
+    <div class="custom-container">
+        <div class="fixtures-section w-100 center-box">
+            <!-- Global Box Start -->
+            <div class="global-box grey-box">
+                <div *ngIf='num == 1'>
+                    <app-comp-header></app-comp-header>
+                </div>
+                <div *ngIf='num == 2'>
+                    <app-memb-header></app-memb-header>
+                </div>
+                <div class="fixture-inner">
+                    <!-- <div class="content-box bg-gray mt-60"> -->
+                    <h2 class="content-box-head"></h2>
+                    <h2 class="content-box-head">Shop</h2>
+                    <div class="content-box-filter">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-9">
+                                <form class="filter-form">
+                                    <div class="filter-box d-inline-block">
+                                        <label class="control-label">Select Product</label>
+                                        <select class="form-control select-style1" (change)="onChangeProduct()" [(ngModel)]="filterProdType" name="filterProdType">
+                                  <option value="">Select Product</option>
+                                  <option value="Tshirt">Tshirt</option>
+                                  <option value="Trouser">Trouser</option>
+                                  <option value="Medal">Medal</option>
+                               </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let item of productList?.docs | paginate : { itemsPerPage: pagination.itemPP, currentPage: pagination.currPage, totalItems: pagination.total } ">
+                            <div class="shop-detail-box">
+                                <figure>
+                                    <img [src]="item.productImage.safeURL || 'assets/images/shop-image2.jpg'" alt="Image" />
+                                </figure>
+                                <div class="product_name">{{item?.productType?.productType}}</div>
+                                <div class="shop-action-btn clearfix">
+                                    <button type="button" class="btn btn-view max-WT-100" data-toggle="modal" (click)="prodDetailModal(item._id)">View</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 100%" *ngIf="!productList.docs?.length">
+                            <h3 class="text-center">No product found.</h3>
+                        </div>
+                    </div>
+                    <div class="pagination-block mt10 text-right" *ngIf="productList.total > productList?.limit">
+                        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                    </div>
+
+                </div>
+                <!-- </div> -->
+            </div>
+            <!-- Global Box End -->
+
+
+        </div>
+        <!-- Max With Box End -->
+
+    </div>
+</main>
+
+<!-- <main class="main-container pt0"> -->
+<!-- <div class="venue-booking-container"> -->
+
+<!-- <div class="content-box bg-gray mt-60">
+        <h2 class="content-box-head">Shop</h2>
+        <div class="content-box-filter">
+           <div class="row">
+              <div class="col-md-12 col-lg-9">
+                 <form class="filter-form">
+                    <div class="filter-box d-inline-block">
+                       <label class="control-label">Select Product</label>
+                       <select class="form-control select-style1" (change)="onChangeProduct()" [(ngModel)]="filterProdType" name="filterProdType">
+                        <option value="">Select Product</option>
+                        <option value="Tshirt">Tshirt</option>
+                        <option value="Trouser">Trouser</option>
+                        <option value="Medal">Medal</option>
+                     </select>
+                    </div>
+                 </form>
+              </div>
+           </div>
+        </div>
+       
+        <div class="row">
+          
+           <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let item of productList?.docs | paginate : { itemsPerPage: pagination.itemPP, currentPage: pagination.currPage, totalItems: pagination.total } ">
+              <div class="shop-detail-box">
+                 <figure>
+                    <img [src]="item.productImage.safeURL || 'assets/images/shop-image2.jpg'" alt="Image"/>
+                 </figure>
+                 <div class="product_name">{{item?.productType?.productType}}</div>
+                 <div class="shop-action-btn clearfix">
+                    <button type="button" class="btn btn-view max-WT-100" data-toggle="modal"  (click)="prodDetailModal(item._id)">View</button>
+                 </div>
+              </div>
+           </div>
+           <div style="width: 100%" *ngIf="!productList.docs?.length"> <h3 class="text-center">No product found.</h3></div>
+        </div>
+        <div class="pagination-block mt10 text-right" *ngIf="productList.total > productList?.limit">
+          <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+     </div>
+       
+     </div> -->
+
+<!-- </div> -->
+<!-- </main> -->
+<!-- Modal Start -->
+<div class="modal fade" id="shop_view_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h5 class="modal-head mb15 navy-blue font_uni_sans">{{productDetails?.productType?.productType}}</h5>
+                <div class="product_purchase_image">
+                    <img src="{{productDetails?.productImage?.url}}" alt="Image" />
+                </div>
+                <div class="product_purchase_detail">
+                    {{productDetails.description}}
+                </div>
+                <div class="product_size" *ngIf='productDetails?.productType?.productType != "Medal"'>
+                    <label>Size:</label>
+                    <span class="btn-inline">
+              <button class="btn" *ngFor='let sizes of productDetails?.price_size_qunatity' (click)="selected_size = sizes?.size; selected_price = sizes?.price; stockAvailable = sizes?.quantity" >{{sizes?.size}}</button>
+             </span>
+                </div>
+
+                <div class="shop_purchase-action text-center">
+                    <!-- pay button -->
+                    <button type="button" class="btn btn-view max-WT-130 btn_large mr10" data-toggle="modal" data-target="#paymentPlanChange" data-dismiss="modal" *ngIf="productDetails?.productType?.replicateTo == 'Tshirt' || productDetails?.productType?.replicateTo == 'Trouser'"
+                        [disabled]="(selected_size == '' || stockAvailable == 0)" (click)="goPay(productDetails?.productType?._id,selected_price,selected_size)">
+            <span *ngIf="selected_size && stockAvailable != 0">PAY {{currencyLogo}} {{selected_price}}</span>
+            <span *ngIf="!selected_size">SELECT SIZE</span>
+            <span *ngIf="stockAvailable == 0">OUT OF STOCK</span>
+            </button>
+                    <button type="button" class="btn btn-view max-WT-130 btn_large mr10" data-toggle="modal" data-target="#paymentPlanChange" data-dismiss="modal" *ngIf="productDetails?.productType?.replicateTo == 'Medal'" [disabled]="productDetails?.price_size_qunatity[0]?.quantity == 0"
+                        (click)="goPay(productDetail._id,price_size_qunatity[0]?.price,null)">
+            <span *ngIf="productDetails?.price_size_qunatity[0]?.quantity != 0">PAY {{currencyLogo}} {{productDetails?.price_size_qunatity[0]?.price}}</span>
+            <span *ngIf="productDetails?.price_size_qunatity[0]?.quantity == 0">OUT OF STOCK</span>
+            </button>
+                    <!-- pay button -->
+                    <!-- <button type="button" class="btn btn-view max-WT-130 btn_large mr10" data-toggle="modal" data-target="#shop_payment_modal" data-dismiss="modal">
+              Pay $ <span>200.00</span>
+              </button> -->
+                    <button type="button" class="btn btn-poster max-WT-130 btn_large" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Shop Modal End-->
+<!-- Modal Start -->
+<div class="modal fade" id="shop_payment_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-500" role="document">
+        <div class="modal-content">
+            <form class="shop_payment_form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans">POSTER</h5>
+                    <p class="head_lagend mb25">Pay For Poster Service.</p>
+                    <div class="max-WT-400 center-box">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Card Number" required="" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control datepicker" placeholder="Expire Date" required="" type="text">
+                        </div>
+                    </div>
+                    <div class="shop_purchase-action text-center">
+                        <button type="button" class="btn btn-view max-WT-130 btn_large mr10" data-toggle="modal" data-target="#shop_payment_modal" data-dismiss="modal">
+                 Pay {{currencyLogo}} <span>{{selected_price}}</span>
+                 </button>
+                        <button type="button" class="btn btn-poster max-WT-130 btn_large" data-dismiss="modal">Modify Card</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Shop Modal End-->
+<!-- payment -->
+<div class="modal fade common-modal" id="paymentPlanChange" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+
+            <div *ngIf="list.cardList.length" class="add-to-card-box">
+                <table class="table table-bordered bor-table large-table">
+                    <!-- <thead>
+                <tr class="table-head-bg">
+                  <th>Card Number</th>
+                  <th>Expiry Date</th>
+                  <th>Choose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let card of list.cardList">
+                  <td>{{card.cardNumber}}</td>
+                  <td>{{card.expiryDate}}</td>
+                  <td class="action-td">
+                      <span class="radio-checkbox"><input type="radio" id="check2" [value]="card._id" name="currCard" [(ngModel)]="currCard" (click)="selectCard(card)">
+                      </span>
+                  </td>
+                </tr>
+              </tbody> -->
+                </table>
+            </div>
+
+            <form class="modal-add-card-form" autocomplete="off" [formGroup]="cardForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans">Payment</h5>
+                    <div class="modal-content-body">
+                        <p class="head_lagend mb20  text-center para">Please enter details for payment</p>
+                        <div class="center-box">
+                            <div class="form-group clearfix row">
+                                <label class="col-md-3 label-blue">Card Number</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" placeholder="Card number" maxlength="16" [formControl]="cf.card">
+                                    <div class="errorMsg" style="float: left" *ngIf="cf.card.dirty && cf.card.invalid">
+                                        <span *ngIf="cf.card.hasError('required')">*Please enter card no.</span>
+                                        <span *ngIf="cf.card.hasError('pattern')">*Please enter valid card no.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix row">
+                                <label class="col-md-3 label-blue">Expiry Date</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control " [formControl]="cf.expiryDate" placeholder="yyyy - mm" maxlength="7" />
+                                    <div class="errorMsg" style="float: left;" *ngIf="cf.expiryDate.dirty && cf.expiryDate.invalid">
+                                        <span *ngIf="cf.expiryDate.hasError('required')">*Please enter expiry date.</span>
+                                        <span *ngIf="cf.expiryDate.hasError('pattern')">*Please enter valid expiry date(YYYY-MM).</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix row">
+                                <label class="col-md-3 label-blue">CVV</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" placeholder="CVV" maxlength="3" [formControl]="cf.cvv">
+                                    <div class="errorMsg" style="float: left" *ngIf="cf.cvv.dirty && cf.cvv.invalid">
+                                        <span *ngIf="cf.cvv.hasError('required')">*Please enter cvv.</span>
+                                        <span *ngIf="cf.cvv.hasError('pattern')">*Please enter valid cvv.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix calendar-action text-center pL15 pR15 mt30">
+                            <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: left;" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: right;" (click)="pay()" [disabled]="cardForm.invalid">Pay</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- payment -->
+
+<app-footer></app-footer>

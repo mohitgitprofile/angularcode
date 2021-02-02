@@ -1,0 +1,256 @@
+<div class="wrapper">
+    <!--  Header  Start  -->
+    <app-header></app-header>
+    <!--  Header  End  -->
+    <div class="topBanner">
+        <div class="container">
+
+        </div>
+    </div>
+    <!-- main Start -->
+    <main class="main-container pt0">
+
+        <div class="content-container">
+            <div class="content-box bg-gray mt20">
+                <div class="content-box-filter p20  pt35 mt20">
+                    <form [formGroup]="mediaForm" autocomplete="off" novalidate>
+
+                        <h5 class="head-sub text-center mb30" *ngIf="currId == 'add'"> Create Album</h5>
+                        <h5 class="head-sub text-center mb30" *ngIf="currId != 'add'"> Edit Album</h5>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Album title" maxlength="50"
+                                        formControlName="title" value="{{albumData.title}}">
+
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control textareaheight" placeholder="Album description"
+                                        maxlength="1000" formControlName="description" value="{{albumData.description}}"></textarea>
+
+                                </div>
+                                <div class="row form-group" *ngIf="(loginTypeArr.length > 1)">
+                                    <label class="col-md-4">Select Role:</label>
+                                    <div class="col-md-8">
+                                       <select class="form-control select-style1"  (change)="getRole($event)" [(ngModel)]="loginRole" [ngModelOptions]="{standalone: true}">
+                                        <option value="">Select Role</option>
+                                        <option *ngIf="(loginTypeArr.includes('COMPETITION'))" value="COMPETITION">COMPETITION</option>
+                                        <option *ngIf="(loginTypeArr.includes('MEMBERSHIP'))"  value="MEMBERSHIP">MEMBERSHIP</option>
+                                        <option *ngIf="(loginTypeArr.includes('VENUE'))" value="VENUE">VENUE</option>
+                                        <!-- <option *ngFor="let item of list.orgList" [value]="item._id" >{{item?.competitionName}}</option> -->
+                                       </select>                             
+                                    </div>
+                                 </div>
+                                <div class="form-group" *ngIf="loginRole == 'COMPETITION'&&(loginTypeArr.includes('COMPETITION'))">
+                                    <select class="form-control select-style1" (change)="getCompetitionId($event)"  [(ngModel)]="organizerId" [ngModelOptions]="{standalone: true}">
+                                        <option value="">Tag Album To Competition</option>
+                                        <option *ngFor="let item of list.orgList" [value]="item._id">{{item?.competitionName}}</option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group" *ngIf="loginRole == 'MEMBERSHIP'&&(loginTypeArr.includes('MEMBERSHIP'))">
+                                    <select class="form-control select-style1" (change)="getMembershipId($event)" [(ngModel)]="organizerId" [ngModelOptions]="{standalone: true}">
+                                        <option value="">Tag Album To Membership</option>
+                                        <option *ngFor="let item of memberlist" [value]="item._id">{{item?.membershipName}}</option>
+                                    </select>
+
+                                </div>
+                                <div class="form-group" *ngIf="loginRole == 'VENUE'&&(loginTypeArr.includes('VENUE'))">
+                                    <select class="form-control select-style1" (change)="getVenueId($event)" [(ngModel)]="organizerId" [ngModelOptions]="{standalone: true}">
+                                        <option value="">Tag Album To Venue</option>
+                                        <option *ngFor="let item of venueList" [value]="item._id">{{item?.venueName}}</option>
+                                    </select>
+                                </div>
+                                <!--  <div class=" form-group">
+                              <label class="col-md-4">Add image:</label>
+                               <div class="col-md-8">
+                                 <div class="file-upload">
+
+                                     <label for="upload" class="file-upload__label">Browse Image</label>
+
+                                     <input id="upload" class="file-upload__input" type="file" name="file-upload">
+
+                                 </div>
+                                 <p class="head-sm d-inline-block">image.jpeg</p>
+                               </div>
+                           </div> -->
+                            </div>
+                            <div class="col-xl-6 col-lg-12">
+                                <div class="create-album-blocks">
+                                    <ul class="create-album-list">
+                                        <li *ngFor="let image of imgArr;let i = index">
+                                            <div class="album-part">
+                                                <span class="cross-icon" (click)="onDeleteImg(i)">
+                                                    <i class="far fa-times-circle"></i>
+                                                </span>
+                                                <img class="logo_img" src="{{image}}">
+                                            </div>
+                                            <!-- <div *ngIf="!imgArr.length">{}</div> -->
+                                        </li>
+                                        <li>
+                                            <div class="album-part">
+                                                <img class="logo_img" src="assets/images/addCard.png" style="object-fit:contain;max-width: 130px;">
+                                                <div class="file-upload">
+                                                    <label for="upload" class="file-upload__label" style="height:130px;"></label>
+                                                    <input id="upload" class="file-upload__input" type="file" name="file-upload"
+                                                        accept="image/*" (change)="fileChange($event)">
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center calendar-action mt30">
+                            <button type="button" class=" btn btn-gray max-WT-150" (click)="goBack()">Cancel</button>
+                            <button type="button" class=" btn btn-navy-blue max-WT-150" [disabled]="mediaForm.invalid || (!imgArr.length)"
+                                (click)="onPublish(1)" *ngIf="currId == 'add'">Publish Album</button>
+                            <button type="button" class=" btn btn-navy-blue max-WT-150" 
+                                (click)="onPublish(2)" *ngIf="currId != 'add'">Update Album</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- <main class="main-container pt0" *ngIf="loginType == 'MEMBERSHIP'" >
+
+        <div class="content-container">
+           <div class="content-box bg-gray mt20">
+              <div class="content-box-filter p20  pt35 mt20">
+                 <form  autocomplete="off" novalidate >
+                
+                    <h5 class="head-sub text-center mb30"> Create Album</h5>
+                    <div class="row">
+                       <div class="col-xl-6 col-lg-12">
+                          <div class="form-group">
+                             <input type="text" class="form-control" placeholder="Album title" maxlength="50"  >
+                            
+                          </div>
+                          <div class="form-group">
+                             <textarea class="form-control textareaheight" placeholder="Album description" maxlength="1000" ></textarea>
+                             
+                          </div>
+                          <div class="form-group"> 
+                             <select class="form-control select-style1" >
+                              <option value="">Tag Album To Membership</option>
+                              <option *ngFor="let item of list.orgList" [value]="item._id">{{item?.competitionName}}</option>
+                             </select>
+                            
+                          </div>
+                       </div>
+                       <div class="col-xl-6 col-lg-12">
+                          <div class="create-album-blocks">
+                             <ul class="create-album-list">
+                                <li *ngFor="let image of imgArr;let i = index">
+                                   <div class="album-part" >
+                                       <span class="cross-icon" (click)="onDeleteImg(i)"> 
+                                           <i class="far fa-times-circle"></i>
+                                       </span>
+                                       <img class="logo_img" src="{{image}}">                                       
+                                   </div>
+                                 
+                                </li>
+                                <li>
+                                   <div class="album-part">
+                                      <img class="logo_img" src="assets/images/upload-dummy.png">
+                                      <div class="file-upload">
+                                          <label for="upload" class="file-upload__label">Add Photo From Desktop<br>(.jpg, .PNG or gif</label>
+                                          <input id="upload" class="file-upload__input" type="file" name="file-upload" accept="image/*" (change)="fileChange($event)">
+                                      </div>
+                                   </div>
+                                </li>
+                             </ul>
+                          </div>
+                       </div>
+                    </div>
+
+                    <div class="text-center calendar-action mt30">
+                       <button type="button" class=" btn btn-gray max-WT-150" (click)="goBack()">Cancel</button>
+                       <button type="button" class=" btn btn-navy-blue max-WT-150" [disabled]="albumForm.invalid || (!imgArr.length)" (click)="onPublish(1)" *ngIf="!currId">Publish Album</button>
+                       <button type="button" class=" btn btn-navy-blue max-WT-150" [disabled]="albumForm.invalid || (!imgArr.length)" (click)="onPublish(2)" *ngIf="currId">Update Album</button>
+                    </div>
+                 
+                 </form>
+              </div>
+           </div>
+        </div>
+     </main> -->
+    <!-- main End -->
+    <!--   Footer  Start -->
+    <app-footer></app-footer>
+    <!--   Footer  End -->
+</div>
+<!-- Wrapper End -->
+<!-- Modal Start -->
+<div class="modal fade" id="add_to_card1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans">Add Card</h5>
+                    <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry.</p>
+                    <div class="max-WT-400 center-box">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Card Number" required />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control datepicker" placeholder="Expire Date" required />
+                        </div>
+                        <div class="form-group mb5">
+                            <input type="text" class="form-control" placeholder="CVC" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix calendar-action text-center pL15 pR15">
+                    <button type="button" class="mb25 btn btn-gray max-WT-150">Cancel</button>
+                    <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- book_slot End -->
+<div class="modal fade common-modal" id="add_to_card" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Card</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Card Number</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Expiry Date</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">CVC</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input " placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button"
+                                        data-toggle="modal" data-target="#edit_venue">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

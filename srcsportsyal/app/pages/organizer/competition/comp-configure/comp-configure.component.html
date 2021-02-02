@@ -1,0 +1,4237 @@
+<!-- Header Start -->
+<app-header></app-header>
+<!-- Header End -->
+<div class="topBanner height300">
+  <div class="container"></div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box">
+      <!-- Subheader of Competition Configure -->
+      <app-comp-configure-header></app-comp-configure-header>
+      <!-- End Subheader of Competition Configure -->
+      <!-- <div class="border-bottom mb-3 pb-2">
+					<div class="row">
+						<div class="col-md-9">
+							<p>The competitions is not publish, click on publish button to to make it accessible for public.</p>
+						</div>
+						<div class="col-md-3 text-right">
+							<button class="btn btn-info">Publish</button>
+						</div>
+					</div>
+				</div> -->
+      <div class="tabs_p_custom">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a
+              class="nav-link makeLink"
+              [ngClass]="tabRole == 1 ? 'active' : ''"
+              (click)="changeTab(1)"
+              >Competition</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link makeLink"
+              [ngClass]="tabRole == 2 ? 'active' : ''"
+              (click)="changeTab(2)"
+              >Option</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link makeLink"
+              [ngClass]="tabRole == 3 ? 'active' : ''"
+              (click)="changeTab(3)"
+              >Standing</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link makeLink"
+              [ngClass]="tabRole == 4 ? 'active' : ''"
+              (click)="changeTab(4)"
+              >Matches</a
+            >
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div
+            role="tabpanel"
+            class="tab-pane fade"
+            [ngClass]="tabRole == 1 ? 'in active' : ''"
+            *ngIf="tabRole == 1"
+          >
+            <div class="row">
+              <div class="col-md-3 col-lg-2 col-xl-2">
+                <div class="profile-img max-WT-170" id="profile_img">
+                  <img
+                    src="{{
+                      competitionDetObj.compImage ||
+                        'assets/images/profile-img.png'
+                    }}"
+                    alt="Profile img"
+                  />
+                  <span class="camera fa fa-camera">
+                    <input type="file" (change)="fileChangeEvent($event)" />
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-9 col-lg-10 col-xl-10">
+                <div class="form-box m-auto mt60">
+                  <form
+                    [formGroup]="competitionForm"
+                    autocomplete="off"
+                    novalidate
+                  >
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Competition Name</label
+                        >
+                        <div class="col-md-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            [formControl]="compForm.compName"
+                            maxlength="50"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Venue</label
+                        >
+                        <div class="col-md-8">
+                          <select
+                            class="form-control select-style1 d-inline-block width200"
+                            [formControl]="compForm.venue"
+                          >
+                            <option value="">Select Venue</option>
+                            <option
+                              *ngFor="let venue of list.venueList"
+                              [value]="venue.venue"
+                              >{{ venue?.venue }}</option
+                            >
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Division</label
+                        >
+                        <div class="col-md-8">
+                          <select
+                            class="form-control select-style1 d-inline-block width200"
+                            [formControl]="compForm.division"
+                          >
+                            <option value="">Select Division</option>
+                            <option
+                              *ngFor="let division of list.divisionList"
+                              [value]="division.divisionName"
+                              >{{ division?.divisionName }}</option
+                            >
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Period</label
+                        >
+                        <div class="col-md-8">
+                          <select
+                            class="form-control select-style1 d-inline-block width200"
+                            [formControl]="compForm.period"
+                          >
+                            <option value="">Select Period</option>
+                            <option
+                              *ngFor="let period of list.periodList"
+                              [value]="period.periodName"
+                              >{{ period?.periodName }}</option
+                            >
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Sports</label
+                        >
+                        <div class="col-md-8">
+                          <select
+                            class="form-control select-style1 d-inline-block width200"
+                            [formControl]="compForm.sports"
+                          >
+                            <option value="">Select Sports</option>
+                            <option
+                              *ngFor="let sport of list.sportsList"
+                              [value]="sport._id"
+                              >{{ sport?.sportName }} {{sport?.sportType}}</option
+                            >
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Start Date</label
+                        >
+                        <div class="col-md-8">
+                          <input
+                            class="form-control"
+                            style="float:none"
+                            placeholder="Select start date"
+                            ngx-mydatepicker
+                            name="startDate"
+                            [formControl]="compForm.startDate"
+                            [options]="startDateOptions"
+                            #startDate="ngx-mydatepicker"
+                            (click)="startDate.toggleCalendar()"
+                            (inputFieldChanged)="onStartDateChanged($event)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >End Date</label
+                        >
+                        <div class="col-md-8">
+                          <input
+                            class="form-control"
+                            style="float:none"
+                            placeholder="Select end date"
+                            ngx-mydatepicker
+                            name="endDate"
+                            [formControl]="compForm.endDate"
+                            [options]="endDateOptions"
+                            #endDate="ngx-mydatepicker"
+                            (click)="endDate.toggleCalendar()"
+                            (inputFieldChanged)="onEndDateChanged($event)"
+                          />
+                          <div
+                            class="errorMsg"
+                            *ngIf="
+                              competitionForm.value.startDate &&
+                              competitionForm.value.endDate
+                            "
+                          >
+                            <span *ngIf="dateErr"
+                              >*Start date must be less than or equal to end
+                              date.</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Status</label
+                        >
+                        <div class="col-md-8">
+                          <select
+                            class="form-control select-style1 d-inline-block width200"
+                            [formControl]="compForm.status"
+                          >
+                            <option value="">Select Status</option>
+                            <option
+                              [value]="status.value"
+                              *ngFor="let status of list.statusList"
+                              >{{ status?.name }}</option
+                            >
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3 text-right"
+                          >Club</label
+                        >
+                        <div class="col-md-8">
+                          <select
+                            class="form-control select-style1 d-inline-block width200"
+                            [formControl]="compForm.club"
+                          >
+                            <option value="">Select Club</option>
+                            <option
+                              *ngFor="let club of list.clubList"
+                              [value]="club.clubName"
+                              >{{ club.clubName }}</option
+                            >
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <label class="control-label col-md-3">&nbsp;</label>
+                        <div
+                          class="custom-checkbox col-md-7 clearfix mt40 text-center"
+                        >
+                          <button
+                            type="button"
+                            class="btn btn-danger font_uni_sans"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-navy-blue font_uni_sans"
+                            (click)="updateCompDetail()"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="table-block mt30">
+              <div class="content-box-filter">
+                <form class="filter-form">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <div class="search-block-main text-left">
+                        <div class="search_block">
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Search"
+                              aria-label="Recipient's username"
+                              aria-describedby="basic-addon2"
+                              [(ngModel)]="prizePage.search"
+                              autocomplete="off"
+                              name="search"
+                              (keyup)="onPrizeSearch(1, $event)"
+                            />
+                            <div class="input-group-append">
+                              <button
+                                class="btn btn_search"
+                                type="button"
+                                (click)="onPrizeSearch(2)"
+                              >
+                                <i class="fas fa-search"></i> Search
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 text-right">
+                      <a
+                        class="btn btn-navy-blue max-WT-100"
+                        (click)="addPrizeModal()"
+                        href="javascript:;"
+                        >Add Prize</a
+                      >
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="table_p_area">
+                <div class="table-responsive mt30">
+                  <table class="table table-bordered text-center">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>Decription</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="!prizeDet.docs.length">
+                        <td></td>
+                        <td class="text-center">No Data Found.</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr
+                        *ngFor="
+                          let item of (prizeDet.docs
+                            | paginate
+                              : {
+                                  itemsPerPage: prizeDet.limit,
+                                  currentPage: prizeDet.page,
+                                  totalItems: prizeDet.total,
+                                  id: 'prizedet'
+                                })
+                        "
+                      >
+                        <td>{{ item?.prize?.name }}</td>
+                        <td>{{ item?.prize?.value }}</td>
+                        <td>{{ item?.prize?.description }}</td>
+                        <td>
+                          <button
+                            class="btn btn-info"
+                            (click)="editPrizeModal(item.prize._id)"
+                          >
+                            <i class="far fa-edit"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger"
+                            (click)="deletePrizeModal(item.prize._id)"
+                          >
+                            <i class="far fa-trash-alt"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="shoing_entries">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="show_ent" *ngIf="prizeDet.docs.length">
+                        <span
+                          >Showing
+                          {{ prizeDet.limit * (prizeDet.page - 1) + 1 || 0 }} to
+                          {{
+                            prizeDet.limit * prizeDet.page < prizeDet.total
+                              ? prizeDet.limit * prizeDet.page
+                              : prizeDet.total || 0
+                          }}
+                          of {{ prizeDet.total }} entries</span
+                        >
+                        <select
+                          class="form-control select-style1 mw50 limit-change"
+                          [(ngModel)]="prizePage.entryLimit"
+                          name="entryLimit"
+                          (change)="onPrizeLimitChange()"
+                        >
+                          <option
+                            *ngFor="let item of prizePage.limitChangeArr"
+                            [value]="item"
+                            >{{ item }}</option
+                          >
+                        </select>
+                        <span>entries</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div
+                        class="pagination-block mt10 text-right"
+                        *ngIf="prizeDet.docs.length"
+                      >
+                        <pagination-controls
+                          (pageChange)="onPrizePageChange($event)"
+                          id="prizedet"
+                        ></pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-block mt30">
+              <div class="content-box-filter">
+                <form class="filter-form">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <div class="search-block-main text-left">
+                        <div class="search_block">
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Search"
+                              aria-label="Recipient's username"
+                              aria-describedby="basic-addon2"
+                              [(ngModel)]="filePage.search"
+                              autocomplete="off"
+                              name="search"
+                              (keyup)="onFileSearch(1, $event)"
+                            />
+                            <div class="input-group-append">
+                              <button
+                                class="btn btn_search"
+                                type="button"
+                                (click)="onFileSearch(2)"
+                              >
+                                <i class="fas fa-search"></i> Search
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 text-right">
+                      <a
+                        class="btn btn-navy-blue max-WT-100"
+                        (click)="addFileModal()"
+                        href="javascript:;"
+                        >Add File</a
+                      >
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="table_p_area">
+                <div class="table-responsive mt30">
+                  <table class="table table-bordered text-center">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="!fileDet.docs.length">
+                        <td></td>
+                        <td class="text-center">No Data Found.</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr
+                        *ngFor="
+                          let item of (fileDet.docs
+                            | paginate
+                              : {
+                                  itemsPerPage: fileDet.limit,
+                                  currentPage: fileDet.page,
+                                  totalItems: fileDet.total
+                                })
+                        "
+                      >
+                        <td>{{ item?.file?.name }}</td>
+                        <td>{{ item?.file?.size }}</td>
+                        <td>
+                          {{ item?.file?.createdAt | date: "dd/MM/yyyy" }}
+                        </td>
+                        <td>
+                          <button
+                            class="btn btn-info"
+                            (click)="editFileModal(item.file._id)"
+                          >
+                            <i class="far fa-edit"></i>
+                          </button>
+                          <button
+                            class="btn btn-danger"
+                            (click)="deleteFileModal(item.file._id)"
+                          >
+                            <i class="far fa-trash-alt"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="shoing_entries">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="show_ent" *ngIf="fileDet.docs.length">
+                        <span
+                          >Showing
+                          {{ fileDet.limit * (fileDet.page - 1) + 1 || 0 }} to
+                          {{
+                            fileDet.limit * fileDet.page < fileDet.total
+                              ? fileDet.limit * fileDet.page
+                              : fileDet.total || 0
+                          }}
+                          of {{ fileDet.total }} entries</span
+                        >
+                        <select
+                          class="form-control select-style1 mw50 limit-change"
+                          [(ngModel)]="filePage.entryLimit"
+                          name="entryLimit"
+                          (change)="onFileLimitChange()"
+                        >
+                          <option
+                            *ngFor="let item of filePage.limitChangeArr"
+                            [value]="item"
+                            >{{ item }}</option
+                          >
+                        </select>
+                        <span>entries</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div
+                        class="pagination-block mt10 text-right"
+                        *ngIf="fileDet.total > fileDet.limit"
+                      >
+                        <pagination-controls
+                          (pageChange)="onFilePageChange($event)"
+                        ></pagination-controls>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane fade"
+            [ngClass]="tabRole == 2 ? 'in active' : ''"
+            *ngIf="tabRole == 2"
+          >
+            <div class="form-box m-auto mt60">
+              <form>
+                <div class="form-group">
+                  <div class="row">
+                    <label class="control-label col-md-3 text-right"
+                      >Allow Comments</label
+                    >
+                    <div class="col-md-8">
+                      <select
+                        class="form-control select-style1 d-inline-block width200"
+                        [(ngModel)]="
+                          competitionDetObj.competitionDetail.allowComment
+                        "
+                        name="allowComment"
+                      >
+                        <option value="false">Disabled</option>
+                        <option value="true">Allowed</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <label class="control-label col-md-3 text-right"
+                      >Allow Follow</label
+                    >
+                    <div class="col-md-8">
+                      <select
+                        class="form-control select-style1 d-inline-block width200"
+                        [(ngModel)]="
+                          competitionDetObj.competitionDetail
+                            .allowPublicToFollow
+                        "
+                        name="allowPublicToFollow"
+                      >
+                        <option value="true">Public</option>
+                        <option value="false">Private</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <label class="control-label col-md-3">&nbsp;</label>
+                    <div class="custom-checkbox col-md-8 clearfix">
+                      <input
+                        type="checkbox"
+                        id="check3"
+                        [(ngModel)]="
+                          competitionDetObj.competitionDetail.clubRegistration
+                        "
+                        name="clubRegistration"
+                      />
+                      <label for="check3">Enable Club Registration</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <label class="control-label col-md-3">&nbsp;</label>
+                    <div
+                      class="custom-checkbox col-md-7 clearfix mt40 text-center"
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-navy-blue font_uni_sans"
+                        (click)="onSavecompOption()"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane fade"
+            [ngClass]="tabRole == 3 ? 'in active' : ''"
+            *ngIf="tabRole == 3"
+          >
+            <form class="filter-form">
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="search-block-main text-left">
+                    <div class="search_block">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Search"
+                          aria-label="Recipient's username"
+                          aria-describedby="basic-addon2"
+                          [(ngModel)]="page.search"
+                          name="search"
+                          (keyup)="onStandingSearch(1, $event)"
+                          autocomplete="off"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn_search"
+                            type="button"
+                            (click)="onStandingSearch(2)"
+                          >
+                            <i class="fas fa-search"></i> Search
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 text-right">
+                  <a
+                    class="btn btn-navy-blue"
+                    href="javascript:void(0);"
+                    (click)="addStandingModal()"
+                    data-toggle="modal"
+                    data-target="#add_standing"
+                    >Add Standing</a
+                  >
+                </div>
+              </div>
+            </form>
+
+            <div class="table_p_area">
+              <div class="table-responsive mt30">
+                <table class="table table-bordered text-center">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Sport</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="standingList.total == 0">
+                      <td colspan="6">No data found.</td>
+                    </tr>
+                    <tr
+                      *ngFor="
+                        let standings of (standingList.docs
+                          | paginate
+                            : {
+                                itemsPerPage: standingList.limit,
+                                currentPage: standingList.page,
+                                totalItems: standingList.total
+                              })
+                      "
+                    >
+                      <!-- <td style="cursor: pointer;" (click)="venueDetailFun(venue)"> -->
+                      <td>{{ standings.standingName }}</td>
+                      <td>{{ standings.sport }}</td>
+                      <td>
+                        <button
+                          class="btn btn-info"
+                          (click)="editStandingModal(standings)"
+                        >
+                          <i class="far fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger"
+                          (click)="deleteMatchStandingModal(standings)"
+                        >
+                          <i class="far fa-trash-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix pagination-entity">
+                <div
+                  class="pagination-block mt10 text-right"
+                  *ngIf="standingList.docs.length"
+                >
+                  <pagination-controls
+                    (pageChange)="onPageChange($event)"
+                  ></pagination-controls>
+                </div>
+                <div class="entity-text" *ngIf="standingList.docs.length">
+                  <span
+                    >Showing {{ page.limit * (page.currPage - 1) + 1 || 0 }} to
+                    {{
+                      page.limit * page.currPage < standingList.total
+                        ? page.limit * page.currPage
+                        : standingList.total || 0
+                    }}
+                    of {{ standingList.total }} entries
+                  </span>
+                  <select
+                    class="form-control select-style1 mw50"
+                    [(ngModel)]="page.entryLimit"
+                    name="entryLimit"
+                    (change)="onLimitChange()"
+                  >
+                    <option
+                      *ngFor="let item of page.limitChangeArr"
+                      [value]="item"
+                      >{{ item }}</option
+                    >
+                  </select>
+                  <span>entries</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            role="tabpanel"
+            class="tab-pane fade"
+            [ngClass]="tabRole == 4 ? 'in active' : ''"
+            *ngIf="tabRole == 4"
+          >
+            <form class="filter-form">
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="search-block-main text-left">
+                    <div class="search_block">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Search"
+                          aria-label="Recipient's username"
+                          aria-describedby="basic-addon2"
+                          [(ngModel)]="page.search"
+                          name="search"
+                          (keyup)="onMatchSearch(1, $event)"
+                          autocomplete="off"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn_search"
+                            type="button"
+                            (click)="onMatchSearch(2)"
+                          >
+                            <i class="fas fa-search"></i> Search
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 text-right">
+                  <a
+                    class="btn btn-navy-blue"
+                    href="javascript:void(0);"
+                    data-toggle="modal"
+                    data-target="#add_Match"
+                    >Create Match Configration</a
+                  >
+                </div>
+              </div>
+            </form>
+
+            <div class="table_p_area">
+              <div class="table-responsive mt30">
+                <table class="table table-bordered text-center">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Sports</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="matchList.total == 0">
+                      <td colspan="6">No data found.</td>
+                    </tr>
+                    <tr
+                      *ngFor="
+                        let match of (matchList.docs
+                          | paginate
+                            : {
+                                itemsPerPage: matchList.limit,
+                                currentPage: matchList.page,
+                                totalItems: matchList.total
+                              })
+                      "
+                    >
+                      <td>{{ match.name }}</td>
+                      <td>{{ match.sports }}</td>
+                      <td>
+                        <button
+                          class="btn btn-info"
+                          (click)="editMatchModal(match)"
+                        >
+                          <i class="far fa-edit"></i>
+                        </button>
+                        <button
+                          class="btn btn-danger"
+                          (click)="deleteMatchStandingModal(match)"
+                        >
+                          <i class="far fa-trash-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="clearfix pagination-entity">
+                <div
+                  class="pagination-block mt10 text-right"
+                  *ngIf="matchList.docs.length"
+                >
+                  <pagination-controls
+                    (pageChange)="onPageChangeMatch($event)"
+                  ></pagination-controls>
+                </div>
+                <div class="entity-text" *ngIf="matchList.docs.length">
+                  <span
+                    >Showing {{ page.limit * (page.currPage - 1) + 1 || 0 }} to
+                    {{
+                      page.limit * page.currPage < matchList.total
+                        ? page.limit * page.currPage
+                        : matchList.total || 0
+                    }}
+                    of {{ matchList.total }} entries
+                  </span>
+                  <select
+                    class="form-control select-style1 mw50"
+                    [(ngModel)]="page.entryLimit"
+                    name="entryLimit"
+                    (change)="onLimitChangeMatch()"
+                  >
+                    <option
+                      *ngFor="let item of page.limitChangeArr"
+                      [value]="item"
+                      >{{ item }}</option
+                    >
+                  </select>
+                  <span>entries</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<!-- Footer Start -->
+<app-footer></app-footer>
+<!-- Footer End -->
+
+<!-- modal -->
+
+<!-- Add Prize Modal -->
+<div
+  class="modal fade"
+  id="compConfAddPrize"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form
+        class="modal-add-card-form"
+        [formGroup]="addPrizeForm"
+        autocomplete="off"
+      >
+        <div class="modal-body text-left">
+          <h5
+            class="modal-head mt15 mb5 navy-blue font_uni_sans text-center"
+            *ngIf="updPrizeData.isAddPrize"
+          >
+            Add Prize
+          </h5>
+          <h5
+            class="modal-head mt15 mb5 navy-blue font_uni_sans text-center"
+            *ngIf="!updPrizeData.isAddPrize"
+          >
+            Edit Prize
+          </h5>
+          <div class="profile-box">
+            <!-- <div class="form-group">
+							   <label class="control-label">Add Prize</label>
+							   <input type="text" class="form-control" placeholder="Name">
+							</div> -->
+            <div class="form-group">
+              <label class="control-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                maxlength="50"
+                [formControl]="prizeF.name"
+              />
+              <div
+                class="errorMsg"
+                *ngIf="prizeF.name.dirty && prizeF.name.invalid"
+              >
+                <span *ngIf="prizeF.name.hasError('required')"
+                  >*Please enter prize name.</span
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Value</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Value"
+                maxlength="10"
+                [formControl]="prizeF.value"
+              />
+              <div
+                class="errorMsg"
+                *ngIf="prizeF.value.dirty && prizeF.value.invalid"
+              >
+                <span *ngIf="prizeF.value.hasError('required')"
+                  >*Please enter prize value.</span
+                >
+                <span *ngIf="prizeF.value.hasError('pattern')"
+                  >*Please enter valid prize value.</span
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Description</label>
+              <textarea
+                class="form-control"
+                row="5"
+                placeholder="Description"
+                maxlength="200"
+                [formControl]="prizeF.description"
+              ></textarea>
+              <div
+                class="errorMsg"
+                *ngIf="prizeF.description.dirty && prizeF.description.invalid"
+              >
+                <span *ngIf="prizeF.description.hasError('required')"
+                  >*Please enter prize description.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            (click)="onAddPrize(1)"
+            [disabled]="addPrizeForm.invalid"
+            *ngIf="updPrizeData.isAddPrize"
+          >
+            Add
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            (click)="onAddPrize(2)"
+            [disabled]="addPrizeForm.invalid"
+            *ngIf="!updPrizeData.isAddPrize"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Add Prize Modal -->
+
+<!-- Delete Prize Modal -->
+<div
+  class="modal fade common-modal"
+  id="compConfDelPrize"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">
+                  Are you sure you want to delete this prize?
+                </p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button
+                    type="button"
+                    class="mb25 btn btn-gray max-WT-150"
+                    data-dismiss="modal"
+                  >
+                    NO
+                  </button>
+                  <button
+                    class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"
+                    type="button"
+                    (click)="onDeletePrize()"
+                  >
+                    YES
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Delete Prize Modal -->
+
+<!-- add file -->
+<div
+  class="modal fade"
+  id="compConfAddFile"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" autocomplete="off">
+        <div class="modal-body text-left">
+          <h5
+            class="modal-head mt15 mb5 navy-blue font_uni_sans text-center"
+            *ngIf="updFileData.isAdd"
+          >
+            Add File
+          </h5>
+          <h5
+            class="modal-head mt15 mb5 navy-blue font_uni_sans text-center"
+            *ngIf="!updFileData.isAdd"
+          >
+            Edit File
+          </h5>
+          <div class="profile-box">
+            <div class="form-group">
+              <label class="control-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                [(ngModel)]="addFileData.name"
+                name="name"
+              />
+            </div>
+            <div class="form-group">
+              <label class="control-label">File</label>
+              <input
+                type="file"
+                class="form-control"
+                (change)="onfileChangeEvent($event)"
+                #compConfAddFileInput
+              />
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            *ngIf="updFileData.isAdd"
+            (click)="onAddFile(1)"
+            [disabled]="!(updFileData.isAdd || updFileData.file)"
+          >
+            Add
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            *ngIf="!updFileData.isAdd"
+            (click)="onAddFile(2)"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end add file -->
+
+<!-- Delete File Modal -->
+<div
+  class="modal fade common-modal"
+  id="compConfDelFile"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s">
+                  Are you sure you want to delete this file?
+                </p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button
+                    type="button"
+                    class="mb25 btn btn-gray max-WT-150"
+                    data-dismiss="modal"
+                  >
+                    NO
+                  </button>
+                  <button
+                    class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"
+                    type="button"
+                    (click)="onDeleteFile()"
+                  >
+                    YES
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Delete File Modal -->
+
+<!-- Delete Prize Modal -->
+<div
+  class="modal fade common-modal"
+  id="deleteMatchStanding"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-500" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center modal-text-s" *ngIf="tabRole == 3">
+                  Are you sure you want to delete this standing?
+                </p>
+                <p class="text-center modal-text-s" *ngIf="tabRole == 4">
+                  Are you sure you want to delete this match?
+                </p>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button
+                    type="button"
+                    class="mb25 btn btn-gray max-WT-150"
+                    data-dismiss="modal"
+                  >
+                    NO
+                  </button>
+                  <button
+                    class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"
+                    type="button"
+                    (click)="onDeleteMatchStanding(tabRole)"
+                  >
+                    YES
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- add standing -->
+<div
+  class="modal fade"
+  id="add_standing"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Create Standing
+          </h5>
+          <div class="profile-box">
+            <div class="form-group">
+              <label class="control-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="addStandingData.name"
+                placeholder="Name"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Sports</label>
+              <select
+                class="form-control select-style1"
+                [(ngModel)]="addStandingData.sports"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option value="">Select Sports</option>
+                <option
+                  *ngFor="let sport of list.sportsList"
+                  [value]="sport.sportName"
+                  >{{ sport?.sportName }}  {{sport?.sportType}}</option
+                >
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            (click)="createStandingFunc()"
+            [disabled]="
+              addStandingData.name == '' || addStandingData.sports == ''
+            "
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end add standing -->
+
+<!-- add session -->
+<div
+  class="modal fade"
+  id="add_Match"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Add Matches
+          </h5>
+          <div class="profile-box">
+            <div class="form-group">
+              <label class="control-label">Name</label>
+              <input
+                type="text"
+                placeholder="Enter Name"
+                [(ngModel)]="addMatchData.name"
+                class="form-control"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Sports</label>
+              <select
+                class="form-control select-style1 round-input"
+                [(ngModel)]="addMatchData.sportName"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option value="" style="display:none" selected
+                  >--- Select Sport ---</option
+                >
+                <option
+                  *ngFor="let sport of sportList"
+                  [ngValue]="sport?.sportName"
+                  >{{ sport?.sportName }}</option
+                >
+              </select>
+              <!-- <my-date-picker name="mydate" [options]="myDatePickerOptions" [(ngModel)]="addMatchData.startDate" [ngModelOptions]="{standalone: true}"
+							 placeholder="Select Start Date" required></my-date-picker> -->
+            </div>
+            <!-- <div class="form-group">
+							<label class="control-label">End Date</label>
+							<my-date-picker name="mydate" [options]="myDatePickerOptions" [(ngModel)]="addMatchData.endDate" [ngModelOptions]="{standalone: true}"
+							 placeholder="Select End Date" required></my-date-picker>
+						</div> -->
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            [disabled]="addMatchData.name == '' || addMatchData.sportName == ''"
+            (click)="createMatchFunc()"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end add session -->
+
+<!-- edit standing -->
+<div
+  class="modal fade"
+  id="edit_standing"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form
+        class="modal-add-card-form"
+        [formGroup]="editStandingForm"
+        autocomplete="off"
+      >
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Edit Standing
+          </h5>
+          <div class="profile-box">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [formControl]="standingForm.standingName"
+                  />
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="control-label">Status</label>
+                  <select class="form-control select-style1">
+                    <option value="active">Active</option>
+                    <option value="inActive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="control-label">Visible columns</label>
+                  <ng-multiselect-dropdown
+                    [placeholder]="'Select Visible columns'"
+                    [data]="visibleColumns"
+                    [formControl]="standingForm.visibleColumns"
+                    [settings]="dropdownSettings"
+                    name="visibleColumns"
+                    [ngModel]="visibleColumnsData"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label class="control-label">Sports</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [formControl]="standingForm.sport"
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="criteria_sec"
+              *ngFor="let data of criteriaArr; let i = index"
+            >
+              <div class="text-right">
+                <button
+                  class="add_p_delete btn-sm btn btn-danger"
+                  *ngIf="i != criteriaArr.length - 1"
+                  (click)="removeCriteria(i)"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label">Criteria</label>
+                    <select
+                      class="form-control select-style1"
+                      [(ngModel)]="data.criteria"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
+                      <option value="Points">Points</option>
+                      <option value="Played">Played Matches</option>
+                      <option value="Won">Won matches</option>
+                      <option value="Lost">Lost matches</option>
+                      <option value="For">For</option>
+                      <option value="Against">Against</option>
+                      <option value="Difference">Difference</option>
+                      <option value="PeriodsWon">Periods won</option>
+                      <option value="PeriodsLost">Periods lost</option>
+                      <option value="Difference">Difference of partials</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label">Order</label>
+                    <select
+                      class="form-control select-style1"
+                      [(ngModel)]="data.order"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
+                      <option value="highToLow">Highest to Lowest</option>
+                      <option value="lowToHigh">Lowest to Highest</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <button
+                  class="btn-sm btn btn-primary"
+                  *ngIf="i == criteriaArr.length - 1"
+                  (click)="addOtherCriteria(data, i)"
+                >
+                  <i class="fas fa-plus"></i> Add Criteria
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            (click)="updateStandingFunc()"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end add standing -->
+
+<!-- end-modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- edit match modal for basketball start -->
+
+<div
+  class="modal fade"
+  id="edit_matches_basketball"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form
+        name="cricketForm"
+        class="modal-add-card-form"
+        action="profile-with-card.html"
+      >
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Edit Match Configuration
+          </h5>
+          <div class="profile-box">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="basketball.basketballName"
+                    #basketballName="ngModel"
+                    name="basketballName"
+                    pattern="^[^-\s][a-zA-Z\s-]+$"
+                    required
+                  />
+                  <div
+                    *ngIf="basketballName.dirty && basketballName.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="basketballName.errors.required">
+                      *Basketball name is required.
+                    </div>
+                    <div *ngIf="basketballName.errors.pattern">
+                      *Invalid Basketball name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Sports</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="basketball.sports"
+                    name="sports"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Duration(Minutes)</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="basketball.basketballDuration"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #basketballDuration="ngModel"
+                    required
+                  />
+                  <div
+                    *ngIf="basketballDuration.dirty && basketballDuration.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="basketballDuration.errors.required">
+                      *Duration is required.
+                    </div>
+                    <div *ngIf="basketballDuration.errors.pattern">
+                      *Duration must be a number.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h4>Match Scoring Criteria</h4>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Points Per Match</h5>
+                  <div class="d-flex justify-content-between bd-highlight mb-3">
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Win</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="basketball.basketballwin"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #basketballwin="ngModel"
+                        required
+                      />
+                      <div *ngIf="basketballwin.dirty && basketballwin.invalid" class="text-danger">
+                        <div *ngIf="basketballwin.errors.required">*win is required.</div>
+                        <div *ngIf="basketballwin.errors.pattern">
+                          *win must be a number.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Tie</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="basketball.basketballtie"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #basketballtie="ngModel"
+                        required
+                      />
+                      <div *ngIf="basketballtie.dirty && basketballtie.invalid" class="text-danger">
+                        <div *ngIf="basketballtie.errors.required">*tie is required.</div>
+                        <div *ngIf="basketballtie.errors.pattern">
+                          *tie must be a number.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Loss</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="basketball.basketballloss"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #basketballloss="ngModel"
+                        required
+                      />
+                      <div
+                        *ngIf="basketballloss.dirty && basketballloss.invalid"
+                        class="text-danger"
+                      >
+                        <div *ngIf="basketballloss.errors.required">
+                          *loss is required.
+                        </div>
+                        <div *ngIf="basketballloss.errors.pattern">
+                          *loss must be a number.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="control-label">Name</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label">Order</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input
+                        type="checkbox"
+                        id="check11"
+                        [(ngModel)]="basketball.basketballbaskets"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="check11">Baskets</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="basketball.basketballbasketsInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #basketballbasketsInput="ngModel"
+                      required
+                      [readonly]="!basketball.basketballbaskets"
+                    />
+                    <div
+                      *ngIf="
+                        basketballbasketsInput.dirty &&
+                        basketballbasketsInput.invalid
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="basketballbasketsInput.errors.required">
+                        *Number of baskets is required.
+                      </div>
+                      <div *ngIf="basketballbasketsInput.errors.pattern">
+                        *Number of baskets must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input
+                        type="checkbox"
+                        id="check12"
+                        [(ngModel)]="basketball.basketballfouls"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="check12">Fouls</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="basketball.basketballfoulsInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #basketballfoulsInput="ngModel"
+                      required
+                      [readonly]="!basketball.basketballfouls"
+                    />
+                    <div
+                      *ngIf="
+                        basketballfoulsInput.dirty &&
+                        basketballfoulsInput.invalid &&
+                        cricket.ballFaced == true
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="basketballfoulsInput.errors.required">
+                        *Number of fouls is required.
+                      </div>
+                      <div *ngIf="basketballfoulsInput.errors.pattern">
+                        *Number of fouls must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            (click)="updateMatchFunc()"
+            [disabled]="
+              basketballName.invalid || basketballDuration.invalid || basketballwin.invalid || basketballtie.invalid || basketballloss.invalid ||
+              (basketball.basketballbaskets == true ? basketballbasketsInput.invalid : false) ||
+              (basketball.basketballfouls == true ? basketballfoulsInput.invalid : false)
+            "
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- edit match modal for basketball end -->
+
+<!-- edit match modal for cricket start -->
+
+ <div
+  class="modal fade"
+  id="edit_matches_cricket"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form
+        name="cricketForm1"
+        class="modal-add-card-form"
+        action="profile-with-card.html"
+      >
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Edit Match Configuration
+          </h5>
+          <div class="profile-box">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="cricket.cricketName"
+                    [ngModelOptions]="{ standalone: true }"
+                    #cricketName="ngModel"
+                    name="cricketName"
+                    pattern="^[^-\s][a-zA-Z\s-]+$"
+                    required
+                  />
+                  <div
+                    *ngIf="cricketName.dirty && cricketName.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="cricketName.errors.required">
+                      *Cricket name is required.
+                    </div>
+                    <div *ngIf="cricketName.errors.pattern">
+                      *Invalid cricket name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Sports</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="cricket.sports"
+                    #sports="ngModel"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[^-\s][a-zA-Z\s-]+$"
+                    required
+                    readonly
+                  />
+                  <div
+                    *ngIf="sports.dirty && sports.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="sports.errors.required">
+                      *sports name is required.
+                    </div>
+                    <div *ngIf="sports.errors.pattern">*Invalid sports.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Duration(Minutes)</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="cricket.duration"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #duration="ngModel"
+                    required
+                  />
+                  <div
+                    *ngIf="duration.dirty && duration.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="duration.errors.required">
+                      *Duration is required.
+                    </div>
+                    <div *ngIf="duration.errors.pattern">
+                      *Duration must be a number.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h4>Match Scoring Criteria</h4>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Points Per Match</h5>
+                  <div class="d-flex justify-content-between bd-highlight mb-3">
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Win</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="cricket.win"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #win="ngModel"
+                        required
+                      />
+                      <div *ngIf="win.dirty && win.invalid" class="text-danger">
+                        <div *ngIf="win.errors.required">*win is required.</div>
+                        <div *ngIf="win.errors.pattern">
+                          *win must be a number.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Tie</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="cricket.tie"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #tie="ngModel"
+                        required
+                      />
+                      <div *ngIf="tie.dirty && tie.invalid" class="text-danger">
+                        <div *ngIf="tie.errors.required">*tie is required.</div>
+                        <div *ngIf="tie.errors.pattern">
+                          *tie must be a number.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Loss</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="cricket.cricketloss"
+                        name="cricketloss"
+                        pattern="^[0-9][0-9]*$"
+                        #cricketloss="ngModel"
+                        required
+                      />
+                      <div
+                        *ngIf="cricketloss.dirty && cricketloss.invalid"
+                        class="text-danger"
+                      >
+                        <div *ngIf="cricketloss.errors.required">
+                          *loss is required.
+                        </div>
+                        <div *ngIf="cricketloss.errors.pattern">
+                          *loss must be a number.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="control-label">Name</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label">Order</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      >
+                      <input
+                        type="checkbox"
+                        id="cricketcheck11"
+                        [(ngModel)]="cricket.runs"
+                        name="runs"
+                      />
+                      <label for="cricketcheck11">Runs</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="cricket.runsInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #runsInput="ngModel"
+                      required
+                      [readonly]="!cricket.runs"
+                    />
+                    <div
+                      *ngIf="
+                        runsInput.dirty &&
+                        runsInput.invalid &&
+                        cricket.runs == true
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="runsInput.errors.required">
+                        *Run is required.
+                      </div>
+                      <div *ngIf="runsInput.errors.pattern">
+                        *Run must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      >
+                      <input
+                        type="checkbox"
+                        id="cricketcheck12"
+                        [(ngModel)]="cricket.ballFaced"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="cricketcheck12">Ball Faced</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="cricket.ballFacedInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #ballFacedInput="ngModel"
+                      required
+                      [readonly]="!cricket.ballFaced"
+                    />
+                    <div
+                      *ngIf="
+                        ballFacedInput.dirty &&
+                        ballFacedInput.invalid &&
+                        cricket.ballFaced == true
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="ballFacedInput.errors.required">
+                        *Number of ball faced is required.
+                      </div>
+                      <div *ngIf="ballFacedInput.errors.pattern">
+                        *Number of ball faced must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      >
+                      <input
+                        type="checkbox"
+                        id="check13"
+                        [(ngModel)]="cricket.fours"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="check13">4s</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="cricket.foursInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #foursInput="ngModel"
+                      required
+                      [readonly]="!cricket.fours"
+                    />
+                    <div
+                      *ngIf="
+                        foursInput.dirty &&
+                        foursInput.invalid &&
+                        cricket.fours == true
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="foursInput.errors.required">
+                        *Number of six is required.
+                      </div>
+                      <div *ngIf="foursInput.errors.pattern">
+                        *Number of six must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      >
+                      <input
+                        type="checkbox"
+                        id="check15"
+                        [(ngModel)]="cricket.six"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="check15">6s</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="cricket.sixInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #sixInput="ngModel"
+                      required
+                      [readonly]="!cricket.six"
+                    />
+                    <div
+                      *ngIf="
+                        sixInput.dirty &&
+                        sixInput.invalid &&
+                        cricket.six == true
+                      "
+                      class="text-danger"
+                    >
+                      <div *ngIf="sixInput.errors.required">
+                        *Number of six is required.
+                      </div>
+                      <div *ngIf="sixInput.errors.pattern">
+                        *Number of six must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="mb25 btn btn-navy-blue max-WT-150 mL5"
+            (click)="updateMatchFunc()"
+            [disabled]="
+              cricketloss.invalid ||
+              tie.invalid ||
+              win.invalid ||
+              duration.invalid ||
+              sports.invalid ||
+              cricketName.invalid ||
+              cricket.cricketName == '' ||
+              cricket.sports == '' ||
+              (cricket.runs == true ? cricket.runsInput == '' : false) ||
+              (cricket.runs == true ? runsInput.invalid : false) ||
+              (cricket.ballFaced == true
+                ? cricket.ballFacedInput == ''
+                : false) ||
+              (cricket.ballFaced == true ? ballFacedInput.invalid : false) ||
+              (cricket.fours == true ? cricket.foursInput == '' : false) ||
+              (cricket.fours == true ? foursInput.invalid : false) ||
+              (cricket.six == true ? cricket.sixInput == '' : false) ||
+              (cricket.six == true ? sixInput.invalid : false) ||
+              (cricket.Fairplay == true
+                ? cricket.FairplayInput == ''
+                : false)
+            "
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- ||
+(cricket.Fairplay == true ? FairplayInput.invalid : false) -->
+<!-- edit match modal for cricket end -->
+
+<!-- edit match modal for soccer start -->
+
+<div
+  class="modal fade"
+  id="edit_matches_soccer"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Edit Match Configuration
+          </h5>
+          <div class="profile-box">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="soccer.soccerName"
+                    #soccerName="ngModel"
+                    name="soccerName"
+                    pattern="^[^-\s][a-zA-Z\s-]+$"
+                    required
+                  />
+                  <div
+                    *ngIf="soccerName.dirty && soccerName.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="soccerName.errors.required">
+                      *Soccer name is required.
+                    </div>
+                    <div *ngIf="soccerName.errors.pattern">
+                      *Invalid soccer name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Sports</label>
+                  <input type="text" class="form-control" [(ngModel)]="soccer.soccerSport" name="soccerSport" readonly />
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Duration(Minutes)</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="soccer.soccerDuration"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #soccerDuration="ngModel"
+                    required
+                  />
+                  <div
+                    *ngIf="soccerDuration.dirty && soccerDuration.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="soccerDuration.errors.required">
+                      *duration is required.
+                    </div>
+                    <div *ngIf="soccerDuration.errors.pattern">
+                      *Duration must be a number.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h4>Match Scoring Criteria</h4>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Points Per Match</h5>
+                  <div class="d-flex justify-content-between bd-highlight mb-3">
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Win</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="soccer.soccerwin"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #soccerwin="ngModel"
+                        required
+                      />
+                      <div
+                        *ngIf="soccerwin.dirty && soccerwin.invalid"
+                        class="text-danger"
+                      >
+                        <div *ngIf="soccerwin.errors.required">
+                          *Win is required.
+                        </div>
+                        <div *ngIf="soccerwin.errors.pattern">
+                          *Win must be a number.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Tie</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="soccer.soccerTie"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #soccerTie="ngModel"
+                        required
+                      />
+                      <div
+                        *ngIf="soccerTie.dirty && soccerTie.invalid"
+                        class="text-danger"
+                      >
+                        <div *ngIf="soccerTie.errors.required">
+                          *Tie is required.
+                        </div>
+                        <div *ngIf="soccerTie.errors.pattern">
+                          *Tie must be a number.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Loss</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="soccer.soccerLoss"
+                        [ngModelOptions]="{ standalone: true }"
+                        pattern="^[0-9][0-9]*$"
+                        #soccerLoss="ngModel"
+                        required
+                      />
+                      <div
+                        *ngIf="soccerLoss.dirty && soccerLoss.invalid"
+                        class="text-danger"
+                      >
+                        <div *ngIf="soccerLoss.errors.required">
+                          *Loss is required.
+                        </div>
+                        <div *ngIf="soccerLoss.errors.pattern">
+                          *Loss must be a number.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="control-label">Name</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label">Order</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input
+                        type="checkbox"
+                        id="Goals"
+                        [(ngModel)]="soccer.soccerGoal"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="Goals">Goals</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="soccer.soccerGoalsInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerGoalsInput="ngModel"
+                      [readonly]="!soccer.soccerGoal"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerGoalsInput.dirty && soccerGoalsInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerGoalsInput.errors.required">
+                        *Numbers of goals is required.
+                      </div>
+                      <div *ngIf="soccerGoalsInput.errors.pattern">
+                        *Numbers of goals must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Own"
+                      [(ngModel)]="soccer.soccerShots"
+                      [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="Own">Shots</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerShotsInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerShotsInput="ngModel"
+                      [readonly]="!soccer.soccerShots"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerShotsInput.dirty && soccerShotsInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerShotsInput.errors.required">
+                        *Numbers of shots is required.
+                      </div>
+                      <div *ngIf="soccerShotsInput.errors.pattern">
+                        *Numbers of shots must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Yellow"
+                        [(ngModel)]="soccer.soccerYellow"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="Yellow">Yellow Cards</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerYellowCardInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerYellowCardInput="ngModel"
+                      [readonly]="!soccer.soccerYellow"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerYellowCardInput.dirty && soccerYellowCardInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerYellowCardInput.errors.required">
+                        *Numbers of yellow card is required.
+                      </div>
+                      <div *ngIf="soccerYellowCardInput.errors.pattern">
+                        *Numbers of yellow card must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Blue"
+                        [(ngModel)]="soccer.soccerblueCard"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="Blue">Blue Cards</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerBlueCardInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerBlueCardInput="ngModel"
+                      [readonly]="!soccer.soccerblueCard"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerBlueCardInput.dirty && soccerBlueCardInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerBlueCardInput.errors.required">
+                        *Numbers of blue card is required.
+                      </div>
+                      <div *ngIf="soccerBlueCardInput.errors.pattern">
+                        *Numbers of blue card must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Red"
+                        [(ngModel)]="soccer.soccerRedCard"
+                        [ngModelOptions]="{ standalone: true }"
+                      />
+                      <label for="Red">Red Cards</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerRedCardInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerRedCardInput="ngModel"
+                      [readonly]="!soccer.soccerRedCard"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerRedCardInput.dirty && soccerRedCardInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerRedCardInput.errors.required">
+                        *Numbers of red card is required.
+                      </div>
+                      <div *ngIf="soccerRedCardInput.errors.pattern">
+                        *Numbers of red card must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Assets"
+                        [(ngModel)]="soccer.soccerOffSide"
+                        [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Assets">OffSide</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerOffSideInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerOffSideInput="ngModel"
+                      [readonly]="!soccer.soccerOffSide"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerOffSideInput.dirty && soccerOffSideInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerOffSideInput.errors.required">
+                        *Offside is required.
+                      </div>
+                      <div *ngIf="soccerOffSideInput.errors.pattern">
+                        *Offside must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Goalsconceded" [(ngModel)]="soccer.soccerCornerKicks"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Goalsconceded">Corner Kicks</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerCornerKicksInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerCornerKicksInput="ngModel"
+                      [readonly]="!soccer.soccerCornerKicks"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerCornerKicksInput.dirty && soccerCornerKicksInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerCornerKicksInput.errors.required">
+                        *Corner Kicks is required.
+                      </div>
+                      <div *ngIf="soccerCornerKicksInput.errors.pattern">
+                        *Corner Kicks must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Fouls" [(ngModel)]="soccer.soccerGoalKeeperSaves"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Fouls">Goal Keeper Saves</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerGoalKeeperSavesInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerGoalKeeperSavesInput="ngModel"
+                      [readonly]="!soccer.soccerGoalKeeperSaves"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerGoalKeeperSavesInput.dirty && soccerGoalKeeperSavesInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerGoalKeeperSavesInput.errors.required">
+                        *Goal Keeper's save is required.
+                      </div>
+                      <div *ngIf="soccerGoalKeeperSavesInput.errors.pattern">
+                        *Goal Keeper's save must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="MVP" [(ngModel)]="soccer.soccerMVP"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="MVP">MVP</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"
+                      [(ngModel)]="soccer.soccerMVPInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #soccerMVPInput="ngModel"
+                      [readonly]="!soccer.soccerMVP"
+                      required
+                    />
+                    <div
+                      *ngIf="soccerMVPInput.dirty && soccerMVPInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="soccerMVPInput.errors.required">
+                        *MVP is required.
+                      </div>
+                      <div *ngIf="soccerMVPInput.errors.pattern">
+                        *MVP must be a number.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" (click)="updateMatchFunc()"
+          [disabled]="
+          soccerName.invalid || soccerDuration.invalid || soccerwin.invalid || soccerTie.invalid || soccerLoss.invalid ||
+          (soccer.soccerGoal == true ? soccerGoalsInput.invalid : false) || (soccer.soccerShots == true ? soccerShotsInput.invalid : false) ||
+          (soccer.soccerYellow == true ? soccerYellowCardInput.invalid : false) || (soccer.soccerRedCard == true ? soccerRedCardInput.invalid : false)
+          || (soccer.soccerOffSide == true ? soccerOffSideInput.invalid : false) || (soccer.soccerCornerKicks == true ? soccerCornerKicksInput.invalid : false)
+          || (soccer.soccerGoalKeeperSaves == true ? soccerGoalKeeperSavesInput.invalid : false) || (soccer.soccerMVP == true ? soccerMVPInput.invalid : false)
+          "
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- edit match modal for soccer end -->
+
+<!-- edit match modal for volleyball start -->
+
+<div
+  class="modal fade"
+  id="edit_matches_volleyball"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Edit Match Configuration
+          </h5>
+          <div class="profile-box">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="volleyball.volleyballName"
+                    #volleyballName="ngModel"
+                    name="volleyballName"
+                    pattern="^[^-\s][a-zA-Z\s-]+$"
+                    required
+                  />
+                  <div
+                    *ngIf="volleyballName.dirty && volleyballName.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballName.errors.required">
+                      *Volleyball name is required.
+                    </div>
+                    <div *ngIf="volleyballName.errors.pattern">
+                      *Invalid volleyball name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Sports</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="volleyball.volleyballSports"
+                    [ngModelOptions]="{ standalone: true }"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Duration(Minutes)</label>
+                  <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballDuration"
+                  [ngModelOptions]="{ standalone: true }"
+                  pattern="^[0-9][0-9]*$"
+                  #volleyballDuration="ngModel"
+                  required
+                />
+                <div
+                  *ngIf="volleyballDuration.dirty && volleyballDuration.invalid"
+                  class="text-danger"
+                >
+                  <div *ngIf="volleyballDuration.errors.required">
+                    *Duration is required.
+                  </div>
+                  <div *ngIf="volleyballDuration.errors.pattern">
+                    *Duration must be a number.
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <h4>Match Scoring Criteria</h4>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Points Per Match</h5>
+                  <div class="d-flex justify-content-between bd-highlight mb-3">
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Win</label>
+                      <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballwin"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #volleyballwin="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="volleyballwin.dirty && volleyballwin.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="volleyballwin.errors.required">
+                        *Win is required.
+                      </div>
+                      <div *ngIf="volleyballwin.errors.pattern">
+                        *Win must be a number.
+                      </div>
+                    </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Tie</label>
+                      <input type="text" class="form-control"  [(ngModel)]="volleyball.volleyballTie"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #volleyballTie="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="volleyballTie.dirty && volleyballTie.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="volleyballTie.errors.required">
+                        *Tie is required.
+                      </div>
+                      <div *ngIf="volleyballTie.errors.pattern">
+                        *Tie must be a number.
+                      </div>
+                    </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Loss</label>
+                      <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballLoss"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #volleyballLoss="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="volleyballLoss.dirty && volleyballLoss.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="volleyballLoss.errors.required">
+                        *Loss is required.
+                      </div>
+                      <div *ngIf="volleyballLoss.errors.pattern">
+                        *Loss must be a number.
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="control-label">Name</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label">Order</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Goalsvolleyball" [(ngModel)]="volleyball.set1Score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Goalsvolleyball">Set 1 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"  [(ngModel)]="volleyball.set1ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #set1ScoreInput="ngModel"
+                    required
+                    [readonly]="!volleyball.set1Score"
+                  />
+                  <div
+                    *ngIf="set1ScoreInput.dirty && set1ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="set1ScoreInput.errors.required">
+                      *Set 1 score is required.
+                    </div>
+                    <div *ngIf="set1ScoreInput.errors.pattern">
+                      *Set 1 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Ownvolleyball" [(ngModel)]="volleyball.set1Timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Ownvolleyball">Set 1 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballset1TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #volleyballset1TimeoutInput="ngModel"
+                    required
+                    [readonly]="!volleyball.set1Timeout"
+                  />
+                  <div
+                    *ngIf="volleyballset1TimeoutInput.dirty && volleyballset1TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballset1TimeoutInput.errors.required">
+                      *set 1 timeout is required.
+                    </div>
+                    <div *ngIf="volleyballset1TimeoutInput.errors.pattern">
+                      *set 1 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Yellowvolleyball" [(ngModel)]="volleyball.set2Score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Yellowvolleyball">Set 2 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballSet2ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #volleyballSet2ScoreInput="ngModel"
+                    required
+                    [readonly]="!volleyball.set2Score"
+                  />
+                  <div
+                    *ngIf="volleyballSet2ScoreInput.dirty && volleyballSet2ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballSet2ScoreInput.errors.required">
+                      *Set 2 score is required.
+                    </div>
+                    <div *ngIf="volleyballSet2ScoreInput.errors.pattern">
+                      *Set 2 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Bluevolleyball" [(ngModel)]="volleyball.volleyballSet2Timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Bluevolleyball">Set 2 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballSet2TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #volleyballSet2TimeoutInput="ngModel"
+                    required
+                    [readonly]="!volleyball.volleyballSet2Timeout"
+                  />
+                  <div
+                    *ngIf="volleyballSet2TimeoutInput.dirty && volleyballSet2TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballSet2TimeoutInput.errors.required">
+                      *Set 2 timeout is required.
+                    </div>
+                    <div *ngIf="volleyballSet2TimeoutInput.errors.pattern">
+                      *Set 2 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Fairplayvolleyball" [(ngModel)]="volleyball.volleyballset3score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Fairplayvolleyball">Set 3 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballset3ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #volleyballset3ScoreInput="ngModel"
+                    required
+                    [readonly]="!volleyball.volleyballset3score"
+                  />
+                  <div
+                    *ngIf="volleyballset3ScoreInput.dirty && volleyballset3ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballset3ScoreInput.errors.required">
+                      *Set 3 score is required.
+                    </div>
+                    <div *ngIf="volleyballset3ScoreInput.errors.pattern">
+                      *Set 3 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <span class="custom-checkbox"
+                        ><input type="checkbox" id="set3timeoutvolleyball" [(ngModel)]="volleyball.volleyballset3timeout"
+                        [ngModelOptions]="{ standalone: true }"/>
+                        <label for="set3timeoutvolleyball">Set 3 Timeout</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballset3TimeoutInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #volleyballset3TimeoutInput="ngModel"
+                      required
+                      [readonly]="!volleyball.volleyballset3timeout"
+                    />
+                    <div
+                      *ngIf="volleyballset3TimeoutInput.dirty && volleyballset3TimeoutInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="volleyballset3TimeoutInput.errors.required">
+                        *Set 3 timeout is required.
+                      </div>
+                      <div *ngIf="volleyballset3TimeoutInput.errors.pattern">
+                        *Set 3 timeout must be a number.
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set4scorevolleyball" [(ngModel)]="volleyball.volleyballset4score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set4scorevolleyball">Set 4 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballset4ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #volleyballset4ScoreInput="ngModel"
+                    required
+                    [readonly]="!volleyball.volleyballset4score"
+                  />
+                  <div
+                    *ngIf="volleyballset4ScoreInput.dirty && volleyballset4ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballset4ScoreInput.errors.required">
+                      *Set 4 score is required.
+                    </div>
+                    <div *ngIf="volleyballset4ScoreInput.errors.pattern">
+                      *Set 4 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set4timeoutvolleyball" [(ngModel)]="volleyball.volleyballset4timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set4timeoutvolleyball">Set 4 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballset4TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #volleyballset4TimeoutInput="ngModel"
+                    required
+                    [readonly]="!volleyball.volleyballset4timeout"
+                  />
+                  <div
+                    *ngIf="volleyballset4TimeoutInput.dirty && volleyballset4TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballset4TimeoutInput.errors.required">
+                      *Set 4 timeout is required.
+                    </div>
+                    <div *ngIf="volleyballset4TimeoutInput.errors.pattern">
+                      *Set 4 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <span class="custom-checkbox"
+                        ><input type="checkbox" id="set5scorevolleyball" [(ngModel)]="volleyball.volleyballset5score"
+                        [ngModelOptions]="{ standalone: true }"/>
+                        <label for="set5scorevolleyball">Set 5 Score</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballset5ScoreInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #volleyballset5ScoreInput="ngModel"
+                      required
+                      [readonly]="!volleyball.volleyballset5score"
+                    />
+                    <div
+                      *ngIf="volleyballset5ScoreInput.dirty && volleyballset5ScoreInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="volleyballset5ScoreInput.errors.required">
+                        *Set 5 score is required.
+                      </div>
+                      <div *ngIf="volleyballset5ScoreInput.errors.pattern">
+                        *Set 5 score must be a number.
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set5timeoutvolleyball" [(ngModel)]="volleyball.volleyballset5timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set5timeoutvolleyball">Set 5 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="volleyball.volleyballset5TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #volleyballset5TimeoutInput="ngModel"
+                    required
+                    [readonly]="!volleyball.volleyballset5timeout"
+                  />
+                  <div
+                    *ngIf="volleyballset5TimeoutInput.dirty && volleyballset5TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="volleyballset5TimeoutInput.errors.required">
+                      *Set 5 timeout is required.
+                    </div>
+                    <div *ngIf="volleyballset5TimeoutInput.errors.pattern">
+                      *Set 5 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" (click)="updateMatchFunc()"
+          [disabled]="
+          volleyballName.invalid || volleyballDuration.invalid || volleyballDuration.invalid || volleyballwin.invalid || volleyballTie.invalid ||
+          volleyballLoss.invalid || ((volleyball.set1Score) ? set1ScoreInput.invalid : false) || ((volleyball.set1Timeout) ? volleyballset1TimeoutInput.invalid : false)
+          || ((volleyball.set2Score) ? volleyballSet2ScoreInput.invalid : false) || ((volleyball.volleyballSet2Timeout) ? volleyballSet2TimeoutInput.invalid : false)
+          || ((volleyball.volleyballset3score) ? volleyballset3ScoreInput.invalid : false) || ((volleyball.volleyballset3timeout) ? volleyballset3TimeoutInput.invalid : false)
+          || ((volleyball.volleyballset4score) ? volleyballset4ScoreInput.invalid : false) || ((volleyball.volleyballset4timeout) ? volleyballset4TimeoutInput.invalid : false)
+          || ((volleyball.volleyballset5score) ? volleyballset5ScoreInput.invalid : false) || ((volleyball.volleyballset5timeout) ? volleyballset5TimeoutInput.invalid : false)
+          "
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- edit match modal for volleyball end -->
+
+<!-- edit match modal for swimming start -->
+
+<div
+  class="modal fade"
+  id="edit_matches_swimming"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Edit Match Configuration
+          </h5>
+          <div class="profile-box">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="swimming.swimmingName"
+                    #swimmingName="ngModel"
+                    name="swimmingName"
+                    pattern="^[^-\s][a-zA-Z\s-]+$"
+                    required
+                  />
+                  <div
+                    *ngIf="swimmingName.dirty && swimmingName.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="swimmingName.errors.required">
+                      *Name is required.
+                    </div>
+                    <div *ngIf="swimmingName.errors.pattern">
+                      *Invalid name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Sports</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="swimming.swimmingSports"
+                    [ngModelOptions]="{ standalone: true }"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Duration(Minutes)</label>
+                  <input type="text" class="form-control" [(ngModel)]="swimming.swimmingDuration"
+                  [ngModelOptions]="{ standalone: true }"
+                  pattern="^[0-9][0-9]*$"
+                  #swimmingDuration="ngModel"
+                  required
+                />
+                <div
+                  *ngIf="swimmingDuration.dirty && swimmingDuration.invalid"
+                  class="text-danger"
+                >
+                  <div *ngIf="swimmingDuration.errors.required">
+                    *Duration is required.
+                  </div>
+                  <div *ngIf="swimmingDuration.errors.pattern">
+                    *Duration must be a number.
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <h4>Match Scoring Criteria</h4>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Points Per Match</h5>
+                  <div class="d-flex justify-content-between bd-highlight mb-3">
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Win</label>
+                      <input type="text" class="form-control" [(ngModel)]="swimming.swimmingwin"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #swimmingwin="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="swimmingwin.dirty && swimmingwin.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="swimmingwin.errors.required">
+                        *Win is required.
+                      </div>
+                      <div *ngIf="swimmingwin.errors.pattern">
+                        *Win must be a number.
+                      </div>
+                    </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Tie</label>
+                      <input type="text" class="form-control"  [(ngModel)]="swimming.swimmingTie"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #swimmingTie="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="swimmingTie.dirty && swimmingTie.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="swimmingTie.errors.required">
+                        *Tie is required.
+                      </div>
+                      <div *ngIf="swimmingTie.errors.pattern">
+                        *Tie must be a number.
+                      </div>
+                    </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Loss</label>
+                      <input type="text" class="form-control" [(ngModel)]="swimming.swimmingLoss"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #swimmingLoss="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="swimmingLoss.dirty && swimmingLoss.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="swimmingLoss.errors.required">
+                        *Loss is required.
+                      </div>
+                      <div *ngIf="swimmingLoss.errors.pattern">
+                        *Loss must be a number.
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="control-label">Name</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label">Order</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Goalsswimming" [(ngModel)]="swimming.swimmingLane"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Goalsswimming">Lane</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"  [(ngModel)]="swimming.swimmingLaneInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #swimmingLaneInput="ngModel"
+                    required
+                    [readonly]="!swimming.swimmingLane"
+                  />
+                  <div
+                    *ngIf="swimmingLaneInput.dirty && swimmingLaneInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="swimmingLaneInput.errors.required">
+                      *Lane is required.
+                    </div>
+                    <div *ngIf="swimmingLaneInput.errors.pattern">
+                      *Lane must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Ownswimming" [(ngModel)]="swimming.swimmingPlace"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Ownswimming">Place</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="swimming.swimmingPlaceInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    #swimmingPlaceInput="ngModel"
+                    required
+                    [readonly]="!swimming.swimmingPlace"
+                  />
+                  <div
+                    *ngIf="swimmingPlaceInput.dirty && swimmingPlaceInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="swimmingPlaceInput.errors.required">
+                      *Place is required.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Yellowswimming" [(ngModel)]="swimming.swimmingTime"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Yellowswimming">Time</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="swimming.swimmingTimeInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #swimmingTimeInput="ngModel"
+                    required
+                    [readonly]="!swimming.swimmingTime"
+                  />
+                  <div
+                    *ngIf="swimmingTimeInput.dirty && swimmingTimeInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="swimmingTimeInput.errors.required">
+                      *Time is required.
+                    </div>
+                    <div *ngIf="swimmingTimeInput.errors.pattern">
+                      *Time must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" (click)="updateMatchFunc()"
+          [disabled]="
+          swimmingName.invalid || swimmingDuration.invalid || swimmingwin.invalid || swimmingTie.invalid || swimmingLoss.invalid ||
+          ((swimming.swimmingLane) ? swimmingLaneInput.invalid : false) || ((swimming.swimmingPlace) ? swimmingPlaceInput.invalid : false)
+          || ((swimming.swimmingTime) ? swimmingTimeInput.invalid : false)
+          "
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- edit match modal for swimming end -->
+
+<!-- edit match modal for other start -->
+
+<div
+  class="modal fade"
+  id="edit_matches_other"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form" action="profile-with-card.html">
+        <div class="modal-body text-left">
+          <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans text-center">
+            Edit Match Configuration
+          </h5>
+          <div class="profile-box">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="other.otherName"
+                    #otherName="ngModel"
+                    name="otherName"
+                    pattern="^[^-\s][a-zA-Z\s-]+$"
+                    required
+                  />
+                  <div
+                    *ngIf="otherName.dirty && otherName.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherName.errors.required">
+                      *Name is required.
+                    </div>
+                    <div *ngIf="otherName.errors.pattern">
+                      *Invalid name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Sports</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="other.otherSports"
+                    [ngModelOptions]="{ standalone: true }"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="control-label">Duration(Minutes)</label>
+                  <input type="text" class="form-control" [(ngModel)]="other.otherDuration"
+                  [ngModelOptions]="{ standalone: true }"
+                  pattern="^[0-9][0-9]*$"
+                  #otherDuration="ngModel"
+                  required
+                />
+                <div
+                  *ngIf="otherDuration.dirty && otherDuration.invalid"
+                  class="text-danger"
+                >
+                  <div *ngIf="otherDuration.errors.required">
+                    *Duration is required.
+                  </div>
+                  <div *ngIf="otherDuration.errors.pattern">
+                    *Duration must be a number.
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <h4>Match Scoring Criteria</h4>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-12">
+                  <h5>Points Per Match</h5>
+                  <div class="d-flex justify-content-between bd-highlight mb-3">
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Win</label>
+                      <input type="text" class="form-control" [(ngModel)]="other.otherwin"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #otherwin="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="otherwin.dirty && otherwin.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="otherwin.errors.required">
+                        *Win is required.
+                      </div>
+                      <div *ngIf="otherwin.errors.pattern">
+                        *Win must be a number.
+                      </div>
+                    </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Tie</label>
+                      <input type="text" class="form-control"  [(ngModel)]="other.otherTie"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #otherTie="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="otherTie.dirty && otherTie.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="otherTie.errors.required">
+                        *Tie is required.
+                      </div>
+                      <div *ngIf="otherTie.errors.pattern">
+                        *Tie must be a number.
+                      </div>
+                    </div>
+                    </div>
+                    <div class="p-1 bd-highlight">
+                      <label class="control-label">Loss</label>
+                      <input type="text" class="form-control" [(ngModel)]="other.otherLoss"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #otherLoss="ngModel"
+                      required
+                    />
+                    <div
+                      *ngIf="otherLoss.dirty && otherLoss.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="otherLoss.errors.required">
+                        *Loss is required.
+                      </div>
+                      <div *ngIf="otherLoss.errors.pattern">
+                        *Loss must be a number.
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="criteria_sec">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label class="control-label">Name</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="control-label">Order</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Goalsother" [(ngModel)]="other.otherset1Score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Goalsother">Set 1 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control"  [(ngModel)]="other.otherset1ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset1ScoreInput="ngModel"
+                    required
+                    [readonly]="!other.otherset1Score"
+                  />
+                  <div
+                    *ngIf="otherset1ScoreInput.dirty && otherset1ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset1ScoreInput.errors.required">
+                      *Set 1 score is required.
+                    </div>
+                    <div *ngIf="otherset1ScoreInput.errors.pattern">
+                      *Set 1 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Ownother" [(ngModel)]="other.otherset1Timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Ownother">Set 1 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset1TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset1TimeoutInput="ngModel"
+                    required
+                    [readonly]="!other.otherset1Timeout"
+                  />
+                  <div
+                    *ngIf="otherset1TimeoutInput.dirty && otherset1TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset1TimeoutInput.errors.required">
+                      *set 1 timeout is required.
+                    </div>
+                    <div *ngIf="otherset1TimeoutInput.errors.pattern">
+                      *set 1 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Yellowother" [(ngModel)]="other.otherset2Score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Yellowother">Set 2 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherSet2ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherSet2ScoreInput="ngModel"
+                    required
+                    [readonly]="!other.otherset2Score"
+                  />
+                  <div
+                    *ngIf="otherSet2ScoreInput.dirty && otherSet2ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherSet2ScoreInput.errors.required">
+                      *Set 2 score is required.
+                    </div>
+                    <div *ngIf="otherSet2ScoreInput.errors.pattern">
+                      *Set 2 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Blueother" [(ngModel)]="other.otherSet2Timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Blueother">Set 2 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherSet2TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherSet2TimeoutInput="ngModel"
+                    required
+                    [readonly]="!other.otherSet2Timeout"
+                  />
+                  <div
+                    *ngIf="otherSet2TimeoutInput.dirty && otherSet2TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherSet2TimeoutInput.errors.required">
+                      *Set 2 timeout is required.
+                    </div>
+                    <div *ngIf="otherSet2TimeoutInput.errors.pattern">
+                      *Set 2 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="Fairplayother" [(ngModel)]="other.otherset3score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="Fairplayother">Set 3 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset3ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset3ScoreInput="ngModel"
+                    required
+                    [readonly]="!other.otherset3score"
+                  />
+                  <div
+                    *ngIf="otherset3ScoreInput.dirty && otherset3ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset3ScoreInput.errors.required">
+                      *Set 3 score is required.
+                    </div>
+                    <div *ngIf="otherset3ScoreInput.errors.pattern">
+                      *Set 3 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <span class="custom-checkbox"
+                        ><input type="checkbox" id="set3timeoutother" [(ngModel)]="other.otherset3timeout"
+                        [ngModelOptions]="{ standalone: true }"/>
+                        <label for="set3timeoutother">Set 3 Timeout</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <input type="text" class="form-control" [(ngModel)]="other.otherset3TimeoutInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #otherset3TimeoutInput="ngModel"
+                      required
+                      [readonly]="!other.otherset3timeout"
+                    />
+                    <div
+                      *ngIf="otherset3TimeoutInput.dirty && otherset3TimeoutInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="otherset3TimeoutInput.errors.required">
+                        *Set 3 timeout is required.
+                      </div>
+                      <div *ngIf="otherset3TimeoutInput.errors.pattern">
+                        *Set 3 timeout must be a number.
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set4scoreother" [(ngModel)]="other.otherset4score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set4scoreother">Set 4 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset4ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset4ScoreInput="ngModel"
+                    required
+                    [readonly]="!other.otherset4score"
+                  />
+                  <div
+                    *ngIf="otherset4ScoreInput.dirty && otherset4ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset4ScoreInput.errors.required">
+                      *Set 4 score is required.
+                    </div>
+                    <div *ngIf="otherset4ScoreInput.errors.pattern">
+                      *Set 4 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set4timeoutother" [(ngModel)]="other.otherset4timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set4timeoutother">Set 4 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset4TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset4TimeoutInput="ngModel"
+                    required
+                    [readonly]="!other.otherset4timeout"
+                  />
+                  <div
+                    *ngIf="otherset4TimeoutInput.dirty && otherset4TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset4TimeoutInput.errors.required">
+                      *Set 4 timeout is required.
+                    </div>
+                    <div *ngIf="otherset4TimeoutInput.errors.pattern">
+                      *Set 4 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <span class="custom-checkbox"
+                        ><input type="checkbox" id="set5scoreother" [(ngModel)]="other.otherset5score"
+                        [ngModelOptions]="{ standalone: true }"/>
+                        <label for="set5scoreother">Set 5 Score</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="option_p_check">
+                      <input type="text" class="form-control" [(ngModel)]="other.otherset5ScoreInput"
+                      [ngModelOptions]="{ standalone: true }"
+                      pattern="^[0-9][0-9]*$"
+                      #otherset5ScoreInput="ngModel"
+                      required
+                      [readonly]="!other.otherset5score"
+                    />
+                    <div
+                      *ngIf="otherset5ScoreInput.dirty && otherset5ScoreInput.invalid"
+                      class="text-danger"
+                    >
+                      <div *ngIf="otherset5ScoreInput.errors.required">
+                        *Set 5 score is required.
+                      </div>
+                      <div *ngIf="otherset5ScoreInput.errors.pattern">
+                        *Set 5 score must be a number.
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set5timeoutother" [(ngModel)]="other.otherset5timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set5timeoutother">Set 5 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset5TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset5TimeoutInput="ngModel"
+                    required
+                    [readonly]="!other.otherset5timeout"
+                  />
+                  <div
+                    *ngIf="otherset5TimeoutInput.dirty && otherset5TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset5TimeoutInput.errors.required">
+                      *Set 5 timeout is required.
+                    </div>
+                    <div *ngIf="otherset5TimeoutInput.errors.pattern">
+                      *Set 5 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set6scoreother" [(ngModel)]="other.otherset6score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set6scoreother">Set 6 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset6ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset6ScoreInput="ngModel"
+                    required
+                    [readonly]="!other.otherset6score"
+                  />
+                  <div
+                    *ngIf="otherset6ScoreInput.dirty && otherset6ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset6ScoreInput.errors.required">
+                      *Set 6 score is required.
+                    </div>
+                    <div *ngIf="otherset6ScoreInput.errors.pattern">
+                      *Set 6 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set6timeoutother" [(ngModel)]="other.otherset6timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set6timeoutother">Set 6 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset6TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset6TimeoutInput="ngModel"
+                    required
+                    [readonly]="!other.otherset6timeout"
+                  />
+                  <div
+                    *ngIf="otherset6TimeoutInput.dirty && otherset6TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset6TimeoutInput.errors.required">
+                      *Set 6 timeout is required.
+                    </div>
+                    <div *ngIf="otherset6TimeoutInput.errors.pattern">
+                      *Set 6 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set7scoreother" [(ngModel)]="other.otherset7score"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set7scoreother">Set 7 Score</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset7ScoreInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset7ScoreInput="ngModel"
+                    required
+                    [readonly]="!other.otherset7score"
+                  />
+                  <div
+                    *ngIf="otherset7ScoreInput.dirty && otherset7ScoreInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset7ScoreInput.errors.required">
+                      *Set 7 score is required.
+                    </div>
+                    <div *ngIf="otherset7ScoreInput.errors.pattern">
+                      *Set 7 score must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <span class="custom-checkbox"
+                      ><input type="checkbox" id="set7timeoutother" [(ngModel)]="other.otherset7timeout"
+                      [ngModelOptions]="{ standalone: true }"/>
+                      <label for="set7timeoutother">Set 7 Timeout</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="option_p_check">
+                    <input type="text" class="form-control" [(ngModel)]="other.otherset7TimeoutInput"
+                    [ngModelOptions]="{ standalone: true }"
+                    pattern="^[0-9][0-9]*$"
+                    #otherset7TimeoutInput="ngModel"
+                    required
+                    [readonly]="!other.otherset7timeout"
+                  />
+                  <div
+                    *ngIf="otherset7TimeoutInput.dirty && otherset7TimeoutInput.invalid"
+                    class="text-danger"
+                  >
+                    <div *ngIf="otherset7TimeoutInput.errors.required">
+                      *Set 7 timeout is required.
+                    </div>
+                    <div *ngIf="otherset7TimeoutInput.errors.pattern">
+                      *Set 7 timeout must be a number.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix calendar-action text-center pL15 pR15">
+          <button
+            type="button"
+            class="mb25 btn btn-gray max-WT-150"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" (click)="updateMatchFunc()"
+          [disabled]="
+          otherName.invalid || otherDuration.invalid || otherwin.invalid || otherTie.invalid || otherLoss.invalid ||
+          ((other.otherset1Score) ? otherset1ScoreInput.invalid : false) || ((other.otherset1Timeout) ? otherset1TimeoutInput.invalid : false) ||
+          ((other.otherset2Score) ? otherSet2ScoreInput.invalid : false) || ((other.otherSet2Timeout) ? otherSet2TimeoutInput.invalid : false) ||
+          ((other.otherset3score) ? otherset3ScoreInput.invalid : false) || ((other.otherset3timeout) ? otherset3TimeoutInput.invalid : false) ||
+          ((other.otherset4score) ? otherset4ScoreInput.invalid : false) || ((other.otherset4timeout) ? otherset4TimeoutInput.invalid : false) ||
+          ((other.otherset5score) ? otherset5ScoreInput.invalid : false) || ((other.otherset5timeout) ? otherset5TimeoutInput.invalid : false) ||
+          ((other.otherset6score) ? otherset6ScoreInput.invalid : false) || ((other.otherset6timeout) ? otherset6TimeoutInput.invalid : false) ||
+          ((other.otherset7score) ? otherset7ScoreInput.invalid : false) || ((other.otherset7timeout) ? otherset7TimeoutInput.invalid : false)
+          "
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- edit match modal for other end -->

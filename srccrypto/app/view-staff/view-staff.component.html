@@ -1,0 +1,147 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">View Profile</h1>
+    </div>
+    <!-- Page Title End -->
+    <div [formGroup]="editStaffForm" class="content-section">
+        <div class="outer-box">
+            <div class="custom_tabs common-tabs">
+                <div class="tab-content">
+                    <h4> Basic Details</h4>&nbsp;&nbsp;
+                    <div class="form-group row">
+                        <span class="col-md-3">Employee ID :</span>
+                        <span class="col-md-3">{{staffDetails?.userId}}</span>
+                        <span class="col-md-3"></span>
+                        <span class="col-md-3"></span>
+                    </div>
+                    <div class="form-group row">
+                        <span class="col-md-3">Name :</span>
+                        <span class="col-md-3">{{staffDetails?.firstName}} {{staffDetails?.lastName}}</span>
+                        <span class="col-md-3"></span>
+                        <span class="col-md-3"></span>
+                    </div>
+                    <div class="form-group row">
+                        <span class="col-md-3">Email :</span>
+                        <span class="col-md-3">{{staffDetails?.email}}</span>
+                        <span class="col-md-3"></span>
+                        <span class="col-md-3"></span>
+                    </div>
+                    <div class="form-group row">
+                        <span class="col-md-3">Gender :</span>
+                        <span class="col-md-3">{{staffDetails?.gender}}</span>
+                        <span class="col-md-3"></span>
+                        <span class="col-md-3"></span>
+                    </div>
+                    <div class="form-group row">
+                        <span class="col-md-3">Phone Number :</span>
+                        <span class="col-md-3">{{staffDetails?.phoneNo}}</span>
+                        <span class="col-md-3"></span>
+                        <span class="col-md-3"></span>
+                    </div>
+                    <div class="form-group row">
+                        <span class="col-md-3">Role :</span>
+                        <span class="col-md-3">{{staffDetails?.role}}</span>
+                        <span class="col-md-3"></span>
+                        <span class="col-md-3"></span>
+                    </div>
+                    <table aria-describedby="">
+                        <tr>
+                            <th id="">Permission</th>
+                            <th id="">Operations</th>
+                        </tr>
+                        <tr>
+                            <td>Dashboard</td>
+
+                            <td>
+                                <input type="checkbox" formControlName="dashboardChecked" (change)="checkboxClick('DASHBOARD',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Staff Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="staffChecked"
+                                    (change)="checkboxClick('STAFF_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Hot Wallet Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="hotWalletChecked"
+                                    (change)="checkboxClick('HOT_COLD_LIMIT_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>KYC Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="kycChecked" (change)="checkboxClick('KYC_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Wallet Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="walletChecked"
+                                    (change)="checkboxClick('WALLET_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Static Content Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="staticChecked" (change)="checkboxClick('STATIC_CONTENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Logs Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="logsChecked"
+                                    (change)="checkboxClick('LOGS_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ticket Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="ticketChecked"
+                                    (change)="checkboxClick('TICKET_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Trade Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="tradeChecked"
+                                    (change)="checkboxClick('TRADE_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Dispute Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="disputeChecked"
+                                    (change)="checkboxClick('DISPUTE_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bank Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="bankChecked"
+                                    (change)="checkboxClick('BANK_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fee Management</td>
+                            <td>
+                                <input type="checkbox" formControlName="feeChecked" (change)="checkboxClick('FEE_MANAGEMENT',$event.target.checked)" readonly>
+                            </td>
+                        </tr>
+                    </table>
+                    &nbsp;
+                    <div style="text-align: center">
+                        <button class="btn  btn-theme" type="button" (click)="back()">Back</button>
+                        <button class="btn  btn-theme" type="button" (click)="edit(staffDetails?.userId)">Edit Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+    </div>
+</main>

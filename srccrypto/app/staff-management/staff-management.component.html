@@ -1,0 +1,244 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">Staff Management</h1>
+
+    </div>
+    <!-- Page Title End -->
+    <div class="content-section" [formGroup]="staffForm">
+        <div class="outer-box">
+            <div class="custom_tabs common-tabs">
+
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="btc"> 
+                        <div class="tab-pane1">
+                            <div class="row trassction-mainbox">
+                                <div class="col-md-3 col-lg-2">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Status</span>
+                                            <select class="form-control" formControlName="status"
+                                                (change)="coinfunction($event.target.value)">
+                                                <option value="">Select</option>
+                                                <option value="ACTIVE">Active</option>
+                                                <option value="BLOCK">Blocked</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-3 col-lg-2">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Role</span>
+                                            <select class="form-control" formControlName="role"
+                                                (change)="onChange($event.target.value)">
+                                                <option value="">Select</option>
+                                                <option value="OPERATIONS">Operations</option>
+                                                <option value="ACCOUNTS">Accounts</option>
+                                                <option value="MARKETING">Marketing</option>
+                                                <option value="SUBADMIN">Sub Admin</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-3 col-lg-2 date-padding">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">From Date</span>
+                                            <!-- <my-date-picker style="margin-left: 6px; width: 200px;"
+                                                            name="fromDate" formControlName='fromDate'
+                                                            [options]="myDatePickerOptions"
+                                                            (dateChanged)="onChange($event)" placeholder="Start date">
+                                                        </my-date-picker> -->
+                                            <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}"
+                                                formControlName="fromDate" name="formdate"
+                                                class="form-control datepicker" placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-lg-2 date-padding">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">To Date</span>
+                                            <!-- <my-date-picker name="todate" style="width:200px"
+                                                            [disabled]='beDisable' formControlName='todate'
+                                                            [options]="toDate" placeholder="End date"></my-date-picker> -->
+                                            <input type="date" name="todate" min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                formControlName="toDate" class="form-control datepicker" [min]="this.staffForm.controls['fromDate'].value"
+                                                placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-4">
+                                    <div class="tras-threebtn">
+                                        <input type="text" placeholder="Search by name" class="form-control"
+                                            formControlName="search"/>
+                                        <div class="comman-btn">
+                                            <button type="submit" class="btn  btn-theme"
+                                                (click)="search()">Search</button>
+                                        </div>
+                                        <div class="comman-btn">
+                                            <button type="submit" class="btn  btn-theme"
+                                                (click)="reset()">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="tras-threebtn" style="float: right;">
+                                        <div class="comman-btn">
+                                            <button type="submit" class="btn  btn-theme" (click)="exportAsXLSX()">EXPORT
+                                                AS EXCEL
+                                            </button>
+                                        </div>
+                                        <div class="comman-btn">
+                                            <button type="submit" class="btn  btn-theme" (click)="addStaff()">Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" aria-describedby="">
+                                    <thead>
+                                        <tr class="no_wrap_th">
+                                            <th id="">ID</th>
+                                            <th id="">Name</th>
+                                            <th id="">Role</th>
+                                            <th id="">Created On</th>
+                                            <th id=""> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let data of staffList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: staffLength}; let i=index; ">
+                                            <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                            <td>{{data?.firstName}} {{data?.lastName}}</td>
+                                            <td>{{data?.role}}</td>
+                                            <td>{{data?.createdTime | date}}</td>
+                                            <td class="action_td_btn3">
+                                                <a data-toggle="modal" style="cursor: pointer"
+                                                    (click)="viewStaff(data?.userId)"><em class="fa fa-eye"></em></a>
+                                                <a data-toggle="modal" style="cursor: pointer"
+                                                    (click)="editStaff(data?.userId)"><em class="fa fa-edit"></em></a>
+                                                <a data-toggle="modal" style="cursor: pointer"
+                                                    (click)="openModal('DELETE', data?.userId)"><em
+                                                        class="fa fa-trash"></em></a>
+                                                <a data-toggle="modal" style="cursor: pointer" *ngIf="data?.userStatus == 'ACTIVE'"
+                                                    (click)="openModal('BLOCK', data?.userId)"><em
+                                                        class="fa fa-ban"></em></a>
+                                                <a data-toggle="modal" style="cursor: pointer" *ngIf="data?.userStatus == 'BLOCK'"
+                                                    (click)="openModal('ACTIVE', data?.userId)"><em
+                                                        class="fa fa-ban"></em></a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="staffList?.length==0">
+                                            <td colspan="5" vertical-align="middle">
+                                                <div class="no-record">
+                                                    <div class="no-recordin">
+                                                        <H5>No record found</H5>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="custom-pagination mt20 text-center" style="    float: right;">
+
+                                <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+    </div>
+</main>
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Remove Staff </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to delete this staff?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2"
+                                        (click)="deleteFunction()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Block Staff </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to block this Staff?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success mr-2"
+                                        (click)="performAction()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- active Start -->
+<div class="modal fade global-modal reset-modal" id="active">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Active Staff </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to active this Staff?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success mr-2"
+                                        (click)="performActionActive()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

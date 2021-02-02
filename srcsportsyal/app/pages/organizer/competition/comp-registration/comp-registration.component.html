@@ -1,0 +1,359 @@
+<div class="wrapper">
+  <!-- Header Start -->
+  <app-header></app-header>
+  <!-- Header End -->
+  <div class="topBanner">
+    <div class="container">
+
+    </div>
+  </div>
+  <!-- main Start -->
+  <main class="main-container pt0">
+
+    <div class="container">
+      <!-- content-box -->
+      <div class="content-box bg-gray mt-60">
+        <!-- Subheader of Competition Configure -->
+        <app-comp-configure-header></app-comp-configure-header>
+        <!-- End Subheader of Competition Configure -->
+        <!-- Profile-form Start -->
+
+        <div class="content-box-filter p20  pt35">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+
+                <fb-like url="http://jasonwatmore.com">
+                  <h5>share {{competitionDetail.competitionName}} competition </h5>
+                </fb-like>
+                <!-- <input type="text" class="form-control" placeholder="https://leverade.com/en/admin/tournament/580820/registration"> -->
+              </div>
+            </div>
+            <div class="col-md-6">
+
+              <div class="form-group text-right share">
+                <p class="head-sm">via
+                  <i (click)="share()" class="fab fa-facebook makeLink"></i>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-box-filter p20  pt35 mt20">
+          <div class="row">
+            <!--Col Left End -->
+            <div class="col-lg-8 col-md-8">
+              <!-- profile-box Start -->
+              <form novalidate [formGroup]="registerForm">
+                <div class="form-group row mb30">
+                  <div class="col-4">
+                    <div class="custom-checkbox clearfix">
+                      <input formControlName="freeOrPaid" (change)="handleChange('free')" [(ngModel)]="registration.freeOrPaid" type="radio" value="free">
+                      <label>Free</label>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="custom-checkbox clearfix">
+                      <input formControlName="freeOrPaid" (change)="handleChange('paid')" [(ngModel)]="registration.freeOrPaid" type="radio" value="paid">
+                      <label>Paid</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="control-label col-md-4">Competition Name</label>
+                  <div class="col-md-8">
+                    {{competitionDetail.competitionName}}
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="payStaus == 'paid'">
+                  <label class="control-label col-md-4">Registration fee</label>
+                  <div class="col-md-8">
+                    <input type="text" formControlName="registrationFee" [(ngModel)]="registration.registrationFee" class="form-control">
+                    <div class="errorMsg" *ngIf="(registerForm.get('registrationFee').hasError('required')) && (registerForm.get('registrationFee').dirty || registerForm.get('registrationFee').touched)">
+                      Please enter fee.
+                    </div>
+                    <div class="errorMsg" *ngIf="(registerForm.get('registrationFee').hasError('pattern')) && (registerForm.get('registrationFee').dirty || registerForm.get('registrationFee').touched)">
+                      Please enter valid fee.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="payStaus == 'paid'">
+                  <label class="control-label col-md-4">Payment in Hand details</label>
+                  <div class="col-md-8">
+                    <input type="text" [(ngModel)]="registration.paymentInHandDetails" formControlName="payInhand" class="form-control">
+                    <div class="errorMsg" *ngIf="(registerForm.get('payInhand').hasError('required')) && (registerForm.get('payInhand').dirty || registerForm.get('payInhand').touched)">
+                      Please enter payment in hand details.
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="control-label col-md-4">Start Date</label>
+                  <div class="col-md-8">
+                    <input class="form-control" style="float:none" [(ngModel)]="registration.startDate" placeholder="Select start date" ngx-mydatepicker
+                      formControlName="startDate" [options]="startDateOptions" #startDate="ngx-mydatepicker" (click)="startDate.toggleCalendar()"
+                      (inputFieldChanged)="onStartDateChanged($event)">
+                    <!-- <div class="errorMsg" *ngIf="(registerForm.get('startDate').hasError('required')) && (registerForm.get('startDate').dirty || registerForm.get('startDate').touched)">
+                            Please select start date.
+                           </div> -->
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="control-label col-md-4">End Date</label>
+                  <div class="col-md-8">
+                    <input class="form-control" style="float:none" [(ngModel)]="registration.endDate" placeholder="Select end date" ngx-mydatepicker
+                      formControlName="endDate" [options]="endDateOptions" #endDate="ngx-mydatepicker" (click)="endDate.toggleCalendar()"
+                      (inputFieldChanged)="onEndDateChanged($event)">
+                    <!-- <div class="errorMsg" *ngIf="(registerForm.get('endDate').hasError('required')) && (registerForm.get('endDate').dirty || registerForm.get('endDate').touched)">
+                              Please select end date.
+                             </div> -->
+                    <div class="errorMsg" *ngIf="registration.startDate && registration.endDate">
+                      <span *ngIf="dateErr">*Start date must be less than end date.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="control-label col-md-4">Description</label>
+                  <div class="col-md-8">
+                    <textarea [(ngModel)]="registration.description" formControlName="description" class="form-control textareaheight"></textarea>
+                    <div class="errorMsg" *ngIf="(registerForm.get('description').hasError('required')) && (registerForm.get('description').dirty || registerForm.get('description').touched)">
+                      Please enter description.
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center pt10 pb10">
+                  <button type="submit" class="btn btn-navy-blue max-WT-170 font_uni_sans" *ngIf="competitionDetail.registrationForm == false"
+                    (click)="save()" [disabled]="registerForm.invalid || dateErr">Save</button>
+                  <button type="submit" class="btn btn-navy-blue max-WT-170 font_uni_sans" *ngIf="competitionDetail.registrationForm == true"
+                    (click)="save()" [disabled]="registerForm.invalid || dateErr">Update</button>
+                </div>
+              </form>
+              <!-- profile-box End -->
+              <!-- Col Right End -->
+            </div>
+            <!-- Profile-form End -->
+          </div>
+        </div>
+        <!-- content-box End-->
+      </div>
+      <div class="content-box bg-gray mt20">
+        <div class="row">
+          <div class="col-md-6" *ngIf="competitionDetail.sportType != 'single'">
+            <div class="content-box-filter p20  pt35 mb20 reg-height">
+              <div class="text-right mb10">
+                <button class="btn btn btn-dark-blue-s max-WT-150" type="button" data-toggle="modal" data-target="#add_venue">Configure Field</button>
+              </div>
+              <div class="max-WT-600 mrgn-0-auto">
+                <h5 class="head-sub text-center mb30" *ngIf="configureTeamList.length"> Configurable Team Fields</h5>
+                <h5 class="head-sub text-center mb30" *ngIf="!configureTeamList.length" style="margin-top: 50%"> No Configurable Team Fields added yet.</h5>
+                <div class="row form-group" *ngFor="let config of configureTeamList; let i = index">
+                  <label class="col-md-4">{{config.field}}:</label>
+                  <div class="col-md-8">
+                    <select class="form-control select-style1" [(ngModel)]="config.importance">
+                      <option value="mandatory">Mandatory</option>
+                      <option value="optional">Optional</option>
+                      <option value="hidden">Hidden</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="text-center calendar-action mt30" *ngIf="configureTeamList.length">
+                  <button type="submit" class=" btn btn-navy-blue max-WT-150 mL5" (click)="saveConfigTeamFields('form')">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-box-filter p20  pt35  reg-height">
+              <div class="text-right mb10">
+                <button class="btn btn btn-dark-blue-s max-WT-150" type="button" data-toggle="modal" data-target="#add_player">Configure Field</button>
+              </div>
+              <div class="max-WT-600 mrgn-0-auto">
+                <h5 class="head-sub text-center mb30" *ngIf="configurePlayerList.length"> Configurable Player Fields </h5>
+                <h5 class="head-sub text-center mb30" *ngIf="!configurePlayerList.length" style="margin-top: 50%"> No Configurable Player Fields added yet. </h5>
+                <div class="row form-group" *ngFor="let configData of configurePlayerList; let i = index">
+                  <label class="col-md-4">{{configData.field}}:</label>
+                  <!-- <label class="col-md-4">{{configData.fieldType}}:</label> -->
+                  <div class="col-md-8">
+                    <select class="form-control select-style1" [(ngModel)]="configData.importance">
+                      <option value="mandatory">Mandatory</option>
+                      <option value="optional">Optional</option>
+                      <option value="hidden">Hidden</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="text-center calendar-action mt30" *ngIf="configurePlayerList.length">
+                  <button type="submit" class=" btn btn-navy-blue max-WT-150 mL5" (click)="saveConfigPlayerFields('form')">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  <!-- main End -->
+  <!-- Footer Start -->
+  <app-footer></app-footer>
+  <!-- Footer End -->
+</div>
+<!-- Wrapper End -->
+<!-- Modal Start -->
+<!-- <div class="modal fade" id="add_to_card1" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" action="profile-with-card.html">
+                  <div class="modal-body text-center">
+                     <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans" >Add Card</h5>
+                     <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                     <div class="max-WT-400 center-box">
+                        <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Card Number" required/>
+                        </div>
+                        <div class="form-group">
+                           <input type="text" class="form-control datepicker" placeholder="Expire Date" required/>
+                        </div>
+                        <div class="form-group mb5">
+                           <input type="text" class="form-control" placeholder="CVC" required/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="clearfix calendar-action text-center pL15 pR15">
+                     <button type="button" class="mb25 btn btn-gray max-WT-150">Cancel</button>
+                     <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5">Add</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div> -->
+<!-- book_slot End -->
+<!-- <div class="modal fade common-modal" id="add_to_card" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" action="profile-with-card.html">
+                  <div class="modal-body text-center">
+                     <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Card</h5>
+                     <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group clearfix row">
+                                 <label class="col-md-3 label-blue">Card Number</label>
+                                 <div class="col-md-9">
+                                    <input type="text" class="form-control round-input" placeholder=""/>
+                                 </div>
+                              </div>
+                              <div class="form-group clearfix row">
+                                 <label class="col-md-3 label-blue">Expiry Date</label>
+                                 <div class="col-md-9">
+                                    <input type="text" class="form-control round-input" placeholder=""/>
+                                 </div>
+                              </div>
+                              <div class="form-group clearfix row">
+                                 <label class="col-md-3 label-blue">CVC</label>
+                                 <div class="col-md-9">
+                                    <input type="text" class="form-control round-input "  placeholder=""/>
+                                 </div>
+                              </div>
+                              <div class="clearfix calendar-action mt30 text-left">
+                                 <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                 <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right"  type="button" data-toggle="modal" data-target="#edit_venue">Add</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div> -->
+<!-- Configure Team field -->
+<div class="modal fade common-modal" id="add_venue" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <!-- <form class="modal-add-card-form" action="profile-with-card.html" novalidate [formGroup]="configureForm"> -->
+      <div class="modal-body text-center">
+        <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Configure Team Field
+        </h5>
+        <div class="modal-content-body modalform-body text-left">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group clearfix row" *ngFor="let data of configureTeamArr; let i = index">
+                <label class="col-md-3 label-blue">Field Name</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control round-input" [(ngModel)]="data.field" placeholder="Please enter Field Name." />
+                </div>
+                <label class="col-md-3 label-blue">Field Type</label>
+                <div class="col-md-9">
+                  <select class="form-control round-input" [(ngModel)]="data.fieldType">
+                    <option value="">Select Field Type</option>
+                    <option value="text">Text</option>
+                    <option value="date">Date</option>
+                    <option value="email">Email</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="text-right">
+                    <button class="btn-sm btn btn-primary" *ngIf="i==configureTeamArr.length-1" (click)="addOtherTeamField(data.name,i)">
+                      <i class="fas fa-plus"></i> Add More Field</button>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix calendar-action mt30 text-right">
+                <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " (click)="saveConfigTeamFields('modal')" type="button" data-toggle="modal"
+                  data-target="#edit_venue">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </form> -->
+    </div>
+  </div>
+</div>
+<!--  Modal End Configure Team field-->
+<!-- Configure Player field -->
+<div class="modal fade common-modal" id="add_player" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Configure Player Field
+        </h5>
+        <div class="modal-content-body modalform-body text-left">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group clearfix row" *ngFor="let data of configurePlayerArr; let i = index">
+                <label class="col-md-3 label-blue">Field Name</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control round-input" [(ngModel)]="data.field" placeholder="Please enter Field Name." />
+                </div>
+                <label class="col-md-3 label-blue">Field Type</label>
+                <div class="col-md-9">
+                  <select class="form-control round-input" [(ngModel)]="data.fieldType">
+                    <option value="">Select Field Type</option>
+                    <option value="text">Text</option>
+                    <option value="date">Date</option>
+                    <option value="email">Email</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="text-right">
+                    <button class="btn-sm btn btn-primary" *ngIf="i==configurePlayerArr.length-1" (click)="addOtherPlayerField(data.name,i)">
+                      <i class="fas fa-plus"></i> Add More Field</button>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix calendar-action mt30 text-right">
+                <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " (click)="saveConfigPlayerFields('modal')" type="button" data-toggle="modal"
+                  data-target="#edit_venue">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  Modal End Configure Player field-->

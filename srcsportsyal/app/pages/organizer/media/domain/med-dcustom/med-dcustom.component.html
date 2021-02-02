@@ -1,0 +1,340 @@
+<div class="wrapper">
+  <!-- Header Start  -->
+  <app-header></app-header>
+  <!-- Header End  -->
+  <div class="topBanner">
+      <div class="container">
+
+      </div>
+  </div>
+
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+       <div class="content-box bg-gray">
+             <div class="custom-breadcrumb mt0 custom-breadcrumb1">
+                <nav class="breadcrumb">
+                    <a class="breadcrumb-item " [ngClass]="{'active': currUrl == 'organizer/domainCustomization'}" [routerLink]="['/organizer/domainCustomization']">Customization</a>
+                    <a class="breadcrumb-item " [ngClass]="{'active': currUrl == 'organizer/domainWebConfiguration'}" [routerLink]="['/organizer/domainWebConfiguration']"> Configure </a>
+                    <a class="breadcrumb-item active" [ngClass]="{'active': currUrl == 'organizer/dWebConfiguration'}" [routerLink]="['/organizer/dWebConfiguration']">Website Configuration </a>
+                
+                </nav>
+                 </div>
+          <div class="content-box-filter">
+             <form class="filter-form fullwidth">
+               <div class="row align-items-center">
+                  <div class="col-md-6">
+                     <div class="search-block-main fiter-full-search">
+                       <div class="search_block input-relativepra">
+                           <div class="input-group">
+                             <input type="text" class="form-control" placeholder="yalasports.com" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            
+                             <div class="col-md-12 input-pra-sh">
+                                  <p>Don't have a domain? Buy one here</p>
+                             </div>
+                           </div>
+                        
+                       </div>
+                       
+                   </div>
+                   
+                  </div>
+                  
+                  <div class="col-md-6 save-sh-btn">
+                       <button class="btn btn btn-dark-blue-s" type="button">Save</button>
+                  </div>
+                  
+                  
+               </div>
+             </form>
+                
+          </div>
+          <div class="content-box-filter custom-sectionsh mt-2">
+             <h2 class="content-box-head">My Web Teamplate</h2>
+             <div class="row">
+                <div class="col-md-6">
+                   <div class="content-box-filter">
+                      <ul class="d-flex justify-content-between">
+                         <li>
+                            <h6> Teamplate 1</h6>
+                         </li>
+                         <li>
+                              
+                              <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                              <!-- <a href="#"> <h6>View Teamplate</h6></a> -->
+                            </li>
+                      </ul>
+                      <figure>
+                         <img src="assets/images/shop-image1.jpg">
+                      </figure>
+                      <div class="btn-sclect text-center">
+                         <button type="button" class="select-btn">
+                               Select Teamplate
+                         </button>
+                      </div>
+                   </div>
+
+                </div>
+                <div class="col-md-6">
+                      <div class="content-box-filter">
+                         <ul class="d-flex justify-content-between">
+                            <li>
+                               <h6> Teamplate 2</h6>
+                            </li>
+                            <li>
+                                 <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                               </li>
+                         </ul>
+                         <figure>
+                            <img src="assets/images/shop-image1.jpg">
+                         </figure>
+                         <div class="btn-sclect text-center">
+                            <button type="button" class="select-btn">
+                                In Use
+                            </button>
+                         </div>
+                      </div>
+
+                   </div>
+                   <div class="col-md-6">
+                         <div class="content-box-filter">
+                            <ul class="d-flex justify-content-between">
+                               <li>
+                                  <h6> Teamplate 3</h6>
+                               </li>
+                               <li>
+                                    <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                                  </li>
+                            </ul>
+                            <figure>
+                               <img src="assets/images/shop-image1.jpg">
+                            </figure>
+                            <div class="btn-sclect text-center">
+                               <button type="button" class="select-btn">
+                                     Select Teamplate
+                               </button>
+                            </div>
+                         </div>
+ 
+                      </div>
+                      <div class="col-md-6">
+                            <div class="content-box-filter">
+                               <ul class="d-flex justify-content-between">
+                                  <li>
+                                     <h6> Teamplate 4</h6>
+                                  </li>
+                                  <li>
+                                       <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                                     </li>
+                               </ul>
+                               <figure>
+                                  <img src="assets/images/shop-image1.jpg">
+                               </figure>
+                               <div class="btn-sclect text-center">
+                                  <button type="button" class="select-btn">
+                                      In Use
+                                  </button>
+                               </div>
+                            </div>
+    
+                         </div>
+                         <div class="col-md-6">
+                               <div class="content-box-filter">
+                                  <ul class="d-flex justify-content-between">
+                                     <li>
+                                        <h6> Teamplate 5</h6>
+                                     </li>
+                                     <li>
+                                          <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                                        </li>
+                                  </ul>
+                                  <figure>
+                                     <img src="assets/images/shop-image1.jpg">
+                                  </figure>
+                                  <div class="btn-sclect text-center">
+                                     <button type="button" class="select-btn">
+                                           Select Teamplate
+                                     </button>
+                                  </div>
+                               </div>
+       
+                            </div>
+                            <div class="col-md-6">
+                                  <div class="content-box-filter">
+                                     <ul class="d-flex justify-content-between">
+                                        <li>
+                                           <h6> Teamplate 6</h6>
+                                        </li>
+                                        <li>
+                                             <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                                           </li>
+                                     </ul>
+                                     <figure>
+                                        <img src="assets/images/shop-image1.jpg">
+                                     </figure>
+                                     <div class="btn-sclect text-center">
+                                        <button type="button" class="select-btn">
+                                            In Use
+                                        </button>
+                                     </div>
+                                  </div>
+          
+                               </div>
+                               <div class="col-md-6">
+                                     <div class="content-box-filter">
+                                        <ul class="d-flex justify-content-between">
+                                           <li>
+                                              <h6> Teamplate 7</h6>
+                                           </li>
+                                           <li>
+                                                <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                                              </li>
+                                        </ul>
+                                        <figure>
+                                           <img src="assets/images/shop-image1.jpg">
+                                        </figure>
+                                        <div class="btn-sclect text-center">
+                                           <button type="button" class="select-btn">
+                                                 Select Teamplate
+                                           </button>
+                                        </div>
+                                     </div>
+             
+                                  </div>
+                                  <div class="col-md-6">
+                                        <div class="content-box-filter">
+                                           <ul class="d-flex justify-content-between">
+                                              <li>
+                                                 <h6> Teamplate 8</h6>
+                                              </li>
+                                              <li>
+                                                   <a (click)="openViewModal()"> <h6>View Teamplate</h6></a>
+                                                 </li>
+                                           </ul>
+                                           <figure>
+                                              <img src="assets/images/shop-image1.jpg">
+                                           </figure>
+                                           <div class="btn-sclect text-center">
+                                              <button type="button" class="select-btn">
+                                                  In Use
+                                              </button>
+                                           </div>
+                                        </div>
+                
+                                     </div>
+                
+             </div>
+
+
+          </div>
+      
+       </div>
+    </div>
+ </main> 
+ <div class="modal fade" id="booking_calander" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog max-WT-900" role="document">
+         <div class="modal-content">
+            
+               <div class="modal-header d-block bdr-none pb0 clearfix">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body text-center">
+                  <h5 class="modal-head mt0 mb5" id="exampleModalLabel">Booking</h5>
+                  <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                  <div class="filter-box d-inline-block">
+                     <label class="control-label">Space</label>
+                     <select class="form-control select-style1 d-inline-block">
+                        <option>Areobics</option>
+                     </select>
+                  </div>
+                  <!-- global-datepicker Start -->
+                  <div class="global-datepicker-block mt25">
+                     <div id="demoPicker2" class="global-datepicker"></div>
+               
+               <div class="clearfix calendar-action">
+                <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-left">Legend</button>
+                      <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right" (click)="paymentModal()"   data-toggle="modal" data-target="#book_slot">Book Template</button>
+               </div>
+               
+                  </div>
+                  <!-- global-datepicker End -->
+               </div>
+               
+          
+         </div>
+      </div>
+   </div>
+
+   <!-- Modal Start -->
+<!-- <div class="modal fade common-modal" id="paymentSubscription" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog max-WT-600" role="document">
+      <div class="modal-content">
+         <form class="modal-add-card-form" autocomplete="off" [formGroup]="cardForm">
+            <div class="modal-body text-center">
+               <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans" >Payment</h5>
+               <div class="modal-content-body">
+                 <p class="head_lagend mb20  text-center para">Please enter details for payment</p>
+                <div class="center-box">
+                   <div class="form-group clearfix row">
+                     <label class="col-md-3 label-blue">Card Number</label>
+                     <div class="col-md-9">
+                       <input type="text" class="form-control" placeholder="Card number" maxlength="16" [formControl]="cf.card">
+                       <div class="errorMsg" style="float: left" *ngIf="cf.card.dirty && cf.card.invalid">
+                         <span *ngIf="cf.card.hasError('required')">*Please enter card no.</span>
+                         <span *ngIf="cf.card.hasError('pattern')">*Please enter valid card no.</span>
+                       </div>
+                     </div>
+                   </div>
+                   <div class="form-group clearfix row">
+                     <label class="col-md-3 label-blue">Expiry Date</label>
+                     <div class="col-md-9">
+                         <input type="text" class="form-control " [formControl]="cf.expiryDate" placeholder="yyyy - mm" maxlength="7" />
+                         <div class="errorMsg" style="float: left;" *ngIf="cf.expiryDate.dirty && cf.expiryDate.invalid">
+                           <span *ngIf="cf.expiryDate.hasError('required')">*Please enter expiry date.</span>
+                           <span *ngIf="cf.expiryDate.hasError('pattern')">*Please enter valid expiry date(YYYY-MM).</span>
+                         </div>
+                     </div>
+                   </div>
+                   <div class="form-group clearfix row">
+                     <label class="col-md-3 label-blue">CVV</label>
+                     <div class="col-md-9">
+                         <input type="password" class="form-control" placeholder="CVV" maxlength="3" [formControl]="cf.cvv">
+                         <div class="errorMsg" style="float: left" *ngIf="cf.cvv.dirty && cf.cvv.invalid">
+                           <span *ngIf="cf.cvv.hasError('required')">*Please enter cvv.</span>
+                           <span *ngIf="cf.cvv.hasError('pattern')">*Please enter valid cvv.</span>
+                         </div>
+                     </div>
+                   </div>
+
+                </div>
+                <div class="clearfix calendar-action text-center pL15 pR15 mt30">
+                   <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: left;" data-dismiss="modal">Cancel</button>
+                   <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: right;" [disabled]="cardForm.invalid">Pay</button>
+                </div>
+              </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div> -->
+<!--  Modal End-->
+<!-- <div class="modal fade common-modal" id="paymentSubscription" tabindex="-1" role="dialog"  aria-hidden="true"> -->
+<!-- <form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
+      <div class="form-row">
+        <label for="card-info">Card Info</label>
+        <div id="card-info" #cardInfo></div>
+    
+        <div id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+      </div>
+    
+      <button type="submit">Pay $777</button>
+    </form> -->
+   <!-- </div>     -->
+
+
+   <!--   Footer  Start -->
+   <app-footer></app-footer>
+   <!--   Footer  End -->
+
+  </div>

@@ -1,0 +1,89 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container-common">
+    <div class="content-box bg-gray">
+      <h3 class="venue-heading heading-main">{{venueDetail.venueName}}</h3>
+      <h3 class="venue-heading text-center">{{selectedSport}}</h3>
+      <div class="filter-box  text-center date-center">
+        <label class="control-label">{{selectedDate}}</label>
+      </div>
+      <div class="form-group clearfix row">
+        <label class="col-md-3 label-blue text-center">Select booking type</label>
+        <div class="col-md-7">
+          <select *ngIf="disableSelect === true" class="form-control select-style1 round-input" (change)="selectBookingType('onChange')" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="bookingType" disabled>
+            <option value=" ">Select booking type</option>
+            <option value="Individual">Individual booking</option>
+            <option value="Group">Group booking</option>
+          </select>
+          <select *ngIf="disableSelect === false" class="form-control select-style1 round-input" (change)="selectBookingType('onChange')" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="bookingType">
+            <option value=" ">Select booking type</option>
+            <option value="Individual">Individual booking</option>
+            <option value="Group">Group booking</option>
+          </select>
+        </div>
+      </div>
+      <table class="table table-bordered large-table text-center" *ngIf="bookingType != ' '">
+        <thead>
+          <tr>
+            <th>Start Time</th>
+            <th>Duration</th>
+            <th>{{selectedSport}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dateSlotArr; let idx = index">
+            <td>{{data.time}}</td>
+            <td>{{data.duration}}</td>
+            <td>
+              <div class="custom-checkbox col-md-8 clearfix" *ngIf="bookingType == 'Group'">
+                <input type="checkbox" id="check{{idx}}" [checked]="data.multipleCheck" (change)="onTimeSelection(data,idx,$event)">
+                <label for="check{{idx}}">{{currency}} {{data.price}}</label>
+              </div>
+              <div class="custom-radio-btn" *ngIf="bookingType == 'Individual'">
+                <input name="exchange" [checked]="data.multipleCheck" type="radio" (change)="onTimeSelection(data,idx,$event)" />
+                <label>{{currency}} {{data.price}}</label>
+                <div class="col-md-5" *ngIf="idx == this.timeSlotIndex">
+                  <select class="form-control select-style1 round-input" (change)="onCourtSelection()" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="selectedCourt">
+                    <option value=" ">Select Courts</option>
+                    <option *ngFor="let item of totalCourtArr; let idx = index" value={{item.slotCount}}>{{item.slotCount}}</option>
+                  </select>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="view_btns mt10">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="btn-right">
+            <button type="button" class="btn btn-blue" *ngIf="disableSelect === true" (click)="resetPartial()">Reset</button>
+            <button type="button" class="btn btn-grey" (click)="goback()">Back to Calender</button>
+            <button type="button" class="btn btn-blue" *ngIf="bookingType == ' '" disabled>Select Booking Type</button>
+            <button type="button" class="btn btn-blue" *ngIf="!selectedTime && bookingType != ' ' && venueDetail.partialBooking === true"
+              disabled>Select Time - Basket({{selectedCourt}})</button>
+            <button type="button" class="btn btn-blue" *ngIf="!selectedTime && bookingType != ' '  && venueDetail.partialBooking === false"
+              disabled>Select Time</button>
+            <button type="button" class="btn btn-blue" *ngIf="selectedTime && bookingType == 'Individual' && selectedCourt ==  ' '" disabled>Select Court</button>
+            <button type="button" class="btn btn-blue" *ngIf="selectedTime && bookingType == 'Individual' && selectedCourt !=  ' '" (click)="goNextPage()">Save Basket({{selectedCourt}})</button>
+            <button type="button" class="btn btn-blue" *ngIf="selectedTime && bookingType == 'Group'" (click)="goNextPage()">Save Basket({{selectedCourt}})</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

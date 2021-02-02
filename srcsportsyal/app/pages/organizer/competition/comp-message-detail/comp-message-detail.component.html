@@ -1,0 +1,72 @@
+<!--   Header  Start   -->
+<app-header></app-header>
+<!--   Header  End   -->
+  <div class="topBanner">
+      <div class="container">
+      </div>
+  </div>
+
+<!-- main Start -->
+  <main class="main-container pt0 mt-min60">
+      <div class="container">
+        <div class="content-box bg-gray">
+          
+            <div class="content-box-filter">
+              <div class="user-message-block clearfix max-WT-800 mrgn-0-auto">
+                  <h5 class="head-sub text-center">Player Name</h5>
+
+                  <!-- <h5 class="head-sub text-center">{{msg.senderId.firstName}}  {{msg.senderId.lasstName}}</h5> -->
+                 <div class="chat-cover">
+                    <div class="chat-block clearfix" *ngFor="let msg of Messages">
+                      <ul class="user-msg-list noborder"  *ngIf="userDetails._id != msg.senderId._id">
+                        <li>
+                          <div class="message-img-block">
+                              <div class="message-img">
+                                <span>HK</span>
+                              </div>
+                          </div>
+                          <div class="message-part">
+                              <p> {{msg?.message}} </p>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="user-msg-list noborder right-side-user"  *ngIf="userDetails._id == msg.senderId._id">
+                        <li>
+                          <div class="message-part">
+                            <p>{{msg?.message}} </p>
+                          </div>
+                          <div class="message-img-block">
+                              <div class="message-img">
+                                <span>RK</span>
+                              </div>
+                          </div>
+                          
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="chat-input-send">
+                    <div class="row">
+                        <div class="col-md-9  form-group">
+                          <input type="text" class="form-control" [(ngModel)]="sendMessage" maxlength="30">
+                        </div>
+                        <div class="col-md-3">
+                          <div class="text-right">
+                              <button class="btn btn btn-dark-blue-s max-WT-120" (click)="sendMessageApi()">Send</button>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  
+              </div>
+            </div>
+
+        </div>
+        <!-- Max With Box End -->
+      </div>
+  </main>
+
+<!-- main End -->
+<!--  Footer Start  -->
+  <app-footer></app-footer>
+<!--  Footer End  -->

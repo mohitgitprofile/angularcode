@@ -1,0 +1,227 @@
+<div class="status-block-s" *ngIf="!observation">
+    <!-- <div class="button-box text-right">
+       <button type="button" class="btn btn-dark-blue-s max-WT-150 white-bor">Observation</button>
+    </div> -->
+    <div class="status-content-block">
+       <div class="row justify-content-center">
+          <div class="col-8">
+             <div class="status-inner" style="text-align: center;">
+               <!-- <div> -->
+                <h4 class="center" style="color: #000;font-size: 18px;font-weight: 600;">Status </h4>
+              <!-- </div> -->
+                <div class="view-row">
+                   <label>Competition</label>
+                   <span>{{gameData?.competitionData?.competitionName}}</span>
+                </div>
+                <div class="view-row">
+                   <label>Division</label>
+                   <span>{{gameData?.competitionData?.division}}</span>
+                </div>
+                <div class="view-row">
+                   <label>Period</label>
+                   <span>{{gameData?.competitionData?.period}}</span>
+                </div>
+                <div class="view-row">
+                   <label>Date</label>
+                   <span>12/12/2017</span>
+                </div>
+                <div class="view-row">
+                   <label>Time</label>
+                   <span>23:00:01</span>
+                </div>
+                <div class="view-row">
+                   <label>Venue</label>
+                   <span>{{gameData?.competitionData?.venue}}</span>
+                </div>
+                <div class="view-row">
+                   <label>Referee</label>
+                   <span>Sushant</span>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
+
+ <!-- Observation -->
+<div id="Information" *ngIf="observation">
+   <div class="tab-inner-text-block">
+     <div class="col-md-12 col-lg-12 marginzero">
+       <textarea class="form-control common-textarea" [(ngModel)]="observationMessage"></textarea>
+       <div class=" text-right mt10">
+         <button class="btn btn btn-dark-blue-s" (click)="updateObservation()">Update Observation</button>
+         <button class="btn btn btn-dark-blue-s" [disabled]="messageFromObservation" (click)="addObservation()">Add Observation</button>
+       </div>
+     </div>
+   </div>
+</div>
+
+
+<!-- Badminton  HTML -->
+ <div class="table-block mt10 white-bg" *ngIf="!observation">
+    <div class="table-responsive">
+       <table class="table table-bordered large-table">
+          <thead>
+             <tr class="table-head-bg">
+                <th>Player Name</th>
+                <th>Team Name</th>
+                <th>Set 1 score</th>
+                <th>Set 2 score</th>
+                 <th>Set 3 score</th>
+                 <th>Set 4 score</th>
+                 <th>Set 5 score</th>
+                 <th>Set 6 score</th>
+                 <th>Set 7 score</th>
+                 <th>Full Score</th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr>
+                <td>
+                  <p>{{basketballGameDetailsData?.teamDeatailsOne[0]?.playersDetails[0]?.firstName}}</p>
+                  <p *ngIf="sportType == 'double'">{{basketballGameDetailsData?.teamDeatailsOne[0]?.playersDetailsTwo[0]?.firstName}}</p>
+                 </td>
+                <td>{{basketballGameDetailsData?.teamDeatailsOne[0]?.teamDetails[0]?.teamName}}</td>
+                <td *ngFor="let data of basketballGameDetailsData?.teamDeatailsOne[0]?.scoreData">{{ data.score }}</td>
+                <td>{{ this.finalScoreOne }}</td>
+             </tr>
+             <tr>
+                <td>
+                  <p>{{basketballGameDetailsData?.teamDeatailsTwo[0]?.playersDetails[0]?.firstName}}</p>
+                  <p *ngIf="sportType == 'double'">{{basketballGameDetailsData?.teamDeatailsTwo[0]?.playersDetailsTwo[0]?.firstName}}</p>
+                </td>
+                <td>{{basketballGameDetailsData?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</td>
+                <td *ngFor="let item of basketballGameDetailsData?.teamDeatailsTwo[0]?.scoreData">{{ item.score }}</td>
+                <td>{{ this.finalScoreTwo }}</td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+    <div class="button-box text-right mt20">
+      <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#BadmintonScore" data-backdrop="static" data-keyboard="false">Edit Score</button>
+      <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" data-toggle="modal" data-target="#socialSharing" data-backdrop="static" data-keyboard="false" (click)="send()">Publish Match</button>
+    </div>
+ </div>
+
+
+ <!-- Badminton Single HTML -->
+ <!-- <div class="table-block mt10 white-bg" *ngIf="sportType == 'Single' ">
+   <div class="table-responsive">
+      <table class="table table-bordered large-table">
+         <thead>
+            <tr class="table-head-bg">
+               <th>Player Name</th>
+               <th>Team Name</th>
+               <th>Set 1 score</th>
+               <th>Set 2 score</th>
+               <th>Set 3 score</th>
+               <th>Set 4 score</th>
+               <th>Set 5 score</th>
+               <th>Set 6 score</th>
+               <th>Set 7 score</th>
+               <th>Full Score</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td> 
+                  <p>{{basketballGameDetailsData?.teamDeatailsOne[0]?.playersDetails[0]?.firstName}}</p>
+                </td>
+               <td>{{basketballGameDetailsData?.teamDeatailsOne[0]?.teamDetails[0]?.teamName}}</td>
+               <td *ngFor="let data of basketballGameDetailsData?.teamDeatailsOne[0]?.scoreData">{{ data.score }}</td>
+               <td>100</td>
+            </tr>
+            <tr>
+               <td>
+                  <p>{{basketballGameDetailsData?.teamDeatailsTwo[0]?.playersDetails[0]?.firstName}}</p>
+               </td>
+               <td>{{basketballGameDetailsData?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</td>
+               <td *ngFor="let data of basketballGameDetailsData?.teamDeatailsOne[0]?.scoreData">{{ data.score }}</td>
+               <td>100</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <div class="button-box text-right mt20">
+      <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor">Publish Match</button>
+   </div>
+</div> -->
+
+
+
+
+
+<!-- Edit score -->
+<div class="modal fade common-modal" id="BadmintonScore" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog max-WT-800" role="document">
+         <div class="modal-content">
+            <form class="modal-add-card-form" >
+               <!-- <div class="modal-body text-center"> -->
+                  <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+                  <div class="modal-content-body modalform-body text-left">
+                     <div class="row">
+  
+                        <div class="">
+                                    <div class="table-scrool-box" >
+                                          <div class="table-block mt10 white-bg" >
+                                                <div class="table-responsive">
+                                                   <table class="table table-bordered large-table">
+                                                      <thead>
+                                                         <tr class="table-head-bg">
+                                                            <th>Player Name</th>
+                                                            <th>Team Name</th>
+                                                            <th>Set 1 score</th>
+                                                            <th>Set 2 score</th>
+                                                            <th>Set 3 score</th>
+                                                            <th>Set 4 score</th>
+                                                            <th>Set 5 score</th>
+                                                            <th>Set 6 score</th>
+                                                            <th>Set 7 score</th>
+                                                            <th>Full Score</th>
+                                                         </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                         <tr>
+                                                            <td>
+                                                               <p>{{basketballGameDetailsData?.teamDeatailsOne[0]?.playersDetails[0]?.firstName}}</p>
+                                                               <p *ngIf="sportType == 'double'">{{basketballGameDetailsData?.teamDeatailsOne[0]?.playersDetailsTwo[0]?.firstName}}</p>
+                                                            </td>
+                                                            <td>{{basketballGameDetailsData?.teamDeatailsOne[0]?.teamDetails[0]?.teamName}}</td>
+                                                            <td *ngFor="let data of scoreOfOne;let i = index">
+                                                               <input type="text" [(ngModel)]="data.score" class="inputScore" name="scoreOne{{i}}" minlength="1" maxlength="3"  inputmode="numeric" digitOnly>
+                                                            </td>
+                                                            <td>
+                                                               <input type="text" [(ngModel)]="finalScoreOne" class="inputScore" name="finalScoreOne" minlength="1" maxlength="3"  inputmode="numeric" digitOnly>
+                                                            </td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td>
+                                                               <p>{{basketballGameDetailsData?.teamDeatailsTwo[0]?.playersDetails[0]?.firstName}}</p>
+                                                               <p *ngIf="sportType == 'double'">{{basketballGameDetailsData?.teamDeatailsTwo[0]?.playersDetailsTwo[0]?.firstName}}</p>
+                                                            </td>
+                                                            <td>{{basketballGameDetailsData?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName}}</td>
+                                                            <td *ngFor="let data of scoreOfTwo;let i = index">
+                                                                  <input type="text" [(ngModel)]="data.score" class="inputScore" name="scoreTwo{{i}}" minlength="1" maxlength="3"  inputmode="numeric" digitOnly>
+                                                            </td>
+                                                            <td>
+                                                               <input type="text" [(ngModel)]="finalScoreTwo" class="inputScore" name="finalScoreOne" minlength="1" maxlength="3"  inputmode="numeric" digitOnly>
+                                                            </td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                </div>
+                                             </div>
+                                          </div> 
+                           <div class="clearfix calendar-action mt30 text-center">
+                              <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                              <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal"  (click)="updatedScore()">Update</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               <!-- </div> -->
+            </form>
+         </div>
+      </div>
+   </div>

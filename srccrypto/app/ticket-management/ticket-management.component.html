@@ -1,0 +1,146 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">ACTIVITY LOGS <span
+                style="text-transform: uppercase;">{{currTab}}</span></h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+
+                        <!-- common search section -->
+                        <div class="sec_head_new">
+                            <div class="row">
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Status</span>
+                                            <select class="form-control" [(ngModel)]="ticketStatus">
+                                                <option value="" placeholder="Select">Select</option>
+                                                <option value="RESOLVED">Resolved</option>
+                                                <option value="INPROGRESS">In Progress</option>
+                                                <option value="CANCELLED">Cancelled</option>
+                                                <option value="CLOSED">Closed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">Start Date</span>
+                                            <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}" name="fromdate"
+                                                [(ngModel)]="calender.fromdate" (change)="fromdate()"
+                                                class="form-control datepicker" placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center">End Date</span>
+                                            <input type="date" name="todate" min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                (change)="todate()" [disabled]="!calender.fromdate"
+                                                [(ngModel)]="calender.todate" class="form-control datepicker"
+                                                placeholder="Search by date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px;">
+                                    <div class="head_flt_select" style="margin-top: 20px;">
+                                        <div class="head_flt_select input-label input-label1">
+                                            <span class="d-flex align-items-center"> </span>
+                                            <input type="text" placeholder="Search by Email" class="form-control" (keypress)="service.restrictSpace($event)"
+                                                [(ngModel)]="searchByEmail" style="height: 38px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 user-pl">
+                                    <div class="user-frmbtn" style="display: flex;">
+                                        <button type="submit" (click)="search()"
+                                            class="btn btn-theme mr-2">Search</button>
+                                        <button type="submit" (click)="reset()" class="btn btn-theme">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- second row -->
+                            <div class="row mt-3">
+                                <div class="col-md-6 col-xl-12 col-lg-4 mt10">
+                                    <div class="text-left" style="float: right;">
+                                        <button type="submit" class="btn btn-theme" (click)="exportAsXLXS()">Export As
+                                            Excel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end common search section -->
+
+                        <!-- table for customer -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="trade table">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th id="">Ticket ID</th>
+                                        <th id="">Subject</th>
+                                        <th id="">Request Date</th>
+                                        <th id="">Customer Name</th>
+                                        <th id="">Customer Email</th>
+                                        <th id="">Status</th>
+                                        <th id="">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let data of ticketData | paginate:{itemsPerPage: itemsPerPage, currentPage: currentPage,totalItems: totalItems}; let i=index; ">
+                                        <td>{{data?.ticketId || 'N/A'}}</td>
+                                        <td>{{data?.subject || 'N/A'}}</td>
+                                        <td>{{(data?.createdAt | date) || 'N/A'}}</td>
+                                        <td>{{data?.name || 'N/A'}}</td>
+                                        <td>{{data?.email || 'N/A'}}</td>
+                                        <td>
+                                            <!-- {{data?.ticketStatus || 'N/A'}} -->
+                                            <select class="form-control" name="" id="" [value]="data?.ticketStatus" (change)="changeTicketStatus($event.target.value, data?.ticketId)">
+                                                <option value="RESOLVED">Resolved</option>
+                                                <option value="INPROGRESS">In Progress</option>
+                                                <option value="CANCELLED">Cancelled</option>
+                                                <option value="CLOSED">Closed</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <a class="view-icon"><em class="fa fa-eye"
+                                                        (click)="viewTicketDetails(data.ticketId)"></em></a>
+                                                <!-- <button type="submit" class="btn btn-theme"
+                                                    (click)="ticketReply(data?.email)">Reply</button> -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="ticketData?.length==0">
+                                        <td colspan="11" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5>No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table for customer -->
+
+
+
+
+
+                        <div class="custom-pagination mt20 text-center" style="float: right;" *ngIf="totalItems > 5 ">
+                            <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

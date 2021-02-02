@@ -1,0 +1,9 @@
+.logo_img{
+    width: 300px;;
+}
+.img-section +.img-section   {
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

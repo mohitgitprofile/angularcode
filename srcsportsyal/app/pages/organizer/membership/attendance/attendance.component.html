@@ -1,0 +1,100 @@
+<!--  Header Start -->
+<app-header ></app-header>
+<!-- Header  End    -->
+<div class="topBanner">
+   <div class="container">
+   </div>
+</div>
+ <!-- main Start -->
+ <main class="main-container pt0 mt-min60">
+    <div class="container">
+       <div class="content-box bg-gray">
+         <h2 class="content-box-head">Filter BY</h2>
+          <div class="content-box-filter">
+           <form class="filter-form fullwidth" [formGroup]="filterForm">
+               <div class="row align-items-center">
+                  <div class="col-md-3">
+                    <div class="filter-box ">
+                      <label class="control-label">MemberShip Name</label>
+                      <select class="form-control select-style1" formControlName="membershipName"   (change)="getMembershipId($event)">
+                          <option value="">All</option>
+                          <option  *ngFor="let i of memberList"  value="{{i?.membershipName}}">{{i?.membershipName}}</option>
+                          </select>
+                     </div>
+                   </div>
+                  <div class="col-md-3">
+                    <div class="filter-box">
+                      <label class="control-label">Membership</label>
+                      <select class="form-control select-style1" formControlName="serviceName" (change)="getServiceId($event)">
+                          <option value="">Select Service</option>
+                           <option  *ngFor="let i of servicelist"  value="{{i?.serviceName}}">{{i?.serviceName}}</option>
+                         </select>
+                     </div>
+                   </div>
+                  <div class="col-md-3">
+                    <div class="filter-box">
+                      <label class="control-label">Membership Status</label>
+                      <my-date-picker name="startdate" formControlName='serviceDate'  [disabled]='disable' [options]="myDatePickerOptions"  placeholder="Choose the service date" ></my-date-picker>
+                     </div>
+                   </div>
+                   <div class="col-md-3 text-right">
+                      <button class="btn btn btn-dark-blue-s max-WT-150" [disabled]="!filterForm.valid" (click)="filter(filterForm.value)">Apply</button>
+                   </div>
+                  </div>
+             </form>
+          </div>
+         <div class="table-block mt10 white-bg">
+             <div class="table-responsive">
+                <table class="table table-bordered  text-center" *ngIf="show == true">
+                   <thead>
+                    <tr class="table-head-bg">
+                      <th>Player Name</th>
+                      <th *ngFor="let days of dayArr">{{dayArr[days - 1]}}</th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                    <tr *ngFor="let player of allPlayerArray" >
+                      <td>{{player?.playerId.firstName}}</td>
+                      <td *ngFor="let attnedance of markArr">{{attnedance.attendance}}</td>
+                    </tr>
+ 
+                      <!-- <tr *ngFor="let players of dayArr">
+                       <td>Body Massage</td>
+                         <td>02/19/2018</td>
+                         <td>02/19/2018</td>
+                         <td>09:00 AM</td>
+                         <td>06:00 Am</td>
+                         <td>30 Mins</td>
+                         <td>$200</td>
+                         <td class="action-td">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#edit_matches_config"><i class="far fa-edit"></i></button>
+                           <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                         </td>
+                      </tr>
+                     <tr>
+                       <td>Body Massage</td>
+                         <td>02/19/2018</td>
+                         <td>02/19/2018</td>
+                         <td>09:00 AM</td>
+                         <td>06:00 Am</td>
+                         <td>30 Mins</td>
+                         <td>$200</td>
+                         <td class="action-td">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#edit_matches_config"><i class="far fa-edit"></i></button>
+                           <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                         </td>
+                      </tr>  -->
+                   </tbody>
+                </table>
+               
+             </div>
+             
+          </div>
+       </div>
+       <!-- Max With Box End -->
+    </div>
+ </main>
+ <!-- main End -->
+ <!-- Footer Start -->
+ <app-footer></app-footer>
+ <!-- Footer End -->

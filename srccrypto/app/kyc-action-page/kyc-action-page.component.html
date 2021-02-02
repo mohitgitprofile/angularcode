@@ -1,0 +1,155 @@
+<!-- <app-sidemenu></app-sidemenu> -->
+<div class="wrapper">
+
+    <!-- Header End -->
+
+
+    <!-- Aside End -->
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title" style="color:black">VIEW KYC DETAILS</h1>
+            <!-- <div class="common-bredcrumb">
+                <ol class="breadcrumb">
+
+                    <li class="breadcrumb-item active">User Management</li>
+                </ol>
+
+            </div> -->
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+            <div class="outer-box">
+                <!-- Gloabl Table Box Start -->
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                            
+                            <div class="col">
+                                <div class="row" style="width: 65%;margin-left: 5%;margin-top: 5%;">
+                                    <div class="col">
+                                        <label>KYC ID :</label><br><br>
+                                        <label>KYC Status</label><br><br>
+                                        <label>Created On :</label><br><br>
+                                        <label>Type :</label><br><br>
+                                        <label>ID Document Type :</label><br><br>
+                                        <label>ID Number :</label><br><br>
+                                        <label>Document Status</label><br><br>
+                                    </div>
+                                    <div class="col">
+                                        <label>{{data?.kycId || '---'}}</label><br><br>
+                                        <label>{{data?.kycStatus || '---'}}</label><br><br>
+                                        <label>{{kycDocList?.createTime || '---' | date }}</label><br><br>
+                                        <label>KYC</label><br><br>
+                                        <label>{{kycDocList?.docName || '---'}}</label><br><br>
+                                        <label>{{kycDocList?.docIdNumber || '---'}}</label><br><br>
+                                        <label>{{kycDocList?.documentStatus || '---'}}</label><br><br>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 3%">
+                                    <div class="col" style="text-align: center;position: relative; left: 7%;">
+                                        <img [src]="kycDocList?.frontIdUrl || 'assets/img/testimonial-img1.jpg'"class="zoom" style="max-width: 60%;"><br>
+                                        <label>(Front)</label>
+                                    </div>
+                                    <div class="col"style="text-align: center;">
+                                        <img [src]="kycDocList?.backIdUrl || 'assets/img/testimonial-img1.jpg'" class="zoom" alt="" style="max-width: 60%;"><br>
+                                        <label>(Back)</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="text-align: center;     margin-top: 9%;">
+                    <div><button class="btn btn-theme ml-1" style="width: 15%" *ngIf="!ButtonDisable=='ACCEPTED'" (click)="approveKyc()">Approve</button>
+                        <button class="btn btn-theme ml-1"  style="width: 15%" *ngIf="!ButtonDisable=='ACCEPTED'"
+                            (click)="openModal()">Reject</button>
+                        <button class="btn btn-theme ml-1" style="width: 15%" (click)="back()">Back</button></div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+
+    </main>
+</div>
+<!-- Wrapper End -->
+<!-- approve_modal Start -->
+<div class="modal fade global-modal reset-modal" id="approveModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to approve this document?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2"
+                                        (click)="approveDocFunc()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- approve_modal End -->
+<!-- reject_modal Start -->
+<div class="modal fade global-modal reset-modal" id="reject">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to reject this document?</p>
+                                <textarea type="text" placeholder="Specify reason for rejection.."
+                                    [(ngModel)]="rejectionReason" class="form-control"
+                                    [ngModelOptions]="{standalone: true}" maxlength="50"></textarea>
+                                <div style="margin-top: 11px">
+                                    <button type="submit" class="btn btn-info mr-2" (click)="rejectKyc()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- reject_modal End -->
+<div class="modal fade global-modal reset-modal" id="approve">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to approve this document?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2"
+                                        (click)="approveDocFunc()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

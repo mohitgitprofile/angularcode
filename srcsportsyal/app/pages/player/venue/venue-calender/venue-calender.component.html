@@ -1,0 +1,73 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="venue-booking-view-section w-100 center-box">
+      <!-- Global Box Start -->
+      <div class="global-box grey-box">
+        <form class="filter-form">
+          <h3 class="venue-heading">{{venueDetail.venueName}}</h3>
+          <div class="filter-box d-inline-block">
+            <label class="control-label">Select Sport</label>
+            <select class="form-control select-style1 d-inline-block width200" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedSport"
+              (change)="onSportSelect()">
+              <option value="">Select Sport</option>
+              <option *ngFor="let sports of sportsList" value="{{sports}}">{{sports}}</option>
+            </select>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="calender-block">
+              <h6 class="pl-3 mb-4" *ngIf="date.selectedDate == '' && selectedSport != '' ">Selected A Date</h6>
+              <h6 class="pl-3 mb-4" *ngIf="!date.selectedDate == '' && selectedSport != '' ">{{date.selectedDate.formatted}}</h6>
+              <form #myForm="ngForm" novalidate>
+                <my-date-picker name="mydate" [options]="myDatePickerOptions" [(ngModel)]="date.selectedDate" (dateChanged)="onDateSelect($event)"
+                  required></my-date-picker>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="colors mt10" *ngIf="selectedSport != '' ">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="text-center d-flex">
+                <span class="box green">
+                </span>
+                <span class="mL5">Available</span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="text-center d-flex">
+                <span class="box red">
+                </span>
+                <span class="mL5">Booked</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view_btns mt10">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="btn-right">
+                <button type="button" class="btn btn-grey" (click)="goback()">Cancel</button>
+                <button type="button" class="btn btn-blue" *ngIf="selectedSport == ''" (click)="bookSlot()" disabled>Select Sport</button>
+                <button type="button" class="btn btn-blue" *ngIf="date.selectedDate == '' && selectedSport != '' " (click)="bookSlot()" disabled>Select date</button>
+                <button type="button" class="btn btn-blue" *ngIf="selectedSport != '' && date.selectedDate!=''" (click)="bookSlot()">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Global Box End -->
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

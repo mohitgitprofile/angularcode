@@ -1,0 +1,217 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">ADD NEW STAFF</h1>
+    </div>
+    <!-- Page Title End -->
+    <div class="content-section">
+        <div class="outer-box" [formGroup]="addForm">
+            <div class="custom_tabs common-tabs">
+                <div class="tab-content">
+                    <h4>Basic Details</h4>&nbsp;&nbsp;
+                    <div class="form-group row w-100">
+                        <div class="col-md-6">
+                            <div style="display: flex">
+                                <label class="col-md-4">First Name </label>
+                                <span class="col-md-2 text-center">:</span>
+                                <div class="col-md-6">
+                                    <input maxlength="100" class="form-control" formControlName="firstName"
+                                        (keypress)="service.preventSpace($event)" type="text">
+                                    <div class="text-danger"
+                                        *ngIf="addForm.get('firstName').invalid && (addForm.get('firstName').dirty  || addForm.get('firstName').touched)">
+                                        <span *ngIf="addForm.get('firstName').hasError('required')">*First name is
+                                            required.</span>
+                                        <span *ngIf="addForm.get('firstName').hasError('pattern')">*Please enter
+                                            valid name.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: flex">
+                                <label class="col-md-4">Last Name </label>
+                                <span class="col-md-2 text-center">:</span>
+                                <div class="col-md-6">
+                                    <input maxlength="100" class="form-control" formControlName="lastName"
+                                        (keypress)="service.preventSpace($event)" type="text">
+                                    <div class="text-danger"
+                                        *ngIf="addForm.get('lastName').invalid && (addForm.get('lastName').dirty  || addForm.get('lastName').touched)">
+                                        <span *ngIf="addForm.get('lastName').hasError('required')">*First name is
+                                            required.</span>
+                                        <span *ngIf="addForm.get('lastName').hasError('pattern')">*Please enter
+                                            valid name.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row w-100">
+                        <div class="col-md-6">
+                            <div style="display: flex">
+                                <label class="col-md-4">Email </label>
+                                <span class="col-md-2 text-center">:</span>
+                                <div class="col-md-6">
+                                    <input maxlength="100" class="form-control" formControlName="email"
+                                        (keypress)="service.preventSpace($event)" type="text">
+                                    <div class="text-danger"
+                                        *ngIf="addForm.get('email').invalid && (addForm.get('email').dirty  || addForm.get('email').touched)">
+                                        <span *ngIf="addForm.get('email').hasError('required')">*Email is
+                                            required.</span>
+                                        <span *ngIf="addForm.get('email').hasError('pattern')">*Please enter
+                                            valid email.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div style="display: flex">
+                                <label class="col-md-4">Phone Number </label>
+                                <span class="col-md-2 text-center">:</span>
+                                <div class="col-md-6">
+                                    <input maxlength="100" class="form-control" formControlName="phoneNumber"
+                                        (keypress)="service.preventSpace($event)" type="text">
+                                    <div class="text-danger"
+                                        *ngIf="addForm.get('phoneNumber').invalid && (addForm.get('phoneNumber').dirty  || addForm.get('phoneNumber').touched)">
+                                        <span *ngIf="addForm.get('phoneNumber').hasError('required')">*Number is
+                                            required.</span>
+                                        <span *ngIf="addForm.get('phoneNumber').hasError('pattern')">*Please enter
+                                            valid number.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row w-100">
+                            <div class="col-md-6">
+                                    <label class="col-md-4">Gender </label>
+                                    <span class="col-md-2 text-center">:</span>
+                                <select class="col-md-6" formControlName="gender" style="width: 45%;
+                                margin-left: 2%;">
+                                    <option value="">Gender</option>
+                                    <option value="MALE">Male</option>
+                                    <option value="FEMALE">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                    <label class="col-md-4">Role </label>
+                                    <span class="col-md-2 text-center">:</span>
+                                    <select class="col-md-6" formControlName="role" style="width: 45%;
+                                    margin-left: 2%;">
+                                            <option value="">Options</option>
+                                            <option value="ACCOUNTS">Accounts</option>
+                                            <option value="MARKETING">Marketing</option>
+                                            <option value="HR">HR</option>
+                                        </select>
+                            </div>
+                    </div>
+                    <table aria-describedby="">
+                        <tr>
+                            <th id="">Permission</th>
+                            <th id="">Operations</th>
+                        </tr>
+                        <tr>
+                            <td>Dashboard</td>
+
+                            <td>
+                                <input type="checkbox" (change)="checkboxClick('DASHBOARD',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Staff Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('STAFF_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>User Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('USER_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Hot Wallet Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('HOT_COLD_LIMIT_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>KYC Management</td>
+                            <td>
+                                <input type="checkbox" (change)="checkboxClick('KYC_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Wallet Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('WALLET_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Static Content Management</td>
+                            <td>
+                                <input type="checkbox" (change)="checkboxClick('STATIC_CONTENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Logs Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('LOGS_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ticket Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('TICKET_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Trade Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('TRADE_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Dispute Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('DISPUTE_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bank Management</td>
+                            <td>
+                                <input type="checkbox"
+                                    (change)="checkboxClick('BANK_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fee Management</td>
+                            <td>
+                                <input type="checkbox" (change)="checkboxClick('FEE_MANAGEMENT',$event.target.checked)">
+                            </td>
+                        </tr>
+                    </table>
+                    &nbsp;
+                    <div style="text-align: center">
+                        <button class="btn  btn-theme" type="button" [disabled]="addForm.invalid"
+                            (click)="addStaff()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+    </div>
+</main>

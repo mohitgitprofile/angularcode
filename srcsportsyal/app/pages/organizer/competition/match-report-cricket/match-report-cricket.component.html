@@ -1,0 +1,533 @@
+<div class="tab-content" *ngIf="!observation">
+    <div id="Starts" class=" tab-pane active show">
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="scoreboard-table-block1">
+                <div class="scoreboard-table-inner">
+                    <div class="status-content-block">
+                      <div>
+                          <div>
+                            <div class="status-inner status-inner-edit">
+
+                                <div class="view-row">
+                                  <label>Competition</label>
+                                  <span>{{ gameData?.competitionData?.competitionName}}</span>
+                                </div>
+                                <div class="view-row">
+                                  <label>Division</label>
+                                  <span>{{ gameData?.competitionData?.division }}</span>
+                                </div>
+                                <div class="view-row">
+                                  <label>Period</label>
+                                  <span>{{ gameData?.competitionData?.period }}</span>
+                                </div>
+                                <div class="view-row">
+                                  <label>Date</label>
+                                  <span>12/12/2017</span>
+                                </div>
+                                <div class="view-row">
+                                  <label>Time</label>
+                                  <span>{{ CurrentTime }}</span>
+                                </div>
+                                <div class="view-row">
+                                  <label>Venue</label>
+                                  <span>{{ gameData?.competitionData?.venue }}</span>
+                                </div>
+                                <div class="view-row">
+                                  <label>Referee</label>
+                                  <span>Sushant</span>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="table-scrool-box">
+                    <div class="table-block mt30">
+                       <div class="table-responsive">
+                           <table class="table table-bordered text-center">
+                              <thead>
+                                <tr class="table-head-bg">
+                                  <th></th>
+                                  <th>Total Score</th>
+                                  <th>Total Outs</th>
+                                  <th>Net Score</th>
+                                  <th>Leading Skins</th>
+                                  <th>Lagging Skins</th>
+                                  <th>Best Batsman</th>
+                                  <th>Best Bowler</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor= "let data of cricketGameDetailsData?.result?.teamDeatailsOne">
+                                  <td>{{ data.teamDetails[0].teamName }}</td>
+                                  <td>{{ data.totalScore }}</td>
+                                  <td>{{ data.totalOut }}</td>
+                                  <td>{{ data.netScore }}</td>
+                                  <td>{{ data.leadingSkins }}</td>
+                                  <td>{{ data.laggingSkins }}</td>
+                                  <td *ngIf="!data.bestBatsman">select from Team A - player names</td>
+                                  <td *ngIf="data.bestBatsman">{{ data.bestBatsman }}</td>
+
+                                  <td *ngIf="!data.bestBowler">select from Team A - player names</td>
+                                  <td *ngIf="data.bestBowler">{{ data.bestBowler}}</td>
+                                </tr>
+                                <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamDeatailsTwo">
+                                  <td>{{ data.teamDetails[0].teamName }}</td>
+                                  <td>{{ data.totalScore }}</td>
+                                  <td>{{ data.totalOut }}</td>
+                                  <td>{{ data.netScore }}</td>
+                                  <td>{{ data.leadingSkins }}</td>
+                                  <td>{{ data.laggingSkins }}</td>
+                                  <td *ngIf="!data.bestBatsman">select from Team B - player names</td>
+                                  <td *ngIf="data.bestBatsman">{{ data.bestBatsman }}</td>
+
+                                  <td *ngIf="!data.bestBowler">select from Team B - player names</td>
+                                  <td *ngIf="data.bestBowler">{{ data.bestBowler}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                       </div>
+                    </div>
+              <!-- Button trigger Team Edit modal -->
+              <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" style="float: right" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#editTeamPerformanceModal" >
+                Edit Score
+              </button>
+
+                    <div class="table-block mt10"  >
+                       <div class="table-responsive">
+                           <table class="table table-bordered text-center">
+                              <thead>
+                                <tr class="table-head-bg">
+                                  <th>{{ cricketGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th>
+                                  <th colspan="7"> Batting Performance</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="strong-color">
+                                  <th>Skin</th>
+                                  <th>Player No.</th>
+                                  <th>Player First Name</th>
+                                  <th>Player Last Name</th>
+                                  <th>Runs</th>
+                                </tr>
+                                <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamOne">
+                                 <td>{{ data?.skin}}</td>
+                                  <td>{{ data?.playerNumber }}</td>
+                                  <td>{{ data?.userDetails[0]?.firstName }}</td>
+                                  <td>{{ data?.userDetails[0]?.lastName }}</td>
+                                  <td>{{ data?.runs }}</td>
+                                </tr> 
+                              </tbody>
+                            </table>
+                       </div>
+                       <!--Button Trigger Edit Player's performance Modal -->
+                       <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" style="float: right" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#editTeamOnePlayersDetails" >
+                          Edit Player's Score
+                        </button>
+                    </div>
+
+
+
+                      <div class="table-block mt10">
+                       <div class="table-responsive">
+                           <table class="table table-bordered text-center">
+                              <thead>
+                                <tr class="table-head-bg">
+                                  <th>{{ cricketGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th>
+                                  <th colspan="7"> Bowling Performance</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="strong-color">
+                                  <th>Skin</th>
+                                  <th>Player No.</th>
+                                  <th>Player First Name</th>
+                                  <th>Player Last Name</th>
+                                  <th>Runs</th>
+                                </tr>
+                                <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamOne">
+                                  <td>{{ data?.skin}}</td>
+                                   <td>{{ data?.playerNumber }}</td>
+                                   <td>{{ data?.userDetails[0]?.firstName }}</td>
+                                   <td>{{ data?.userDetails[0]?.lastName }}</td>
+                                   <td>{{ data?.runs }}</td>
+                                 </tr>
+                                <!-- <tr>
+                                 <td>2nd Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr>
+                                <tr>
+                                 <td>3rd Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr>
+                                <tr>
+                                 <td>4th Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr> -->
+                              </tbody>
+                            </table>
+                       </div>
+                    </div>
+                     <!-- Button trigger Edit Player's modal -->
+                     <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" style="float: right" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#editTeamOnePlayersDetails" >
+                        Edit Player's Score
+                     </button>
+
+
+                      <div class="table-block mt20">
+                       <div class="table-responsive">
+                           <table class="table table-bordered text-center">
+                              <thead>
+                                <tr class="table-head-bg">
+                                  <th>{{ cricketGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                                  <th colspan="7"> Batting Performance</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="strong-color">
+                                  <th>Skin</th>
+                                  <th>Player No.</th>
+                                  <th>Player First Name</th>
+                                  <th>Player Last Name</th>
+                                  <th>Runs</th>
+                                </tr>
+                                <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamTwo">
+                                  <td>{{ data?.skin }}</td>
+                                  <td>{{ data?.playerNumber }}</td>
+                                  <td>{{ data?.userDetails[0]?.firstName }}</td>
+                                  <td>{{ data?.userDetails[0]?.lastName }}</td>
+                                  <td>{{ data?.runs }}</td>
+                                </tr>
+                                <!-- <tr>
+                                 <td>2nd Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr>
+                                <tr>
+                                 <td>3rd Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr>
+                                <tr>
+                                 <td>4th Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr> -->
+                              </tbody>
+                            </table>
+                       </div>
+                    </div>
+                     <!-- Button trigger Edit Player's modal -->
+                    <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" style="float: right" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#editTeamTwoPlayersDetails" >
+                      Edit Player's Score
+                    </button>
+
+
+                      <div class="table-block mt10">
+                       <div class="table-responsive">
+                           <table class="table table-bordered text-center">
+                              <thead>
+                                <tr class="table-head-bg">
+                                  <th>{{ cricketGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                                  <th colspan="7"> Bowling Performance</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="strong-color">
+                                  <th>Skin</th>
+                                  <th>Player No.</th>
+                                  <th>Player First Name</th>
+                                  <th>Player Last Name</th>
+                                  <th>Runs</th>
+                                </tr>
+                                <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamTwo">
+                                  <td>{{ data?.skin }}</td>
+                                  <td>{{ data?.playerNumber }}</td>
+                                  <td>{{ data?.userDetails[0]?.firstName }}</td>
+                                  <td>{{ data?.userDetails[0]?.lastName }}</td>
+                                  <td>{{ data?.runs }}</td>
+                                </tr>
+                                <!-- <tr>
+                                 <td>2nd Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr>
+                                <tr>
+                                 <td>3rd Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr>
+                                <tr>
+                                 <td>4th Skin</td>
+                                  <td>11</td>
+                                  <td>Kajal</td>
+                                  <td>Garg</td>
+                                  <td>34</td>
+                                </tr> -->
+                              </tbody>
+                            </table>
+                       </div>
+                    </div>
+                     <!-- Button trigger EDit Player's modal -->
+                    <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" style="float: right" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#editTeamTwoPlayersDetails" >
+                      Edit Player's Score
+                    </button>
+                  </div>
+                  
+
+
+                <div class=" text-right mt20">
+                  <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" data-toggle="modal" data-target="#socialSharing" data-backdrop="static" data-keyboard="false" (click)="sendURL()">Publish Match</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+<!-- Observation -->
+<div id="Information" *ngIf="observation">
+  <div class="tab-inner-text-block">
+    <div class="col-md-12 col-lg-12 marginzero">
+      <textarea class="form-control common-textarea" [(ngModel)]="observationMessage"></textarea>
+      <div class=" text-right mt10">
+        <button class="btn btn btn-dark-blue-s" (click)="updateObservation()">Update Observation</button>
+        <button class="btn btn btn-dark-blue-s" [disabled]="messageFromObservation" (click)="addObservation()">Add Observation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+
+<!-- =-=-=-=-=-=-=-=--=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-===-=- -->
+<!--Edit Team Wise performance Modal -->
+<div class="modal fade" id="editTeamPerformanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">Edit Team Scors</h5>
+          <!-- <div class="modal-content-body modalform-body text-left"> -->
+        <div class="modal-header1">
+          <form>
+            <div >
+          <table class="table table-bordered text-center" >    
+            <thead>
+              <tr class="table-head-bg">
+                <th></th>
+                <th>Total Score</th>
+                <th>Total Outs</th>
+                <th>Net Score</th>
+                <th>Leading Skins</th>
+                <th>Lagging Skins</th>
+                <th>Best Batsman</th>
+                <th>Best Bowler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor= "let data of cricketGameDetailsData?.result?.teamDeatailsOne">
+                <td>{{ data.teamDetails[0].teamName }}</td>
+                <td>
+                  <input type="text" [(ngModel)]="data.totalScore " name="totalScoreOne" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.totalOut" name="totalOutOne" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.netScore" name="netScoreOne" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.leadingSkins" name="leadingSkinsOne" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.laggingSkins" name="laggingSkinsOne" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <!-- select from Team A - player names -->
+                  <select name="bestBatsmanOfTeamOne" [(ngModel)]="bestBatsmanOfTeamOne" class="select" (change)="onChange()">
+                    <option [ngValue]="undefined" disabled>Select Player From {{ cricketGameDetailsData?.result?.teamDeatailsOne[0].teamDetails[0]?.teamName }}</option>
+                    <option *ngFor="let data of cricketGameDetailsData?.result?.teamOne " > {{ data.userDetails[0].firstName }} {{ data.userDetails[0].lastName }} </option>
+                  </select>  
+                </td>
+                <td>
+                  <!-- select from Team A - player names -->
+                  <select name="bestBowlerOfTeamOne" [(ngModel)]="bestBowlerOfTeamOne" class="select" (change)="onChange()">
+                    <option [ngValue]="undefined" disabled>Select Player From {{ cricketGameDetailsData?.result?.teamDeatailsOne[0].teamDetails[0]?.teamName }}</option>
+                    <option *ngFor="let data of cricketGameDetailsData?.result?.teamOne "  > {{ data.userDetails[0].firstName }} {{ data.userDetails[0].lastName }} </option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamDeatailsTwo">
+                <td>{{ data.teamDetails[0].teamName }}</td>
+                <td>
+                  <input type="text" [(ngModel)]="data.totalScore" name="totalScoreTwo" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.totalOut" name="totalOutTwo" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.netScore" name="netScoreTwo" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.leadingSkins" name="leadingSkinsTwo" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="data.laggingSkins" name="laggingSkinsTwo" class="inputScore" minlength="1" maxlength="3" digitOnly>  
+                </td>
+                <td>
+                  <!-- select from Team B - player names -->
+                  <select name="bestBatsmanOfTeamTwo" [(ngModel)]="bestBatsmanOfTeamTwo" class="select" (change)="onChange()">
+                    <option [ngValue]="undefined" disabled>Select Player From {{ cricketGameDetailsData?.result?.teamDeatailsTwo[0].teamDetails[0]?.teamName }}</option>
+                    <option *ngFor="let data of cricketGameDetailsData?.result?.teamTwo"  >{{ data.userDetails[0].firstName }} {{ data.userDetails[0].lastName }}</option>
+                </select>
+                </td>
+                <td>
+                  <!-- select from Team B - player names -->
+                  <select name="bestBowlerOfTeamTwo" [(ngModel)]="bestBowlerOfTeamTwo" class="select" (change)="onChange()">
+                    <option [ngValue]="undefined" disabled>Select Player From {{ cricketGameDetailsData?.result?.teamDeatailsTwo[0].teamDetails[0].teamName }}</option>
+                    <option *ngFor="let data of cricketGameDetailsData?.result?.teamTwo"  >{{ data.userDetails[0].firstName }} {{ data.userDetails[0].lastName }}</option>
+                </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </form>
+        <!-- </div> -->
+        <div class="clearfix calendar-action mt30 text-center" style="width: -webkit-fill-available;">
+            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+            <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" (click)="onUpdate()">Update</button>
+         </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- -=-=-=-=-=--=-=-=-=-=-=---=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+  <!-- Edit TeamOne Players Wise Details Modal -->
+<div class="modal fade" id="editTeamOnePlayersDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">Edit Player Scors</h5>
+        <div class="modal-header1">
+          <form>
+              <div class="table-block mt10" style="overflow-y:auto; max-height: 300px;">
+                  <div class="table-responsive">
+                      <table class="table table-bordered text-center" style="overflow-y: scroll;
+                      max-height: 269px;">
+                         <thead>
+                           <tr class="table-head-bg">
+                             <th>{{ cricketGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th>
+                             <th colspan="7"> Bowling Performance</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                           <tr class="strong-color">
+                             <th>Skin</th>
+                             <th>Player No.</th>
+                             <th>Player First Name</th>
+                             <th>Player Last Name</th>
+                             <th>Runs</th>
+                           </tr>
+                           <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamOne; let i = index">
+                              <td>
+                                <input type="text" [(ngModel)]="data.skin" name="skin{{i}}" class="inputScore"  minlength="1" maxlength="3"  digitOnly>
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="data.playerNumber" name="playerNumber{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                              </td>
+                              <td>{{ data?.userDetails[0]?.firstName }}</td>
+                              <td>{{ data?.userDetails[0]?.lastName }}</td>
+                              <td>
+                                <input type="text" [(ngModel)]="data.runs" name="runs{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                              </td>
+                            </tr>
+                         </tbody>
+                       </table>
+                  </div>
+               </div>
+        </form> 
+      </div>
+   <div class="clearfix calendar-action mt30 text-center" style="width: -webkit-fill-available;">
+      <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+      <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" (click)="onUpdatePlayer(TeamOne)">Update</button>
+   </div>
+    </div>
+  </div>
+  </div>
+
+
+
+   <!-- Edit TeamOne Players Wise Details Modal -->
+<div class="modal fade" id="editTeamTwoPlayersDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">Edit Player Scors</h5>
+        <div class="modal-header1">
+          <form>
+              <div class="table-block mt10" style="overflow-y:auto; max-height: 300px;">
+                  <div class="table-responsive">
+                      <table class="table table-bordered text-center" style="overflow-y: scroll;
+                      max-height: 269px;">
+                         <thead>
+                           <tr class="table-head-bg">
+                             <th>{{ cricketGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                             <th colspan="7"> Bowling Performance</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                           <tr class="strong-color">
+                             <th>Skin</th>
+                             <th>Player No.</th>
+                             <th>Player First Name</th>
+                             <th>Player Last Name</th>
+                             <th>Runs</th>
+                           </tr>
+                           <tr *ngFor = " let data of cricketGameDetailsData?.result?.teamTwo; let i = index">
+                              <td>
+                                <input type="text" [(ngModel)]="data.skin" name="skin{{i}}" class="inputScore"  minlength="1" maxlength="3"  digitOnly>
+                              </td>
+                              <td>
+                                <input type="text" [(ngModel)]="data.playerNumber" name="playerNumber{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                              </td>
+                              <td>{{ data?.userDetails[0]?.firstName }}</td>
+                              <td>{{ data?.userDetails[0]?.lastName }}</td>
+                              <td>
+                                <input type="text" [(ngModel)]="data.runs" name="runs{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                              </td>
+                            </tr>
+                         </tbody>
+                       </table>
+                  </div>
+               </div>
+        </form> 
+      </div>
+        <div class="clearfix calendar-action mt30 text-center" style="width: -webkit-fill-available;">
+            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+            <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" (click)="onUpdatePlayer(teamTwo)">Update</button>
+        </div>
+    </div>
+  </div>
+  </div>

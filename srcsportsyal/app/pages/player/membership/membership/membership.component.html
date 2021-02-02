@@ -1,0 +1,514 @@
+<app-header>
+</app-header>
+<div class="topBanner height300">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <div class="heading-search-block mb30">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3 class="content-box-head">Memberships</h3>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="search-block-main">
+                            <div class="search_block">
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="data.search" autocomplete="off" (keyup)="onSearch(1, $event)">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_search" type="button" (click)="onSearch(2)"><i class="fas fa-search"></i></button>
+                                    </div>
+                                    <button class="btn btn-navy-blue max-WT-100 ml-4" (click)="financial(page)">Financial</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-box-filter">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <form class="filter-form">
+                            <div class="filter-box d-inline-block">
+                                <label class="control-label">Club Name</label>
+                                <select [(ngModel)]="data.clubName" [ngModelOptions]="{standalone: true}" class="form-control select-style1 d-inline-block ">
+                                <option value="" selected>Select Club Name</option>
+                                <option [value]="club" *ngFor='let club of ClubName'>{{club}}</option>
+                         </select>
+                            </div>
+                            <div class="filter-box d-inline-block">
+                                <label class="control-label">Following Status</label>
+                                <select [(ngModel)]="data.followStatus" [ngModelOptions]="{standalone: true}" class="form-control select-style1 d-inline-block">
+                        <option value="" >Select Status</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="PENDING">Pending</option>
+                       
+                       </select>
+                            </div>
+                            <button type="submit" class="btn btn-navy-blue max-WT-100" (click)='applyFilter()'>Apply</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="table-block mt30">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Club Name</th>
+                                <th>Membership Name</th>
+                                <th>Organizer Name</th>
+                                <th>Status</th>
+                                <th>Request</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="pagination.total == 0">
+                                <td colspan="5">No data found.</td>
+                            </tr>
+                            <tr [ngClass]="{'pointer': member.playerFollowStatus.followStatus == 'APPROVED', 'default':member.playerFollowStatus == 'NOT FOLLOWED', 'default':member.playerFollowStatus.followStatus == 'PENDING'}" *ngFor='let member of membershipList | paginate : { itemsPerPage: pagination.itemPP, currentPage: pagination.currPage, totalItems: pagination.total ,id:"member" }'>
+                                <td (click)='membershipDetail(member)' class="text-left">
+
+                                    <span class="image-box">  
+                                                                  
+                                        <img *ngIf="!member.imageURL" src="assets/images/follow-img.png">
+                                        <img *ngIf="member.imageURL" src="{{member.imageURL}}">     
+                                </span >{{member?.clubName}}
+                               
+                            </td>
+                             <td  (click)='membershipDetail(member)' >{{member?.membershipName}}</td>
+                             <td  (click)='membershipDetail(member)' >{{member?.organizerId[0]?.firstName}} {{member?.organizerId[0]?.lastName}}</td>                      
+                             <td  (click)='membershipDetail(member)' >{{member?.status}}</td>
+                             <td class="tbl_btn"> 
+                              <button type="button" class="btn btn-follow" *ngIf="member.playerFollowStatus == 'NOT FOLLOWED'" (click)="follow(member)">follow</button>
+                              <button type="button" class="btn btn-unfollow rm-2 bm-2" *ngIf="member.playerFollowStatus.followStatus == 'APPROVED'" (click)="unfollow(member)">Unfollow</button>
+                              <button type="button" class="btn btn-follow" *ngIf="member.playerFollowStatus.followStatus == 'APPROVED'" (click)="membershipDetail(member)">view</button>
+                              <button type="button" class="btn btn-unfollow" *ngIf="member.playerFollowStatus.followStatus == 'PENDING'" (click)="unfollow(member)">Cancel Request</button>
+                             </td>
+                           </tr>                              
+                         </tbody>
+                       </table>
+                  </div>
+                  <div class="pagination-block mt10">
+                    <ul class="pagination">
+                      <div class="pagination-block mt10 text-right page-item" *ngIf="pagination?.total > pagination?.itemPP">
+                        <pagination-controls class="page-item" (pageChange)="onPageChange($event)" id="member"></pagination-controls>
+                      </div> 
+                    </ul>
+                   </div>
+               </div>
+             </div>
+             <!-- Max With Box End -->
+           </div>
+         </main>
+      <!-- <div class="topBanner">
+         <div class="container">
+         </div>
+      </div>
+      <main class="main-container pt0 mt-min60">
+         <div class="container">
+            <div class="content-box bg-gray">
+               <h2 class="content-box-head">Membership</h2>
+               <div class="content-box-filter">
+                  <div class="row">
+                     <div class="col-md-12 col-lg-9">
+                        <form class="filter-form">
+                           <div class="filter-box d-inline-block">
+                              <label class="control-label">Membership Status</label>
+                              <select class="form-control select-style1 d-inline-block width200">
+                                 <option>Select Game</option>
+                              </select>
+                           </div>
+                           <button type="submit" class="btn btn-navy-blue max-WT-100">Apply</button>
+                        </form>
+                     </div>
+                     <div class="col-md-12 col-lg-3 text-right">
+                        <div class="search-box max-WT-300">
+                           <input class="form-control" placeholder="Search here">
+                           <i class="fas fa-search"></i>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="table-block mt30">
+                  <div class="table-responsive">
+                     <table class="table table-bordered">
+                        <thead>
+                           <tr>
+                              <th>Service Name</th>
+                              <th>Organizer</th>
+                              <th>Price</th>
+                              <th>Durations</th>
+                              <th class="action-td">Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor='let member of membershipList | paginate : { itemsPerPage: pagination.itemPP, currentPage: pagination.currPage, totalItems: pagination.total }'>
+                              <td>{{member?.clubName}}</td>
+                              <td>{{member?.organizerId[0]?.firstName}} {{member?.organizerId[0]?.lastName}}</td>
+                              <td>$50.00</td>
+                              <td>30 Minutes</td>
+                              <td class="action-td">
+                                 <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book">View</button>
+                                 <a href="#membership_service_booking" data-toggle="modal" data-target="#membership_service_booking" class="btn btn-book">Book</a>
+                              </td>
+                           </tr>
+                          
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="pagination-block mt10">
+                     <ul class="pagination">
+                            <div class="pagination-block mt10 text-right" *ngIf="pagination?.total > pagination?.itemPP">
+                                    <pagination-controls class="page-item" (pageChange)="onPageChange($event)"></pagination-controls>
+                               </div>                        
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+      <app-footer></app-footer>
+      <div class="modal fade" id="membership_service_booking" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-900" role="document">
+            <div class="modal-content">
+               <form class="membership-booking-form">
+                  <div class="modal-header d-block bdr-none pb0 clearfix">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="modal-head mt0 mb5 text-center">Membership service booking</h5>
+                    <p class="head_lagend mb25 text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Select A Date </label>
+                                <input class="form-control datepicker" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="col-md-8 bdr-left">
+                            <label class="control-label">Selected Date: <span>22/03/2018</span></label>
+                            <div class="mebership-business-detail clearfix">
+                                <div class="business-image"><img src="assets/images/makup-img1.png" alt="Image" /></div>
+                                <div class="business-name">
+                                    <h4>Makeup</h4>
+                                    <div class="busi-price"><span>Price:</span><span>$30</span></div>
+                                    <div class="busi-price mb0"><span>Duration:</span><span>30 Minutes</span></div>
+                                </div>
+                            </div>
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets.
+                            </p>
+                            <button type="button" class="btn btn-blue appoint_btn mb20">Make Appointment</button>
+                            <div class="book_slot_box hide-tag mb20">
+                                <ul class="book_slot_list clearfix">
+                                    <li class="gray-dark-bg">09:00 AM</li>
+                                    <li>09:30 AM</li>
+                                    <li>10:00 AM</li>
+                                    <li>10:30 AM</li>
+                                    <li>11:00 AM</li>
+                                    <li class="gray-dark-bg">11:30 AM</li>
+                                    <li>12:00 PM</li>
+                                    <li>12:30 PM</li>
+                                    <li>01:00 PM</li>
+                                    <li>01:30 PM</li>
+                                    <li class="green-dark-bg">02:00 PM</li>
+                                    <li>02:30 PM</li>
+                                </ul>
+                                <button type="button" class="btn btn-navy-blue font_uni_sans_italic max-WT-150 mr10" data-toggle="modal" data-target="#membership_service_booking_info" data-dismiss="modal">Book Slot</button>
+                                <button type="button" class="btn btn-gray font_uni_sans_italic max-WT-150 cancel_appoint_btn">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="membership_service_booking_info" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog max-WT-800" role="document">
+            <div class="modal-content">
+                <form class="booking-proceed-form">
+                    <div class="modal-header d-block bdr-none pb0 clearfix">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                    </div>
+                    <div class="modal-body tab_pad_L60 tab_pad_R60">
+                        <h5 class="modal-head mt0 mb20 text-center navy-blue font_uni_sans">Booking Form</h5>
+                        <div class="modal_booking_table">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>21/03/2018</td>
+                                            <td>6:00 PM</td>
+                                            <td>8:00 PM</td>
+                                            <td>8:00 PM</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3">Total</td>
+                                            <td>$300</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-box booking-field">
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Email ID</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Phone No.</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Payment Method</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <div class="col-md-6 offset-md-3">
+                                    <button type="button" class="mb25 btn btn-navy-blue font_uni_sans_italic max-WT-170" data-toggle="modal" data-target="#Chat_modal_box" data-dismiss="modal">Proceed</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade global-modal chat-modal" id="Chat_modal_box" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-block bdr-none  clearfix">
+                    <h4 class="modal-title">Message</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body noscroll">
+                    <div class="modal-chat-block">
+                        <ul class="modal-chat-list">
+                            <li class="left">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                            <li class="right">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                            <li class="left">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                            <li class="right">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                            <li class="left">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                            <li class="right">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                            <li class="left">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                            <li class="right">
+                                <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                                <div class="modal-chat-msg">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="modal-comment-box">
+                            <span class="modal-chat-img"><img src="assets/images/msg-user1.png" alt="chat user image"/></span>
+                            <input type="text" class="form-control" placeholder="" />
+                            <button type="submit" class="btn btn-navy-blue font_uni_sans">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="view_preview_booking" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog max-WT-800" role="document">
+            <div class="modal-content">
+                <form class="preview-booking-form">
+                    <div class="modal-header d-block bdr-none pb0 clearfix">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                    </div>
+                    <div class="modal-body tab_pad_L60 tab_pad_R60">
+                        <h5 class="modal-head mt0 mb0 text-center navy-blue font_uni_sans">Preview Booking</h5>
+                        <p class="head_lagend mb25 text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <div class="modal_booking_table">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>21/03/2018</td>
+                                            <td>6:00 PM</td>
+                                            <td>8:00 PM</td>
+                                            <td>8:00 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">Outside 7 - Aside</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3">Total</td>
+                                            <td>$300</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="center-box booking-field hide-tag mb30">
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Email ID</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Phone No.</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <label class="control-label col-md-3">Payment Method</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix calendar-action">
+                            <label class="mr10">Payment Method</label>
+                            <div class="radio_btn radio-inline d-inline-block">
+                                <div class="custom-radio-btn d-inline-block">
+                                    <input name="exchange" id="check1" checked="" type="radio" />
+                                    <label for="check1">Card</label>
+                                </div>
+                                <div class="custom-radio-btn d-inline-block">
+                                    <input name="exchange" id="check2" type="radio" />
+                                    <label for="check2">Cash</label>
+                                </div>
+                            </div>
+                            <button type="button" class="mb25 btn btn-navy-blue max-WT-170 f-right proceed-btn">Proceed</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+    <app-footer></app-footer>
+    <!-- Sell History Modal Start Here -->
+    <div class="modal fade common-modal" id="sell" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog max-WT-900" role="document">
+            <div class="modal-content">
+                <form class="modal-add-card-form">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Financial</h5>
+                        <button type="button" class="close close-icon" data-dismiss="modal">&times;</button>
+                        <div class="modal-content-body modalform-body text-left">
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                        <tr class="table-head-bg">
+
+                                            <th>Transaction Id</th>
+                                            <th>Date</th>
+                                            <th>Organizer</th>
+                                            <th>Amount</th>
+                                            <th>Payment Method</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of financiaList | paginate: { itemsPerPage:pageLimit , currentPage:financials?.page , totalItems:pageTotal , id:'financial'  } ; let i = index">
+
+                                            <td>{{item?.paymentDetails[0]?.response.transactionId}}</td>
+                                            <td>{{item?.createdAt | date}}</td>
+                                            <td>{{item?.organizerId?.firstName}}</td>
+                                            <td *ngIf="item?.bookingId?.totalPrice == 0"> -- </td>
+                                            <td *ngIf="item?.bookingId?.totalPrice != 0">{{currency}}{{item?.bookingId?.totalPrice}}</td>
+                                            <td>{{item?.paymentMethod}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <h3 *ngIf="financiaList.length == 0">No Data Found</h3>
+                                <pagination-controls id="financial" style="text-align: center" *ngIf="(pageLimit<pageTotal)" (pageChange)="financial($event)" ></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

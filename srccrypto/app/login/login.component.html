@@ -1,0 +1,59 @@
+
+
+<body class="afterlogin" >
+  <div class="login-wrapper">
+      <div class="container-common">
+          <div class="row justify-content-center">
+              <div class="col-md-6">
+                  <form class="login_box_outer" [formGroup]="loginForm">
+                      <div class="login-box max-WT-520">
+                          <div class="login-right-block">
+                              <div class="login-heading">
+                                  <h4 style="color:black">LOGIN</h4>
+                              </div>
+                              <div class="login-box-body">
+                                  <div class="form-group">
+                                      <input type="email" class="form-control" placeholder="Email" formControlName="email" (keypress)="service.preventSpace($event)"/>
+                                     
+                                      <div *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched">
+                                          <span class="error">*Email is required.</span>
+                                      </div>
+                                      <span class="error">
+                                        <p *ngIf="loginForm.get('email').hasError('pattern') && loginForm.get('email').dirty" class="error"
+                                        padding>*Please enter valid email.</p>
+                                        </span>
+                                  </div>
+                                  <div class="form-group">
+                                      <input type="password" class="form-control " placeholder="Password" formControlName="password" (keypress)="service.preventSpace($event)"/>
+                                     
+                                      <div *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
+                                          <span class="error">*Password is required.</span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <div class="col-6">
+                                          <div class="remember-text ">
+                                              <label class="checkbox-design" style="color:black">
+                                                <input type="checkbox" formControlName='rememberMe'  /><span></span>Remember me
+                                              </label>
+                                          </div>
+                                      </div>
+
+                                      <div class="col-lg-6">
+                                          <div class="forgot-links">
+                                              <a [routerLink]="['/forgot-password']" routerLinkActive="router-link-active" style="color:black">Forgot Password?</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group text-center mt40">
+                                      <button type="submit" class="btn btn-login btn-large  width100 font-100"  [disabled]="!loginForm.valid" (click)="onLogin()" >LOGIN</button>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>

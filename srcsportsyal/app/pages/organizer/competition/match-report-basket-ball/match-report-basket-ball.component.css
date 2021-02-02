@@ -1,0 +1,64 @@
+.inputScore{
+    width: 40px;
+    height: 40px; 
+    text-align: center;
+}
+
+span.span{
+    margin-right: 38%;
+    margin-left: -10px;
+}
+span.spanMiddle{
+    margin-right: 27%;
+    margin-left: -14px;
+}
+
+span.spanMiddle:after {
+    position: absolute;
+    content: '';
+    border: 0.5px solid #999999;
+    top: -15px;
+    right: -44px;
+    height: 50px;
+}
+
+
+
+span.span:after {
+    position: absolute;
+    content: '';
+    border: 0.5px solid #999999;
+    top: -15px;
+    right: -44px;
+    height: 50px;
+}
+
+span.span {
+    position: relative;
+}
+span.spanMiddle {
+    position: relative;
+}
+
+.table-responsive{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.select{
+    width: 100%;
+    height: 38px;
+    align-content: safe;
+    text-align-last: center;
+}
+
+
+.inputScore{
+    width: 40px;
+    height: 40px; 
+    text-align: center;
+}
+/* span.new{
+    width: 78px;
+    border: none;
+} */

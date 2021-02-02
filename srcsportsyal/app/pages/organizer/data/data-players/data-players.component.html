@@ -1,0 +1,655 @@
+<!-- Header Start -->
+<app-header></app-header>
+<!-- Header End -->
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('COMPETITION'))">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <h2 class="content-box-head">Filter BY COMPETITION</h2>
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <div class="row align-items-center">
+            <div class="col-md-3">
+              <div class="filter-box ">
+                <label class="control-label">Status</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.teamStatus" name="teamStatus">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let status of list.teamStatusList" [value]="status.value">{{status?.name}}</option>
+
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box">
+                <label class="control-label">Team</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.team" name="team">
+                  <option value="">Select Team</option>
+                  <option *ngFor="let team of list.teamList" [value]="team.teamName">{{team?.teamName}}</option>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-md-3">
+                         <div class="filter-box">
+                           <label class="control-label">Club</label>
+                            <select class="form-control select-style1" [(ngModel)]="filter.club" name="club">
+                               <option value="">Select Club</option>
+                               <option *ngFor="let club of list.clubList" [value]="club.clubName">{{club?.clubName}}</option>
+                            </select>
+                          </div>
+                        </div> -->
+
+            <div class="col-md-3">
+              <div class="filter-box ">
+                <label class="control-label">Competition Status</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.compStatus" name="compStatus">
+                  <option value="">Select Competition Status</option>
+                  <option *ngFor="let status of list.compStatusList" [value]="status.value">{{status?.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box">
+                <label class="control-label">Sport</label>
+                <ng-multiselect-dropdown [placeholder]="'Select Sport'" [data]="list.sportsList" [(ngModel)]="filter.sports" [settings]="dropdownSettings"
+                  name="sports">
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box">
+                <label class="control-label">Gender</label>
+                <select class="form-control select-style1" [(ngModel)]="filter.gender" name="gender">
+                  <option value="">Select Gender</option>
+                  <option *ngFor="let item of list.genderList" [value]="item.value">{{item?.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="filter-box">
+                <label class="control-label">Division</label>
+                <ng-multiselect-dropdown [placeholder]="'Select Division'" [data]="list.divisionList" [(ngModel)]="filter.division" [settings]="dropdownSettings"
+                  name="division">
+                </ng-multiselect-dropdown>
+                <!-- class="d-inline-block" -->
+              </div>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn btn-dark-blue-s max-WT-170" (click)="onSearch(2)" style="float: right">Apply</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2"
+                      [(ngModel)]="filter.search" name="search" (keyup)="onSearch(1, $event)" autocomplete="off">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-white-bg" (click)="printTeam(1)">Print</button>
+              <button class="btn btn-white-bg" (click)="printTeam(2)">Export To CSV</button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn btn-dark-blue-s max-WT-170" type="button" (click)="sendMsgModal('', true)" style="float: right">Send message to All</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Name</th>
+                <th>Team</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th style="min-width: 168px;">Country of Residence</th>
+                <th>Competition</th>
+                <th>Birthday</th>
+                <th>Gender</th>
+                <th>Status</th>
+                <th>Sports</th>
+                <th style="min-width:350px">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!playerDet.docs.length">
+                <td colspan="11" class="text-center">No Data Found.</td>
+              </tr>
+              <tr *ngFor="let item of playerDet.docs">
+                <td>{{item?.Player?.firstName}} {{item?.Player?.lastName}}</td>
+                <td>{{item?.teamName || '- - -'}}</td>
+                <td>{{item?.Player?.mobileNumber}}</td>
+                <td>{{item?.Player?.email}}</td>
+                <td>{{item?.Player?.nationality || '- - -'}}</td>
+                <td>{{item?.Comp?.competitionName}}</td>
+                <td>{{item?.Player?.dob}}</td>
+                <td>{{item?.Player?.gender | letterCase}}</td>
+                <td>{{getStatus(item?.status)}}</td>
+                <td>{{item?.Comp?.sports}}</td>
+                <td class="action-td">
+                  <!-- <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book">View</button> -->
+                  <button type="button" class="btn btn-book" (click)="sendMsgModal(item.Player._id, false)">Message</button>
+                </td>
+              </tr>
+              <!-- <tr>
+                            <td>Manish</td>
+                              <td>Knight Rider</td>
+                              <td>9999999999</td>
+                              <td>abc@gmail.com</td>
+                              <td>Dubai</td>
+                              <td>12th Dp-Ball</td>
+                              <td>12/12/2017</td>
+                              <td>Male</td>
+                              <td>inprogressl</td>
+                              <td>Sports</td>
+                              <td class="action-td">
+                                 <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book">View</button>
+                                 <button type="button" data-toggle="modal" data-target="#view_preview_booking1" class="btn btn-book">Message</button>
+                              </td>
+                           </tr> -->
+            </tbody>
+          </table>
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block text-right" *ngIf="playerDet.total > playerDet.limit">
+            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+          </div>
+          <div class="entity-text" *ngIf="playerDet.docs.length">
+            <span>Showing {{playerDet.limit * (playerDet.page - 1) + 1 || 0}} to {{((playerDet.limit * playerDet.page)
+              < playerDet.total)
+                ? (playerDet.limit * playerDet.page) : playerDet.total || 0}} of {{playerDet.total}} entries</span>
+                <select class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                  <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                </select>
+                <span>entries</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('MEMBERSHIP'))">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <h2 class="content-box-head">Filter BY MEMBERSHIP</h2>
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth" [formGroup]="applyForm">
+          <div class="row align-items-center">
+            <div class="col-md-4 col-xl-3">
+              <div class="filter-box ">
+                <label class="control-label">Status</label>
+                <select class="form-control select-style1" name="teamStatus" formControlName="status">
+                  <option value="">Select Status</option>
+                  <option *ngFor="let status of list.teamStatusList" [value]="status.value">{{status?.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+              <div class="filter-box">
+                <label class="control-label">Membership Name</label>
+                <select class="form-control select-style1" name="team" formControlName="membership" (change)="getMembershipId($event)">
+                  <option value="">Select Membership</option>
+                  <option *ngFor="let member of memberlist" [value]="member.membershipName">{{member?.membershipName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+              <div class="filter-box">
+                <div class="filter-box ">
+                  <label class="control-label">Service Name</label>
+                  <select class="form-control select-style1" formControlName="servicename">
+                    <option value="">Select Service</option>
+                    <option *ngFor="let i of servicelist" value="{{i?.serviceName}}">{{i?.serviceName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+              <div class="filter-box">
+                <label class="control-label">Gender</label>
+                <select class="form-control select-style1" name="gender" formControlName="gender">
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+              <button class="btn btn btn-dark-blue-s max-WT-170" [disabled]="!applyForm.valid" (click)="filterFunc(applyForm.value,filters.currPage,1)">Apply</button>
+            </div>
+          </div>
+        </form>
+        <form class="filter-form fullwidth mt10" [formGroup]="searchForm">
+          <div class="row">
+            <div class="col-lg-5 col-md-7">
+              <div class="search-block-main fiter-full-search">
+                <div class="search_block">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Here.." formControlName="search" aria-label="Recipient's username"
+                      aria-describedby="basic-addon2" name="search" autocomplete="off">
+                    <div class="input-group-append">
+                      <button class="btn btn_search" type="button" (click)="filterFunc(searchForm.value,filters.currPage,2)">Search</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-5">
+              <button class="btn btn-white-bg" (click)="print()">Print</button>
+              <button class="btn btn-white-bg" (click)="exportToCSV()">Export To The CSV</button>
+            </div>
+            <div class="col-lg-3 col-md-4">
+              <button class="btn btn btn-dark-blue-s max-WT-170" type="button" (click)="openMessageModal()" style="float: right">Send Message to All</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="table-block mt10 white-bg">
+        <div class="table-responsive">
+          <table class="table table-bordered large-table text-center">
+            <thead>
+              <tr class="table-head-bg">
+                <th>Membership Name</th>
+                <th>Service Name</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th style="min-width: 168px;">Country of Residence</th>
+                <th>Date Of Birth</th>
+                <th>Gender</th>
+                <th>Status</th>
+                <th style="min-width:350px">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!playerlist.length">
+                <td colspan="11">No Data Found.</td>
+              </tr>
+              <tr *ngFor="let item of playerlist | paginate: { itemsPerPage: pageLimit, currentPage: filters.currPage,  totalItems: pageTotal }">
+                <td>{{item?.Service?.membershipName}}</td>
+                <td>{{item?.Service?.serviceName}}</td>
+                <td>{{item?.Player?.firstName}} &nbsp; {{item?.Player?.lastName}}</td>
+                <td>{{item?.Player?.countryCode}}{{item?.Player?.mobileNumber}}</td>
+                <td>{{item?.Player?.email}}</td>
+                <td>{{item?.Player?.nationality || '- - -'}}</td>
+                <td>{{item?.Player?.dob}}</td>
+                <td>{{item?.Player?.gender | letterCase}}</td>
+                <td>{{item?.Player?.status}}</td>
+                <td class="action-td">
+                  <button type="button" (click)="viewDetailFun(item?._id)" class="btn btn-book">View</button>
+                  <button type="button" class="btn btn-book">Message</button>
+                </td>
+              </tr>
+              <!-- <tr>
+                          <td>Manish</td>
+                            <td>Knight Rider</td>
+                            <td>9999999999</td>
+                            <td>abc@gmail.com</td>
+                            <td>Dubai</td>
+                            <td>12th Dp-Ball</td>
+                            <td>12/12/2017</td>
+                            <td>Male</td>
+                            <td>inprogressl</td>
+                            <td>Sports</td>
+                            <td class="action-td">
+                               <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book">View</button>
+                               <button type="button" data-toggle="modal" data-target="#view_preview_booking1" class="btn btn-book">Message</button>
+                            </td>
+                         </tr> -->
+            </tbody>
+          </table>
+
+        </div>
+        <div class="clearfix pagination-entity">
+          <div class="pagination-block text-right" *ngIf="pageTotal > pageLimit">
+            <pagination-controls (pageChange)="filterFunc(searchForm.value,$event,2)"></pagination-controls>
+          </div>
+          <!-- <div class="entity-text" *ngIf="playerDet.docs.length">
+                    <span>Showing {{playerDet.limit * (playerDet.page - 1) + 1 || 0}} to {{((playerDet.limit * playerDet.page) < playerDet.total) ? (playerDet.limit * playerDet.page) : playerDet.total || 0}} of {{playerDet.total}} entries</span>
+                    <select class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                       <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                     </select>
+                     <span>entries</span>
+                  </div> -->
+
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('VENUE'))">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <h2 class="content-box-head">Filter BY VENUE</h2>
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth" [formGroup]="applyVenueForm">
+          <div class="row align-items-center">
+            <div class="col-md-4 col-xl-3">
+              <div class="filter-box ">
+                <label class="control-label">Venue List </label>
+                <select class="form-control select-style1" name="venuename" formControlName="venue">
+                  <option value="">Select Venue</option>
+                  <option value="">Select Venue</option>
+                  <option value="">Select Venue</option>
+                  <!-- <option *ngFor="let status of list.teamStatusList" [value]="status.value">{{status?.name}}</option>  -->
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-xl-3">
+              <div class="filter-box">
+                <label class="control-label">Sports Name</label>
+                <select class="form-control select-style1" name="sportsname" formControlName="sport">
+                  <option value="">Select Sports</option>
+                  <option value="">Select Sports</option>
+                  <option value="">Select Sports</option>
+                  <!-- <option *ngFor="let member of memberlist" [value]="member.membershipName" >{{member?.membershipName}}</option>   -->
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-md-4 col-xl-3">
+                        <div class="filter-box">
+                         <div class="filter-box ">
+                           <label class="control-label">Service Name</label>
+                            <select class="form-control select-style1" formControlName = "servicename" >
+                              <option value="">Select Service</option>
+                               <option  *ngFor="let i of servicelist"  value="{{i?.serviceName}}">{{i?.serviceName}}</option>
+                             </select>
+                          </div>
+                         </div>
+                       </div>
+                      -->
+            <!-- <div class="col-md-4 col-xl-3">
+                        <div class="filter-box">
+                          <label class="control-label">Gender</label>
+                           <select class="form-control select-style1"  name="gender" formControlName="gender">
+                              <option value="">Select Gender</option>
+                              <option value="male">Male</option>
+                              <option value="female">Female</option>
+                           </select>
+                         </div>
+                       </div> -->
+            <div class="col-md-4 col-xl-3">
+              <button class="btn btn btn-dark-blue-s max-WT-170" [disabled]="!applyVenueForm.valid" (click)="filterVenueFunc(applyVenueForm.value)">Apply</button>
+            </div>
+          </div>
+        </form>
+        <!-- <form class="filter-form fullwidth mt10" [formGroup]="searchForm">
+                      <div class="row">
+                      <div class="col-lg-5 col-md-7">
+                         <div class="search-block-main fiter-full-search">
+                           <div class="search_block">
+                               <div class="input-group">
+                                 <input type="text" class="form-control" placeholder="Search Here.." formControlName="search"    aria-label="Recipient's username" aria-describedby="basic-addon2"  name="search"  autocomplete="off">
+                                 <div class="input-group-append">
+                                   <button class="btn btn_search" type="button" (click)="filterFunc(searchForm.value,filters.currPage,2)">Search</button>
+                                 </div>
+                               </div>
+                           </div>
+                       </div>
+                      </div>
+                      <div class="col-lg-4 col-md-5">
+                        <button class="btn btn-white-bg" (click)="print()">Print</button>
+                        <button class="btn btn-white-bg" (click)="exportToCSV()">Export To The CSV</button>
+                      </div>
+                      <div class="col-lg-3 col-md-4">
+                          <button class="btn btn btn-dark-blue-s max-WT-170" type="button"  (click)="openMessageModal()"  style="float: right">Send Message to All</button>
+                      </div>
+                   </div>
+                 </form> -->
+      </div>
+      <!-- <div class="table-block mt10 white-bg">
+                 <div class="table-responsive">
+                    <table class="table table-bordered large-table text-center">
+                       <thead>
+                          <tr class="table-head-bg">
+                             <th>Membership Name</th>
+                             <th>Service Name</th>
+                             <th>Name</th>
+                             <th>Mobile</th>
+                             <th>Email</th>
+                              <th style="min-width: 168px;">Country of Residence</th>
+                              <th>Date Of Birth</th>
+                              <th>Gender</th>
+                              <th>Status</th>
+                              <th style="min-width:350px">Action</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                          <tr *ngIf="!playerlist.length">
+                           <td colspan="11" >No Data Found.</td>
+                          </tr>
+                          <tr *ngFor="let item of playerlist | paginate: { itemsPerPage: pageLimit, currentPage: filters.currPage,  totalItems: pageTotal }" >
+                             <td>{{item?.Service?.membershipName}}</td>
+                             <td>{{item?.Service?.serviceName}}</td>
+                             <td>{{item?.Player?.firstName}} &nbsp; {{item?.Player?.lastName}}</td>
+                             <td>{{item?.Player?.countryCode}}{{item?.Player?.mobileNumber}}</td>
+                             <td>{{item?.Player?.email}}</td>
+                             <td>{{item?.Player?.nationality || '- - -'}}</td>
+                             <td>{{item?.Player?.dob}}</td>
+                             <td>{{item?.Player?.gender | letterCase}}</td>
+                             <td>{{item?.Player?.status}}</td>                           
+                             <td class="action-td">
+                                <button type="button" (click)="viewDetail(item?._id)" class="btn btn-book">View</button>
+                                <button type="button" class="btn btn-book"  >Message</button>
+                             </td>
+                          </tr>
+                         <tr>
+                           <td>Manish</td>
+                             <td>Knight Rider</td>
+                             <td>9999999999</td>
+                             <td>abc@gmail.com</td>
+                             <td>Dubai</td>
+                             <td>12th Dp-Ball</td>
+                             <td>12/12/2017</td>
+                             <td>Male</td>
+                             <td>inprogressl</td>
+                             <td>Sports</td>
+                             <td class="action-td">
+                                <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book">View</button>
+                                <button type="button" data-toggle="modal" data-target="#view_preview_booking1" class="btn btn-book">Message</button>
+                             </td>
+                          </tr>
+                       </tbody>
+                    </table>
+                  
+                 </div>
+                 <div class="clearfix pagination-entity">
+                     <div class="pagination-block text-right" *ngIf="pageTotal > pageLimit">
+                         <pagination-controls  (pageChange)="filterFunc(searchForm.value,$event,2)"></pagination-controls>   
+                     </div>
+                   <div class="entity-text" *ngIf="playerDet.docs.length">
+                     <span>Showing {{playerDet.limit * (playerDet.page - 1) + 1 || 0}} to {{((playerDet.limit * playerDet.page) < playerDet.total) ? (playerDet.limit * playerDet.page) : playerDet.total || 0}} of {{playerDet.total}} entries</span>
+                     <select class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                        <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                      </select>
+                      <span>entries</span>
+                   </div>
+                 
+                 </div> 
+              </div> -->
+    </div>
+
+  </div>
+</main>
+<!-- Max With Box End -->
+<!-- main End -->
+<!-- <div class="table-responsive" id="table_dataPlayers" [hidden]="true">
+          <table class="table table-bordered large-table text-center">
+             <thead>
+                <tr class="table-head-bg">
+                   <th>Name</th>
+                   <th>Team</th>
+                   <th>Phone</th>
+                   <th>Email</th>
+                    <th>Country of Residence</th>
+                    <th>Competition</th>
+                    <th>Birthday</th>
+                    <th>Gender</th>
+                    <th>Status</th>
+                    <th>Sports</th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr *ngIf="!printData.length">
+                 <td colspan="11" class="text-center">No Data Found.</td>
+                </tr>
+                <tr *ngFor="let item of printData">
+                 <td>{{item?.Player?.firstName}} {{item?.Player?.lastName}}</td>
+                   <td>{{item?.teamName || '- - -'}}</td>
+                   <td>{{item?.Player?.mobileNumber}}</td>
+                   <td>{{item?.Player?.email}}</td>
+                   <td>{{item?.Player?.nationality || '- - -'}}</td>
+                   <td>{{item?.Comp?.competitionName}}</td>
+                   <td>{{item?.Player?.dob}}</td>
+                   <td>{{item?.Player?.gender | letterCase}}</td>
+                   <td>{{getStatus(item?.status)}}</td>
+                   <td>{{item?.Comp?.sports}}</td>
+                </tr>
+             </tbody>
+          </table>
+       </div> -->
+<!--  Footer Start  -->
+<app-footer></app-footer>
+<!--  Footer End  -->
+
+<!-- Modal Start -->
+<!-- Send message -->
+<div class="modal fade common-modal" id="dataPlayerSendMsg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb0 navy-blue font_uni_sans noborder">SEND MESSAGE</h5>
+          <div class="modal-content-body">
+            <div class="center-box">
+              <div class="form-group clearfix">
+                <textarea class="form-control textareaheight" placeholder="Message" [(ngModel)]="message" name="msg"></textarea>
+              </div>
+            </div>
+            <div class="clearfix calendar-action mt10 text-left">
+              <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+              <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" (click)="send()">Send</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Send message modal End-->
+<!-- Send message -->
+<div class="modal fade common-modal" id="SendMsg" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb0 navy-blue font_uni_sans noborder">SEND MESSAGE</h5>
+          <div class="modal-content-body">
+            <div class="center-box">
+              <div class="form-group clearfix">
+                <textarea class="form-control textareaheight" placeholder="Message" [(ngModel)]="message" name="msg"></textarea>
+              </div>
+            </div>
+            <div class="clearfix calendar-action mt10 text-left">
+              <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+              <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" (click)="send()">Send</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  Send message modal End-->
+<!-- View Player Details Start  -->
+<div class="modal fade common-modal" id="viewDetail" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-800" role="document">
+    <div class="modal-content">
+      <form class="modal-add-card-form">
+        <div class="modal-body text-center">
+          <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">View Details</h5>
+          <div class="modal-content-body modalform-body text-left">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="profile-img" id="profile_img">
+                  <label>Profile Pic</label>
+                  <img src="{{viewPlayerDetail[0]?.Player?.image}}" alt="Token Image" class="profile-pic">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Membership Name</label>
+                  <div class="col-md-9">
+                    <label>{{viewPlayerDetail[0]?.Service?.membershipName}}</label>
+                  </div>
+                </div>
+
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Service Name</label>
+                  <div class="col-md-9">
+                    <label>{{viewPlayerDetail[0]?.Service?.serviceName}}</label>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Player Name</label>
+                  <div class="col-md-9">
+                    <label for="">{{viewPlayerDetail[0]?.Player?.firstName}}&nbsp;{{viewPlayerDetail[0]?.Player?.lastName}}</label>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Mobile</label>
+                  <div class="col-md-9">
+                    <label>{{viewPlayerDetail[0]?.Player?.mobileNumber}}</label>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Email</label>
+                  <div class="col-md-9">
+                    <label>{{viewPlayerDetail[0]?.Player?.email}}</label>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Nationality</label>
+                  <div class="col-md-9">
+                    <label>{{viewPlayerDetail[0]?.Player?.nationality}}</label>
+                  </div>
+                </div>
+                <div class="form-group clearfix row">
+                  <label>Dynamic Form Fields:</label>
+                  <br>
+                  <form>
+                    <div class="col-md-12" *ngFor="let item of playerDynamicDetail">
+                      <b>{{item.field}}:</b> &nbsp;&nbsp;&nbsp;
+                      <label>{{item.itemValue}}</label>
+                      <!-- <input [type]="item.fieldType" class="form-control"  name="{{item.Name}}" [(ngModel)]="item.itemValue" [ngModelOptions]="{standalone: true}"> -->
+                    </div>
+                  </form>
+                </div>
+                <div class="clearfix calendar-action mt30 text-left">
+                  <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" data-dismiss="modal">Ok</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- View Player Detail Ends Here -->

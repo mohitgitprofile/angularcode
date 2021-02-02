@@ -1,0 +1,197 @@
+<div id="Starts" class=" tab-pane active show">
+    <div class="row">
+       <div class="col-lg-12">
+          <div class="scoreboard-table-block1">
+             <div class="scoreboard-table-inner">
+                <div class="status-content-block">
+                  <div>
+                    <div>
+                        <div class="status-inner status-inner-edit">
+
+                          <div class="view-row">
+                              <label>Competition</label>
+                              <span>{{gameData?.competitionData?.competitionName}}</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Division</label>
+                              <span>{{gameData?.competitionData?.division}}</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Period</label>
+                              <span>{{gameData?.competitionData?.period}}</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Date</label>
+                              <span>12/12/2017</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Time</label>
+                              <span>23:00:01</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Venue</label>
+                              <span>{{gameData?.competitionData?.venue}}</span>
+                          </div>
+                          <div class="view-row">
+                              <label>Referee</label>
+                              <span>Sushant</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                 <div class="table-scrool-box1">
+                 <div class="table-block mt30">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center">
+                           <thead>
+                             <tr class="table-head-bg">
+                               <th>Lane</th>
+                               <th>Place</th>
+                               <th>Team</th>
+                               <th>Player First Name</th>
+                               <th>Player Last Name</th>
+                               <th>Time</th>
+                             </tr>
+                           </thead>
+                           <tbody>
+                             <tr *ngFor="let data of swimmingGameDetailsData?.teamDeatailsOne;let i = index">
+                               <td>{{data?.scoreData[0]?.lane}}</td>
+                               <td>{{data?.scoreData[0]?.place}}</td>
+                               <td>{{data?.teamDetails[0]?.teamName}}</td>
+                               <td>{{data?.playersDetails[0]?.firstName}}</td>
+                               <td>{{data?.playersDetails[0]?.lastName}}</td>
+                               <td>{{data?.scoreData[0]?.time}}</td>
+                             </tr>
+                             <tr *ngFor="let data of swimmingGameDetailsData?.teamDeatailsTwo;let i = index">
+                               <td>{{data?.scoreData[0]?.lane}}</td>
+                               <td>{{data?.scoreData[0]?.place}}</td>
+                               <td>{{data?.teamDetails[0]?.teamName}}</td>
+                               <td>{{data?.playersDetails[0]?.firstName}}</td>
+                               <td>{{data?.playersDetails[0]?.lastName}}</td>
+                               <td>{{data?.scoreData[0]?.time}}</td>
+                             </tr>
+                             <!-- <tr>
+                               <td>1</td>
+                               <td>5</td>
+                               <td>DD</td>
+                               <td>Ravi</td>
+                               <td>sharma</td>
+                               <td>11:23:34</td>
+                             </tr>
+                             <tr>
+                               <td>1</td>
+                               <td>4</td>
+                               <td>RCB</td>
+                               <td>Saurav</td>
+                               <td>Verma</td>
+                               <td>11:23:23</td>
+                             </tr>
+                             <tr>
+                               <td>2</td>
+                               <td>3</td>
+                               <td>KKR</td>
+                               <td>Gaurav</td>
+                               <td>Tiwari</td>
+                               <td>11:23:45</td>
+                             </tr> -->
+                            
+                           </tbody>
+                         </table>
+                    </div>
+                 </div>
+               </div>
+                  <div class=" text-right mt20">
+                    <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#swimmingPlayerEditScoreOne" data-backdrop="static" data-keyboard="false" style="margin-bottom: 12px;margin-top: 13px;width: 164px;">Edit Team Score</button>
+                    <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#socialSharing" (click)="send()">Publish Match</button>
+                  </div>
+           </div>
+         </div>
+       </div>
+     </div>
+ </div>
+
+
+
+
+
+
+
+
+<!-- Edit score Team Wise Start-->
+ <div class="modal fade common-modal" id="swimmingPlayerEditScoreOne" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+       <div class="modal-content">
+          <form class="modal-add-card-form" >
+                <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+                <div class="modal-content-body modalform-body text-left">
+                   <div class="row">
+
+                      <div class="">
+                      
+                          
+                          <div class="table-scrool-box1" style="min-width: 749px;">
+                              <div class="table-block mt30">
+                                 <div class="table-responsive">
+                                     <table class="table table-bordered text-center">
+                                        <thead>
+                                          <tr class="table-head-bg">
+                                            <th>Lane</th>
+                                            <th>Place</th>
+                                            <th>Team</th>
+                                            <th>Player First Name</th>
+                                            <th>Player Last Name</th>
+                                            <th>Time</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let data of swimmingGameDetailsData?.teamDeatailsOne;let i = index">
+                                            <td>
+                                              <!-- {{data?.scoreData[0]?.lane}} -->
+                                              <input type="text" [(ngModel)]="teamOneLane" name="laneOne{{i}}" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                                            </td>
+                                            <td>
+                                              <!-- {{data?.scoreData[0]?.place}} -->
+                                              <input type="text" [(ngModel)]="teamOnePlace" name="placeOne{{i}}" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                                            </td>
+                                            <td>{{data?.teamDetails[0]?.teamName}}</td>
+                                            <td>{{data?.playersDetails[0]?.firstName}}</td>
+                                            <td>{{data?.playersDetails[0]?.lastName}}</td>
+                                            <td>{{data?.scoreData[0]?.time}}</td>
+                                          </tr>
+                                          
+                                          <tr *ngFor="let data of swimmingGameDetailsData?.teamDeatailsTwo;let i = index">
+                                            <td>
+                                              <!-- {{data?.scoreData[0]?.lane}} -->
+                                              <input type="text" [(ngModel)]="teamTwoLane" name="laneTwo{{i}}" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                                            </td>
+                                            <td>
+                                              <!-- {{data?.scoreData[0]?.place}} -->
+                                              <input type="text" [(ngModel)]="teamTwoPlace" name="placeTwo{{i}}" class="inputScore" minlength="1" maxlength="3" digitOnly>
+                                            </td>
+                                            <td>{{data?.teamDetails[0]?.teamName}}</td>
+                                            <td>{{data?.playersDetails[0]?.firstName}}</td>
+                                            <td>{{data?.playersDetails[0]?.lastName}}</td>
+                                            <td>{{data?.scoreData[0]?.time}}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                 </div>
+                              </div>
+                            </div>
+                  
+
+
+                         
+                         <div class="clearfix calendar-action mt30 text-center">
+                            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                            <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal"  (click)="updatedTeamScore()">Update</button>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+          </form>
+       </div>
+    </div>
+ </div>
+<!-- Edit score Team Wise End-->

@@ -1,0 +1,66 @@
+<main class="middle-content" id="view">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">TICKET DETAILS</h1>
+    </div>
+    <div class="custom_tabs common-tabs">
+        <div class="content-section">
+            <div class="tab-pane active show">
+                <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                    <div class="main-block-innner mb40 mt40">
+                        <div class="add-store-block input-style">
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Subject</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label>{{ticketDetails?.subject || 'N/A'}}</label>
+                                    <!-- <label>Mohit</label> -->
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Description</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <!-- <label class="user-eml">{{ticketDetails?.description  || '---'}}</label> -->
+                                    <label class="">{{ticketDetails?.description  || 'N/A'}}</label>
+
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Customer Name</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label>{{ticketDetails?.name  || 'N/A'}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Customer Email</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label>{{ticketDetails?.email  || 'N/A'}}</label>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Attachment</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <!-- <button style="width: 43%;
+                                    border-radius: 5%;">Disable</button> -->
+                                    <div *ngIf="ticketDetails?.imageUrl" class="img-attch-box">
+                                        <img [src]="ticketDetails?.imageUrl" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-left mt40 text-center">
+                            <a (click)="back()" class="btn btn-large  max-WT-200 font-100 btn-green">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>

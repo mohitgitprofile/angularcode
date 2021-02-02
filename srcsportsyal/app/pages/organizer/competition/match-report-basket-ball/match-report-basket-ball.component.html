@@ -1,0 +1,467 @@
+<div id="Starts" class=" tab-pane active show" *ngIf="!observation">
+    <div class="row">
+       <div class="col-lg-12">
+          <div class="scoreboard-table-block1">
+             <div class="scoreboard-table-inner">
+               <div class="status-content-block">
+                  <div class="status-inner status-inner-edit">
+                     <div class="view-row">
+                        <label>Competition</label>
+                        <span>{{gameData?.competitionData?.competitionName}}</span>
+                     </div>
+                     <div class="view-row">
+                        <label>Division</label>
+                        <span>{{gameData?.competitionData?.division}}</span>
+                     </div>
+                     <div class="view-row">
+                        <label>Period</label>
+                        <span>{{gameData?.competitionData?.period}}</span>
+                     </div>
+                     <div class="view-row">
+                        <label>Date</label>
+                        <span>12/12/2017</span>
+                     </div>
+                     <div class="view-row">
+                        <label>Time</label>
+                        <span>23:00:01</span>
+                     </div>
+                     <div class="view-row">
+                        <label>Venue</label>
+                        <span>{{gameData?.competitionData?.venue}}</span>
+                     </div>
+                     <div class="view-row">
+                        <label>Referee</label>
+                        <span>Sushant</span>
+                     </div>
+                  </div>
+               </div>
+                 <div class="table-scrool-box">
+                 <div class="table-block mt30">
+                     <div class="table-responsive table-responsive-edit">
+                        <table class="table table-bordered large-table extra-large-table">
+                           <thead>
+                              <tr class="table-head-bg">
+                                 <th  class="empty-tb"></th>
+                                 <th  colspan="3"  class="custom-top-heading">Q1</th>
+                                 <th  colspan="3"  class="custom-top-heading">Q2</th>
+                                 <th  colspan="3"  class="custom-top-heading">Q3</th>
+                                 <th  colspan="3"  class="custom-top-heading">Q4</th>
+                                 <th  colspan="3"  class="custom-top-heading">Extra Period</th>
+                                 <th  colspan="3"  class="empty-tb"></th>
+
+                              </tr>
+                                 <tr class="table-head-bg">
+                                 <th class="custom-top-heading"></th>
+                                 <th>Q1 Score</th>
+                                 <th>Team Fouls</th>
+                                 <th>Time Outs</th>
+                                 <th>Q2 Score</th>
+                                 <th>Team Fouls</th>
+                                 <th>Time Outs</th>
+                                 <th>Q3 Score</th>
+                                 <th>Team Fouls</th>
+                                 <th>Time Outs</th>
+                                 <th>Q4 Score</th>
+                                 <th>Team Fouls</th>
+                                 <th>Time Outs</th>
+                                 <th>Q5 Score</th>
+                                 <th>Team Fouls</th>
+                                 <th>Time Outs</th>
+                                    <th>Final Score</th>
+                                    <th>MVP</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr *ngFor= "let data of basketballGameDetailsData?.result?.teamDeatailsOne ">
+                                 <td>{{ data?.teamDetails[0]?.teamName}}</td>
+                                 <td *ngFor = " let item of data?.scoreData" colspan="3">
+                                    <span class="span">
+                                       {{item?.score}}
+                                    </span>
+                                    <span class="spanMiddle">
+                                       {{item?.fouls}}
+                                    </span>
+                                    <span >
+                                       {{item?.timeOut}}
+                                    </span>
+                                    </td>
+                                 <td>{{ finalScoreOne }}</td>
+                                 <td *ngIf="!playerOne">select from Team A - player names</td>
+                                 <td *ngIf="playerOne">{{ playerOne }}</td>
+                              </tr>
+                              <tr  *ngFor= "let data of basketballGameDetailsData?.result?.teamDeatailsTwo;let i=index">
+                                 <td>{{ data?.teamDetails[0]?.teamName }}</td>
+                                 <td *ngFor = " let item of data?.scoreData" colspan="3">
+                                    <span class="span" >{{item?.score}}</span>
+                                    <span class="spanMiddle">{{item?.fouls}}</span>
+                                    <span>{{item?.timeOut}}</span>
+                                 </td>
+                                 <td>{{ finalScoreTwo }}</td>
+                                 <td *ngIf="!playerTwo">select from Team B - player names</td>
+                                 <td *ngIf="playerTwo">{{ playerTwo }}</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        </div>
+               <div class=" text-right mt20">
+                  <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#BasketBallScore" data-backdrop="static" data-keyboard="false" style="margin-top: -28px; width:199px;">Edit Team Score</button>
+               </div>
+
+
+   <table class="table table-bordered large-table">
+     <thead>
+        <tr class="table-head-bg">
+           <th colspan="5" class="custom-top-heading text-align-left">{{ basketballGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th>
+        </tr>
+        <tr class="table-head-bg">
+           <th>Player No.</th>
+           <th>Player First Name</th>
+           <th>Player Last Name</th>
+           <th>Baskets</th>
+           <th>Fouls</th>
+        </tr>
+     </thead>
+     <tbody>
+        <tr *ngFor="let data of basketballGameDetailsData?.result?.teamOne; let i = index">
+           <td>{{data?.playerNumber}}</td>
+           <td>{{data?.userDetails[0]?.firstName}}</td>
+           <td>{{data?.userDetails[0]?.lastName}}</td>
+           <td>{{data?.baskets}}</td>
+           <td>{{data?.fouls}}</td>
+        </tr>
+         <tr *ngIf="!basketballGameDetailsData?.result?.teamOne?.length">
+           <td colspan="9">No Record Found</td>
+         </tr>
+     </tbody>
+  </table>
+  <div class=" text-right mt20">
+      <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#BasketBallPlayerScoreOne" data-backdrop="static" data-keyboard="false" style="margin-top: -28px; width:199px;">Edit Player's Score</button>
+  </div>
+
+   <table class="table table-bordered large-table">
+     <thead>
+        <tr class="table-head-bg">
+           <th colspan="5" class="custom-top-heading text-align-left">{{ basketballGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+        </tr>
+        <tr class="table-head-bg">
+           <th>Player No.</th>
+           <th>Player First Name</th>
+           <th>Player Last Name</th>
+           <th>Baskets</th>
+           <th>Fouls</th>
+        </tr>
+     </thead>
+     <tbody>
+        <tr *ngFor="let data of basketballGameDetailsData?.result?.teamTwo; let i = index">
+           <td>{{data?.playerNumber}}</td>
+           <td>{{data?.userDetails[0]?.firstName}}</td>
+           <td>{{data?.userDetails[0]?.lastName}}</td>
+           <td>{{data?.baskets}}</td>
+           <td>{{data?.fouls}}</td>
+        </tr>
+        <tr *ngIf="!basketballGameDetailsData?.result?.teamTwo?.length">
+           <td colspan="9">No Record Found</td>
+        </tr>
+        <!-- <tr>
+           <td>01</td>
+           <td>Pooja</td>
+           <td>Gupta</td>
+           <td>11</td>
+           <td>34</td>
+
+        </tr>
+        <tr>
+           <td>01</td>
+           <td>Pooja</td>
+           <td>Gupta</td>
+           <td>11</td>
+           <td>34</td>
+
+        </tr>
+        <tr>
+           <td>01</td>
+           <td>Pooja</td>
+           <td>Gupta</td>
+           <td>11</td>
+           <td>34</td>
+
+        </tr>
+        <tr>
+           <td>01</td>
+           <td>Pooja</td>
+           <td>Gupta</td>
+           <td>11</td>
+           <td>34</td>
+
+        </tr>
+        <tr>
+           <td>01</td>
+           <td>Pooja</td>
+           <td>Gupta</td>
+           <td>11</td>
+           <td>34</td>
+
+        </tr>
+        <tr>
+           <td>01</td>
+           <td>Pooja</td>
+           <td>Gupta</td>
+           <td>11</td>
+           <td>34</td>
+
+        </tr>
+        <tr>
+           <td>01</td>
+           <td>Pooja</td>
+           <td>Gupta</td>
+           <td>11</td>
+           <td>34</td>
+
+
+        </tr> -->
+     </tbody>
+  </table>
+  <div class=" text-right mt20">
+      <button class="btn btn btn-dark-blue-s" data-toggle="modal" data-target="#BasketBallPlayerScoreTwo" data-backdrop="static" data-keyboard="false" style="margin-top: -28px; width:199px;">Edit Player's Score</button>
+  </div>
+</div>
+      <div class="button-box text-right mt20">   
+      <button type="button" class="btn btn-dark-blue-s max-WT-200 white-bor" data-toggle="modal" data-target="#socialSharing" data-backdrop="static" data-keyboard="false" (click)="sendUrl()">Publish Match</button>
+      </div>
+</div>
+       </div>
+     </div>
+ </div>
+</div>
+</div>
+
+
+<!-- Observation -->
+<div id="Information" *ngIf="observation">
+      <div class="tab-inner-text-block">
+        <div class="col-md-12 col-lg-12 marginzero">
+          <textarea class="form-control common-textarea" [(ngModel)]="observationMessage"></textarea>
+          <div class=" text-right mt10">
+            <button class="btn btn btn-dark-blue-s" (click)="updateObservation()">Update Observation</button>
+            <button class="btn btn btn-dark-blue-s" [disabled]="messageFromObservation" (click)="addObservation()">Add Observation</button>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+<!-- EDIT MODAL FOR EDIT SCORE OF THE GAME -->
+<div class="modal fade common-modal" id="BasketBallScore" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog max-WT-800" role="document">
+      <div class="modal-content" style="width: 125%; margin-left: -12%; margin-right: -12%">
+         <form class="modal-add-card-form" action="profile-with-card.html" >
+               <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+               <div class="modal-content-body modalform-body text-left">
+                  <div class="row">
+
+                     <div class="">
+                     
+                   <div class="table-scrool-box" style="width: 47%">
+                     <div class="table-block mt30">
+                        <div class="table-responsive">
+                           <table class="table table-bordered large-table extra-large-table">
+                                 <thead>
+                                    <tr class="table-head-bg">
+                                       <th  class="empty-tb"></th>
+                                       <th  colspan="3"  class="custom-top-heading">Q1</th>
+                                       <th  colspan="3"  class="custom-top-heading">Q2</th>
+                                       <th  colspan="3"  class="custom-top-heading">Q3</th>
+                                       <th  colspan="3"  class="custom-top-heading">Q4</th>
+                                       <th  colspan="3"  class="custom-top-heading">Extra Period</th>
+                                       <th  colspan="3"  class="empty-tb"></th>
+                                    </tr>
+                                     <tr class="table-head-bg">
+                                       <th class="custom-top-heading"></th>
+                                       <th>Q1 Score</th>
+                                       <th>Team Fouls</th>
+                                       <th>Time Outs</th>
+                                       <th>Q2 Score</th>
+                                       <th>Team Fouls</th>
+                                       <th>Time Outs</th>
+                                       <th>Q3 Score</th>
+                                       <th>Team Fouls</th>
+                                       <th>Time Outs</th>
+                                       <th>Q4 Score</th>
+                                       <th>Team Fouls</th>
+                                       <th>Time Outs</th>
+                                       <th>Q5 Score</th>
+                                       <th>Team Fouls</th>
+                                       <th>Time Outs</th>
+                                       <th>Final Score</th>
+                                       <th>MVP</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr *ngFor= "let data of basketballGameDetailsData?.result?.teamDeatailsOne ;let index = index;trackBy : trackByIndex">
+                                       <td>{{ data?.teamDetails[0]?.teamName}}</td>
+                                       <td *ngFor = " let item of data?.scoreData;let i = index" colspan="3">
+                                          <span style="float: left">
+                                             <input type="text" class="inputScore"  [(ngModel)]="item.score" name="scoreOne{{i}}" minlength="1" maxlength="3"  inputmode="numeric"  digitOnly>
+                                          </span>
+                                          <span >
+                                             <input type="text" class="inputScore" [(ngModel)]="item.fouls" name="foulsOne{{i}}" minlength="1" maxlength="3"  inputmode="numeric"  digitOnly>
+                                          </span>
+                                          <span style="float: right">
+                                             <input type="text" class="inputScore" [(ngModel)]="item.timeOut" name="timeOutOne{{i}}" minlength="1" maxlength="3"  inputmode="numeric"  digitOnly>
+                                          </span>
+                                       </td>
+                                       <td>
+                                          <input type="text" class="inputScore" [(ngModel)]="finalScoreOne" name="finalScore" minlength="1" maxlength="3"  inputmode="numeric">
+                                       </td>
+                                       <td>
+                                          <select name="mvpOfOne" [(ngModel)]="playerOne" class="select" (change)="onChange()">
+                                             <option [ngValue]="undefined" disabled>Select Player From {{ basketballGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</option>
+                                             <option *ngFor="let item of this.basketballGameDetailsData?.result?.teamOne" >{{ item?.userDetails[0]?.firstName }} {{ item?.userDetails[0]?.lastName }}</option>
+                                          </select>
+                                       </td>
+                                    </tr>
+                                    <tr  *ngFor= "let data of basketballGameDetailsData?.result?.teamDeatailsTwo ">
+                                       <td>{{ data?.teamDetails[0]?.teamName }}</td>
+                                       <td *ngFor = " let item of data?.scoreData;let i = index" colspan="3">
+                                          <span style="float: left;">
+                                             <input type="text" class="inputScore" [(ngModel)]="item.score" name="scoreTwo{{i}}" minlength="1" maxlength="3"  inputmode="numeric"  digitOnly>
+                                          </span>
+                                          <span >
+                                             <input type="text" class="inputScore" [(ngModel)]="item.fouls" name="foulsTwo{{i}}" minlength="1" maxlength="3"  inputmode="numeric"  digitOnly>
+                                          </span>
+                                          <span style="float: right">
+                                             <input type="text" class="inputScore" [(ngModel)]="item.timeOut" name="timeOutTwo{{i}}" minlength="1" maxlength="3"  inputmode="numeric"  digitOnly>
+                                          </span>
+                                       </td>
+                                       <td>
+                                          <input type="text" class="inputScore" [(ngModel)]="finalScoreTwo" name="finalScoreTwo" minlength="1" maxlength="3"  inputmode="numeric" digitOnly>
+                                       </td>
+                                       <td>
+                                          <select name="mvpOfTwo" [(ngModel)]="playerTwo" class="select" (change)="onChange()">
+                                             <option [ngValue]="undefined" disabled>Select Player From {{ basketballGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</option>
+                                             <option *ngFor="let item of this.basketballGameDetailsData?.result?.teamTwo">{{ item?.userDetails[0]?.firstName }} {{ item?.userDetails[0]?.lastName }}</option>
+                                          </select>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div> 
+                  </div>
+                  <div class="clearfix calendar-action mt30 text-center" style="width: -webkit-fill-available;">
+                     <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                     <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" (click)="onUpdate()">Update</button>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+
+ <!-- Start Edit Modal Player Wise TeamOne-->
+<div class="modal fade common-modal" id="BasketBallPlayerScoreOne" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog max-WT-800" role="document">
+         <div class="modal-content" >
+            <form class="modal-add-card-form" >
+                  <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+                  <div class="modal-content-body modalform-body text-left">
+                     <div class="row">
+                           <table class="table table-bordered large-table" style="width: -webkit-fill-available;">
+                              <thead>
+                                 <tr class="table-head-bg">
+                                    <th colspan="5" class="custom-top-heading text-align-left">{{ basketballGameDetailsData?.result?.teamDeatailsOne[0]?.teamDetails[0]?.teamName }}</th>
+                                 </tr>
+                                 <tr class="table-head-bg">
+                                    <th>Player No.</th>
+                                    <th>Player First Name</th>
+                                    <th>Player Last Name</th>
+                                    <th>Baskets</th>
+                                    <th>Fouls</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr *ngFor="let data of basketballGameDetailsData?.result?.teamOne; let i = index">
+                                    <td>
+                                       <input type="text" [(ngModel)]="data.playerNumber" name="playerNumberOne{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                    </td>
+                                    <td>{{data?.userDetails[0]?.firstName}}</td>
+                                    <td>{{data?.userDetails[0]?.lastName}}</td>
+                                    <td>
+                                       <input type="text" [(ngModel)]="data.baskets" name="basketsOne{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                    </td>
+                                    <td>
+                                       <input type="text" [(ngModel)]="data.fouls" name="foulsOne{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                    </td>
+                                 </tr>
+                                  <tr *ngIf="!basketballGameDetailsData?.result?.teamOne?.length">
+                                    <td colspan="9">No Record Found</td>
+                                  </tr>
+                              </tbody>
+                           </table>
+                     <div class="clearfix calendar-action mt30 text-center" style="width: -webkit-fill-available;">
+                        <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                        <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" (click)="updatePlyerDetails('teamOne')">Update</button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+<!-- End Edit Modal Player Wise One-->
+   
+
+
+ <!-- Start Edit Modal Player Wise TeamTwo-->
+ <div class="modal fade common-modal" id="BasketBallPlayerScoreTwo" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog max-WT-800" role="document">
+         <div class="modal-content" >
+            <form class="modal-add-card-form" >
+                  <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans" style="text-align:center">EDIT SCORE </h5>
+                  <div class="modal-content-body modalform-body text-left">
+                     <div class="row">
+                           <table class="table table-bordered large-table" style="width: -webkit-fill-available;">
+                              <thead>
+                                 <tr class="table-head-bg">
+                                    <th colspan="5" class="custom-top-heading text-align-left">{{ basketballGameDetailsData?.result?.teamDeatailsTwo[0]?.teamDetails[0]?.teamName }}</th>
+                                 </tr>
+                                 <tr class="table-head-bg">
+                                    <th>Player No.</th>
+                                    <th>Player First Name</th>
+                                    <th>Player Last Name</th>
+                                    <th>Baskets</th>
+                                    <th>Fouls</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr *ngFor="let data of basketballGameDetailsData?.result?.teamTwo; let i = index">
+                                    <td>
+                                       <input type="text" [(ngModel)]="data.playerNumber" name="playerNumberTwo{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                    </td>
+                                    <td>{{data?.userDetails[0]?.firstName}}</td>
+                                    <td>{{data?.userDetails[0]?.lastName}}</td>
+                                    <td>
+                                       <input type="text" [(ngModel)]="data.baskets" name="basketsTwo{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                    </td>
+                                    <td>
+                                       <input type="text" [(ngModel)]="data.fouls" name="fouls{{i}}" class="inputScore" inputmode="numeric" minlength="1" maxlength="3" digitOnly>
+                                    </td>
+                                 </tr>
+                                  <tr *ngIf="!basketballGameDetailsData?.result?.teamTwo?.length">
+                                    <td colspan="9">No Record Found</td>
+                                  </tr>
+                              </tbody>
+                           </table>
+                     <div class="clearfix calendar-action mt30 text-center" style="width: -webkit-fill-available;">
+                        <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal" (click)="onCancel()">Cancel</button>
+                        <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" data-dismiss="modal" (click)="updatePlyerDetails('teamTwo')">Update</button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+<!-- End Edit Modal Player Wise Two-->

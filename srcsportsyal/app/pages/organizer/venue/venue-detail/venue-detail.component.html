@@ -1,0 +1,113 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <div class="row align-items-center">
+            <div class="col-md-7">
+              <div class="search-block-main fiter-full-search">
+                <!-- <div class="search_block">
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                  <div class="input-group-append">
+                                    <button class="btn btn_search" type="button">Search</button>
+                                  </div>
+                                </div>
+                            </div> -->
+              </div>
+            </div>
+            <div class="col-md-5 text-right">
+              <button class="btn btn btn-dark-blue-s" type="button" [routerLink]="['/organizer/venueSlots', venueId]">Manage Slot</button>
+              <button class="btn btn btn-dark-blue-s" type="button" [routerLink]="['/organizer/editVenue', venueId]">Edit Venue</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="detail-block-venue mt20">
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Venue:</label>
+          </div>
+          <div class="col-lg-8 col-md-7">
+            <span>{{venueDetail.venueName}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Location:</label>
+          </div>
+          <div class="col-lg-8 col-md-7">
+            <span>{{venueDetail.locationName}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Sport:</label>
+          </div>
+          <div class="col-lg-8 col-md-7" *ngFor="let sportName of venueDetail.sport; let i = index">
+            <span> {{sportName}} {{i === venueDetail.weekOffArray.length - 1 ? '' : ', '}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Start time:</label>
+          </div>
+          <div class="col-lg-8 col-md-7">
+            <span>{{venueDetail.startTime}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>End time:</label>
+          </div>
+          <div class="col-lg-8 col-md-7">
+            <span>{{venueDetail.endTime}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Duration:</label>
+          </div>
+          <div class="col-lg-8 col-md-7">
+            <span>{{venueDetail.duration}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Week off: </label>
+          </div>
+          <div class="col-lg-8 col-md-7" *ngFor="let weekOff of venueDetail.weekOffArray; let i = index">
+            <span>{{weekOff}} {{i === venueDetail.weekOffArray.length - 1 ? '' : ', '}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Description:</label>
+          </div>
+          <div class="col-lg-8 col-md-7">
+            <span>{{venueDetail.description}} </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-5">
+            <label>Image:</label>
+          </div>
+          <div class="col-lg-8 col-md-7 img-section" *ngFor="let image of venueDetail.images">
+            <img class="logo_img" src="{{image}}">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer></app-footer>

@@ -1,0 +1,1290 @@
+<main class="middle-content" id="view">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">User Details</h1>
+
+    </div>
+    <div class="custom_tabs common-tabs">
+        <div class="row mb20 justify-content-center">
+            <div class="col-sm-12">
+                <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                            [ngClass]="{'active': currTab=='general'}" (click)="selectTab('general')"
+                            href="javascript:;">General Information</a>
+                    </li>
+                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                            [ngClass]="{'active': currTab=='wallet'}" (click)="selectTab('wallet')"
+                            href="javascript:;">Wallet</a>
+                    </li>
+                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                            [ngClass]="{'active': currTab=='trading'}" (click)="selectTab('trading')"
+                            href="javascript:;">Trading</a>
+                    </li>
+                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                            [ngClass]="{'active': currTab=='login'}" (click)="selectTab('login')"
+                            href="javascript:;">Login Session Activity</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+            <div class="tab-pane active show" *ngIf="this.currTab == 'general'">
+                <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                    <div class="main-block-innner mb40 mt40">
+                        <div class="add-store-block input-style">
+                            <div class="form-group row">
+                                <div class="col-md-12" style="text-align: center">
+                                    <img src="assets/img/testimonial-img1.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Name</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label>{{userDetail?.firstName}} {{userDetail?.lastName}}</label>
+                                    <!-- <label>Mohit</label> -->
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Email</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label class="user-eml">{{userDetail?.email  || '---'}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Phone Number</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label>{{userDetail?.phoneNo  || '---'}}</label>
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Two FA</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">{{userDetail?.twoFaType}}</div>
+                            </div>
+
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Address </label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <p class="rap2">{{userDetail?.address || '---'}}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">KYC Doc </label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <img src="{{userDetail?.kyc.document[0].backIdUrl}}" alt="">
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">KYC Doc </label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                        <img src="{{userDetail?.kyc.document[0].frontIdUrl}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-left mt40 text-center">
+                            <a (click)="back()" class="btn btn-large  max-WT-200 font-100 btn-green">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane active show" *ngIf="this.currTab == 'wallet'">
+                <div class="row mb20 justify-content-center">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                    [ngClass]="{'active': currTabb=='BTC'}" (click)="selectTabb('BTC')"
+                                    href="javascript:;">BTC</a>
+                            </li>
+                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                    [ngClass]="{'active': currTabb=='ETH'}" (click)="selectTabb('ETH')"
+                                    href="javascript:;">ETH</a>
+                            </li>
+                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                    [ngClass]="{'active': currTabb=='XRP'}" (click)="selectTabb('XRP')"
+                                    href="javascript:;">XRP</a>
+                            </li>
+                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                    [ngClass]="{'active': currTabb=='LTC'}" (click)="selectTabb('LTC')"
+                                    href="javascript:;">LTC</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div *ngIf="!viewTradingg">
+                    <div class="tab-pane active show" *ngIf="this.currTabb == 'BTC'">
+                        <div class="content-section" [formGroup]="staffForm">
+                            <div class="outer-box">
+                                <div class="custom_tabs common-tabs">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="btc">
+                                            <div class="tab-pane1">
+                                                <!-- <div class="row trassction-mainbox">
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Type</span>
+                                                                <select class="form-control" formControlName="status"
+                                                                    (change)="coinfunction($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BUY">BUY</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Currency</span>
+                                                                <select class="form-control" formControlName="role"
+                                                                    (change)="onChange($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BTC">BTC</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">From </span>
+                                                                <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="fromDate" name="formdate"
+                                                                    class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">To </span>
+                                                                <input type="date" name="todate"
+                                                                    min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="toDate" class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-4">
+                                                        <div class="tras-threebtn" style="display: inline-flex;">
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Search</button>
+                                                            </div>
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Reset</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="tras-threebtn" style="float: right;">
+                                                            <div class="comman-btn">
+                                                                <label>Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tras-threebtn">
+                                                            <div class="comman-btn">
+                                                                <label>Blocked Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+    
+                                                </div> -->
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" aria-describedby="">
+                                                        <thead>
+                                                            <tr class="no_wrap_th">
+                                                                <th id="">ID</th>
+                                                                <th id="">Currency</th>
+                                                                <th id="">Type</th>
+                                                                <th id="">Amount</th>
+                                                                <th id="">Transaction ID</th>
+                                                                <th id="">Date</th>
+                                                                <th id="">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let data of walletDetailsList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: walletDetailsListLength}; let i=index; ">
+                                                                <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                                <td>{{data?.coinType}}</td>
+                                                                <td>{{data?.txnType}}</td>
+                                                                <td>{{data?.amount}}</td>
+                                                                <td>{{data?.txnId}}</td>
+                                                                <td>{{data?.txnTime | date}}</td>
+                                                                <td class="action_td_btn3">
+                                                                    <a data-toggle="modal" style="cursor: pointer"
+                                                                    (click)="viewCoinDetails(data?.txnId)"><em
+                                                                            class="fa fa-eye"></em></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr *ngIf="walletDetailsListLength==0">
+                                                                <td colspan="10" vertical-align="middle">
+                                                                    <div class="no-record">
+                                                                        <div class="no-recordin">
+                                                                            <H5>No record found
+                                                                            </H5>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="custom-pagination mt20 text-center" style="    float: right;">
+    
+                                                    <pagination-controls (pageChange)="pagination($event)">
+                                                    </pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Table Responsive End -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="viewTradingg">
+                    <div>
+                        <h3>Wallet Details</h3>
+                        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                            <div class="main-block-innner mb40 mt40">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION ID:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnId}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>COIN:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.coinType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>WALLET:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>AMOUNT:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.units}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TYPE:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>ADDRESS:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>USER NAME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userName}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>EMAIL:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userEmail}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>DATE AND TIME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnTime | date}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button class="btn btn-theme" (click)="backkk()">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!viewEth">
+                    <div class="tab-pane active show" *ngIf="this.currTabb == 'ETH'">
+                        <div class="content-section" [formGroup]="staffForm">
+                            <div class="outer-box">
+                                <div class="custom_tabs common-tabs">
+    
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="btc">
+                                            <div class="tab-pane1">
+                                                <!-- <div class="row trassction-mainbox">
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Type</span>
+                                                                <select class="form-control" formControlName="status"
+                                                                    (change)="coinfunction($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BUY">BUY</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Currency</span>
+                                                                <select class="form-control" formControlName="role"
+                                                                    (change)="onChange($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BTC">BTC</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">From </span>
+                                                                <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="fromDate" name="formdate"
+                                                                    class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">To </span>
+                                                                <input type="date" name="todate"
+                                                                    min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="toDate" class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-4">
+                                                        <div class="tras-threebtn" style="display: inline-flex;">
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Search</button>
+                                                            </div>
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Reset</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="tras-threebtn" style="float: right;">
+                                                            <div class="comman-btn">
+                                                                <label>Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tras-threebtn">
+                                                            <div class="comman-btn">
+                                                                <label>Blocked Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+    
+                                                </div> -->
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" aria-describedby="">
+                                                        <thead>
+                                                            <tr class="no_wrap_th">
+                                                                <th id="">ID</th>
+                                                                <th id="">Currency</th>
+                                                                <th id="">Type</th>
+                                                                <th id="">Amount</th>
+                                                                <th id="">Transaction ID</th>
+                                                                <th id="">Date</th>
+                                                                <th id="">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let data of walletDetailsList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: walletDetailsListLength}; let i=index; ">
+                                                                <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                                <td>{{data?.coinType}}</td>
+                                                                <td>{{data?.txnType}}</td>
+                                                                <td>{{data?.amount}}</td>
+                                                                <td>{{data?.txnId}}</td>
+                                                                <td>{{data?.txnTime | date}}</td>
+                                                                <td class="action_td_btn3">
+                                                                    <a data-toggle="modal" style="cursor: pointer"
+                                                                    (click)="viewCoinBTCDetails(data?.txnId)"><em
+                                                                            class="fa fa-eye"></em></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr *ngIf="walletDetailsListLength==0">
+                                                                <td colspan="10" vertical-align="middle">
+                                                                    <div class="no-record">
+                                                                        <div class="no-recordin">
+                                                                            <H5>No record found
+                                                                            </H5>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="custom-pagination mt20 text-center" style="    float: right;">
+    
+                                                    <pagination-controls (pageChange)="pagination($event)">
+                                                    </pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Table Responsive End -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="viewEth">
+                    <div>
+                        <h3>Wallet Details</h3>
+                        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                            <div class="main-block-innner mb40 mt40">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION ID:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnId}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>COIN:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.coinType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>WALLET:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>AMOUNT:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.units}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TYPE:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>ADDRESS:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>USER NAME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userName}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>EMAIL:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userEmail}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>DATE AND TIME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnTime | date}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button class="btn btn-theme" (click)="backfromEth()">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!viewXrp">
+                    <div class="tab-pane active show" *ngIf="this.currTabb == 'XRP'">
+                        <div class="content-section" [formGroup]="staffForm">
+                            <div class="outer-box">
+                                <div class="custom_tabs common-tabs">
+    
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="btc">
+                                            <div class="tab-pane1">
+                                                <!-- <div class="row trassction-mainbox">
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Type</span>
+                                                                <select class="form-control" formControlName="status"
+                                                                    (change)="coinfunction($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BUY">BUY</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Currency</span>
+                                                                <select class="form-control" formControlName="role"
+                                                                    (change)="onChange($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BTC">BTC</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">From </span>
+                                                                <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="fromDate" name="formdate"
+                                                                    class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">To </span>
+                                                                <input type="date" name="todate"
+                                                                    min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="toDate" class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-4">
+                                                        <div class="tras-threebtn" style="display: inline-flex;">
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Search</button>
+                                                            </div>
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Reset</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="tras-threebtn" style="float: right;">
+                                                            <div class="comman-btn">
+                                                                <label>Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tras-threebtn">
+                                                            <div class="comman-btn">
+                                                                <label>Blocked Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+    
+                                                </div> -->
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" aria-describedby="">
+                                                        <thead>
+                                                            <tr class="no_wrap_th">
+                                                                <th id="">ID</th>
+                                                                <th id="">Currency</th>
+                                                                <th id="">Type</th>
+                                                                <th id="">Amount</th>
+                                                                <th id="">Transaction ID</th>
+                                                                <th id="">Date</th>
+                                                                <th id="">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let data of walletDetailsList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: walletDetailsListLength}; let i=index; ">
+                                                                <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                                <td>{{data?.coinType}}</td>
+                                                                <td>{{data?.txnType}}</td>
+                                                                <td>{{data?.amount}}</td>
+                                                                <td>{{data?.txnId}}</td>
+                                                                <td>{{data?.txnTime | date}}</td>
+                                                                <td class="action_td_btn3">
+                                                                    <a data-toggle="modal" style="cursor: pointer"
+                                                                    (click)="viewXrpCoinDetails(data?.txnId)"><em
+                                                                            class="fa fa-eye"></em></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr *ngIf="walletDetailsListLength==0">
+                                                                <td colspan="10" vertical-align="middle">
+                                                                    <div class="no-record">
+                                                                        <div class="no-recordin">
+                                                                            <H5>No record found
+                                                                            </H5>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="custom-pagination mt20 text-center" style="    float: right;">
+    
+                                                    <pagination-controls (pageChange)="pagination($event)">
+                                                    </pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Table Responsive End -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="viewXrp">
+                    <div>
+                        <h3>Wallet Details</h3>
+                        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                            <div class="main-block-innner mb40 mt40">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION ID:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnId}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>COIN:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.coinType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>WALLET:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>AMOUNT:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.units}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TYPE:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>ADDRESS:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>USER NAME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userName}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>EMAIL:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userEmail}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>DATE AND TIME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnTime | date}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button class="btn btn-theme" (click)="backfromXrp()">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!viewLtc">
+                    <div class="tab-pane active show" *ngIf="this.currTabb == 'LTC'">
+                        <div class="content-section" [formGroup]="staffForm">
+                            <div class="outer-box">
+                                <div class="custom_tabs common-tabs">
+    
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="btc">
+                                            <div class="tab-pane1">
+                                                <!-- <div class="row trassction-mainbox">
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Type</span>
+                                                                <select class="form-control" formControlName="status"
+                                                                    (change)="coinfunction($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BUY">BUY</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">Currency</span>
+                                                                <select class="form-control" formControlName="role"
+                                                                    (change)="onChange($event.target.value)">
+                                                                    <option value="">Select</option>
+                                                                    <option value="BTC">BTC</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">From </span>
+                                                                <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="fromDate" name="formdate"
+                                                                    class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-lg-2 date-padding">
+                                                        <div class="head_flt_select">
+                                                            <div class="head_flt_select input-label input-label1">
+                                                                <span class="d-flex align-items-center">To </span>
+                                                                <input type="date" name="todate"
+                                                                    min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                                    formControlName="toDate" class="form-control datepicker"
+                                                                    placeholder="Search by date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-lg-4">
+                                                        <div class="tras-threebtn" style="display: inline-flex;">
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Search</button>
+                                                            </div>
+                                                            <div class="comman-btn">
+                                                                <button type="submit" class="btn  btn-theme">Reset</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="tras-threebtn" style="float: right;">
+                                                            <div class="comman-btn">
+                                                                <label>Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tras-threebtn">
+                                                            <div class="comman-btn">
+                                                                <label>Blocked Balance :</label><span>0.45 BTC</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+    
+                                                </div> -->
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" aria-describedby="">
+                                                        <thead>
+                                                            <tr class="no_wrap_th">
+                                                                <th id="">ID</th>
+                                                                <th id="">Currency</th>
+                                                                <th id="">Type</th>
+                                                                <th id="">Amount</th>
+                                                                <th id="">Transaction ID</th>
+                                                                <th id="">Date</th>
+                                                                <th id="">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let data of walletDetailsList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: walletDetailsListLength}; let i=index; ">
+                                                                <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                                <td>{{data?.coinType}}</td>
+                                                                <td>{{data?.txnType}}</td>
+                                                                <td>{{data?.amount}}</td>
+                                                                <td>{{data?.txnId}}</td>
+                                                                <td>{{data?.txnTime | date}}</td>
+                                                                <td class="action_td_btn3">
+                                                                    <a data-toggle="modal" style="cursor: pointer"
+                                                                    (click)="viewLtcCoinDetails(data?.txnId)"><em
+                                                                            class="fa fa-eye"></em></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr *ngIf="walletDetailsListLength==0">
+                                                                <td colspan="10" vertical-align="middle">
+                                                                    <div class="no-record">
+                                                                        <div class="no-recordin">
+                                                                            <H5>No record found
+                                                                            </H5>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="custom-pagination mt20 text-center" style="    float: right;">
+    
+                                                    <pagination-controls (pageChange)="pagination($event)">
+                                                    </pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Table Responsive End -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="viewLtc">
+                    <div>
+                        <h3>Wallet Details</h3>
+                        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                            <div class="main-block-innner mb40 mt40">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION ID:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnId}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>COIN:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.coinType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>WALLET:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>AMOUNT:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.units}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TYPE:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>ADDRESS:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.address}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>TRANSACTION:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnType}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>USER NAME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userName}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>EMAIL:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.userEmail}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>DATE AND TIME:</label>
+                                    </div>
+                                    <div class="col-md-6">{{coinList?.txnTime | date}}</div>
+    
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <button class="btn btn-theme" (click)="backfromLtc()">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!viewTrading">
+                <div class="tab-pane active show" *ngIf="this.currTab == 'trading'">
+                    <div class="content-section" [formGroup]="tradingForm">
+                        <div class="outer-box">
+                            <div class="custom_tabs common-tabs">
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active show" id="btc">
+                                        <div class="tab-pane1">
+                                            <div class="row trassction-mainbox">
+                                                <div class="col-md-3 col-lg-2">
+                                                    <div class="head_flt_select">
+                                                        <div class="head_flt_select input-label input-label1">
+                                                            <span class="d-flex align-items-center">Type</span>
+                                                            <select class="form-control" formControlName="tradingstatus"
+                                                                (change)="coinfunction($event.target.value)">
+                                                                <option value="">Select</option>
+                                                                <option value="BUY">BUY</option>
+                                                                <option value="sell">SELL</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2">
+                                                    <div class="head_flt_select">
+                                                        <div class="head_flt_select input-label input-label1">
+                                                            <span class="d-flex align-items-center">Currency</span>
+                                                            <select class="form-control"
+                                                                formControlName="tradingCurrency"
+                                                                (change)="onChange($event.target.value)">
+                                                                <option value="">Select</option>
+                                                                <option value="BTC">BTC</option>
+                                                                <option value="ETH">ETH</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 date-padding">
+                                                    <div class="head_flt_select">
+                                                        <div class="head_flt_select input-label input-label1">
+                                                            <span class="d-flex align-items-center">From </span>
+                                                            <input type="date" max="{{minAge | date:'yyyy-MM-dd'}}"
+                                                                formControlName="tradingfromDate" name="formdate"
+                                                                class="form-control datepicker"
+                                                                placeholder="Search by date">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 date-padding">
+                                                    <div class="head_flt_select">
+                                                        <div class="head_flt_select input-label input-label1">
+                                                            <span class="d-flex align-items-center">To </span>
+                                                            <input type="date" name="todate"
+                                                                min="{{fromDate | date:'yyyy-MM-dd'}}"
+                                                                formControlName="tradingtoDate"
+                                                                class="form-control datepicker"
+                                                                placeholder="Search by date">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-4">
+                                                    <div class="tras-threebtn" style="display: inline-flex;">
+                                                        <div class="comman-btn">
+                                                            <button type="submit" class="btn  btn-theme">Search</button>
+                                                        </div>
+                                                        <div class="comman-btn">
+                                                            <button type="submit" class="btn  btn-theme">Reset</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="tras-threebtn" style="float: right;">
+                                                        <div class="comman-btn">
+                                                            <button type="submit" class="btn  btn-theme"
+                                                                (click)="exportAsXLSX()">EXPORT
+                                                                AS EXCEL
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" aria-describedby="">
+                                                    <thead>
+                                                        <tr class="no_wrap_th">
+                                                            <th id="">ID</th>
+                                                            <th id="">Transaction ID</th>
+                                                            <th id="">Transaction Type</th>
+                                                            <th id="">Amount</th>
+                                                            <th id="">Base Coin</th>
+                                                            <th id="">Executable Coin</th>
+                                                            <th id="">Date and Time</th>
+                                                            <th id="">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            *ngFor="let data of tradingList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: tradingListlength}; let i=index; ">
+                                                            <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                            <td>{{data?.transactionId}}</td>
+                                                            <td>{{data?.orderSide}}</td>
+                                                            <td>{{data?.quantity}}</td>
+                                                            <td>{{data?.baseCoin}}</td>
+                                                            <td>{{data?.exeCoin}}</td>
+                                                            <td>{{data?.lastExecutionTime | date}}</td>
+                                                            <td class="action_td_btn3">
+                                                                <a data-toggle="modal" style="cursor: pointer"
+                                                                    (click)="viewTradingDetails(data?.userId, data?.transactionId)"><em
+                                                                        class="fa fa-eye"></em></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngIf="tradingList==0">
+                                                            <td colspan="10" vertical-align="middle">
+                                                                <div class="no-record">
+                                                                    <div class="no-recordin">
+                                                                        <h5>No record found
+                                                                        </h5>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="custom-pagination mt20 text-center" style="    float: right;">
+
+                                                <pagination-controls (pageChange)="pagination($event)">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Table Responsive End -->
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="viewTrading">
+                <div>
+                    <h3>Trading Details</h3>
+                    <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                        <div class="main-block-innner mb40 mt40">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>TRANSACTION ID:</label>
+                                </div>
+                                <div class="col-md-6">{{tradingList?.transactionId}}</div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>BASE COIN:</label>
+                                </div>
+                                <div class="col-md-6">{{tradingList?.baseCoin}}</div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>EXECUTABLE COIN:</label>
+                                </div>
+                                <div class="col-md-6">{{tradingList?.exeCoin}}</div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>PRICE:</label>
+                                </div>
+                                <div class="col-md-6">{{tradingList?.limitPrice}}</div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>AMOUNT:</label>
+                                </div>
+                                <div class="col-md-6">{{tradingList?.currentQuantity}}</div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>TYPE:</label>
+                                </div>
+                                <div class="col-md-6">{{tradingList?.orderType}}</div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>DATE AND TIME:</label>
+                                </div>
+                                <div class="col-md-6">{{tradingList?.lastExecutionTime | date}}</div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <button class="btn btn-theme" (click)="backk()">Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane active show" *ngIf="this.currTab == 'login'">
+                <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                    <div class="main-block-innner mb40 mt40">
+                        <div class="add-store-block input-style">
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Last Login :</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label>{{loginDetails?.userLastLoginTime | date}}</label>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Location :</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label class="user-eml">{{loginDetails?.ipAdress}}</label>
+                                </div>
+                            </div> -->
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6" style="position: relative; top: -75px;">Browser Agent :</label>
+                                <div class="col-md-1" style="position: relative;top: -75px;">:</div>
+                                <div class="col-md-5">
+                                    <label>{{loginDetails?.userLastLoginUserAgent || '---'}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6" style="position: relative;top: -16px;">IP Address :</label>
+                                <div class="col-md-1" style="position: relative;top: -16px;">:</div>
+                                <div class="col-md-5">
+                                    <label>{{loginDetails?.ipAdress}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-6">Last Transaction :</label>
+                                <div class="col-md-1">:</div>
+                                <div class="col-md-5">
+                                    <label>{{loginDetails?.lastTransactionDate | date}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div class="modal fade global-modal reset-modal" id="trading">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Trading Details</h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to active this user?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success mr-2"
+                                        (click)="performAction()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

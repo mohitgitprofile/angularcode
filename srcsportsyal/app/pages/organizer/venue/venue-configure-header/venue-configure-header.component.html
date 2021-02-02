@@ -1,0 +1,19 @@
+<div class="fixture-btn-row">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="btn_row mb20">
+        <a type="btn" class="btn" [ngClass]="{'active': currUrl == '/organizer/venConfiguration' || currUrl == '/organizer/addSports'}"
+          [routerLink]="['/organizer/venConfiguration']">Sports</a>
+        <a type="btn" class="btn" [ngClass]="{'active': tab == 'sms'}" [routerLink]="['/organizer/configureBooking','sms']">SMS</a>
+        <a type="btn" class="btn" [ngClass]="{'active': tab == 'bookingForm'}" [routerLink]="['/organizer/configureBooking', 'bookingForm']">Booking Form</a>
+        <a type="btn" class="btn" [ngClass]="{'active': currUrl == '/organizer/venueNotification'}" [routerLink]="['/organizer/venueNotification']">Notifications</a>
+      </div>
+    </div>
+    <div class="col-md-2" *ngIf="currUrl == '/organizer/venConfiguration'">
+      <a class="btn btn btn-dark-blue-s max-WT-100" type="a" [routerLink]="['/organizer/addSports']">Add</a>
+    </div>
+    <!-- <div class="col-md-2" *ngIf="tab == 'bookingForm'">
+      <a class="btn btn btn-dark-blue-s max-WT-100" type="a" (click)="configureFieldModal()">Configure</a>
+    </div> -->
+  </div>
+</div>

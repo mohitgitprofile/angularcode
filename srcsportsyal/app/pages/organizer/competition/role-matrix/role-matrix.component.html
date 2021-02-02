@@ -1,0 +1,435 @@
+<!--   Header  Start -->
+<app-header></app-header>
+<!--   Header End -->
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="container">
+    <div class="content-box bg-gray">
+
+      <div class="content-box-filter">
+        <form class="filter-form fullwidth">
+          <h5 class="head-sub"> Permission/Roles For Administrator
+            <!-- For Adminstartor -->
+          </h5>
+          <div class="checkbox-part">
+            <p class="head-sm">Database</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="loginTypeArr.includes('COMPETITION') && subscriptionAccessDataBase.includes('Team')">
+                <input type="checkbox" id="adcheck1" [checked]="administratorDataBase.includes('Team')" (click)="checkbox('administratorDatabaseCompetion','Team')">
+                <label for="adcheck1">Teams</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessDataBase.includes('Player')">
+                <input type="checkbox" id="adcheck2" [checked]="administratorDataBase.includes('Player')" (click)="checkbox('administratorDatabaseCompetion','Player')">
+                <label for="adcheck2">Player</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="loginTypeArr.includes('COMPETITION') && subscriptionAccessDataBase.includes('Matches')">
+                <input type="checkbox" id="adcheck3" [checked]="administratorDataBase.includes('Matches')" (click)="checkbox('administratorDatabaseCompetion','Matches')">
+                <label for="adcheck3">Matches</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="(loginTypeArr.includes('COMPETITION')||loginTypeArr.includes('MEMBERSHIP'))&& subscriptionAccessDataBase.includes('Clubs')">
+                <input type="checkbox" id="adcheck4" [checked]="administratorDataBase.includes('Clubs')" (click)="checkbox('administratorDatabaseCompetion','Clubs')">
+                <label for="adcheck4">Clubs</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="(loginTypeArr.includes('COMPETITION')||loginTypeArr.includes('MEMBERSHIP'))&& subscriptionAccessDataBase.includes('Venue')">
+                <input type="checkbox" id="adcheck5" [checked]="administratorDataBase.includes('Venue')" (click)="checkbox('administratorDatabaseCompetion','Venue')">
+                <label for="adcheck5">Venue</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="loginTypeArr.includes('COMPETITION')&& subscriptionAccessDataBase.includes('Refree')">
+                <input type="checkbox" id="adcheck6" [checked]="administratorDataBase.includes('Refree')" (click)="checkbox('administratorDatabaseCompetion','Refree')">
+                <label for="adcheck6">Referee</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessDataBase.includes('Sponsor')">
+                <input type="checkbox" id="adcheck7"  [checked]="administratorDataBase.includes('Sponser')" (click)="checkbox('administratorDatabaseCompetion','Sponsor')">
+                <label for="adcheck7">Sponsers</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessDataBase.includes('Newslatter')">
+                <input type="checkbox" id="adcheck8" [checked]="administratorDataBase.includes('Newslatter')" (click)="checkbox('administratorDatabaseCompetion','Newslatter')">
+                <label for="adcheck8">Newsletter</label>
+              </div>
+              <!-- <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="adcheck9" (click)="checkbox('administratorDatabaseCompetion','Activity')">
+                <label for="adcheck9">ACTIVITY</label>
+              </div> -->
+            </div>
+            <!-- <div class="checkbox-grp" *ngIf="loginTypeArr.includes('MEMBERSHIP')">
+              <div class="custom-checkbox clearfix" >
+                <input type="checkbox" id="admcheck1" (click)="checkbox('administratorDatabaseMembership','Player')">
+                <label for="admcheck1">Player</label>
+              </div>
+              <div class="custom-checkbox clearfix" (click)="checkbox('administratorDatabaseMembership','Sponsor')">
+                <input type="checkbox" id="admcheck2">
+                <label for="admcheck2">Sponsor</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="admcheck3" (click)="checkbox('administratorDatabaseMembership','Newsletter')">
+                <label for="admcheck3">Newsletter</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="admcheck4" (click)="checkbox('administratorDatabaseMembership','Clubs')">
+                <label for="admcheck4">Clubs</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="admcheck5" (click)="checkbox('administratorDatabaseMembership','Venue')">
+                <label for="admcheck5">Venue</label>
+              </div>
+             </div>
+            <div class="checkbox-grp" *ngIf="loginTypeArr.includes('VENUE')">
+              <div class="custom-checkbox clearfix" >
+                <input type="checkbox" id="advcheck1" (click)="checkbox('administratorDatabaseVenue','Player')">
+                <label for="advcheck1">Player</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="advcheck2" (click)="checkbox('administratorDatabaseVenue','Sponsor')">
+                <label for="advcheck2">Sponsor</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="advcheck3" (click)="checkbox('administratorDatabaseVenue','Newsletter')">
+                <label for="advcheck3">Newsletter</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="advcheck4" (click)="checkbox('administratorDatabaseVenue','ActivityLog')">
+                <label for="advcheck4">ActivityLog</label>
+              </div>
+            </div> -->
+          </div>
+          <div class="checkbox-part" *ngIf="loginTypeArr.includes('COMPETITION')">
+            <p class="head-sm">My Competition</p>
+            <div class="checkbox-grp" >
+              <div class="custom-checkbox clearfix" >
+                <input type="checkbox" id="cacheck1" [checked]="administratorCompetition.includes('Competitions')" (click)="checkbox('administratorCompetition','Competitions')">
+                <label for="cacheck1">Competitions</label>
+              </div>
+                <div class="custom-checkbox clearfix" >
+                     <input type="checkbox" id="cacheck2" [checked]="administratorCompetition.includes('Message')" (click)="checkbox('administratorCompetition','Message')">
+                     <label for="cacheck2">Message</label>
+                   </div>
+                   <div class="custom-checkbox clearfix" >
+                     <input type="checkbox" id="cacheck3" [checked]="administratorCompetition.includes('Product')" (click)="checkbox('administratorCompetition','Product')">
+                     <label for="cacheck3">Product</label>
+                   </div>
+                   <div class="custom-checkbox clearfix" >
+                     <input type="checkbox" id="cacheck4" [checked]="administratorCompetition.includes('Confirm')" (click)="checkbox('administratorCompetition','Confirm')">
+                     <label for="cacheck4">Confirm</label>
+                   </div>
+                   <div class="custom-checkbox clearfix" >
+                     <input type="checkbox" id="cacheck5" [checked]="administratorCompetition.includes('Activity')" (click)="checkbox('administratorCompetition','Activity')">
+                     <label for="cacheck5">Activity</label>
+                   </div>
+                   <div class="custom-checkbox clearfix" >
+                    <input type="checkbox" id="cacheck6" [checked]="administratorCompetition.includes('Financial')" (click)="checkbox('administratorCompetition','Financial')">
+                    <label for="cacheck6">Financial</label>
+                  </div>
+            </div>
+          </div>
+          <div class="checkbox-part" *ngIf="loginTypeArr.includes('MEMBERSHIP')" >
+            <p class="head-sm">My Membership</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Registration')">
+                <input type="checkbox" id="macheck1" [checked]="administratorMembership.includes('Registration')" (click)="checkbox('administratorMembership','Registration')">
+                <label for="macheck1">Registration</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Member Card')">
+                <input type="checkbox" id="macheck2" [checked]="administratorMembership.includes('MemberCards')" (click)="checkbox('administratorMembership','MemberCards')">
+                <label for="macheck2">MemberCards</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Attendance')">
+                <input type="checkbox" id="macheck3" [checked]="administratorMembership.includes('Attendance')" (click)="checkbox('administratorMembership','Attendance')">
+                <label for="macheck3">Attendance</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Leaderboard')">
+                <input type="checkbox" id="macheck4" [checked]="administratorMembership.includes('Leaderboard')" (click)="checkbox('administratorMembership','Leaderboard')">
+                <label for="macheck4">Leaderboard</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Evaluation')">
+                <input type="checkbox" id="macheck5" [checked]="administratorMembership.includes('Evaluation')" (click)="checkbox('administratorMembership','Evaluation')">
+                <label for="macheck5">Evaluation</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Approval')">
+                <input type="checkbox" id="macheck6" [checked]="administratorMembership.includes('Approval')" (click)="checkbox('administratorMembership','Approval')">
+                <label for="macheck6">Approval</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Section')">
+                <input type="checkbox" id="macheck7" [checked]="administratorMembership.includes('Section')" (click)="checkbox('administratorMembership','Section')">
+                <label for="macheck7">Service</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Settings')">
+                <input type="checkbox" id="macheck8" [checked]="administratorMembership.includes('Settings')" (click)="checkbox('administratorMembership','Settings')">
+                <label for="macheck8">Settings</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Report')">
+                <input type="checkbox" id="macheck9" [checked]="administratorMembership.includes('Report')" (click)="checkbox('administratorMembership','Report')">
+                <label for="macheck9">Reports</label>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-part" *ngIf="loginTypeArr.includes('VENUE')">
+            <p class="head-sm">My Venue</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Dashboard')">
+                <input type="checkbox" id="vacheck1" [checked]="administratorVenue.includes('Dashboard')" (click)="checkbox('administratorVenue','Dashboard')">
+                <label for="vacheck1">Dashboard</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Venue')">
+                <input type="checkbox" id="vacheck2" [checked]="administratorVenue.includes('Venue')" (click)="checkbox('administratorVenue','Venue')">
+                <label for="vacheck2">Venue</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Booking')">
+                <input type="checkbox" id="vacheck3" [checked]="administratorVenue.includes('Booking')" (click)="checkbox('administratorVenue','Booking')">
+                <label for="vacheck3">Booking</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Stores')">
+                <input type="checkbox" id="vacheck4" [checked]="administratorVenue.includes('Stores')" (click)="checkbox('administratorVenue','Stores')">
+                <label for="vacheck4">Store</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Section')">
+                <input type="checkbox" id="vacheck5" [checked]="administratorVenue.includes('Section')" (click)="checkbox('administratorVenue','Section')">
+                <label for="vacheck5">Section</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Configuration')">
+                <input type="checkbox" id="vacheck6" [checked]="administratorVenue.includes('Configuration')" (click)="checkbox('administratorVenue','Configuration')">
+                <label for="vacheck6">Configuration</label>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-part">
+            <p class="head-sm">Other</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="media">
+                <input type="checkbox" id="mecheck1" [checked]="mediaCheck" (click)="checkbox('administratorMedia','Media')">
+                <label for="mecheck1">Media</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="userManagment">
+                <input type="checkbox" id="mecheck2" [checked]="userManagmentCheck" (click)="checkbox('administratorMedia','UserManagement')">
+                <label for="mecheck2">UserManagment</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="productCoordinator">
+                <input type="checkbox" id="mecheck3" [checked]="productCheck" (click)="checkbox('administratorMedia','Product')">
+                <label for="mecheck3">Product</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="content-box-filter mt20">
+        <form class="filter-form fullwidth">
+          <h5 class="head-sub"> Permission/Roles For Coordinator
+            <!-- For Coordinator -->
+          </h5>
+          <div class="checkbox-part">
+            <p class="head-sm">Database</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="loginTypeArr.includes('COMPETITION') && subscriptionAccessDataBase.includes('Team')">
+                <input type="checkbox" id="cccheck1" [checked]="coordinatorDataBase.includes('Team')" (click)="checkbox('coordinatorDatabaseCompetition','Team')">
+                <label for="cccheck1">Team</label>
+              </div>
+
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessDataBase.includes('Player')">
+                <input type="checkbox" id="cccheck2"  [checked]="coordinatorDataBase.includes('Player')" (click)="checkbox('coordinatorDatabaseCompetition','Player')">
+                <label for="cccheck2">Player</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="loginTypeArr.includes('COMPETITION') && subscriptionAccessDataBase.includes('Matches')">
+                <input type="checkbox" id="cccheck3" [checked]="coordinatorDataBase.includes('Matches')" (click)="checkbox('coordinatorDatabaseCompetition','Matches')">
+                <label for="cccheck3">Matches</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="(loginTypeArr.includes('COMPETITION')||loginTypeArr.includes('MEMBERSHIP'))&& subscriptionAccessDataBase.includes('Clubs')">
+                <input type="checkbox" id="cccheck4" [checked]="coordinatorDataBase.includes('Clubs')" (click)="checkbox('coordinatorDatabaseCompetition','Clubs')">
+                <label for="cccheck4">Clubs</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="(loginTypeArr.includes('COMPETITION')||loginTypeArr.includes('MEMBERSHIP'))&& subscriptionAccessDataBase.includes('Venue')">
+                <input type="checkbox" id="cccheck5" [checked]="coordinatorDataBase.includes('Venue')"  (click)="checkbox('coordinatorDatabaseCompetition','Venue')">
+                <label for="cccheck5">Venue</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="loginTypeArr.includes('COMPETITION')&& subscriptionAccessDataBase.includes('Refree')">
+                <input type="checkbox" id="cccheck6" [checked]="coordinatorDataBase.includes('Refree')" (click)="checkbox('coordinatorDatabaseCompetition','Referee')">
+                <label for="cccheck6">Referee</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessDataBase.includes('Sponsor')">
+                <input type="checkbox" id="cccheck7" [checked]="coordinatorDataBase.includes('Sponsor')" (click)="checkbox('coordinatorDatabaseCompetition','Sponsers')">
+                <label for="cccheck7">Sponsers</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessDataBase.includes('Newslatter')">
+                <input type="checkbox" id="cccheck8" [checked]="coordinatorDataBase.includes('Newslatter')" (click)="checkbox('coordinatorDatabaseCompetition','Newsletter')">
+                <label for="cccheck8">Newsletter</label>
+              </div>
+              <!-- <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cccheck9" (click)="checkbox('coordinatorDatabaseCompetition','ActivityLog')">
+                <label for="cccheck9">ActivityLog</label>
+              </div> -->
+            </div>
+            <!-- <div class="checkbox-grp" *ngIf="loginTypeArr.includes('MEMBERSHIP')">
+              <div class="custom-checkbox clearfix" >
+                <input type="checkbox" id="cmcheck1" (click)="checkbox('coordinatorDatabaseMembership','Player')">
+                <label for="cmcheck1">Player</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cmcheck2" (click)="checkbox('coordinatorDatabaseMembership','Sponsor')">
+                <label for="cmcheck2">Sponsor</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cmcheck3" (click)="checkbox('coordinatorDatabaseMembership','Newsletter')">
+                <label for="cmcheck3">Newsletter</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cmcheck4" (click)="checkbox('coordinatorDatabaseMembership','Clubs')">
+                <label for="cmcheck4">Clubs</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cmcheck5" (click)="checkbox('coordinatorDatabaseMembership','Venue')">
+                <label for="cmcheck5">Venue</label>
+              </div>
+             </div>
+            <div class="checkbox-grp" *ngIf="loginTypeArr.includes('VENUE')">
+              <div class="custom-checkbox clearfix" >
+                <input type="checkbox" id="cvcheck1" (click)="checkbox('coordinatorDatabaseVenue','Player')">
+                <label for="cvcheck1">Player</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cvcheck2" (click)="checkbox('coordinatorDatabaseVenue','Sponsor')">
+                <label for="cvcheck2">Sponsor</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cvcheck3" (click)="checkbox('coordinatorDatabaseVenue','Newsletter')">
+                <label for="cvcheck3">Newsletter</label>
+              </div>
+              <div class="custom-checkbox clearfix">
+                <input type="checkbox" id="cvcheck4" (click)="checkbox('coordinatorDatabaseVenue','ActivityLog')">
+                <label for="cvcheck4">ActivityLog</label>
+              </div>
+            </div> -->
+          </div>
+          <div class="checkbox-part" *ngIf="loginTypeArr.includes('COMPETITION')">
+            <p class="head-sm">My Competition</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" >
+                <input type="checkbox" id="ccheck1" [checked]="coordinatorCompetition.includes('Competitions')" (click)="checkbox('coordinatorCompetition','Competitions')">
+                <label for="ccheck1">Competitions</label>
+              </div>
+                <div class="custom-checkbox clearfix">
+                     <input type="checkbox" id="ccheck2" [checked]="coordinatorCompetition.includes('Message')" (click)="checkbox('coordinatorCompetition','Message')">
+                     <label for="ccheck2">Message</label>
+                   </div>
+                   <div class="custom-checkbox clearfix">
+                     <input type="checkbox" id="ccheck3" [checked]="coordinatorCompetition.includes('Product')" (click)="checkbox('coordinatorCompetition','Product')">
+                     <label for="ccheck3">Product</label>
+                   </div>
+                   <div class="custom-checkbox clearfix">
+                     <input type="checkbox" id="ccheck4" [checked]="coordinatorCompetition.includes('Confirm')" (click)="checkbox('coordinatorCompetition','Confirm')">
+                     <label for="ccheck4">Confirm</label>
+                   </div>
+                   <div class="custom-checkbox clearfix">
+                     <input type="checkbox" id="ccheck5" [checked]="coordinatorCompetition.includes('Activity')" (click)="checkbox('coordinatorCompetition','Activity')">
+                     <label for="ccheck5">Activity</label>
+                   </div>
+                   <div class="custom-checkbox clearfix">
+                    <input type="checkbox" id="ccheck6" [checked]="coordinatorCompetition.includes('Financial')" (click)="checkbox('coordinatorCompetition','Financial')">
+                    <label for="ccheck6">Financial</label>
+                  </div>
+            </div>
+          </div>
+          <div class="checkbox-part" *ngIf="loginTypeArr.includes('MEMBERSHIP')">
+            <p class="head-sm">My Membership</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Registration')">
+                <input type="checkbox" id="ccmcheck2" [checked]="coordinatorMembership.includes('Registration')" (click)="checkbox('coordinatorMembership','Registration')">
+                <label for="ccmcheck2">Registration</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Member Card')">
+                <input type="checkbox" id="ccmcheck3" [checked]="coordinatorMembership.includes('MemberCards')" (click)="checkbox('coordinatorMembership','MemberCards')">
+                <label for="ccmcheck3">MemberCards</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Attendance')">
+                <input type="checkbox" id="ccmcheck4" [checked]="coordinatorMembership.includes('Attendance')" (click)="checkbox('coordinatorMembership','Attendance')">
+                <label for="ccmcheck4">Attendance</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Leaderboard')">
+                <input type="checkbox" id="ccmcheck5" [checked]="coordinatorMembership.includes('Leaderboard')" (click)="checkbox('coordinatorMembership','Leaderboard')">
+                <label for="ccmcheck5">Leaderboard</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Evaluation')">
+                <input type="checkbox" id="ccmcheck6" [checked]="coordinatorMembership.includes('Evaluation')" (click)="checkbox('coordinatorMembership','Evaluation')">
+                <label for="ccmcheck6">Evaluation</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Approval')">
+                <input type="checkbox" id="ccmcheck7" [checked]="coordinatorMembership.includes('Approval')" (click)="checkbox('coordinatorMembership','Approval')">
+                <label for="ccmcheck7">Approval</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Section')">
+                <input type="checkbox" id="ccmcheck8" [checked]="coordinatorMembership.includes('Section')" (click)="checkbox('coordinatorMembership','Section')">
+                <label for="ccmcheck8">Service</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Settings')">
+                <input type="checkbox" id="ccmcheck9" [checked]="coordinatorMembership.includes('Settings')" (click)="checkbox('coordinatorMembership','Settings')">
+                <label for="ccmcheck9">Settings</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessMembership.includes('Report')">
+                <input type="checkbox" id="ccmcheck10" [checked]="coordinatorMembership.includes('Report')" (click)="checkbox('coordinatorMembership','Reports')">
+                <label for="ccmcheck10">Reports</label>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-part" *ngIf="loginTypeArr.includes('VENUE')">
+            <p class="head-sm">My Venue</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Dashboard')">
+                <input type="checkbox" id="ccvcheck1" [checked]="coordinatorVenue.includes('Dashboard')" (click)="checkbox('coordinatorVenue','Dashboard')">
+                <label for="ccvcheck1">Dashboard</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Venue')">
+                <input type="checkbox" id="ccvcheck2" [checked]="coordinatorVenue.includes('Venue')" (click)="checkbox('coordinatorVenue','Venue')">
+                <label for="ccvcheck2">Venue</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Booking')">
+                <input type="checkbox" id="ccvcheck3" [checked]="coordinatorVenue.includes('Booking')" (click)="checkbox('coordinatorVenue','Booking')">
+                <label for="ccvcheck3">Booking</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Stores')">
+                <input type="checkbox" id="ccvcheck4" [checked]="coordinatorVenue.includes('Stores')" (click)="checkbox('coordinatorVenue','Store')">
+                <label for="ccvcheck4">Store</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Section')">
+                <input type="checkbox" id="ccvcheck5" [checked]="coordinatorVenue.includes('Section')" (click)="checkbox('coordinatorVenue','Section')">
+                <label for="ccvcheck5">Section</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="subscriptionAccessVenue.includes('Configuration')">
+                <input type="checkbox" id="ccvcheck6" [checked]="coordinatorVenue.includes('Configuration')" (click)="checkbox('coordinatorVenue','Configuration')">
+                <label for="ccvcheck6">Configuration</label>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-part">
+            <p class="head-sm">Other</p>
+            <div class="checkbox-grp">
+              <div class="custom-checkbox clearfix" *ngIf="media">
+                <input type="checkbox" id="meccheck2" [checked]="coordinatorMediaCheck" (click)="checkbox('coordinatorMedia','Media')">
+                <label for="meccheck2">Media</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="userManagment">
+                <input type="checkbox" id="meccheck3" [checked]="coordinatorUserManagmentCheck" (click)="checkbox('coordinatorMedia','UserManagement')">
+                <label for="meccheck3">UserManagment</label>
+              </div>
+              <div class="custom-checkbox clearfix" *ngIf="productCoordinator">
+                <input type="checkbox" id="meccheck4" [checked]="coordinatorProductCheck" (click)="checkbox('coordinatorMedia','Product')">
+                <label for="meccheck4">Product</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="clearfix calendar-action mt30 text-right">
+        <button type="button" class="mb25 btn btn-gray max-WT-150" [routerLink]="['/organizer/menuCompConfUser']">Cancel</button>
+        <button type="button" (click)="getPermissionData()" class="mb25 btn btn-navy-blue max-WT-150 mL5">Submit</button>
+
+        <!-- <button type="button" data-toggle="modal" data-target="#edit_club" class="mb25 btn btn-navy-blue max-WT-150 mL5">Submit</button> -->
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<!--- Footer Start -->
+<app-footer></app-footer>
+<!--- Footer End -->

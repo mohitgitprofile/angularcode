@@ -1,0 +1,717 @@
+<main class="middle-content">
+    <!-- Page Title Start -->
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:black">User Details</h1>
+
+    </div>
+    <!-- Page Title End -->
+    <div class="content-section">
+        <div class="outer-box">
+            <div class=" common-tabs">
+
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="btc">
+                        <div class="tab-pane1">
+                            <div class="row  form-group">
+                                <div class="col-md-12">
+
+                                    <div class="tras-threebtn" style="float: right;">
+                                        <!-- <div class="comman-btn">
+                                            <button type="submit" class="btn  btn-theme" (click)="addStaff()">End User
+                                                Data
+                                            </button>
+                                        </div>
+                                        <div class="comman-btn">
+                                            <button type="submit" class="btn  btn-theme" (click)="addStaff()">Active
+                                            </button>
+                                        </div> -->
+                                        <div class="comman-btn">
+                                                <button *ngIf="userStatusForSuspend == 'SUSPENDED'" type="submit" class="btn  btn-theme" (click)="unsuspenduser()">Unsuspend
+                                                        User
+                                                    </button>
+                                            <button *ngIf="userStatusForSuspend == 'ACTIVE'" type="submit" class="btn  btn-theme" (click)="suspenduser()">Suspend
+                                                User
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <label>Username:</label>&nbsp;&nbsp;&nbsp;<span>{{basicUserDetails?.firstName}}
+                                        {{basicUserDetails?.lastName}}</span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Email:</label>&nbsp;&nbsp;&nbsp;<span>{{basicUserDetails?.email}}</span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Account Created
+                                        On:</label>&nbsp;&nbsp;&nbsp;<span>{{basicUserDetails?.dob}}</span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <label>Feedback:</label>&nbsp;&nbsp;&nbsp;<span>100%</span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label></label>&nbsp;&nbsp;&nbsp;<span></span>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <label></label>&nbsp;&nbsp;&nbsp;<span></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+
+                                <div class="col-md-6">
+                                    <div>
+                                        <label>Login History</label>
+                                        <button class="btn btn-theme" style="float: right;" (click)="loginHistoryExportInExcel()">Export In Excel</button>
+                                    </div>&nbsp;
+                                    <table class="table table-bordered" aria-describedby="">
+                                        <thead>
+                                            <tr class="no_wrap_th">
+                                                <th id="">S.No.</th>
+                                                <th id="">Date - Time</th>
+                                                <th id="">Region IP</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let data of loginDetailss | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: loginDetailsLength}; let i=index; ">
+                                                <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                <td>{{data?.createTime | date}}</td>
+                                                <td>{{data?.ipAddress}}</td>
+                                            </tr>
+                                            <tr *ngIf="loginDetailss?.length==0">
+                                                <td colspan="5" vertical-align="middle">
+                                                    <div class="no-record">
+                                                        <div class="no-recordin">
+                                                            <H5>No record found</H5>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="custom-pagination mt20 text-center" style="float: right;"
+                                        *ngIf="loginDetailsLength > 10 ">
+                                        <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div>
+                                        <label>KYC Status</label>
+                                        <button class="btn btn-theme" style="float: right;" (click)="kycStatusExportInExcel()">Export In Excel</button>
+                                    </div>&nbsp;
+
+                                    <table class="table table-bordered" aria-describedby="">
+                                        <thead>
+                                            <tr class="no_wrap_th">
+                                                <th id="">Document</th>
+                                                <th id="">Status</th>
+                                                <th id="">Date - Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <!-- <tr
+                                                *ngFor="let data of kycDetailss | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: kycDetailsLength}; let i=index; "> -->
+                                                <td>Email</td>
+                                                <td>
+                                                    <button *ngIf="userStatusForSuspend == 'ACTIVE'" class="btn btn-theme" disabled>Verified</button>
+                                                    <button *ngIf="userStatusForSuspend == 'BLOCK'" class="btn btn-theme" disabled>Unverified</button>
+                                                </td>
+                                                <td>{{basicUserDetails?.emailVerificationTime | date}}</td>
+                                            </tr>
+                                            <tr>
+                                                <!-- <tr
+                                                *ngFor="let data of kycDetailss | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: kycDetailsLength}; let i=index; "> -->
+                                                <td>Phone Number</td>
+                                                <td>
+                                                    <button *ngIf="userStatusForSuspend == 'ACTIVE'" class="btn btn-theme" disabled>Verified</button>
+                                                    <button *ngIf="userStatusForSuspend == 'BLOCK'" class="btn btn-theme" disabled>Unverified</button>
+                                                </td>
+                                                <td>{{basicUserDetails?.emailVerificationTime | date}}</td>
+                                            </tr>
+                                            <tr>
+                                                <!-- <tr
+                                                *ngFor="let data of kycDetailss | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: kycDetailsLength}; let i=index; "> -->
+                                                <td>ID</td>
+                                                <td>
+                                                    <button class="btn btn-theme" disabled>{{basicUserDetails?.kyc?.kycStatus}}</button>
+                                                </td>
+                                                <td>{{basicUserDetails?.creationTime | date}}</td>
+                                            </tr>
+                                            <!-- <tr *ngIf="kycDetailss?.length== ''">
+                                                <td colspan="5" vertical-align="middle">
+                                                    <div class="no-record">
+                                                        <div class="no-recordin">
+                                                            <H5>No record found</H5>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>
+                                    <div class="custom-pagination mt20 text-center" style="float: right;"
+                                        *ngIf="kycDetailsLength > 10 ">
+                                        <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="custom_tabs common-tabs">
+
+                                <div class="row mb20 justify-content-center">
+                                    <div class="col-sm-12">
+                                        <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                    [ngClass]="{'active': currTab=='advertisement'}"
+                                                    (click)="selectTab('advertisement')"
+                                                    href="javascript:;">Advertisement</a>
+                                            </li>
+                                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                    [ngClass]="{'active': currTab=='trades'}"
+                                                    (click)="selectTab('trades')" href="javascript:;">Trades</a>
+                                            </li>
+                                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                    [ngClass]="{'active': currTab=='wallet'}"
+                                                    (click)="selectTab('wallet')" href="javascript:;">Wallet</a>
+                                            </li>
+                                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                    [ngClass]="{'active': currTab=='feedback'}"
+                                                    (click)="selectTab('feedback')" href="javascript:;">Feedback
+                                                </a>
+                                            </li>
+                                            <!-- <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                    [ngClass]="{'active': currTab=='trustedby'}"
+                                                    (click)="selectTab('trustedby')" href="javascript:;">Trusted By
+                                                </a>
+                                            </li> -->
+                                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                                    [ngClass]="{'active': currTab=='blockedby'}"
+                                                    (click)="selectTab('blockedby')" href="javascript:;">Blocked By
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Page Title End -->
+                                <div class="content-section">
+                                    <div class="tab-pane active show" *ngIf="this.currTab == 'advertisement'">
+                                        <div class="">
+                                            <!-- <div class="input-group filter_search_group">
+                                                <input type="text" class="form-control" style="max-width: 85%;"
+                                                    placeholder="Search bar text-filter">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn_search_group" type="button" style="width: 33%;
+                                                    height: 87%;"><img src="assets/img/icon-search.png"
+                                                            alt="Search"></button>&nbsp;
+                                                    <button class="btn btn-theme" style="float: right">Export In
+                                                        Excel</button>
+                                                </div>
+
+                                            </div>&nbsp; -->
+                                            <table class="table table-bordered" aria-describedby="">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th id="">Ad ID</th>
+                                                        <th id="">Created Date-Time</th>
+                                                        <th id="">Status</th>
+                                                        <th id="">Type</th>
+                                                        <th id="">Payment Method</th>
+                                                        <th id="">Limits</th>
+                                                        <th id="">Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let data of advertisementlist | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: advertisementlistlength}; let i=index; ">
+                                                        <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                        <td>{{data?.creationTime | date}}</td>
+                                                        <td><button class="btn btn-theme"
+                                                                disabled>{{data?.orderStatus}}</button></td>
+                                                        <td>{{data?.orderType}}</td>
+                                                        <td>{{data?.paymentType}}</td>
+                                                        <td>{{data?.fiatCoin}}</td>
+                                                        <td>{{data?.maxValue}}</td>
+                                                    </tr>
+                                                    <tr *ngIf="advertisementlistlength==0">
+                                                        <td colspan="5" vertical-align="middle">
+                                                            <div class="no-record">
+                                                                <div class="no-recordin">
+                                                                    <H5>No record found</H5>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt20 text-center" style="float: right;"
+                                                *ngIf="advertisementlistlength > 5 ">
+                                                <pagination-controls (pageChange)="pageNumber = $event">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active show" *ngIf="this.currTab == 'trades'">
+                                        <div class="">
+                                            <!-- <div class="input-group filter_search_group">
+                                                <input type="text" class="form-control" style="max-width: 85%;"
+                                                    placeholder="Search bar text-filter">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn_search_group" type="button" style="width: 33%;
+                                                    height: 87%;"><img src="assets/img/icon-search.png"
+                                                            alt="Search"></button>&nbsp;
+                                                    <button class="btn btn-theme" style="float: right">Export In
+                                                        Excel</button>
+                                                </div>
+
+                                            </div>&nbsp; -->
+                                            <table class="table table-bordered" aria-describedby="">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th id="">Ad ID</th>
+                                                        <th id="">Created Date-Time</th>
+                                                        <th id="">Status</th>
+                                                        <th id="">Type</th>
+                                                        <th id="">Payment Method</th>
+                                                        <th id="">Trading Partner</th>
+                                                        <th id="">Fiat</th>
+                                                        <th id="">Trade Amount</th>
+                                                        <th id="">Fee</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let data of tradeList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: tradeListlength}; let i=index; ">
+                                                        <td>{{data?.tradingId}}</td>
+                                                        <td>{{data?.creationTime}}</td>
+                                                        <td><button class="btn btn-theme"
+                                                                disabled>{{data?.tradeStatus}}</button></td>
+                                                        <td>{{data?.type}}</td>
+                                                        <td>{{data?.paymentType}}</td>
+                                                        <td>{{data?.buyer || '---'}}</td>
+                                                        <td>{{data?.totalBTC}} BTC</td>
+                                                        <td>{{data?.tradeAmount}}</td>
+                                                        <td>{{data?.tradeFee}}</td>
+                                                    </tr>
+                                                    <tr *ngIf="tradeList==0">
+                                                        <td colspan="11" vertical-align="middle">
+                                                            <div class="no-record">
+                                                                <div class="no-recordin">
+                                                                    <H5>No record found</H5>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt20 text-center" style="float: right;"
+                                                *ngIf="tradeListlength > 5 ">
+                                                <pagination-controls (pageChange)="pageNumber = $event">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active show" *ngIf="this.currTab == 'wallet'">
+                                        <div class="">
+                                            <!-- <div class="input-group filter_search_group">
+                                                <input type="text" class="form-control" style="max-width: 85%;"
+                                                    placeholder="Search bar text-filter">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn_search_group" type="button" style="width: 33%;
+                                                    height: 87%;"><img src="assets/img/icon-search.png"
+                                                            alt="Search"></button>&nbsp;
+                                                    <button class="btn btn-theme" style="float: right">Export In
+                                                        Excel</button>
+                                                </div>
+
+                                            </div>&nbsp; -->
+                                            <table class="table table-bordered" aria-describedby="">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th id="">ID</th>
+                                                        <th id="">Coin</th>
+                                                        <th id="">Transaction Type</th>
+                                                        <th id="">Date</th>
+                                                        <th id="">Transaction Hash</th>
+                                                        <th id="">Amount</th>
+                                                        <th id="">Email</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let data of wallethistoryData | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: wallethistoryDatalength}; let i=index; ">
+                                                        <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                        <td>{{data?.coinType}}</td>
+                                                        <td>{{data?.txnType}}</td>
+                                                        <td>{{data?.txnTime | date}}</td>
+                                                        <td>{{data?.txnHash || '---'}}</td>
+                                                        <td>{{data?.fees}}</td>
+                                                        <td>{{data?.userEmail}}</td>
+                                                    </tr>
+                                                    <tr *ngIf="wallethistoryData==0">
+                                                        <td colspan="7" vertical-align="middle">
+                                                            <div class="no-record">
+                                                                <div class="no-recordin">
+                                                                    <H5>No record found</H5>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt20 text-center" style="float: right;"
+                                                *ngIf="wallethistoryDatalength > 10 ">
+                                                <pagination-controls (pageChange)="pageNumber = $event">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active show" *ngIf="this.currTab == 'feedback'">
+                                        <div class="">
+                                            <!-- <div class="input-group filter_search_group">
+                                                <input type="text" class="form-control" style="max-width: 85%;"
+                                                    placeholder="Search bar text-filter">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn_search_group" type="button" style="width: 33%;
+                                                    height: 87%;"><img src="assets/img/icon-search.png"
+                                                            alt="Search"></button>&nbsp;
+                                                    <button class="btn btn-theme" style="float: right">Export In
+                                                        Excel</button>
+                                                </div>
+                                            </div>&nbsp; -->
+                                            <table class="table table-bordered" aria-describedby="">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th id="">S.No.</th>
+                                                        <th id="">Date</th>
+                                                        <th id="">Type</th>
+                                                        <th id="">Feedback</th>
+                                                        <th id="">Customer Name</th>
+                                                        <th id="">Message</th>
+                                                        <th id="">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- <tr feedbackLoopData> -->
+                                                    <tr
+                                                        *ngFor="let data of feedbackLoopData | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: advertisementlistlength}; let i=index; ">
+                                                        <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                        <!-- <td>1</td> -->
+                                                        <td>{{data?.date | date}}</td>
+                                                        <td>{{data?.type}}</td>
+                                                        <td><button class="btn btn-theme" disabled>{{data?.feedbackStatus}}</button></td>
+                                                        <td>{{data?.name}}</td>
+                                                        <td>{{data?.feedbackMessage}}</td>
+                                                        <td class="action_td_btn3" style="cursor: pointer">
+                                                            <a (click)="feedback(data?.feedbackId)"><em class="fa fa-eye"></em></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="feedbackLoopData==0">
+                                                        <td colspan="7" vertical-align="middle">
+                                                            <div class="no-record">
+                                                                <div class="no-recordin">
+                                                                    <H5>No record found</H5>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt20 text-center" style="float: right;"
+                                                *ngIf="advertisementlistlength > 5 ">
+                                                <pagination-controls (pageChange)="pageNumber = $event">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active show" *ngIf="this.currTab == 'trustedby'">
+                                        <div class="">
+                                            <!-- <div class="input-group filter_search_group">
+                                                <input type="text" class="form-control" style="max-width: 85%;"
+                                                    placeholder="Search bar text-filter">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn_search_group" type="button" style="width: 33%;
+                                                    height: 87%;"><img src="assets/img/icon-search.png"
+                                                            alt="Search"></button>&nbsp;
+                                                    <button class="btn btn-theme" style="float: right">Export In
+                                                        Excel</button>
+                                                </div>
+
+                                            </div>&nbsp; -->
+                                            <table class="table table-bordered" aria-describedby="">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th id="">S.No.</th>
+                                                        <th id="">Date-Time</th>
+                                                        <th id="">Username</th>
+                                                        <th id="">Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>03/07/2020, 01:45 PM</td>
+                                                        <td>Username</td>
+                                                        <td class="action_td_btn3" style="cursor: pointer">
+                                                            <a (click)="blockby()"><em class="fa fa-trash"></em></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="staffList?.length==0">
+                                                        <td colspan="5" vertical-align="middle">
+                                                            <div class="no-record">
+                                                                <div class="no-recordin">
+                                                                    <H5>No record found</H5>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt20 text-center" style="    float: right;">
+
+                                                <pagination-controls (pageChange)="pagination($event)">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane active show" *ngIf="this.currTab == 'blockedby'">
+                                        <div class="">
+                                            <!-- <div class="input-group filter_search_group">
+                                                <input type="text" class="form-control" style="max-width: 85%;"
+                                                    placeholder="Search bar text-filter">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn_search_group" type="button" style="width: 33%;
+                                                            height: 87%;"><img src="assets/img/icon-search.png"
+                                                            alt="Search"></button>&nbsp;
+                                                    <button class="btn btn-theme" style="float: right">Export In
+                                                        Excel</button>
+                                                </div>
+
+                                            </div>&nbsp; -->
+                                            <table class="table table-bordered" aria-describedby="">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th id="">User ID</th>
+                                                        <th id="">Date-Time</th>
+                                                        <th id="">Username</th>
+                                                        <th id="">Blocked By</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                        <tr
+                                                        *ngFor="let data of blockedbyData | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: advertisementlistlength}; let i=index; ">
+                                                        <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                                        <td>{{data?.dateTime | date}}</td>
+                                                        <td>{{data?.userName}}</td>
+                                                        <td class="action_td_btn3" style="cursor: pointer">
+                                                            <a (click)="blockby(data?.blockedId)"><em class="fa fa-trash"></em></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="blockedbyData==0">
+                                                        <td colspan="5" vertical-align="middle">
+                                                            <div class="no-record">
+                                                                <div class="no-recordin">
+                                                                    <H5>No record found</H5>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt20 text-center" style="    float: right;">
+
+                                                <pagination-controls (pageChange)="pagination($event)">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+    </div>
+</main>
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Remove User </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to delete this user?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2"
+                                        (click)="deleteFunction()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Block Staff </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to block this Staff?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success mr-2"
+                                        (click)="performAction()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- active Start -->
+<div class="modal fade global-modal reset-modal" id="active">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Active Staff </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to active this Staff?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success mr-2"
+                                        (click)="performActionActive()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="suspendModal">
+    <div class="modal-dialog max-WT-500">
+        <form [formGroup]="suspendForm" class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Suspend User </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="form-group row">
+                            <div class="col-md-4" style="    text-align: center;">
+                                <label>Reason :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <textarea name="" id="" cols="20" style="    padding: 2%;" formControlName="reasonforsuspend"
+                                    rows="5">Message that will be sent to the user's email if the "Notify Use"r is selected.</textarea>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group row">
+                            <div class="col-md-4" style="    text-align: center;">
+                                <label></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="checkbox" name="" id="">&nbsp;<span>Notify User</span>
+                            </div>
+                        </div> -->
+                        <div style="text-align: center;">
+                            <button class="btn btn-theme" (click)="finalSuspendUser()">Suspend</button>&nbsp;&nbsp;
+                            <button class="btn btn-theme" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="unsuspendModal">
+        <div class="modal-dialog max-WT-500">
+            <form [formGroup]="suspendForm" class="change_password">
+                <div class="modal-content">
+                    <div>
+                        <div class="modal-body">
+                            <h3 style="text-align: center; ">Unsuspend User </h3>
+                            <hr>
+                            <button type="button" class="close" data-dismiss="modal"
+                                style="margin-top: -85px;">&times;</button>
+                            <div class="form-group row">
+                                <div class="col-md-4" style="    text-align: center;">
+                                    <label>Reason :</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea name="" id="" cols="20" style="    padding: 2%;" formControlName="reasonforsuspend"
+                                        rows="5">Message that will be sent to the user's email if the "Notify Use"r is selected.</textarea>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group row">
+                                <div class="col-md-4" style="    text-align: center;">
+                                    <label></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="checkbox" name="" id="">&nbsp;<span>Notify User</span>
+                                </div>
+                            </div> -->
+                            <div style="text-align: center;">
+                                <button class="btn btn-theme" (click)="finalUnuspendUser()">Unsuspend</button>&nbsp;&nbsp;
+                                <button class="btn btn-theme" data-dismiss="modal">Cancel</button>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

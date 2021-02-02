@@ -1,0 +1,6 @@
+.detail-row label {
+    text-decoration: underline;
+    font-weight: 600;
+    width: 100px;
+    cursor: pointer;
+}

@@ -1,0 +1,571 @@
+<!--   Header Start  -->
+<app-header></app-header>
+<!--   Header End  -->
+<div class="topBanner">
+    <div class="container">
+    </div>
+</div>
+<!-- main Start -->
+<!-- <main class="main-container pt0 mt-min60" *ngIf="(loginTypeArr.includes('COMPETITION'))">
+    <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Filter BY COMPETITION</h2>
+            <div class="content-box-filter">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form class="filter-form">
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Here.." aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)]="searchKey" [ngModelOptions]="{standalone: true}" (keyup)="onSearch(1,$event)">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button" (click)="onSearch(2)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn btn btn-dark-blue-s max-WT-150" type="button" data-toggle="modal" (click)="addclub()">Add
+              Club</button>
+                    </div>
+                    <div class="col-sm-12 text-right mt20">
+                        <button class="btn btn-white-bg" (click)="printTeam(1)">Print</button>
+                        <button class="btn btn-white-bg" (click)="printTeam(2)">Export To CSV</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered large-table text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Headquarter</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!ClubsList.docs.length">
+                                <td colspan="6" class="text-center">No data found.</td>
+                            </tr>
+                            <tr *ngFor="let item of ClubsList?.docs | paginate: { itemsPerPage: ClubsList?.limit, currentPage: ClubsList?.page,  totalItems: ClubsList?.total } ">
+                                <td>{{item?.clubName}}</td>
+                                <td>{{item?.phone}}</td>
+                                <td>{{item?.email}}</td>
+                                <td>{{item?.headquaters}}</td>
+                                <td>{{item?.status | letterCase}}</td>
+                                <td class="action-td" style="min-width:350px">
+                                    <button type="button" data-toggle="modal" data-target="#view_preview_booking" class="btn btn-book" (click)="get(item._id)">Edit</button>
+                                    <button type="button" data-toggle="modal" data-target="#view_preview_booking1" class="btn btn-book red" (click)="delete(item._id)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix pagination-entity">
+                    <div class="pagination-block text-right" *ngIf="ClubsList?.total > ClubsList?.limit">
+                        <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                    </div>
+                    <div class="entity-text" *ngIf="ClubsList?.docs.length">
+                        <span>Showing {{ClubsList?.limit * (ClubsList?.page - 1) + 1}} to {{((ClubsList?.limit * ClubsList?.page) < ClubsList?.total)
+                ? (ClubsList?.limit * ClubsList?.page) : ClubsList?.total || 0}} entries</span>
+                        <select class="form-control select-style1 mw50" [(ngModel)]="filter.limitChange" name="limitChange" (change)="onChangeLimit()">
+                  <option [value]="item" *ngFor="let item of list.limitChangeArr">{{item}}</option>
+                </select>
+                        <span>entries</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main> -->
+<main class="main-container pt0 mt-min60">
+    <!-- <form action="https://partner.insurancehotline.com/default.aspx" method="POST">
+        <input type="text" name="postalCode" placeholder="Enter Postal Code" maxlength="7"
+        pattern="[ABCEGHJKLMNPRSTVXYabceghjklmnprstvxy][0-9][ABCEGHJKLMNPRSTVWXYZabceghjklmnprstvwxyz]( )?[0-9][ABCEGHJKLMNPRSTVWXYZabceghjklmnprstvwxyz][0-9]"
+        required="required"
+        oninvalid="this.setCustomValidity('Enter postal code. Ex: A1A 1A1')"
+        oninput="setCustomValidity('')" />
+        <input type="text" name="businessLine" value="1" hidden="hidden" />
+        <input type="text" name="partnerID" value="1012" hidden="hidden" />
+        <input type="submit" value="Start a quote" />
+        </form> -->
+    <div class="container">
+        <div class="content-box bg-gray">
+            <h2 class="content-box-head">Filter BY </h2>
+            <div class="content-box-filter">
+                <form class="filter-form fullwidth" [formGroup]="searchForm">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="search-block-main fiter-full-search">
+                                <div class="search_block">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search Here.." formControlName="search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn_search" type="button" (click)="getClubApi(searchForm.value,filter.currPage)">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="button-box text-right">
+                                <button class="btn btn btn-dark-blue-s" type="button" data-toggle="modal" data-target="#addClub">Add Club</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-sm-12 text-right mt20">
+                    <button class="btn btn btn-dark-blue-s" type="button" (click)="print()">Print</button>
+                    <button class="btn btn btn-dark-blue-s" type="button" (click)="exportToCSV()">Export To CSV</button>
+                </div>
+            </div>
+            <div class="table-block mt10 white-bg">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr class="table-head-bg">
+                                <th>Sr.No.</th>
+                                <th>Image</th>
+                                <th>Club Name</th>
+                                <th>Mobile Number</th>
+                                <th>Email</th>
+                                <th>Headquarter</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of clubList | paginate: { itemsPerPage:pageLimit , currentPage:filter.currPage , totalItems:pageTotal } ; let i = index">
+                                <td *ngIf="filter.currPage == 1">{{i + 1}}</td>
+                                <td *ngIf="filter.currPage > 1">{{i + 1 +(pageLimit * (filter.currPage-1))}}</td>
+                                <td><img [src]="item.image" style="height: 98px;"></td>
+                                <td>{{item.clubName}}</td>
+                                <td>{{item.phone}}</td>
+                                <td>{{item.email}}</td>
+                                <td>{{item.headquaters}}</td>
+                                <td>{{item.status}}</td>
+                                <td class="action-td">
+                                    <button class="btn btn-info" (click)="viewClubApi(item._id)"><i class="far fa-edit"></i></button>
+                                    <button class="btn btn-danger" (click)="deletememberClub(item._id)"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                          
+                        </tbody>
+                    </table>
+                    <h3 *ngIf="(clubList == '')">No Data Found</h3>
+                    <pagination-controls style="text-align: center" *ngIf="pageLimit<pageTotal" (pageChange)="getClubApi(searchForm.value,$event)"></pagination-controls>
+                </div>
+                <!-- <div class="clearfix pagination-entity">
+                <div class="pagination-block text-right">
+                 <ul class="pagination">
+                  <li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-caret-left"></i> Prev</a></li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">4</a></li>
+                  <li class="page-item"><a class="page-link" href="#">5</a></li>
+                  <li class="page-item"><a class="page-link" href="#">6</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next <i class="fas fa-caret-right"></i></a></li>
+                  </ul>
+                </div>
+                <div class="entity-text">
+                   <span>showing 1 to 6 entries</span>
+                   <select class="form-control select-style1 mw50">
+                      <option>4</option>
+                      <option>4</option>
+                      <option>4</option>
+                   </select>
+                    <span>entries</span>
+                </div>
+              
+              </div> -->
+            </div>
+        </div>
+        <!-- Max With Box End -->
+    </div>
+</main>
+<!-- main End -->
+<!--   Footer Start  -->
+<app-footer></app-footer>
+<!--   Footer End  -->
+
+<div class="table-responsive" id="table_dataClubs" [hidden]="true">
+    <table class="table table-bordered large-table text-center">
+        <thead>
+            <tr class="table-head-bg">
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Headquarter</th>
+                <th>Status</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="!printData.length">
+                <td colspan="6" class="text-center">No data found.</td>
+            </tr>
+            <tr *ngFor="let item of printData">
+                <td>{{item?.clubName}}</td>
+                <td>{{item?.phone}}</td>
+                <td>{{item?.email}}</td>
+                <td>{{item?.headquaters}}</td>
+                <td>{{item?.status | letterCase}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- create-club -->
+<!-- <div class="modal fade common-modal" id="create_club" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">CREATE CLUB</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img id="preview" [src]="ImageBase64" alt="Profile img">
+                                    <span class="camera fa fa-pencil-alt"><input type="file" (change)="fileChangeEvent($event)" accept="image/*"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" placeholder="Enter name" class="form-control round-input" [formControl]="CreateClubForm.controls['clubName']" maxlength="30" />
+                                        <span class="errorMsg" *ngIf="CreateClubForm.controls['clubName'].hasError('required') && CreateClubForm.controls['clubName'].dirty">*Please enter club name</span>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Phone</label>
+                                    <div class="col-md-9">
+                                        <input type="text" placeholder="Enter phone" class="form-control round-input" [formControl]="CreateClubForm.controls['phone']" maxlength="16" />
+                                        <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['phone'].hasError('required') && CreateClubForm.controls['phone'].dirty">*Please enter phone number</span>
+                                        <span class="error-box" style="color:red" *ngIf="( CreateClubForm.controls['phone'].hasError('minlength') || CreateClubForm.controls['phone'].hasError('pattern') ) && CreateClubForm.controls['phone'].dirty">*Please enter a valid phone number</span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="email" placeholder="Enter email" class="form-control round-input" [formControl]="CreateClubForm.controls['email']" maxlength="52" />
+                                        <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['email'].hasError('required') && CreateClubForm.controls['email'].dirty">*Please enter email id</span>
+                                        <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['email'].hasError('pattern') && CreateClubForm.controls['email'].dirty">*Please enter a valid email id</span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Headquarters</label>
+                                    <div class="col-md-9">
+                                        <input type="text" placeholder="Enter headquarters" class="form-control round-input" [formControl]="CreateClubForm.controls['headquaters']" maxlength="52" />
+                                        <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['headquaters'].hasError('required') && CreateClubForm.controls['headquaters'].dirty">*Please enter headquarter's name</span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [formControl]="CreateClubForm.controls['status']" name="status">
+                      <option value="">Select Status</option>
+                      <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                    </select>
+                                        <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['status'].hasError('required') && CreateClubForm.controls['status'].dirty">*Please select status</span>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button type="button" data-toggle="modal" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" (click)="createClubApi()" [disabled]="!CreateClubForm.valid">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+<!--  Modal End create-club-->
+<!-- edit-club -->
+<!-- <div class="modal fade common-modal" id="edit_club" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" action="profile-with-card.html">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">EDIT CLUB</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img id="preview" [src]="ImageBase64" alt="Profile img">
+                                    <span class="camera fa fa-pencil-alt"><input type="file" (change)="fileChangeEvent($event)" accept="image/*"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" placeholder="Enter name" class="form-control round-input" [formControl]="CreateClubForm.controls['clubName']" maxlength="30" />
+                                    </div>
+                                    <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['clubName'].hasError('required') && CreateClubForm.controls['clubName'].dirty">*
+                    Please enter Club Name</span>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Phone</label>
+                                    <div class="col-md-9">
+                                        <input type="text" placeholder="Enter phone" class="form-control round-input" [formControl]="CreateClubForm.controls['phone']" maxlength="16" />
+                                    </div>
+                                    <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['phone'].hasError('required') && CreateClubForm.controls['phone'].dirty">*
+                    Please enter Phone Number</span>
+                                    <span class="error-box" style="color:red" *ngIf="( CreateClubForm.controls['phone'].hasError('minlength') || CreateClubForm.controls['phone'].hasError('pattern') ) && CreateClubForm.controls['phone'].dirty">*
+                    Please enter a valid Phone Number</span>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="email" placeholder="Enter email" class="form-control round-input" [formControl]="CreateClubForm.controls['email']" maxlength="52" />
+                                    </div>
+                                    <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['email'].hasError('required') && CreateClubForm.controls['email'].dirty">*
+                    Please enter email Id</span>
+                                    <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['email'].hasError('pattern') && CreateClubForm.controls['email'].dirty">*
+                    Please enter a valid email id</span>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Headquaters</label>
+                                    <div class="col-md-9">
+                                        <input type="text" placeholder="Enter headquaters" class="form-control round-input" [formControl]="CreateClubForm.controls['headquaters']" maxlength="52" />
+                                    </div>
+                                    <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['headquaters'].hasError('required') && CreateClubForm.controls['headquaters'].dirty">*
+                    Please enter Headquarter's name</span>
+                                    <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['headquaters'].hasError('minlength') && CreateClubForm.controls['headquaters'].dirty">*
+                    Please enter valid Headquarter's name</span>
+                                </div>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" [formControl]="CreateClubForm.controls['status']" name="status">
+                      <option value="">Select Status</option>
+                      <option [value]="status.value" *ngFor="let status of list.statusList">{{status?.name}}</option>
+                    </select>
+                                    </div>
+                                    <span class="error-box" style="color:red" *ngIf="CreateClubForm.controls['status'].hasError('required') && CreateClubForm.controls['status'].dirty">*
+                    Please select status</span>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" [disabled]="!CreateClubForm.valid" (click)="save()">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+<!--  Modal End edit-club-->
+<!-- Delete Club Modal -->
+<!-- <div class="modal fade common-modal" id="delete_club" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Delete Club</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <label class="deleteModal">Are you sure want to delete this club ?</label>
+
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button" (click)="onDeleteClub()">Yes</button>
+                                    <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->
+<!-- End Delete Club Modal -->
+<!-- Club Modals Through Membership Start Here -->
+<!-- Add Club -->
+<div class="modal fade common-modal" id="addClub" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="addClubForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Add Club</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img *ngFor="let item of addClubphoto" src="{{item}}" alt="Token Image" class="profile-pic">
+                                    <label class="upload-label">
+                           <input type="file" name="image" formControlName="image" (change)="onUploadChange($event)" accept=".png, .jpg, .jpeg">
+                          </label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Club Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter Club Name" formControlName="clubname" />
+                                    </div>
+                                </div>
+                                <p *ngIf="addClubForm.get('clubname').hasError('required') &&  addClubForm.get('clubname').dirty" style="color:red" padding>*Clubname field can not be empty</p>
+                                <p *ngIf="addClubForm.get('clubname').hasError('pattern') &&  addClubForm.get('clubname').dirty" style="color:red" padding>*Invalid Club Name</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Mobile Number</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter Mobile Number" formControlName="mobile" />
+                                    </div>
+                                </div>
+                                <p *ngIf="addClubForm.get('mobile').hasError('required') &&  addClubForm.get('mobile').dirty" style="color:red" padding>*Mobile field can not be empty</p>
+                                <p *ngIf="addClubForm.get('mobile').hasError('pattern') &&  addClubForm.get('mobile').dirty" style="color:red" padding>*Invalid Mobile Number</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter Email" formControlName="email" />
+                                    </div>
+                                </div>
+                                <p *ngIf="addClubForm.get('email').hasError('required') &&  addClubForm.get('email').dirty" style="color:red" padding>*Email field can not be empty</p>
+                                <p *ngIf="addClubForm.get('email').hasError('pattern') &&  addClubForm.get('email').dirty" style="color:red" padding>*Invalid Email</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Headquarter</label>
+                                    <div class="col-md-9">
+                                        <!-- <input ngx-google-places-autocomplete [options]='options' class="form-control round-input" #placesRef="ngx-places" formControlName="headquater" (onAddressChange)="handleAddressChange($event)"/> -->
+                                        <input type="text" class="form-control round-input" placeholder="Enter HeadQuater" formControlName="headquater" />
+                                    </div>
+                                </div>
+                                <p *ngIf="addClubForm.get('headquater').hasError('required') &&  addClubForm.get('headquater').dirty" style="color:red" padding>*Headquater field can not be empty</p>
+                                <p *ngIf="addClubForm.get('headquater').hasError('pattern') &&  addClubForm.get('headquater').dirty" style="color:red" padding>*Invalid Headquater</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="status">
+                               <option value="">Select Status</option>
+                                <option value="confirmed">Confirmed</option>
+                                 <option value="unconfirmed">Unconfirmed</option>
+                          </select>
+                                    </div>
+                                </div>
+                                <p *ngIf="addClubForm.get('status').hasError('required') &&  addClubForm.get('status').dirty" style="color:red" padding>*Status field can not be empty</p>
+                                <div class="clearfix calendar-action mt30 text-right">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " [disabled]="!addClubForm.valid" type="button" (click)="addClubFunc(addClubForm.value)">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit Club -->
+<div class="modal fade common-modal" id="editClub" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-800" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form" [formGroup]="editClubForm">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Edit Club</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="profile-img" id="profile_img">
+                                    <img *ngFor="let item of editClubphoto" src="{{item}}" alt="Token Image" class="profile-pic">
+                                    <label class="upload-label">
+                           <input type="file" name="image" formControlName="image" (change)="oneditChange($event)" accept=".png, .jpg, .jpeg">
+                          </label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Club Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter Club Name" formControlName="clubname" [(ngModel)]="editclubList.clubName" />
+                                    </div>
+                                </div>
+                                <p *ngIf="editClubForm.get('clubname').hasError('pattern') &&  editClubForm.get('clubname').dirty" style="color:red" padding>*Invalid Club Name</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Mobile Number</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter Mobile Number" formControlName="mobile" [(ngModel)]="editclubList.phone" />
+                                    </div>
+                                </div>
+                                <p *ngIf="editClubForm.get('mobile').hasError('pattern') &&  editClubForm.get('mobile').dirty" style="color:red" padding>*Invalid Mobile Number</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter Email" formControlName="email" [(ngModel)]="editclubList.email" />
+                                    </div>
+                                </div>
+                                <p *ngIf="editClubForm.get('email').hasError('pattern') &&  editClubForm.get('email').dirty" style="color:red" padding>*Invalid Email</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Headquarter</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control round-input" placeholder="Enter HeadQuater" formControlName="headquater" [(ngModel)]="editclubList.headquaters" />
+                                    </div>
+                                </div>
+                                <p *ngIf="editClubForm.get('headquater').hasError('pattern') &&  editClubForm.get('headquater').dirty" style="color:red" padding>*Invalid Headquater</p>
+                                <div class="form-group clearfix row">
+                                    <label class="col-md-3 label-blue">Status</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select-style1 round-input" formControlName="status" [(ngModel)]="editclubList.status">
+                               <option value="">Select Status</option>
+                                <option value="confirmed">Confirmed</option>
+                                 <option value="unconfirmed">Unconfirmed</option>
+                          </select>
+                                    </div>
+                                </div>
+                                <div class="clearfix calendar-action mt30 text-right">
+                                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " [disabled]="!editClubForm.valid" type="button" (click)="editClubFunc(editClubForm.value)">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Club Modal -->
+<div class="modal fade common-modal" id="deleteClub" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+        <div class="modal-content">
+            <form class="modal-add-card-form">
+                <div class="modal-body text-center">
+                    <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Delete Club</h5>
+                    <div class="modal-content-body modalform-body text-left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="deleteModal">Are you sure want to delete this club ?</label>
+                                <div class="clearfix calendar-action mt30 text-left">
+                                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button" (click)="deleteclubApi()">Yes</button>
+                                    <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Delete Club Modal -->
+<!-- Club Modals Through Membership End Here -->

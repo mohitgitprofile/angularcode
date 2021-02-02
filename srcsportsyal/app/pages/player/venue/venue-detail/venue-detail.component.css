@@ -1,0 +1,66 @@
+.custom-breadcrumb1 .breadcrumb .breadcrumb-item.active {
+    color: #faca29;
+}
+.venue-img img{
+    width: 200px;
+    height: 170px;
+}
+.star-icon[_ngcontent-c4]:before {
+    color: #FDE16D;
+    content: attr(data-icon) " ";
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    width: 0;
+}
+
+.star-icon.half100[_ngcontent-c4]:before {
+    width: 100%;
+}
+
+.rating {
+    /* background: #5a8b34; */
+    color: #fff;
+    padding: 4px 12px;
+    position: absolute;
+    right: 147px;
+    font-size: 14px;
+}
+
+.star-icon[_ngcontent-c8]:before {
+    color: #FFC107;
+    content: attr(data-icon) " ";
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    width: 0;
+}
+
+.dijitCalendarContainer {
+    /* (must be higher than popup z-index) */
+    z-index: 10010 !important;
+    background-color: #eff0f2;
+    display: block !important;
+  }
+  .red{
+      background-color: #f00;
+      height: 20px;
+      width:20px;
+      content: " ";
+      margin-right: 5px;
+  }
+
+  .green{
+    background-color:green;
+    height: 20px;
+    width:20px;
+    content: " ";
+    margin-right: 5px;
+}
+.yellow{
+    background-color:rgb(255, 152, 0);
+    height: 20px;
+    width:20px;
+    content: " ";
+    margin-right: 5px;
+}

@@ -1,0 +1,137 @@
+  <!--  Header Start -->
+  <app-header></app-header>
+  <!-- Header  End    -->
+  <div class="topBanner">
+     <div class="container">
+     </div>
+  </div>
+  <!-- main Start -->
+  <main class="main-container pt0 mt-min60">
+      <div class="container">
+         <div class="content-box bg-gray">
+           <h2 class="content-box-head">Filter BY</h2>
+            <div class="content-box-filter">
+               <form class="filter-form fullwidth" [formGroup]= 'searchForm'>
+                  <div class="row align-items-center">
+                    <div class="col-md-8">
+                       <div class="search-block-main fiter-full-search">
+                         <div class="search_block">
+                             <div class="input-group">
+                               <input type="text" class="form-control" placeholder="Search Here.." formControlName="searchname">
+                               <div class="input-group-append">
+                                 <button class="btn btn_search" type="button" (click)="getMemberCardList(searchForm.value,filter.currPage)">Search</button>
+                               </div>
+                             </div>
+                         </div>
+                     </div>
+                    </div>
+                 </div>
+               </form>
+                  
+            </div>
+           <div class="table-block mt10 white-bg">
+               <div class="table-responsive">
+                  <table class="table table-bordered text-center">
+                     <thead>
+                        <tr class="table-head-bg">
+                           <th>Service Name</th>
+                           <th>Player Name</th>
+                           <th>Email</th>
+                           <th>Mobile Number</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of membercardList | paginate: { itemsPerPage:pageLimit , currentPage:filter.currPage , totalItems:pageTotal } ; let i = index">
+                           <td>{{item.Service.serviceName}}</td>
+                           <td>{{item.Player.firstName}}&nbsp;{{item.Player.lastname}}</td>
+                           <td>{{item.Player.email}}</td>
+                           <td>{{item.Player.countryCode}}{{item.Player.mobileNumber}}</td>
+                           <td class="action-td">
+                             <button class="btn btn-info" (click)="send(item._id)"><img src="assets/images/send.png"></button>
+                             <button class="btn btn-danger" (click)="delete(item._id)" ><i class="far fa-trash-alt"></i></button>
+                           </td>
+                        </tr>
+                       
+                     </tbody>
+                  </table>
+                  <h3 *ngIf = "(membercardList == '')">No User Found</h3>
+                 
+               </div>
+               <div class="pagination-block text-right">
+                <pagination-controls style="text-align: center" *ngIf=" pageLimit < pageTotal" (pageChange)="getMemberCardList(searchForm.value,$event)" ></pagination-controls>
+               </div>
+               <!-- <div class="clearfix pagination-entity">
+                 
+                 <div class="entity-text">
+                    <span>showing 1 to 6 entries</span>
+                    <select class="form-control select-style1 mw50">
+                       <option>4</option>
+                       <option>4</option>
+                       <option>4</option>
+                    </select>
+                     <span>entries</span>
+                 </div>
+               
+               </div> -->
+            </div>
+         </div>
+         <!-- Max With Box End -->
+      </div>
+   </main>
+   <!-- main End -->
+  <!-- Footer Start -->
+  <app-footer></app-footer>
+  <!-- Footer End -->
+   <!-- Delete Venue Modal -->
+<div class="modal fade common-modal" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+      <div class="modal-content">
+        <form class="modal-add-card-form">
+          <div class="modal-body text-center">
+            <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Delete Player</h5>
+            <div class="modal-content-body modalform-body text-left">
+              <div class="row">
+  
+                <div class="col-md-12">
+                  <label class="deleteModal">Are you sure want to delete this Player ?</label>
+  
+                  <div class="clearfix calendar-action mt30 text-left">
+                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button" (click)="deleteApi()">Yes</button>
+                    <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End Delete Venue Modal -->
+ <!-- Delete Venue Modal -->
+<div class="modal fade common-modal" id="send" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+      <div class="modal-content">
+        <form class="modal-add-card-form">
+          <div class="modal-body text-center">
+            <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Send As Pdf</h5>
+            <div class="modal-content-body modalform-body text-left">
+              <div class="row">
+  
+                <div class="col-md-12">
+                  <label class="deleteModal">Are you sure want to send as PDF?</label>
+  
+                  <div class="clearfix calendar-action mt30 text-left">
+                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-left" type="button" (click)="sendApi()">Yes</button>
+                    <button class="mb25 btn btn-gray max-WT-150 pull-right" type="button" data-dismiss="modal">No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End Delete Venue Modal -->

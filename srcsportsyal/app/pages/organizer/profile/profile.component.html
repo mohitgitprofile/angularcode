@@ -1,0 +1,415 @@
+ <app-header></app-header>
+  <div class="topBanner">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="topBanner-content d-flex align-items-center w-100">
+            <div class="w-100">
+              <h1>COMPREHENSIVE MANAGEMENT OF<br> ANY SPORTS COMPETITION</h1>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- main Start -->
+  <main class="main-container pt0">
+    <div class="venue-booking-container">
+      <!-- content-box -->
+      <div class="content-box bg-gray mt-60">
+        <!-- Profile-form Start -->
+        <form class="profile-form">
+          <div class="row">
+            <div class="col-md-3 col-lg-2 col-xl-2">
+              <div class="profile-img max-WT-170" id="profile_img">
+                <img src="{{ImageBase64}}" alt="Profile img" />
+                <span class="camera fa fa-camera"><input type="file" (change)="fileChangeEvent($event)" accept="image/*"></span>
+              </div>
+            </div>
+            <!--Col Left End -->
+            <div class="col-md-9 col-lg-10 col-xl-10">
+              <div class="page_head">
+                <h2>My Profile</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s
+                  standard dummy text ever since the 1500s, when an unknown printer took.</p>
+              </div>
+              <!-- profile-box Start -->
+              <div class="profile-box" [formGroup]="editProfileForm">
+                <h3>Personal Information</h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Name</label>
+                      <input type="text" class="form-control" [formControl]="editProfileForm.controls.name" placeholder="Enter name" maxlength="50"
+                      />
+                      <div class="errorMsg" *ngIf="editProfileForm.controls.name.dirty && editProfileForm.controls.name.invalid">
+                        <span *ngIf="editProfileForm.controls.name.hasError('required')">*Please enter name.</span>
+                        <span *ngIf="editProfileForm.controls.name.hasError('minlength')">*Name must be between 2 to 50 characters.</span>
+                        <span *ngIf="editProfileForm.controls.name.hasError('pattern') &&!editProfileForm.controls.name.hasError('minlength')">*Please
+                          enter valid name.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Email</label>
+                      <input type="email" class="form-control" [formControl]="editProfileForm.controls.email" placeholder="Enter email" maxlength="100"
+                      />
+                      <div class="errorMsg" *ngIf="editProfileForm.controls.email.dirty && editProfileForm.controls.email.invalid">
+                        <span *ngIf="editProfileForm.controls.email.hasError('required')">*Please enter a email address.</span>
+                        <span *ngIf="editProfileForm.controls.email.hasError('pattern')">*Please enter a valid email address.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Gender</label>
+                      <select class="form-control select-style1" [formControl]="editProfileForm.controls.gender">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                      <div class="errorMsg" *ngIf="editProfileForm.controls.gender.dirty && editProfileForm.controls.gender.invalid">
+                        <span *ngIf="editProfileForm.controls.gender.hasError('required')">*Please select gender.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Date of Birth</label>
+                      <input style="float:none" class="form-control datepicker" placeholder="yyyy-mm-dd" [formControl]="editProfileForm.controls.dob"
+                        ngx-mydatepicker name="date" [options]="myOptions" #dp="ngx-mydatepicker" (click)="dp.toggleCalendar()">
+                      <div class="errorMsg" *ngIf="editProfileForm.controls.dob.dirty && editProfileForm.controls.dob.invalid">
+                        <span *ngIf="editProfileForm.controls.dob.hasError('required')">*Please enter birthday.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Mobile Number</label>
+                      <input type="text" class="form-control" [formControl]="editProfileForm.controls.phone" maxlength="19" placeholder="Enter mobile number"
+                      />
+                      <div class="errorMsg" *ngIf="editProfileForm.controls.phone.dirty && editProfileForm.controls.phone.invalid">
+                        <span *ngIf="editProfileForm.controls.phone.hasError('required')">*Please enter Phone.</span>
+                        <span *ngIf="editProfileForm.controls.phone.hasError('pattern')">*Please enter valid Phone.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Nationality</label>
+                      <select class="form-control select-style1" [formControl]="editProfileForm.controls.nationality">
+                        <option value="">Select Nationality</option>
+                        <option [value]="country.countryName" *ngFor="let country of list.countryList">{{country?.countryName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center pt10 pb10">
+                  <button type="submit" class="btn btn-navy-blue max-WT-170 font_uni_sans" [disabled]="editProfileForm.invalid" (click)="updateProfile()">Save
+                    Details
+                  </button>
+                </div>
+              </div>
+              <!-- profile-box End -->
+              <!-- profile-box Start -->
+              <div class="profile-box">
+                <div class="row" [formGroup]="changePasswordForm">
+                  <div class="col-md-5">
+                    <h3>Security</h3>
+                    <div class="form-group">
+                      <label class="control-label">Old Password</label>
+                      <input type="password" maxlength="16" class="form-control" [formControl]="changePasswordForm.controls.oldPassword" placeholder="Enter old password"
+                      />
+                      <div class="errorMsg" *ngIf="changePasswordForm.controls.oldPassword.dirty && changePasswordForm.controls.oldPassword.invalid">
+                        <span *ngIf="changePasswordForm.controls.oldPassword.hasError('required')">*Please enter old password.</span>
+                        <span *ngIf="changePasswordForm.controls.oldPassword.hasError('minlength')">*Old password must be
+                          between 8 to 16 characters.</span>
+                        <span *ngIf="changePasswordForm.controls.oldPassword.hasError('pattern') &&!changePasswordForm.controls.oldPassword.hasError('minlength')">*Please
+                          enter valid old password.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">New Password</label>
+                      <input type="password" maxlength="16" class="form-control" [formControl]="changePasswordForm.controls.newPassword" placeholder="Enter new password"
+                      />
+                      <div class="errorMsg" *ngIf="changePasswordForm.controls.newPassword.dirty && changePasswordForm.controls.newPassword.invalid">
+                        <span *ngIf="changePasswordForm.controls.newPassword.hasError('required')">*Please enter new password.</span>
+                        <span *ngIf="changePasswordForm.controls.newPassword.hasError('minlength')">*New password must be
+                          between 8 to 16 characters.</span>
+                        <span *ngIf="changePasswordForm.controls.newPassword.hasError('pattern') &&!changePasswordForm.controls.newPassword.hasError('minlength')">*Please
+                          enter valid new password.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Confirm Password</label>
+                      <input type="password" maxlength="16" class="form-control" [formControl]="changePasswordForm.controls.confirmPassword" placeholder="Enter confirm password"
+                      />
+                      <div class="errorMsg" *ngIf="changePasswordForm.controls.confirmPassword.dirty && changePasswordForm.controls.confirmPassword.invalid">
+                        <span *ngIf="changePasswordForm.controls.confirmPassword.hasError('required')">*Please enter confirm
+                          password.
+                        </span>
+                      </div>
+                      <div class="errorMsg" *ngIf="changePasswordForm.controls.confirmPassword.dirty">
+                        <span *ngIf="(changePasswordForm.value.newPassword!==changePasswordForm.value.confirmPassword) && !(changePasswordForm.controls.confirmPassword.hasError('required'))">
+                          *New password and confirm password does not match.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="text-center pt10 pb10">
+                      <button type="submit" class="btn btn-navy-blue max-WT-170 font_uni_sans" [disabled]="changePasswordForm.invalid || (changePasswordForm.value.newPassword!==changePasswordForm.value.confirmPassword)"
+                        (click)="changePasswordApi()">Save</button>
+                    </div>
+                  </div>
+                  <div class="col-md-7 bdr-left">
+                    <a *ngIf="list.cardList.length != 0" (click)="addCard()">
+                      <img src="assets/images/plus-circle-icon.png" style="float: right; padding:0; margin: 0; height: 30px;width: 30px" alt="Icon"
+                      />
+                    </a>
+                    <h3>Payment Method</h3>
+                    <div *ngIf="list.cardList.length != 0" class="add-to-card-box">
+                      <table class="table table-bordered bor-table large-table">
+                        <thead>
+                          <tr class="table-head-bg">
+                            <th>Card Number</th>
+                            <th>Expiry Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let card of list.cardList">
+                            <td>{{card.cardNumber}}</td>
+                            <td>{{card.expiryDate}}</td>
+                            <td class="action-td">
+
+                                <button class="btn btn-info" (click)="editCard(card)"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-danger" (click)="deleteCard(card)"><i class="far fa-trash-alt"></i></button>
+
+                              <!-- <img src="assets/images/edit-ico.png" style="height: 20px;width: 20px" alt="Icon" (click)="editCard(card)" />
+                              <img src="assets/images/del.png" style="height: 20px;width: 20px" alt="Icon" (click)="deleteCard(card)" /> -->
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div *ngIf="list.cardList.length == 0" class="add-to-card-box">
+                      <a class="addcard-btn" (click)="addCard()">
+                        <img src="assets/images/plus-circle-icon.png" alt="Icon" />
+                        <span>Add Card</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- profile-box End -->
+            </div>
+            <!-- Col Right End -->
+          </div>
+        </form>
+        <!-- Profile-form End -->
+      </div>
+      <!-- content-box End-->
+    </div>
+  </main>
+  <!-- main End -->
+  <!-- <footer class="footer-section">
+      <div class="custom-container">
+        <div class="footer-inner">
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="footer-logo-block">
+                <div class="footer-logo">
+                  <a href="index.html"><img class="logo_img" src="images/logo.png" alt="logo" /></a>
+                </div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s
+                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+                  to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+                  typesetting, remaining essentially unchanged.</p>
+              </div>
+              <div class="copyright hidden-sm">DIGI © 2018 - All Rights Reserved.</div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="footer-link-col">
+                <div class="row">
+                  <div class="col-sm-4 link-col">
+                    <div class="footer-links-block">
+                      <h3 class="ftr-hdng">Company</h3>
+                      <ul class="ftr-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="press.html">Press</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="career.html">Careers</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 link-col">
+                    <div class="footer-links-block">
+                      <h3 class="ftr-hdng">Legal</h3>
+                      <ul class="ftr-links">
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy-policy">Privacy Policy</a></li>
+                        <li><a href="disclosures.html">Disclosures</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 link-col">
+                    <div class="footer-links-block">
+                      <h3 class="ftr-hdng">Connect With Us</h3>
+                      <ul class="social-links">
+                        <li class="facebook">
+                          <a href="javascript:void(0);">
+                            <span class="social-icn">
+                              <i class="fab fa-facebook-f"></i>
+                            </span>
+                            Facebook
+                          </a>
+                        </li>
+                        <li class="twitter">
+                          <a href="javascript:void(0);">
+                            <span class="social-icn">
+                              <i class="fab fa-twitter"></i>
+                            </span>
+                            Twitter
+                          </a>
+                        </li>
+                        <li class="google-plus">
+                          <a href="javascript:void(0);">
+                            <span class="social-icn">
+                              <i class="fab fa-google-plus-g"></i>
+                            </span>
+                            Google+
+                          </a>
+                        </li>
+                        <li class="instagram">
+                          <a href="javascript:void(0);">
+                            <span class="social-icn">
+                              <i class="fab fa-instagram"></i>
+                            </span>
+                            Instagram
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="chat-btn"><img src="images/chat-icon.png" alt="chat icon" /></span>
+      <div class="chat-box">
+        <div class="chat-box-head">Chat <span class="fa fa-plus chat-toggle"></span></div>
+        <div class="chat-box-body">
+          <ul class="chat">
+            <li class="right clearfix">
+              <div class="chat-inner-box clearfix d-table">
+                <span class="dateandtime d-cell">12:15</span>
+                <p class="d-cell">Lorem Ipsum is simply dummy text</p>
+                <span class="chat-user-img d-cell"><img src="images/chat-user1.png" alt="Icon"></span>
+              </div>
+            </li>
+            <li class="left clearfix">
+              <div class="chat-inner-box clearfix d-table">
+                <span class="chat-user-img d-cell"><img src="images/chat-user2.png" alt="Icon"></span>
+                <p class="d-cell">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                </p>
+                <span class="dateandtime d-cell">12:15</span>
+              </div>
+            </li>
+            <li class="right clearfix">
+              <div class="chat-inner-box clearfix d-table">
+                <span class="dateandtime d-cell">12:15</span>
+                <p class="d-cell">Lorem Ipsum is simply dummy text</p>
+                <span class="chat-user-img d-cell"><img src="images/chat-user1.png" alt="Icon"></span>
+              </div>
+            </li>
+            <li class="left clearfix">
+              <div class="chat-inner-box clearfix d-table">
+                <span class="chat-user-img d-cell"><img src="images/chat-user2.png" alt="Icon"></span>
+                <p class="d-cell">
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                </p>
+                <span class="dateandtime d-cell">12:15</span>
+              </div>
+            </li>
+          </ul>
+          <div class="chat-comment-box">
+            <input class="form-control" type="text" placeholder="Message" />
+            <button class="btn send-chat-btn" type="submit"><i class="fa fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </footer> -->
+  <app-footer></app-footer>
+  <!-- Add card Modal Start -->
+  <div class="modal fade" id="addCard_Modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-600" role="document">
+      <div class="modal-content">
+        <form class="modal-add-card-form" [formGroup]="addCardForm">
+          <div class="modal-body text-center">
+            <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans" *ngIf="modalType == 'addCardModal'">Add Card</h5>
+            <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans" *ngIf="modalType == 'editCardModal'">Edit Card</h5>
+            <!-- <p class="head_lagend mb25">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> -->
+            <div class="max-WT-400 center-box" style="display: inline">
+              <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Card Number</label>
+                  <div class="col-md-9">
+                      <input type="text" class="form-control" [formControl]="addCardForm.controls.cardNumber" maxlength="16" placeholder="Card number" />
+                      <div class="errorMsg" style="float: left;" *ngIf="addCardForm.controls.cardNumber.dirty && addCardForm.controls.cardNumber.invalid">
+                        <span *ngIf="addCardForm.controls.cardNumber.hasError('required')">*Please enter card number.</span>
+                        <span *ngIf="addCardForm.controls.cardNumber.hasError('pattern')">*Please
+                          enter valid card number.</span>
+                      </div>
+                  </div>
+                </div>
+              <div class="form-group clearfix row">
+                  <label class="col-md-3 label-blue">Expiry Date</label>
+                  <div class="col-md-9">
+                      <input type="text" class="form-control " [formControl]="addCardForm.controls.expiryDate" placeholder="yyyy - mm" />
+                      <div class="errorMsg" style="float: left;" *ngIf="addCardForm.controls.expiryDate.dirty && addCardForm.controls.expiryDate.invalid">
+                        <span *ngIf="addCardForm.controls.expiryDate.hasError('required')">*Please enter expiry date.</span>
+                        <span *ngIf="addCardForm.controls.expiryDate.hasError('pattern')">*Please enter valid expiry date(YYYY-MM).</span>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="clearfix calendar-action text-center pL15 pR15">
+            <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" (click)="saveAddCard()" *ngIf="modalType == 'addCardModal'">Add</button>
+            <button type="submit" class="mb25 btn btn-navy-blue max-WT-150 mL5" (click)="saveEditCard()" *ngIf="modalType == 'editCardModal'">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Add card Modal End -->
+
+  <!-- detele modal -->
+<div class="modal fade common-modal" id="delete-card" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog max-WT-500" role="document">
+      <div class="modal-content">
+        <form class="modal-add-card-form" action="profile-with-card.html">
+          <div class="modal-body text-center">
+            <div class="modal-content-body modalform-body text-left">
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="text-center modal-text-s">Are you sure you want to delete this card?</p>
+                  <div class="clearfix calendar-action mt30 text-left">
+                    <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">NO</button>
+                    <button class="mb25 btn btn-navy-blue max-WT-150 mL5 pull-right" type="button" (click)="deleteCardApi()">YES</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- detele modal end -->

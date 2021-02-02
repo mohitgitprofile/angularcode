@@ -1,0 +1,218 @@
+     <!--   Header Start -->
+     <app-header></app-header>
+     <!--   Header End -->
+      <div class="topBanner">
+         <div class="container">
+         </div>
+      </div>
+      <!-- main Start -->
+      <main class="main-container pt0 mt-min60">
+         <div class="container">
+            <div class="content-box bg-gray">
+              <!-- Subheader of Menu Competition Configuration Header  -->
+                <app-menu-comp-conf-header></app-menu-comp-conf-header>
+                <!-- End Subheader of Menu Competition Configuration Header  -->
+              <h2 class="content-box-head">Select your plan</h2>
+               <div class="content-box-filter">
+                <form class="filter-form fullwidth max-WT-400">
+                    <div class="row">
+                      <div class="col-6" *ngIf="profileDet.subscription == 'oneEvent'">
+                        <div class="radio-custom" >
+                          <span class="radio-checkbox"><input type="radio" id="check2" value="monthly" name="newPlan" [(ngModel)]="newPlan" (click)="changePlan()">
+                            <label for="check2">Monthly</label>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="radio-custom" *ngIf="profileDet.subscription == 'yearly' || profileDet.subscription == 'oneEvent' || profileDet.subscription == 'monthly'">
+                          <span class="radio-checkbox"><input type="radio" id="check3" value="yearly" name="newPlan" [(ngModel)]="newPlan" (click)="changePlan()">
+                            <label for="check3">Yearly</label>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+               </div>
+
+               <div class="row mt30 justify-content-center">
+                <div class="col-md-6" >
+                  <div class="grid-column noborder box-shadow">
+                    <!-- <h5 class="head-sub" *ngIf="loginRes?.result?.organizerType"> One {{loginRes?.result?.organizerType[0]  | letterCase}} </h5> -->
+                    <!-- <h5 class="head-sub text-center">  {{getPlan(loginRes?.result?.subscription)}} </h5> -->
+                    
+                    <div class="plan-included-text">
+                        <div>
+                            <h4>DataBase</h4>
+                            <ul>
+                              <li *ngFor="let data of DataBase">{{data}}</li>
+                            </ul>
+                            <h4 *ngIf="loginTypeArr.includes('COMPETITION')">For Competition</h4>
+                            <ul *ngIf="loginTypeArr.includes('COMPETITION')">
+                              <li *ngFor="let comp of subscriptionAccessCompetition">{{comp}}</li>
+                            </ul>
+                            <h4 *ngIf="loginTypeArr.includes('MEMBERSHIP')">For Membership</h4>
+                            <ul *ngIf="loginTypeArr.includes('MEMBERSHIP')">
+                              <li *ngFor="let mem of subscriptionAccessMembership">{{mem}}</li>
+                            </ul>
+                            <h4 *ngIf="loginTypeArr.includes('VENUE')">For Venue</h4>
+                            <ul *ngIf="loginTypeArr.includes('VENUE')">
+                              <li *ngFor="let ven of subscriptionAccessVenue">{{ven}}</li>
+                            </ul>
+                            <h4 *ngIf="Media">Media</h4>
+                            <h4 *ngIf="Product">Product</h4>
+                            <h4 *ngIf="UserManagment">UserManagment</h4>
+                          </div>
+                      <h5 class="head-sub mb10 mt20" *ngIf="addonArr.length"> Subscription Add on </h5>
+                      <div class="button-box" *ngIf="addonArr.length">
+                        <!-- <p *ngFor="let key of objectKeys(loginRes?.result?.optionalSubsPrices)"> 
+                          <input type="checkbox" (click)="selectAddOn(key)">{{key}}
+                        </p> -->
+                        <p *ngFor="let item of addonArr"> 
+                          <input type="checkbox" (click)="selectAddOn(item)" [(ngModel)]="item.checked">  {{showNameFun(item?.name)}}
+                        </p>
+                        
+                        <!-- <h6>41$ Per Year</h6> -->
+                        <h6 class="mt20 mb20">Total Amount = $ {{totalPrice}} </h6>                        
+                      </div>
+                      <div>
+                        <p> <input type="checkbox" [(ngModel)]="autoRenewPlan" name="autoRenewPlan"> Auto Renew Plan</p>
+                      </div>
+                      <div class="text-center">
+                        <button class="btn btn btn-dark-blue-s max-WT-150" type="button" (click)="paymentModal()">Upgrade</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Max With Box End -->
+         </div>
+      </main>
+      <!-- main End -->
+     <!-- Footer Start -->
+     <app-footer></app-footer>
+     <!-- Footer End -->
+
+       <!-- add-venue -->
+      <div class="modal fade common-modal" id="plan" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog max-WT-600" role="document">
+            <div class="modal-content">
+               <form class="modal-add-card-form" action="profile-with-card.html">
+                  <div class="modal-body text-center">
+                      <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">MONTHLY PLAN</h5>
+                     <div class="modal-content-body modalform-body text-left">
+                      <div class="row">
+
+                        <div class="col-md-12">
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Card Number</label>
+                             <div class="col-md-9">
+                              <input type="text" class="form-control" placeholder=""/>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">Expiry Date</label>
+                             <div class="col-md-9">
+                              <input type="text" class="form-control datepicker" placeholder="dd-mm-yyyy"/>
+                             </div>
+                           </div>
+                           <div class="form-group clearfix row">
+                             <label class="col-md-3 label-blue">CVC Number</label>
+                             <div class="col-md-9">
+                              <input type="text" class="form-control"/>
+                             </div>
+                           </div>
+                          <div class="clearfix calendar-action mt30 text-left">
+                            <button type="button" class="mb25 btn btn-gray max-WT-200" data-dismiss="modal">Cancel</button>
+                            <button class="mb25 btn btn-navy-blue max-WT-200 mL5 pull-right"  type="button" data-toggle="modal" data-target="#edit_venue">Pay(40.00 US$Month)</button>
+                          </div>
+                         </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!--  Modal End add-venue--> 
+       <!-- Card Modal Start -->
+<div class="modal fade common-modal" id="paymentPlanChange" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+     <div class="modal-content">
+
+        <div *ngIf="list.cardList.length" class="add-to-card-box">
+            <table class="table table-bordered bor-table large-table">
+              <thead>
+                <tr class="table-head-bg">
+                  <th>Card Number</th>
+                  <th>Expiry Date</th>
+                  <th>Choose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let card of list.cardList">
+                  <td>{{card.cardNumber}}</td>
+                  <td>{{card.expiryDate}}</td>
+                  <td class="action-td">
+                      <span class="radio-checkbox"><input type="radio" id="check2" [value]="card._id" name="currCard" [(ngModel)]="currCard" (click)="selectCard(card)">
+                        <!-- <label for="check2">Monthly</label> -->
+                      </span>
+                    <!-- <img src="assets/images/edit-ico.png" style="height: 20px;width: 20px" alt="Icon" (click)="editCard(card)" />
+                    <img src="assets/images/del.png" style="height: 20px;width: 20px" alt="Icon" (click)="deleteCard(card)" /> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        <form class="modal-add-card-form" autocomplete="off" [formGroup]="cardForm">
+           <div class="modal-body text-center">
+              <h5 class="modal-head mt15 mb5 navy-blue font_uni_sans" >Payment</h5>
+              <div class="modal-content-body">
+                <p class="head_lagend mb20  text-center para">Please enter details for payment</p>
+               <div class="center-box">
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Card Number</label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" placeholder="Card number" maxlength="16" [formControl]="cf.card">
+                      <div class="errorMsg" style="float: left" *ngIf="cf.card.dirty && cf.card.invalid">
+                        <span *ngIf="cf.card.hasError('required')">*Please enter card no.</span>
+                        <span *ngIf="cf.card.hasError('pattern')">*Please enter valid card no.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">Expiry Date</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control " [formControl]="cf.expiryDate" placeholder="yyyy - mm" maxlength="7" />
+                        <div class="errorMsg" style="float: left;" *ngIf="cf.expiryDate.dirty && cf.expiryDate.invalid">
+                          <span *ngIf="cf.expiryDate.hasError('required')">*Please enter expiry date.</span>
+                          <span *ngIf="cf.expiryDate.hasError('pattern')">*Please enter valid expiry date(YYYY-MM).</span>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group clearfix row">
+                    <label class="col-md-3 label-blue">CVV</label>
+                    <div class="col-md-9">
+                        <input type="password" class="form-control" placeholder="CVV" maxlength="3" [formControl]="cf.cvv">
+                        <div class="errorMsg" style="float: left" *ngIf="cf.cvv.dirty && cf.cvv.invalid">
+                          <span *ngIf="cf.cvv.hasError('required')">*Please enter cvv.</span>
+                          <span *ngIf="cf.cvv.hasError('pattern')">*Please enter valid cvv.</span>
+                        </div>
+                    </div>
+                  </div>
+               </div>
+               <div class="clearfix calendar-action text-center pL15 pR15 mt30">
+                  <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: left;" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="mb25 btn btn-navy-blue max-WT-150" style="float: right;" (click)="pay()" [disabled]="cardForm.invalid">Pay</button>
+               </div>
+             </div>
+           </div>
+        </form>
+     </div>
+  </div>
+</div> 
+<!-- Card  Modal End -->
+	  
+   

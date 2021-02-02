@@ -1,0 +1,252 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <!-- <h1 class="page_title" style="color:black">EDIT ADVERTISEMENT</h1> -->
+        <h1 class="page_title" style="color:black">ADVERTISEMENT DETAILS</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="custom_tabs common-tabs">
+                <div class="tab-content">
+                    <div class="row">
+                        <!-- left section -->
+                        <div class="col-lg-6">
+                            <form [formGroup]="editAdvertisementForm">
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">ID :</div>
+                                    <div class="col-md-9">{{advertisementData?.peerToPeerExchangeId}}</div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Username :</div>
+                                    <div class="col-md-9">{{advertisementData?.userName}}</div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Created On :</div>
+                                    <div class="col-md-9">{{advertisementData?.creationTime | date}}</div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Payment Method :</div>
+                                    <div class="col-md-9" style="padding-left: 0px;">
+                                        <div class="head_flt_select">
+                                            <div class="head_flt_select input-label input-label1">
+                                                <select disabled class="form-control" formControlName="paymentType">
+                                                    <option value="">Select</option>
+                                                    <option value="IMPS">IMPS</option>
+                                                    <option value="NationalBankTransfer">National Bank Transfer</option>
+                                                    <!-- <option value="paypal">Paypal</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Location :</div>
+                                    <div class="col-md-9" style="padding-left: 0px;">
+                                        <div class="head_flt_select">
+                                            <div class="head_flt_select input-label input-label1">
+                                                <select disabled class="form-control" formControlName="country">
+                                                    <option value="">Select</option>
+                                                    <option *ngFor="let item of countryList" [value]="item?.country">
+                                                        {{item?.country}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Price :</div>
+                                    <div class="col-md-9" style="padding-left: 0px;">
+                                        <div class="head_flt_select">
+                                            <div class="head_flt_select input-label input-label1">
+                                                <select disabled class="form-control" formControlName="fiatCoin">
+                                                    <option value="">Select</option>
+                                                    <option value="INR">INR</option>
+                                                    <option value="USD">USD</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Margin :</div>
+                                    <div class="col-md-9" style="padding-left: 0px;">
+                                        <div class="head_flt_select">
+                                            <div class="head_flt_select input-label input-label1">
+                                                <input readonly type="text" placeholder="%" class="form-control"
+                                                    formControlName="margin" style="height: 38px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Ad Limit :</div>
+                                    <div class="col-md-9">Min- {{advertisementData?.minValue}} <br> Max-
+                                        {{advertisementData?.maxValue}}</div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Active Hours :</div>
+                                    <div class="col-md-9">24hrs</div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Terms of Trade :</div>
+                                    <div class="col-md-9" style="padding-left: 0px;">
+                                        <div class="head_flt_select">
+                                            <div class="head_flt_select input-label input-label1">
+                                                <textarea type="text" rows="3" placeholder="Terms of Trade"
+                                                    class="form-control" formControlName="termsOfTrade" readonly></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Payment Details :</div>
+                                    <div class="col-md-9">{{advertisementData?.price}}</div>
+                                </div> -->
+                                <div class="form-group row">
+                                    <div class="col-md-3 edit-text">Security Options :</div>
+                                    <div class="col-md-9">
+                                        <div>
+                                            <!-- <input type="checkbox" formControlName="isIdentifiedPeople">  -->
+                                            <input type="checkbox" checked disabled>
+                                            Identified Only</div>
+                                        <div>
+                                            <!-- <input type="checkbox" formControlName="twpfaType">  -->
+                                            <input type="checkbox" checked disabled>
+                                            SMS Verificaition
+                                            required</div>
+                                        <!-- <div><input type="checkbox"> Trusted People only</div> -->
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <!-- end left section -->
+
+                        <!-- right section -->
+                        <div class="col-lg-6">
+                            <!-- <div>
+                                <div class="transaction">
+                                    <h3>Ad Details</h3>
+                                    <div class="text-left" style="float: right;">
+                                        <button type="submit" class="btn btn-theme" (click)="exportAsXLXS()">Export in
+                                            Excel</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" aria-describedby="trade table">
+                                        <thead>
+                                            <tr class="no_wrap_th">
+                                                <th id="">ID</th>
+                                                <th id="">Date/Time</th>
+                                                <th id="">User</th>
+                                                <th id="">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>02/07/2020</td>
+                                                <td>Ramneek</td>
+                                                <td>Ad updated</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>02/07/2020</td>
+                                                <td>Ramneek</td>
+                                                <td>Ad updated</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>02/07/2020</td>
+                                                <td>Ramneek</td>
+                                                <td>Ad updated</td>
+                                            </tr>
+                                            <tr *ngIf="tradeList?.length==0">
+                                                <td colspan="11" vertical-align="middle">
+                                                    <div class="no-record">
+                                                        <div class="no-recordin">
+                                                            <H5>No record found</H5>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="custom-pagination mt20 text-center" style="float: right;"
+                                    *ngIf="totalItems > 5 ">
+                                    <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                </div>
+                            </div> -->
+                            <!--  -->
+                            <!-- <div>
+                                <div class="transaction">
+                                    <h3>Trades placed in this Advertisement</h3>
+                                    <div class="text-left" style="float: right;">
+                                        <button type="submit" class="btn btn-theme" (click)="exportAsXLXS()">Export in
+                                            Excel</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" aria-describedby="trade table">
+                                        <thead>
+                                            <tr class="no_wrap_th">
+                                                <th id="">ID</th>
+                                                <th id="">Date/Time</th>
+                                                <th id="">User</th>
+                                                <th id="">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>02/07/2020</td>
+                                                <td>Ramneek</td>
+                                                <td>Ad updated</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>02/07/2020</td>
+                                                <td>Ramneek</td>
+                                                <td>Ad updated</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>02/07/2020</td>
+                                                <td>Ramneek</td>
+                                                <td>Ad updated</td>
+                                            </tr>
+                                            <tr *ngIf="tradeList?.length==0">
+                                                <td colspan="11" vertical-align="middle">
+                                                    <div class="no-record">
+                                                        <div class="no-recordin">
+                                                            <H5>No record found</H5>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="custom-pagination mt20 text-center" style="float: right;"
+                                    *ngIf="totalItems > 5 ">
+                                    <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                </div>
+                            </div> -->
+
+                        </div>
+                        <!-- end right section -->
+                    </div>
+                    <div class="mt-3" style="text-align: center">
+                        <!-- <button class="btn  btn-theme" type="button" (click)="updateAdvertisement()">Update Ad</button>
+                        <button class="btn  btn-theme" type="button" (click)="deleteAdvertisement()">Delete Ad</button> -->
+                        <!-- <button class="btn  btn-theme" type="button" (click)="cancel()">Cancel</button> -->
+                        <button class="btn  btn-theme" type="button" (click)="cancel()">Back</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+    </div>
+</main>

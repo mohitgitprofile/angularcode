@@ -1,0 +1,146 @@
+<app-header>
+</app-header>
+<div class="topBanner">
+  <div class="container">
+  </div>
+</div>
+<!-- main Start -->
+<main class="main-container pt0 mt-min60">
+  <div class="content-container">
+    <div class="content-box bg-gray">
+      <app-venue-configure-header></app-venue-configure-header>
+      <div class="table-block mt10 white-bg" *ngIf="currUrl == 'bookingForm'">
+        <div class="form-group clearfix row" *ngIf="!venueList.length">
+          <label class="col-md-3 label-blue">Add venue to cofigure booking fields</label>
+        </div>
+        <div *ngIf="venueList.length">
+          <div class="form-group clearfix row select-venue-section">
+            <label class="col-md-2 label-blue color-blue1">Select Venue</label>
+            <div class="col-md-10">
+               <div class="venue-dropdown"> 
+              <select class="form-control select-style1 round-input width-manage" (change)="onVenueSelect()" [(ngModel)]="venueId">
+                <option *ngFor="let i of venueList" value="{{i._id}}">{{i?.venueName}}</option>
+              </select>
+              <button class="btn btn btn-dark-blue-s" type="button" (click)="configureFieldModal()">Configure Fields</button>
+              </div>
+            </div>
+          </div>
+         
+          <div class="table-responsive">
+            <table class="table table-bordered large-table text-center">
+              <thead>
+                <tr class="table-head-bg">
+                  <th>FIELD NAME</th>
+                  <!-- <th>FIELD TYPE</th> -->
+                  <th>VALUE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of configureArrList; let i = index">
+                  <td>{{data.field}}</td>
+                  <td>
+                    <div class="col-md-8">
+                      <select class="form-control select-style1" [(ngModel)]="data.importance">
+                        <option value="mandatory">Mandatory</option>
+                        <option value="optional">Optional</option>
+                        <option value="hidden">Hidden</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center">
+              <button class="btn btn btn-dark-blue-s max-WT-100" type="button" (click)="saveConfigFields('form')">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-scroll-block" *ngIf="currUrl == 'sms'">
+        <div class="tab-content mt20 sms-tab">
+          <div class="tab-pane active" id="home">
+            <div class="form-block">
+              <h3 class="tab-inner-heading">SMS Config</h3>
+              <form>
+                <div class="form-group clearfix row">
+                  <label class="col-md-5 col-lg-3 label-blue">API key</label>
+                  <div class="col-md-7 col-lg-8">
+                    <input type="text" class="form-control round-input" placeholder="">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="button-box">
+              <button class="btn btn btn-dark-blue-s max-WT-100" type="button ">Save</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Max With Box End -->
+  </div>
+</main>
+<!-- main End -->
+<app-footer>
+</app-footer>
+
+
+
+
+<!-- Configure Team field -->
+<div class="modal fade common-modal" id="configurField_modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog max-WT-600" role="document">
+    <div class="modal-content">
+      <!-- <form class="modal-add-card-form" action="profile-with-card.html" novalidate [formGroup]="configureForm"> -->
+      <div class="modal-body text-center">
+        <h5 class="modal-head mt15 mb5 pb20 navy-blue font_uni_sans">Configure Booking Field
+        </h5>
+        <div class="modal-content-body modalform-body text-left">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group clearfix row">
+                <label class="col-md-3 label-blue">Select Venue</label>
+                <div class="col-md-9">
+                  <select class="form-control select-style1 round-input" [(ngModel)]="venueId">
+                    <option *ngFor="let i of venueList" value="{{i._id}}">{{i?.venueName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group clearfix row" *ngFor="let data of configureArr; let i = index">
+                <label class="col-md-3 label-blue" style="margin-bottom: 1rem; ">Field Name</label>
+                <div class="col-md-9" style="margin-bottom: 1rem; ">
+                  <input type="text" class="form-control round-input" [(ngModel)]="data.field" placeholder="Please enter Field Name." />
+                </div>
+                <label class="col-md-3 label-blue">Field Type</label>
+                <div class="col-md-9">
+                  <select class="form-control round-input" [(ngModel)]="data.fieldType">
+                    <option value="">Select Field Type</option>
+                    <option value="text">Text</option>
+                    <option value="date">Date</option>
+                    <option value="email">Email</option>
+                    <option value="number">Number</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="text-right">
+                    <button class="btn-sm btn btn-primary" *ngIf="i==configureArr.length-1" (click)="addOtherField(data.name,i)">
+                      <i class="fas fa-plus"></i> Add More Field</button>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix calendar-action mt30 text-right">
+                <button type="button" class="mb25 btn btn-gray max-WT-150" data-dismiss="modal">Cancel</button>
+                <button class="mb25 btn btn-navy-blue max-WT-150 mL5 " (click)="saveConfigFields('modal')" type="button" data-toggle="modal"
+                  data-target="#edit_venue">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </form> -->
+    </div>
+  </div>
+</div>
+<!--  Modal End Configure Team field-->

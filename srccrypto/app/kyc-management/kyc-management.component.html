@@ -1,0 +1,183 @@
+
+<div class="wrapper">
+ 
+    <!-- Aside End -->
+    <main class="middle-content">
+        <!-- Page Title Start -->
+        <div class="page_title_block">
+            <h1 class="page_title" style="color:black">KYC Management</h1>
+           
+        </div>
+        <!-- Page Title End -->
+        <div class="content-section">
+            <div class="outer-box">
+                <!-- Gloabl Table Box Start -->
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                            <div class="sec_head_new">
+                                <div class="row">
+                                    <div class="col-md-3 ">
+                                        <div class="filter_fields">
+                                            <div class="head_flt_select" style="display: flex">
+                                                <div class="head_flt_select align-items-center d-flex h-100">
+                                                    <label>Status:</label>
+                                                </div>
+                                            </div>
+                                            <div class="head_flt_select">
+                                                <div class="head_flt_select">
+                                                    <select class="form-control" (change)="getStatus($event)">
+                                                        <option value=" ">ALL</option>
+                                                        <option value="ACCEPTED">Accepted</option>
+                                                        <option value="PENDING">Pending</option>
+                                                        <option value="REJECTED">Rejected</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                       
+                                                <div class="head_flt_select search-div" >
+                                                    <input type="text" placeholder="Search by email" class="form-control " [(ngModel)]="searchText" >
+                                                    <div class="input-group-append">
+                                                            <button class="btn btn_search_group" type="button" ><img src="assets/img/icon-search.png" alt="Search" (click)="getListOfKyc('text')"></button>
+                                                        </div>
+                                                </div>
+                                            
+                                    </div>
+                                    <div class="col-md-3 button-div">
+                                        <div class="">
+                                            <button type="submit" class="btn  btn-theme" (click)="getListOfKyc('no-filter')">Reset Filter</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" aria-describedby="">
+                                    <thead>
+                                        <tr class="no_wrap_th">
+                                            <th id="">S.No</th>
+                                            <th id="">User Name</th>
+                                            <th id="">Email</th>
+                                            <th id="">KYC ID</th>
+                                            <th id="">Status</th>
+                                            <th id="" class="action_td_btn3">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let kyc of kycList | paginate:{itemsPerPage: 10, currentPage: pageNumber,totalItems: kycDetail}; let i=index; ">
+                                            <td>{{10 * (pageNumber - 1) + i+1}}</td>
+                                            <td>{{kyc?.firstName}}</td>
+                                            <td>{{kyc?.email}}</td>
+                                            <td>{{kyc?.kycId}}</td>
+                                            <td>{{kyc?.kycStatus}}</td>
+                                            <td class="action_td_btn3">
+                                                <a (click)="gotoview(kyc?.userId)" ><em class="fa fa-eye"></em></a>
+
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="kycList == ''">
+                                            <td colspan="6">No Kyc Record Found</td>                                            
+                                        </tr>                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <pagination-controls  *ngIf="kycDetail > 10" (pageChange)="changePageNumber($event)"></pagination-controls>                         
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Table Responsive End -->
+
+</main>
+</div>
+<!-- Wrapper End -->
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="delete">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to delete this user?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+
+<!-- view_modal Start -->
+<div class="modal fade global-modal reset-modal" id="view">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div>                       
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>Kyc Documents </h3>
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">                                    
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                            <label>1st Document Front View</label>
+                                       <img [src]="kycData[0]?.frontIdUrl" alt=""/>
+                                      </div>
+                                      <div class="col-md-6">
+                                            <label>1st Document Back View</label>
+                                       <img [src]="kycData[0]?.backIdUrl" alt=""/>                                         
+                                      </div>                                      
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button type="submit" class="btn btn-info" (click)="documentActionFunc('ACCEPT','1',kycData[0].documentId)">Accept</button>                                
+                                        </div>
+                                        <div class="col-md-6">
+                                           <button type="button" class="btn btn-danger" (click)="documentActionFunc('REJECT',1,kycData[0].documentId)">Reject</button>                                           
+                                        </div>
+                                        
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                            <label>2nd Document Front View</label>
+                                         <img [src]="kycData[1]?.frontIdUrl" alt=""/>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <label>2nd Document Front View</label>
+                                         <img [src]="kycData[1]?.backIdUrl" alt=""/>                                         
+                                        </div>                                      
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <button type="submit" class="btn btn-info" (click)="documentActionFunc('ACCEPT','2',kycData[1].documentId)">Accept</button>                                
+                                          </div>
+                                          <div class="col-md-6">
+                                             <button type="button" class="btn btn-danger" (click)="documentActionFunc('REJECT','2',kycData[1].documentId)">Cancel</button>                                           
+                                          </div>
+                                          
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+      <!-- view_modal End -->

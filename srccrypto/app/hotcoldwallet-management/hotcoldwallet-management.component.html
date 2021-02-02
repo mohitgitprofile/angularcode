@@ -1,0 +1,212 @@
+
+
+<main class="middle-content">
+  <!-- Page Title Start -->
+  <!-- Page Title End -->
+  <div class="content-section">
+      <div class="page_title_block pL0 pR0">
+          <h1 class="page_title" style="color:black">HOT Wallet Management</h1>
+      </div>
+      <div class="custom_tabs common-tabs">
+          <div class="row mb20 justify-content-center">
+              <div class="col-sm-12">
+                  <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                      <li class="nav-item flex-fill"> <a class="nav-link active show" [ngClass]="{'active': currTab=='HOT'}" (click)="selectTab('HOT')" href="javascript:;">Hot Wallet</a>
+                      </li>
+                      <li class="nav-item flex-fill"> <a class="nav-link active show" [ngClass]="{'active': currTab=='COLD'}" (click)="selectTab('COLD')" href="javascript:;">Hot Wallet to cold wallet transactions</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          
+          <div class="tab-content">
+              <div class="tab-pane active show" *ngIf="this.currTab == 'HOT'">
+                  <div class="tab-pane1">
+                      <div class="table-responsive">
+                          <table class="table table-bordered" aria-describedby="">
+                              <thead>
+                                  <tr class="no_wrap_th">
+                                    <th id="">S.No</th>
+                                    <th id="">Coin Name</th>
+                                    <th id="">Wallet Adderss</th>
+                                    <th id="">Last withdraw On</th>
+                                    <th id="">Hot Wallet</th>
+                                    <th id="">Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of finalHotWalletArray; let i = index;">
+                                  <td>{{i+1}}</td>
+                                  <td>{{item?.data.CoinName || "---"}}</td>
+                                  <td>{{item.data.HotWalletData.address || "---"}}
+                                   
+                               </td>
+                               <td>{{item?.data.lastWithdrawTime | date}}</td>
+                             
+                                        <td>
+                                            {{item?.data.HotWalletData.hotWalletBalance || '---'}}
+                                        <!-- <input type="text" class="form-control" name="{{i}}" [(ngModel)]="item.hotWalletBalance"> -->
+                                      </td>
+                                      <td class="action_td_btn3">
+                                          <!-- <button class="btn btn-success btn-sm" (click)="updateHotBalance(item.coinShortName)" *ngIf="!item.create_wallet && item.address != null">Update Balance</button>
+                                        
+                                          <button class="btn btn-warning btn-sm" (click)="createwalletCold(item?.coinShortName)"*ngIf="item.create_wallet">Create Wallet</button>
+                                          <button class="btn btn-danger btn-sm" (click)="generateAddress(item?.coinShortName)"*ngIf="!item.create_wallet && item.address == null">Update Address</button> -->
+                                          <button class="btn btn-warning btn-sm" (click)="transferBalance(item?.data.HotWalletData.coinType,item?.data.HotWalletData.address, item?.data.HotWalletData.hotWalletBalance, item?.data.HotWalletData.tag)">Transfer</button>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="tab-pane active show" *ngIf="this.currTab == 'COLD'">
+                  <div class="tab-pane1">
+                                <!-- <label style="margin-left: 80%;">Search</label> &nbsp;
+                                <select style="width: 15%">
+                                    <option value="">Select</option>
+                                    <option value="Failed">Failed</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Completed">Completed</option>
+                                </select>&nbsp; -->
+                      <div class="table-responsive">
+                          <table class="table table-bordered" aria-describedby="">
+                              <thead>
+                                  <tr class="no_wrap_th">
+                                      <th id="">Transaction #</th>
+                                      <th id="">Coin Name</th>
+                                      <th id="">To Address</th>
+                                      <th id="">TXN. Hash</th>
+                                      <th id="">Transaction Date and Time</th>
+                                      <th id="">Transaction Status</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of getAlltransactionsHistoryList; let i = index;">
+                                  <td>{{item?.txnId}}</td>
+                                  <td>{{item?.coinType || "No record"}}</td>
+                                  <td>{{item?.address || "NO record"}}</td>
+                                  <td >{{item.txnHash || "No record"}}</td>
+                                  <td>
+                                      {{item?.txnTime | date}}
+                                        <!-- <input type="text" class="form-control" name="{{i}}" [(ngModel)]="item.hotWalletBalance"> -->
+                                      </td>
+                                      <td>{{item?.status || "No record"}}</td>
+                                      <!-- <td class="action_td_btn3">
+                                          <button class="btn btn-success btn-sm" (click)="updateAddressModal(item?.coinShortName)" *ngIf="!item.create_wallet">Update Address</button>
+                                          <button class="btn btn-success btn-sm" (click)="updateHotBalance(item.coinShortName)" *ngIf="!item.create_wallet && item.address != null">Update Balance</button>
+                                          <button class="btn btn-warning btn-sm" (click)="createwalletCold(item?.coinShortName)" *ngIf="item.create_wallet">Create Wallet</button>
+                                          <button class="btn btn-danger btn-sm" (click)="generateAddress(item?.coinShortName)"*ngIf="!item.create_wallet && item.address == null">Update Address</button>
+                                         
+                                      </td> -->
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal fade global-modal reset-modal" id="updateAddress1">
+              <div class="modal-dialog max-WT-500">
+                  <form class="change_password">
+                      <div class="modal-content">
+                          <div>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <div class="modal-body">
+                                  <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                      <div class="w-100">
+                                          <p>Please provide the new address</p>
+                                          <div class="form-group row align-items-baseline">
+                                              <div class="form-group row align-items-center">
+                                                  <label class="col-md-5">Your address :</label>
+                                                  <div class="col-md-7">
+                                                    
+                                                      <input type="email" id="emailid" class="form-control form-control2" placeholder="Enter new address" style=" width: 200px;" name="address" [(ngModel)]="addresObj.address">
+                                                  </div>
+                                              </div>
+                                              <div>
+                                                  <br>
+                                                  <button type="submit" class="btn btn-info mr10" data-dismiss="modal" [disabled]="!addresObj.address" (click)="submitAddress()" style="
+                                                  text-align: center;
+                                                  /* padding: 156px; */
+                                                  padding: left;
+                                                  margin-left: 156px;
+                                              ">Submit</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</main>
+
+    <div class="modal fade global-modal reset-modal" id="transferModal">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password" [formGroup]="transferForm">
+                <div class="modal-content">
+                    <div>
+                     <div class="modal-body">
+                                <h4 style="text-align: center; ">Total Available Balance {{hotbalance}} {{hotcoinname}}</h4>
+                                <hr>  
+                                <button type="button" class="close" data-dismiss="modal" style="margin-top: -85px;">&times;</button>
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                   <br>
+                                   <div class="hot-coldpopup mb-4">
+                                    <label>Cold Wallet Address: </label> <input style="width: 59%;" type="text" formControlName="coldAddress"><br>
+                                   
+                                   </div>
+                                  
+                                   <div class="hot-coldpopup mb-4">
+                                    <label>Hot Wallet Address: </label> <input style="width: 59%;" type="text" formControlName="transferAmount" [value]="hotcoinaddr" readonly>
+                                    <span class="error">
+                                        <small *ngIf="transferForm.get('transferAmount').hasError('pattern') && transferForm.get('transferAmount').dirty" class="error"
+                                        padding>*Please enter valid cold amount</small>
+                                        </span>
+                                   </div>
+
+                                   <div class="hot-coldpopup mb-4">
+                                        <label>Amount To Transfer: </label> <input style="width: 59%;" type="text" formControlName="transferrAmount"><br>
+                                        <span class="error">
+                                                <small *ngIf="transferForm.get('transferrAmount').hasError('pattern') && transferForm.get('transferrAmount').dirty" class="error"
+                                                padding>*Please enter valid amount</small>
+                                                </span>
+                                       </div>
+
+                                       <div *ngIf="hotcoinname == 'XRP'" class="hot-coldpopup mb-4">
+                                        <label>Tag      : </label> <input style="width: 59%;" type="text" formControlName="tag"><br>
+                                        <span class="error">
+                                                <small *ngIf="transferForm.get('tag').hasError('pattern') && transferForm.get('tag').dirty" class="error"
+                                                padding>*Please enter tag.</small>
+                                                </span>
+                                       </div>
+                                       <div *ngIf="hotcoinname == 'XLM'" class="hot-coldpopup mb-4">
+                                        <label>Tag      : </label> <input style="width: 59%;" type="text" formControlName="tag"><br>
+                                        <span class="error">
+                                                <small *ngIf="transferForm.get('tag').hasError('pattern') && transferForm.get('tag').dirty" class="error"
+                                                padding>*Please enter tag.</small>
+                                                </span>
+                                       </div>
+
+                                    <div class="buttons-alignments d-flex align-items-center justify-content-center">
+                                        <!-- <button type="submit" class="btn btn-info mr-4" (click)="transferHotToCold()"
+                                            >Transfer Now</button> -->
+                                            <button type="submit" class="btn btn-info mr-4" (click)="transferHotToCold()"
+                                            >Transfer Now</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
