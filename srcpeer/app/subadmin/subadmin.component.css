@@ -1,0 +1,49 @@
+.btn-outline {
+  color: #414e60;
+  /* background-color: #ffffff; */
+  /* border-color: #495057; */
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline {
+  color: #495057;
+  /* background-color: #ffffff; */
+  border-color: #495057;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.btn-outline:hover,
+.btn-outline:active,
+.btn-outline:focus,
+.btn-outline.active {
+  /* background: #495057; */
+  /* color: #ffffff; */
+  /* border-color: #495057; */
+
+}
+
+
+.btn-colour-1 {
+  /* color: #fff; */
+  /* background-color: #414e60; */
+  /* border-color: #414e60; */
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  border-radius: 50%;
+}
+
+.btn-colour-1:hover,
+.btn-colour-1:active,
+.btn-colour-1:focus,
+.btn-colour-1.active {
+  /* let's darken #004E64 a bit for hover effect */
+  /* background: #495057; */
+  /* color: #ffffff; */
+  /* border-color: #495057; */
+}
+
+.btn .fa{
+  margin-right: 0px !important;
+}

@@ -1,0 +1,50 @@
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <h1>Banner Management</h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <!-- [routerLink]="['/admin/header/staticcontentManagement']" -->
+      <!-- <li class="breadcrumb-item"><a [routerLink]="['/header/staticContentManagement']">Storage Type</a></li> -->
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <form [formGroup]="addBannerForm" #f="ngForm">
+          <fieldset class="global-fieldset" style="margin: 25%;">
+            <legend>Add Storage Type</legend>
+            <div class="row">
+                    <div class="col-md-12 center-align">
+                      <div class="image-upload">
+                            <img src="assets/img/text.png" *ngIf="!image" class="image-setting">
+                            <img [src]="image" *ngIf="image" class="image-setting">
+                        <input id="file-input" accept="image/png,image/jpeg" (change)="selectImages($event)" type="file" />
+                      </div>
+                    </div>
+              <div class="col-md-12">
+                <label>Banner Management</label>
+                <input type="text" formControlName="bannerName" class="form-control" placeholder="Banner Type">
+                <div *ngIf="addBannerForm.get('bannerName').hasError('required') && (addBannerForm.get('bannerName').dirty || f.submitted)"
+                  style="color:red">
+                </div>
+                <!-- <div *ngIf="addStorageForm.get('features').hasError('pattern') && (addStorageForm.get('features').dirty || f.submitted)"
+                  style="color:red">
+                </div> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group  btn-container mt-2 text-right">
+                  <button class="btn btn-primary btn-md" [disabled]="addBannerForm.invalid" (click)="submit(addBannerForm.value)"><i
+                      class="fa fa-sign-in fa-lg fa-fw"></i>Submit</button>&nbsp;
+                  <button class="btn btn-primary btn-md" routerLink="/header/staticContentManagement">Back</button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

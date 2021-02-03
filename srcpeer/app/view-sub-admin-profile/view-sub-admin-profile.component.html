@@ -1,0 +1,128 @@
+<main class="app-content patient-section">
+  <div class="app-title">
+    <h1><i class="fa fa-th-list"></i> Sub Admin Management</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="row">
+          <div class="col-md-12" style="text-align: center">
+            <span style="font-size: 26px;">Sub Admin Details</span>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12" style="text-align: center">
+            <img src="assets/img/text.png" *ngIf="data?.imageUrl[0]?.Value == 'noImage'" class="image-setting">
+            <img [src]="data?.imageUrl[0]?.Value" *ngIf="data?.imageUrl[0]?.Value != 'noImage'" class="image-setting">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Name :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{data?.name[0]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Contact No. :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{data?.mobNo[0]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Email Id :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{data?.email[0]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Address :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{data?.address[0]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Granted Permissions :</span>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.dashborard[0]?.Value == 'true'"> Dashboard</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.subadminManagement[0]?.Value == 'true'"> Sub Admin Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.userManagement[0]?.Value == 'true'"> User Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.masterSetUp[0]?.Value == 'true'"> Master Set Up</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.bookingManagement[0]?.Value == 'true'"> Booking Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.listingManagement[0]?.Value == 'true'"> Listing Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.reportManagement[0]?.Value == 'true'"> Report Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.siteSetting[0]?.Value == 'true'"> Site Setting</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.staticContent[0]?.Value == 'true'"> Static Content Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.bannerManagement[0]?.Value == 'true'"> Banner Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.feeManagement[0]?.Value == 'true'"> Fee Management</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <span style="font-size: 18px;" *ngIf="data.permission.referalManagement[0]?.Value == 'true'"> Referal Management</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-12" style="text-align: right">
+            <!-- <button class="btn btn-info mr-2" [routerLink]="['/header/changePassword/'+ data?.email[0]?.Value]" style='min-width: 174px;'>Change Password</button> -->
+            <button class="btn btn-danger" style='min-width: 174px;' [routerLink]="['/header/subadmin']">Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

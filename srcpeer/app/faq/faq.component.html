@@ -1,0 +1,139 @@
+<main class="app-content patient-section">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-th-list mr-2"></i>FAQ's</h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/header/staticContentManagement']">Static Content Management</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class='row mt-2'>
+          <div class="col-md-12" style="text-align:center">
+            <h1>Frequently asked Questions</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-info pull-right" style="min-width: 160px" (click)="addFaqModal('addFaq')"><i class="fa fa-plus"></i>Add
+              FAQ</button>
+          </div>
+        </div>
+        <div class="row" *ngFor="let data of faqQuestions;let i = index">
+          <div class="col-md-12">
+            <div class="tile mt-2" (click)="toggle(i)" style="cursor: pointer">
+              <div class="d-flex justify-content-between align-items-center">
+                <span><span>Q.1 - </span> {{data?.question}}</span>
+                <div class="">
+                  <button class="btn btn-info mr-2" (click)="openEditModal(data)"><i class="fa fa-pencil-square-o white"
+                    title="Edit"></i></button>
+                  <button class="btn btn-danger" (click)="openDeleteModal(data)"><i class="fa fa-trash white" title="Delete"></i></button>
+                </div>
+                
+              </div>
+            </div>
+            <div id="aa{{i}}" style="display: none">
+              <span>Ans - </span>
+              <span [innerHTML]="data?.answer"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<div class="modal global-modal reset-modal" id="viewAnswer">
+  <div class="modal-dialog max-WT-700">
+    <form class="change_password" [formGroup]="updateAnswerForm">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+          <h3 class="modal-title d-inline-block" *ngIf="whichModal != 'addFaq'">Edit</h3>
+          <h3 class="modal-title d-inline-block" *ngIf="whichModal == 'addFaq'">Add</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mt-0">
+          <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+            <div class="w-100">
+              <div class="row">
+                <div class="col-md-12">
+                  <p style="text-align: left;font-size: 19px;">Question :</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <input type="text" class="form-control" formControlName="question" placeholder="question">
+                  <div *ngIf="updateAnswerForm.get('question').hasError('required') &&
+                        (updateAnswerForm.get('question').dirty)"
+                    style="color:red;text-align: left">
+                    {{validationMessage?.staticContent?.question?.required}}
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <p style="text-align: left;font-size: 19px;">Answer :</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div>
+                    <ckeditor formControlName="answer" #myckeditor>
+                    </ckeditor>
+                    <div *ngIf="updateAnswerForm.get('answer').hasError('required') &&
+                          (updateAnswerForm.get('answer').dirty)"
+                      style="color:red;text-align: left">
+                      {{validationMessage?.staticContent?.content?.required}}
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <button type="submit" class="btn mr-2 btn-info" [disabled]="updateAnswerForm.invalid" *ngIf="whichModal != 'addFaq'"
+                      (click)="updateAnswerModal()">
+                      Update
+                    </button>
+                    <button type="submit" class="btn mr-2 btn-info" [disabled]="updateAnswerForm.invalid" *ngIf="whichModal == 'addFaq'"
+                      (click)="addFaq()">
+                      Add
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal global-modal reset-modal" id="deleteModal">
+  <div class="modal-dialog max-WT-350">
+    <div class="modal-content">
+      <div class="modal-header d-block text-center">
+        <h5 class="modal-title d-inline-block">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: #000;font-size: 1.3125rem;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #FFF;float:right">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mt-0">
+        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+          <div class="w-100">
+            <p>Are you sure you want to deactivate this user?</p>
+            <div>
+              <button type="submit" class="btn mr-2 btn-info" (click)="deleteFaq()">Delete</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

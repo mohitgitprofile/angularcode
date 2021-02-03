@@ -1,0 +1,61 @@
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-edit"></i>Static Content</h1>
+      <p>Edit Content</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <!-- [routerLink]="['/admin/header/staticcontentManagement']" -->
+      <li class="breadcrumb-item"><a [routerLink]="['/header/staticContentManagement']">Static Content Management</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <form [formGroup]="staticForm" #f="ngForm">
+          <fieldset class="global-fieldset">
+            <legend>Edit</legend>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Title</label>
+                <input type="text" formControlName="title" class="form-control" placeholder="Title" readonly>
+                <div *ngIf="staticForm.get('title').hasError('required') && (staticForm.get('title').dirty || f.submitted)"
+                  style="color:red">
+                  {{validationMessage?.staticContent?.title?.required}}
+                </div>
+                <div *ngIf="staticForm.get('title').hasError('pattern') && (staticForm.get('title').dirty || f.submitted)"
+                  style="color:red">
+                  {{validationMessage?.staticContent?.title?.invalid}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Description</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <ckeditor formControlName="content" #myckeditor>
+                </ckeditor>
+                <div *ngIf="staticForm.get('content').hasError('required')  && (staticForm.get('content').dirty || f.submitted)"
+                  style="color:red">
+                  {{validationMessage?.staticContent?.content?.required}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group  btn-container mt-2 text-right">
+                  <button class="btn btn-primary btn-md" [disabled]="staticForm.invalid" (click)="submit(staticForm.value)"><i
+                      class="fa fa-sign-in fa-lg fa-fw"></i>Submit</button>&nbsp;
+                  <button class="btn btn-primary btn-md" routerLink="/header/staticContentManagement">Back</button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

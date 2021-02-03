@@ -1,0 +1,15 @@
+.image-setting {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+}
+.center-align {
+  text-align: center
+}
+.image-upload>input {
+  display: none;
+}
+.setFontSize {
+  font-size: 20px;
+  /* min-width: 172px; */
+}

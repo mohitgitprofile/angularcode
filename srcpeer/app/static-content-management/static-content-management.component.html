@@ -1,0 +1,61 @@
+<main class="app-content patient-section">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-th-list"></i>Static Content Management</h1>
+    </div>
+    <!-- <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item">Static Content</li>
+    </ul> -->
+  </div>
+  <div class="row">
+    <div class="clearfix"></div>
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="tile mt-3">
+
+              <div class="table-responsive">
+                <table class="table table-hover" id="patientPdf">
+                  <thead>
+                    <tr>
+                      <th><b>#Sno.</b></th>
+                      <th><b>Title</b> </th>
+                      <th><b>Updated At</b></th>
+                      <th><b>Action</b> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of staticData ;let i=index;">
+                      <td>{{(i+1)}}</td>
+                      <td>{{data?.Title}}</td>
+                      <td>{{data?.Timestamp | date:'dd/MM/yyyy HH:mm:ss a'}}</td>
+                      <td>
+                        <a  *ngIf="data?.Title!='FAQ' && data?.Title!='Frequently Ask Question'" [routerLink]="['/header/viewStaticContent/'+data?.staticId]" class="btn btn-warning btn-sm mr-2">
+                          <i class="fa fa-eye white" title="View"></i>
+                        </a>
+                        <a  *ngIf="data?.Title!='FAQ' && data?.Title!='Frequently Ask Question'" [routerLink]="['/header/editStaticContent/'+data?.staticId]" class="btn btn-info btn-sm">
+                          <i class="fa fa-pencil-square-o white" title="Edit"></i>
+                        </a>
+
+                        <a  *ngIf="data?.Title=='Frequently Ask Question'" [routerLink]="['/header/faq']" class="btn btn-warning btn-sm">
+                          <i class="fa fa-eye white" title="View"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr *ngIf="staticData == ''">
+                      <td colspan="3">
+                        <h4 style="text-align: center"> No Record Found </h4>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

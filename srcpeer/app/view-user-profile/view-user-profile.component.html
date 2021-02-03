@@ -1,0 +1,76 @@
+<main class="app-content patient-section">
+  <div class="app-title">
+    <h1><i class="fa fa-th-list"></i> user Management</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="row">
+          <div class="col-md-12" style="text-align: center">
+            <span style="font-size: 26px;">User Details</span>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12" style="text-align: center">
+            <img src="assets/img/text.png" *ngIf="profilePic == ''" class="image-setting">
+            <img [src]="profilePic" *ngIf="profilePic" class="image-setting">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Name :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{particularUserDetail[2]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Contact No. :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{particularUserDetail[5]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Email Id :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{particularUserDetail[8]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Email Verification :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{particularUserDetail[1]?.Value}}</span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-6" style="text-align: right">
+            <span style="font-size: 21px">Mobile Verification :</span>
+          </div>
+          <div class="col-md-6">
+            <span style="font-size: 18px;">{{particularUserDetail[3]?.Value}}</span>
+          </div>
+        </div>
+        
+            <div class="row">
+              <div class="col-md-12">
+                <!-- <span style="font-size: 18px;" *ngIf="data.permission.referalManagement[0]?.Value == 'true'"> Referal Management</span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-12" style="text-align: right">
+            <button class="btn btn-danger" style='min-width: 174px;' [routerLink]="['/header/userManagement']">Back</button>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
+</main>

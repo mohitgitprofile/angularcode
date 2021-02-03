@@ -1,0 +1,161 @@
+<header class=" app-header"><a class=" app-header__logo" style="color: #fff">P2P Storage</a>
+  <a class="app-sidebar__toggle" data-toggle="sidebar" aria-label="Hide Sidebar" id="toggle"></a>
+</header>
+
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<aside class="app-sidebar">
+  <div class="app-sidebar__user">
+      <div>
+          <p class="app-sidebar__user-name">Admin</p>
+          <p class="app-sidebar__user-designation"></p>
+      </div>
+  </div>
+  <ul class="app-menu">
+
+      <li style="color:white">
+          <!-- [ngClass]="{'active': currentUrl == 'dashboard'}" -->
+          <a class="app-menu__item" [routerLink]="['/header/dashboard']">
+              <i class="app-menu__icon fa fa-dashboard"></i>
+              <span class="app-menu__label">Dashboard</span>
+          </a>
+      </li>
+      <li style="color:white">
+          <a class="app-menu__item" [routerLink]="['/header/subadmin']">
+              <i class="app-menu__icon fa fa-users"></i>
+              <span class="app-menu__label">Sub Admin Management</span>
+          </a>
+      </li>
+      <li style="color:white">
+        <a class="app-menu__item" [routerLink]="['/header/userManagement']">
+            <i class="app-menu__icon fa fa-users"></i>
+            <span class="app-menu__label">User Management</span>
+        </a>
+    </li>
+     <li style="color:white" (click) = 'openDropDown()'>
+          <a class="app-menu__item">
+              <i class="app-menu__icon fa fa-product-hunt"></i>
+              <span class="app-menu__label">Master Setup</span>
+              
+              <!-- <div class="">
+                <select class="form-control" [formControl]="addForm.controls['category']">
+                    <option>Mobile</option>
+                    <option>Laptop</option>
+                    <option>Home Appliances</option>
+                </select>
+        </div> -->
+          </a>
+      </li>
+      <div *ngIf = 'showDropDown'>
+        <li style="color:white">
+            <a class="app-menu__item"  [routerLink]="['/header/master-setup']">
+                <i class="app-menu__icon fa fa-university"></i>
+                <span class="app-menu__label"> Storage Type </span>
+            </a>
+        </li>
+        <li style="color:white">
+            <a class="app-menu__item" [routerLink]="['/header/storage-feature']">
+                <i class="app-menu__icon fa fa-shopping-cart"></i>
+                <span class="app-menu__label">Storage Feature</span>
+            </a>
+        </li>
+
+        <li style="color:white">
+            <a class="app-menu__item" [routerLink]="['/header/accessiblity-option']">
+                <i class="app-menu__icon fa fa-shopping-cart"></i>
+                <span class="app-menu__label">Accessiblity Option</span>
+            </a>
+        </li>
+       
+
+        <li style="color:white">
+            <a class="app-menu__item" [routerLink]="['/header/storing']">
+                <i class="app-menu__icon fa fa-shopping-cart"></i>
+                <span class="app-menu__label">Storing Plan</span>
+            </a>
+        </li>
+
+
+
+        <li style="color:white">
+            <a class="app-menu__item" [routerLink]="['/header/admin-city-price']">
+                <i class="app-menu__icon fa fa-shopping-cart"></i>
+                <span class="app-menu__label">Admin city and price</span>
+            </a>
+        </li>
+
+
+      </div>
+
+      <li style="color:white">
+        <a class="app-menu__item" [routerLink]="['/header/banner-management']">
+            <i class="app-menu__icon fa fa-users"></i>
+            <span class="app-menu__label">Banner Management</span>
+        </a>
+    </li>
+
+
+    <li style="color:white">
+        <a class="app-menu__item" [routerLink]="['/header/fee-management']">
+            <i class="app-menu__icon fa fa-users"></i>
+            <span class="app-menu__label">Fee Management</span>
+        </a>
+    </li>
+
+
+
+    <li style="color:white">
+        <a class="app-menu__item" [routerLink]="['/header/blog-management']">
+            <i class="app-menu__icon fa fa-users"></i>
+            <span class="app-menu__label">Blog Management</span>
+        </a>
+    </li>
+ 
+      <li style="color:white">
+          <a class="app-menu__item" [routerLink]="['/header/staticContentManagement']">
+              <i class="app-menu__icon fa fa-file"></i>
+              <span class="app-menu__label">Static Content Management</span>
+          </a>
+      </li>
+      <li >
+        <a class="app-menu__item"  [routerLink]="['/header/changePassword']">
+            <i class="app-menu__icon fa fa-sign-out"></i>
+            <span class="app-menu__label">Change Password</span>
+        </a>
+    </li>
+      <li>
+          <a style="color: white; cursor: pointer;" class="app-menu__item" data-toggle="modal" data-target="#logout_modal">
+              <i class="app-menu__icon fa fa-sign-out"></i>
+              <span class="app-menu__label">Log Out</span>
+          </a>
+      </li>
+  </ul>
+</aside>
+
+<router-outlet></router-outlet>
+
+<div class="modal fade global-modal reset-modal modalview" data-backdrop="static" id="logout_modal">
+  <div class="modal-dialog max-WT-350">
+      <!-- <form class="change_password"> -->
+          <div class="modal-content">
+              <div class="modal-header d-block text-center">
+                  <h5 class="modal-title d-inline-block">Logout</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 1.3125rem;text-shadow: 0 1px 0 #fff;color:black">
+                      <span aria-hidden="true" >&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                      <div class="w-100">
+                          <p>Are you sure you want to logout ?</p>
+                          <div>
+                              <!-- (click)="logout()" -->
+                              <button type="submit" (click)="logout()" class="btn mr-2 btn-info" >Logout</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      <!-- </form> -->
+  </div>
+</div>

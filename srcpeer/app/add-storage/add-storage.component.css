@@ -1,0 +1,11 @@
+.image-upload{
+    text-align: center;
+}
+img.image-setting{
+    height: 200px;
+    width: 200px;
+}
+#file-input{
+    margin: 0 auto;
+    width: 185px;
+}

@@ -1,0 +1,254 @@
+<main class="app-content patient-section">
+    <div class="app-title">
+      <h1><i class="fa fa-th-list"></i> Add Sub Admin</h1>
+      <div class="mr-0" style="outline: none;cursor: pointer" [routerLink]="['/header/subadmin']">
+        Sub Admin Management
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="content-wrap">
+            <form [formGroup]="addSubAdmin">
+              <fieldset class="global-fieldset mt-3">
+                <div class="row mt-3">
+                  <div class="col-md-12 center-align">
+                    <div class="image-upload">
+                      <label for="file-input">
+                          <img src="assets/img/text.png" *ngIf="data?.imageUrl[0]?.Value == 'noImage'" class="image-setting">
+                          <img [src]="data?.imageUrl[0]?.Value" *ngIf="data?.imageUrl[0]?.Value != 'noImage'" class="image-setting">
+                      </label>
+                      <input id="file-input" accept="image/png,image/jpeg" (change)="selectImages($event)" type="file" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <span class="setFontSize">
+                      Name :
+                    </span>
+                    <input type="text" formControlName="name" class="form-control" />
+                    <div class="text-danger" *ngIf="addSubAdmin.get('name').hasError('required') && (addSubAdmin.get('name').dirty || addSubAdmin.get('name').touched)">
+                      {{validationMessage?.name?.required}}
+                    </div>
+                    <div class="text-danger" *ngIf="addSubAdmin.get('name').hasError('pattern') && (addSubAdmin.get('name').dirty || addSubAdmin.get('name').touched)">
+                      {{validationMessage?.name?.pattern}}
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <span class="setFontSize">
+                          Contact Number :
+                        </span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <select class="form-control" formControlName="countryCode">
+                          <option *ngFor="let data of countryList" [value]="data?.dial_code">{{data?.dial_code}}</option>
+                        </select>
+                        <div class="text-danger" *ngIf="addSubAdmin.get('countryCode').hasError('required') && (addSubAdmin.get('countryCode').dirty || addSubAdmin.get('countryCode').touched)">
+                          {{validationMessage?.countryCode?.required}}
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <input type="text" style="min-height: 37px;" formControlName="contactNumber" class="form-control" />
+                        <div class="text-danger" *ngIf="addSubAdmin.get('contactNumber').hasError('required') && (addSubAdmin.get('contactNumber').dirty || addSubAdmin.get('contactNumber').touched)">
+                          {{validationMessage?.contactNumber?.required}}
+                        </div>
+                        <div class="text-danger" *ngIf="addSubAdmin.get('contactNumber').hasError('pattern') && (addSubAdmin.get('contactNumber').dirty || addSubAdmin.get('contactNumber').touched)">
+                          {{validationMessage?.contactNumber?.invalid}}
+                        </div>
+                        <div class="text-danger" *ngIf="addSubAdmin.get('contactNumber').hasError('minlength') && !(addSubAdmin.get('contactNumber').hasError('pattern')) && (addSubAdmin.get('contactNumber').dirty || addSubAdmin.get('contactNumber').touched)">
+                          {{validationMessage?.contactNumber?.minlength}}
+                        </div>
+                        <div class="text-danger" *ngIf="addSubAdmin.get('contactNumber').hasError('maxlength') && !(addSubAdmin.get('contactNumber').hasError('pattern')) && (addSubAdmin.get('contactNumber').dirty || addSubAdmin.get('contactNumber').touched)">
+                          {{validationMessage?.contactNumber?.maxlength}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="setFontSize">
+                      Email Id :
+                    </span>
+                    <input type="text" formControlName="email" class="form-control" />
+                    <div class="text-danger" *ngIf="addSubAdmin.get('email').hasError('required') && (addSubAdmin.get('email').dirty || addSubAdmin.get('email').touched)">
+                      {{validationMessage?.email?.required}}
+                    </div>
+                    <div class="text-danger" *ngIf="addSubAdmin.get('email').hasError('pattern') && (addSubAdmin.get('email').dirty || addSubAdmin.get('email').touched)">
+                      {{validationMessage?.email?.invalid}}
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="setFontSize">
+                      Address :
+                    </span>
+                    <input type="text" formControlName="address" class="form-control" />
+                    <div class="text-danger" *ngIf="addSubAdmin.get('address').hasError('required') && (addSubAdmin.get('address').dirty || addSubAdmin.get('address').touched)">
+                      {{validationMessage?.address?.required}}
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="setFontSize">
+                      Password :
+                    </span>
+                    <input type="password" formControlName="password" class="form-control" />
+                    <div class="text-danger" *ngIf="addSubAdmin.get('password').hasError('required') && (addSubAdmin.get('password').dirty || addSubAdmin.get('password').touched)">
+                      {{validationMessage?.password?.required}}
+                    </div>
+                    <div class="text-danger" *ngIf="addSubAdmin.get('password').hasError('minlength') && (addSubAdmin.get('password').dirty || addSubAdmin.get('password').touched)">
+                      {{validationMessage?.password?.minlength}}
+                    </div>
+                    <div class="text-danger" *ngIf="addSubAdmin.get('password').hasError('maxlength') && (addSubAdmin.get('password').dirty || addSubAdmin.get('password').touched)">
+                      {{validationMessage?.password?.maxlength}}
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="setFontSize">
+                      Confirm Password :
+                    </span>
+                    <input type="password" formControlName="confirmPassword" class="form-control" />
+                    <div class="text-danger" *ngIf="addSubAdmin.get('confirmPassword').hasError('required') && (addSubAdmin.get('confirmPassword').dirty || addSubAdmin.get('confirmPassword').touched)">
+                      {{validationMessage?.confirmPassword?.required}}
+                    </div>
+                    <div class="text-danger" *ngIf="(addSubAdmin.value.password != addSubAdmin.value.confirmPassword) && !(addSubAdmin.get('confirmPassword').hasError('required')) && (addSubAdmin.get('confirmPassword').dirty || addSubAdmin.get('confirmPassword').touched)">
+                      {{validationMessage?.confirmPassword?.mismatch}}
+                    </div>
+                  </div>
+                </div> -->
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="setFontSize">
+                      Granted Permissions :
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="dashboard" (change)="checkboxPermission()" id="id6"/>
+                    <label class="ml-3 mt-1" for="id6" style="font-size: 17px;font-weight: 100;">
+                        Dashboard
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="listingMgmt" (change)="checkboxPermission()" id="id1"/>
+                    <label class="ml-3 mt-1" for="id1" style="font-size: 17px;font-weight: 100;">
+                        Listing Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="bookingMgmt" (change)="checkboxPermission()" id="id2"/>
+                    <label class="ml-3 mt-1" for="id2" style="font-size: 17px;font-weight: 100;">
+                        Booking Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="bannerMgmt" (change)="checkboxPermission()" id="id3"/>
+                    <label class="ml-3 mt-1" for="id3" style="font-size: 17px;font-weight: 100;">
+                        Banner Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="userMgmt" (change)="checkboxPermission()" id="id4"/>
+                    <label class="ml-3 mt-1" for="id4" style="font-size: 17px;font-weight: 100;">
+                        User Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="subAdminMgmt" (change)="checkboxPermission()" id="id7"/>
+                    <label class="ml-3 mt-1" for="id7" style="font-size: 17px;font-weight: 100;">
+                        Sub Admin Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="reportMgmt" (change)="checkboxPermission()" id="id8"/>
+                    <label class="ml-3 mt-1" for="id8" style="font-size: 17px;font-weight: 100;">
+                      Report Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="siteSetting" (change)="checkboxPermission()" id="id9"/>
+                    <label class="ml-3 mt-1" for="id9" style="font-size: 17px;font-weight: 100;">
+                      Site Setting
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="staticContent" (change)="checkboxPermission()" id="id10"/>
+                    <label class="ml-3 mt-1" for="id10" style="font-size: 17px;font-weight: 100;">
+                      Static Content
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="feeMgmt" (change)="checkboxPermission()" id="id11"/>
+                    <label class="ml-3 mt-1" for="id11" style="font-size: 17px;font-weight: 100;">
+                      Fee Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="referalMgmt" (change)="checkboxPermission()" id="id12"/>
+                    <label class="ml-3 mt-1" for="id12" style="font-size: 17px;font-weight: 100;">
+                      Referral Management
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="checkbox" formControlName="masterSetUpScreen" (change)="checkboxPermission()" id="id5"/>
+                    <label class="ml-3 mt-1" for="id5" style="font-size: 17px;font-weight: 100;">
+                        Master Set up screen
+                    </label>
+                    <div class="text-danger" *ngIf="permisstionErrorMessage">
+                        {{validationMessage?.permission?.required}}
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn btn-danger pull-right ml-2" [routerLink]="['/header/subadmin']">
+                      Cancel
+                    </button>
+                    <button type="submit" (click)="updateProfile()" class="btn btn-info pull-right" >
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- [disabled]="addSubAdmin.value.password != addSubAdmin.value.confirmPassword || addSubAdmin.invalid" -->
